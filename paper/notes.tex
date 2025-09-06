@@ -1,0 +1,366 @@
+\documentclass{article}
+\usepackage[a4paper, total={6in, 8in}]{geometry}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{cleveref}
+\usepackage{bm}
+\usepackage{braket}
+\usepackage[backend=biber]{biblatex}
+\addbibresource{references.bib}
+
+\title{Correlated QEC 2}
+\author{Fidel}
+\date{March 2025}
+
+\begin{document}
+
+\maketitle
+
+\section{High-level narrative}
+\subsection{Results to emphasise}
+\begin{enumerate}
+    \item \textbf{A bridge from the fundamental physics to abstract error correction.} The SPC framework builds a bridge from the microscopic, general description of open quantum system evolution to an efficiently sampleable classical error model, that is also deeply theoretically relevant for quantum error correction. The process tensor-derived SPC isn't an adhoc model, but is a direct and necessary consequence of the underlying quantum dynamics.
+    \item \textbf{The tensor network formulation as a "computational microscrope".} Using the language of tensor networks, we show that the complexity of the noise is fundamentally limited by the size of the environment. Tensor networks also serve an effective tool for efficient computational modelling and simulation.
+    \item \textbf{Relevance to QEC.} This contribution largely stands on the results of the previous paper, which shows that temporal correlations in a stochastic Pauli noise model can be very important to QEC performance.
+    
+\end{enumerate}
+
+\subsection{Implications and applications}
+\begin{enumerate}
+    \item \textbf{QEC simulation and theory.}
+    \item \textbf{QEC experiments and device characterisation.}
+    \item \textbf{Better decoders.} (I have a personal conjecture, that the performance gains to seen be utilising a decoder that accounts for correlations scale favourably with 1., the strength or magnitude of correlations as bounded by the coupling strength of the system-environment, and scale scale unfavourably with 2., the complexity of correlations as bounded by the size of the environment.)
+    \item \textbf{Beyond QEC.} Pauli channels are highly relevant for quantum information beyond QEC.
+\end{enumerate}
+
+\subsection{Limitations to address}
+\begin{enumerate}
+    \item \textbf{The Pauli twirling approximation.}
+
+    \item \textbf{Scalability.}
+\end{enumerate}
+
+\section{Constructing multi-time Pauli channels}
+\subsection{Pauli noise channels}
+An $n$-qubit Pauli noise channel has the form
+\begin{equation}\label{eq:pauli_channel}
+    \mathcal{E}_P^{(n)}(\rho) = \sum_{P_i} p_iP_i\rho P_i,
+\end{equation}
+where $[P_0, P_1,\dots,P_{4^n-1}]$ is the $n$-qubit Pauli basis. E.g., for a single-qubit, $P_0=I, P_1=X, P_2=Y, P_3=Z$.
+
+\subsubsection*{$\chi$-matrix representation}
+The (Pauli basis) Chi-matrix representation of a quantum channel $\mathcal{E}$ is a matrix $\chi$ such that the evolution of a state $\rho$ is given by
+\begin{equation}
+    \mathcal{E}(\rho)=\frac{1}{2^n}\sum_{i,j}\chi_{ij}P_i\rho P_j.
+\end{equation}
+It is related to the Choi representation by a change of basis of the Choi-matrix into the Pauli basis. For a Pauli noise channel, $\chi_P$ is a diagonal matrix where its elements correspond to the Pauli error probabilities, e.g., for a single qubit
+\begin{equation}
+        \chi_P^{(1)} = \text{diag}(p_I, p_X, p_Y, p_Z) \\
+        =
+        \begin{pmatrix}
+        p_I & 0 & 0 & 0\\
+        0 & p_X & 0 & 0\\
+        0 & 0 & p_Y & 0\\
+        0 & 0 & 0 & p_Z
+        \end{pmatrix}.
+\end{equation}
+
+\subsubsection*{Pauli transfer matrix}
+The Pauli Transfer Matrix (PTM) representation of channel $\mathcal{E}^{(n)}$ is a superoperator $R$ defined with respect to the Pauli basis. The elements of the PTM $R$ are given by
+\begin{equation}
+    R_{ij}=\frac{1}{2^n}\text{Tr}[P_j\mathcal{E}(P_i)].
+\end{equation}
+Similar to the $\chi$-matrix, the PTM representation of a Pauli channel is a diagonal matrix
+\begin{equation}
+    R^P = \text{diag}(\lambda_0, \lambda_1, \dots, \lambda_{4^n-1}) \\
+\end{equation}
+where the vector $\vec{\lambda}$, known as the Pauli channel eigenvalues, is related to the Pauli error probabilities via the Walsh-Hadamard transform
+\begin{equation}
+    \vec{\lambda}=\bm{W}\vec{p}.
+\end{equation}
+where the elements of $\bm{W}$ are
+\begin{equation}
+    W_{ij} = 
+    \begin{cases}
+        +1, \quad \text{if $P_i$ and $P_j$ commute}\\
+        -1, \quad \text{if $P_i$ and $P_j$ anti-commute}
+    \end{cases}.
+\end{equation}
+For a single qubit example
+\begin{equation}
+        \bm{W}^{(1)}
+        =
+        \begin{pmatrix}
+        1 & 1 & 1 & 1\\
+        1 & 1 & -1 & -1\\
+        1 & -1 & 1 & -1\\
+        1 & -1 & -1 & 1
+        \end{pmatrix}.
+\end{equation}
+
+\subsubsection*{Example: Single-qubit depolarizing channel}
+\begin{equation}
+    \mathcal{E}(\rho) = (1-p)\rho + \frac{p}{3}(X\rho X + Y\rho Y + Z\rho Z)
+\end{equation}
+\begin{equation}
+    \chi_\text{depol}^{(1)} =
+        \begin{pmatrix}
+        1-p & 0 & 0 & 0\\
+        0 & \frac{p}{3} & 0 & 0\\
+        0 & 0 & \frac{p}{3} & 0\\
+        0 & 0 & 0 & \frac{p}{3}
+        \end{pmatrix}
+\end{equation}
+\begin{equation}
+    R_\text{depol}^{(1)} =
+        \begin{pmatrix}
+        1 & 0 & 0 & 0\\
+        0 & 1-p & 0 & 0\\
+        0 & 0 & 1-p & 0\\
+        0 & 0 & 0 & 1-p
+        \end{pmatrix}
+\end{equation}
+
+\subsection{Calculating Pauli error rates of a twirled channel}
+Given an $n$-qubit quantum channel $\mathcal{E}$, its Pauli twirl is
+\begin{equation}
+    \mathcal{E}_\text{twirled}(\rho) \coloneqq \frac{1}{4^n} \sum_{{P \in \{I, X, Y, Z\}}^{\otimes n}}P^\dagger\mathcal{E}(P\rho P^\dagger)P.
+\end{equation}
+Example, for a single qubit
+\begin{equation}
+    \begin{split}
+        \mathcal{E}_\text{twirled}(\rho) &\coloneqq \frac{1}{4} \sum_{P \in \{I, X, Y, Z\}}P^\dagger\mathcal{E}(P\rho P^\dagger)P.\\
+        &= \frac{1}{4} \left[\rho + X\mathcal{E}(X\rho X)X + Y\mathcal{E}(Y\rho Y)Y + Z\mathcal{E}(Z\rho Z)Z \right].
+    \end{split}
+\end{equation}
+% \begin{enumerate}
+%     \item Express 
+% \end{enumerate}
+For a linear map $\mathcal{E}(\rho)=\sum_i K_i\rho K_i^\dagger$ with Kraus operators $K_i=\sum_ma_{im}P_m$, the Pauli error rates are given by
+\begin{equation}
+    p_m = \sum_i a_{im}a^*_{im}=\chi_{mm}.
+\end{equation}
+(More generally $\sum_i a_{im}a^*_{in}=\chi_{mn}$, where $\chi_{mn}$ are the Pauli basis $\chi$-matrix elements.)
+% This is equivalent to converting the Kraus operators to the Pauli-basis Chi-matrix and simply taking the Pauli error rates to be the diagonal elements. Pauli twirling a channel is equivalent to setting all non-diagonal elements of its $\chi$-matrix or PTM to 0.
+
+Given either the $\chi$-matrix or PTM representation of an error channel, applying the error channel is equivalent to settings all non-diagonal elements of either matrix to zero (proof?).
+
+To compute the Choi state $\Lambda_\mathrm{Choi}$ from the Pauli-basis $\chi$-matrix.
+\begin{equation}
+\Lambda_\mathrm{Choi} = \sum_{m,n}\chi_{mn}\ket{P_m}\rangle\langle\bra{P_n},
+\end{equation}
+Hence, vice versa:
+\begin{equation}
+    \chi_{mn} = \langle\bra{P_m}\Lambda_\mathrm{Choi}\ket{P_n}\rangle.
+\end{equation}
+
+As a result, the Pauli error probabilities of the twirled channel given its Choi representation corresponds to the expectation values
+\begin{equation}
+    p_m = \langle\bra{P_m}\Lambda_\mathrm{Choi}\ket{P_m}\rangle.
+\end{equation}
+
+\subsection{MPO representation of process tensor Choi state}
+Source: Page 205-206, White, Gregory AL, et al. "From many-body to many-time physics." arXiv preprint arXiv:2107.13934 (2021)(https://arxiv.org/abs/2405.05416).
+
+\
+
+\noindent A process tensor Choi state, in full generality, has MPO representation
+$$
+\Upsilon_{k:0} =
+\sum
+\left( \Gamma_{k:k-1} \right)^{k_o^k k_i^k}_{b_o^k b_i^k}
+\cdots
+\left( \Gamma_{1:0} \right)^{k_o^1 k_i^1}_{b_o^1 b_i^1}
+\left( \Gamma_{0} \right)^{k_o^0}_{b_o^0}
+\left| k_o^k k_i^k \cdots k_o^1 k_i^1 k_o^0 \right\rangle
+\left\langle b_o^k b_i^k \cdots b_o^1 b_i^1 b_o^0 \right|,
+$$
+where $k_i, k_o, b_i, b_o$ are system indices. For $j\neq k, 0$, the following are $d^2_E\times d^2_E$ matrices:
+$$
+\left( \Gamma_{j:j-1} \right)^{k_o^j k_i^j}_{b_o^j b_i^j}
+= 
+\langle b_o^j | U_{j:j-1} | b_i^j \rangle 
+\otimes 
+\langle k_o^j | U_{j:j-1}^* | k_i^j \rangle.
+$$
+The final step, then, is a length $d^2_E$ row vector
+$$
+\left( \Gamma_{k:k-1} \right)^{k_o^k k_i^k}_{b_o^k b_i^k}
+=
+\sum_{\gamma}
+\langle b_o^k \gamma_E | U_{k:k-1} | b_i^k \rangle 
+\otimes 
+\langle k_o^k \gamma_E | U_{k:k-1}^* | k_i^k \rangle,
+$$
+and supposing the initial state has eigendecomposition
+$$
+\rho_0^{SE} = \sum_i p_i |\psi_i\rangle\langle\psi_i |,
+$$
+then we have a length $d^2_E$ column vector
+$$
+(\Gamma_0)^{k_o^0}_{b_o^0} = \sum_i p_i \langle b_o^0 | \psi_i \rangle \otimes \langle k_o^0 | \psi_i \rangle ^* .
+$$
+
+\subsection{Pauli-twirling Choi matrices}
+If a channel $\mathcal{E}$ has a Choi matrix $\Lambda_\mathcal{E}$, then the twirled channel $\mathcal{E}_T$ (obtained by Pauli twirling) has a Choi matrix $\Lambda_{\mathcal{E}_T}$ which is obtained by applying the "twirling operation on state" to the original Choi matrix:
+$$
+\int dU(U\otimes U^*) \Lambda_\mathcal{E} (U^\dagger \otimes U^T)
+$$
+Here, the integral is over the Haar measure of the Unitary group. For Pauli twirling, this simplifies to a sum over Pauli operators:
+$$
+\Lambda_{\mathcal{E}_T} = \frac{1}{4^n} \sum_{P_i}(P_i\otimes P_i^*) \Lambda_\mathcal{E} (P_i^\dagger \otimes P_i^T)
+$$
+where $P_i$ are the $4^n$ n-qubit Pauli operators (including the identity)
+
+\subsection{Separability of Pauli-twirled Choi matrices}
+A two-qubit CPTP map $\mathcal{E}$ maps onto a four-qubit Choi state $\Lambda$:
+\begin{equation}
+    \Lambda = \sum_{abcd} \chi_{abcd} P_a\otimes P_b \otimes P_c \otimes P_d,
+\end{equation}
+where $\Lambda$ has unit trace and is PSD (hence is a valid density operator).
+
+The Pauli twirling operation is a superchannel
+\begin{equation}
+    \mathcal{T}(\Lambda) = \sum_{\alpha \beta} K_{P_\alpha P_\beta}\Lambda K_{P_\alpha P_\beta}^\dagger \eqcolon \Lambda_\mathcal{T}
+\end{equation}
+where $K_{P_\alpha P_\beta}=P_\alpha^T\otimes P_\alpha  \otimes P_\beta^T \otimes P_\beta$, and $K_{P_\alpha P_\beta} = K_{P_\alpha P_\beta}^\dagger$ (property of Pauli strings). $\mathcal{T}(\Lambda)$ is CPTP with respect to the Choi state representation, i.e., maps valid Choi states to valid Choi states (unit trace and PSD). Its action on $\Lambda$ is
+\begin{equation}\label{eq:seppauli}
+    \begin{split}
+    \Lambda_\mathcal{T} &= \sum_{abcd}\sum_{\alpha \beta} \chi_{abcd} K_{P_\alpha P_\beta}(P_a\otimes P_b \otimes P_c \otimes P_d)K_{P_\alpha P_\beta} \\
+    &= \sum_{abcd}\sum_{\alpha \beta} \chi_{abcd} (P_\alpha^TP_aP_\alpha^T\otimes P_\alpha P_bP_\alpha \otimes P_\beta^TP_cP_\beta^T \otimes P_\beta P_dP_\beta). \\
+    \end{split}
+\end{equation}
+(Note: $P^T\otimes Q\otimes P^T=P^*\otimes Q\otimes P^*=P\otimes Q\otimes P$). Using
+\begin{equation}
+    \sum_P P P_k P \otimes P P_l P = 
+    \begin{cases}
+        P_k \otimes P_l : & k=l \\
+        0 : & k\neq l,
+    \end{cases}
+\end{equation}
+from \cref{eq:seppauli}, we obtain
+\begin{equation}
+    \Lambda_\mathcal{T} = \sum_{aacc}\chi_{aacc} (P_a\otimes P_a \otimes P_c\otimes P_c).
+\end{equation}
+Crucially, the Bell basis states $\ket{\beta_i} \in \{\ket{\Phi^+}, \ket{\Phi^-}, \ket{\Psi^+}, \ket{\Psi^-}\}$ are simultaneous eigenvectors of $P_a \otimes P_a$, hence $\Lambda_\mathcal{T}$ is diagonal in the Bell product basis $\ket{\mathcal{B}_{ij}} =\ket{\beta_i} \otimes \ket{\beta_j}$. We perform the change of basis
+\begin{equation}
+    \begin{split}
+    \Lambda_\mathcal{T} &= \sum_{ikjl} \bra{\mathcal{B}_{ij}} \sum_{aacc}\chi_{aacc} (P_a\otimes P_a \otimes P_c\otimes P_c) \ket{\mathcal{B}_{kl}} \ket{\mathcal{B}_{ij}}\bra{\mathcal{B}_{kl}} \\
+    &= \sum_{ikjl} \sum_{aacc}\chi_{aacc} \bra{\mathcal{B}_{ij}} (P_a\otimes P_a \otimes P_c\otimes P_c) \ket{\mathcal{B}_{kl}} \ket{\mathcal{B}_{ij}}\bra{\mathcal{B}_{kl}} \\ 
+    &= \sum_{iijj} \bra{\mathcal{B}_{ij}} \sum_{aacc}\chi_{aacc}(P_a\otimes P_a \otimes P_c\otimes P_c) \ket{\mathcal{B}_{ij}} \ket{\mathcal{B}_{ij}}\bra{\mathcal{B}_{ij}},
+    \end{split}
+\end{equation}
+where the last line follows since $\ket{\mathcal{B}_{ij}}$ are eigenvectors of $P_1\otimes P_1 \otimes P_2 \otimes P_2$. Next we define 
+\begin{equation}
+    \lambda_{ij} \coloneq \bra{\mathcal{B}_{ij}} \Lambda_\mathcal{T} \ket{\mathcal{B}_{ij}} = \bra{\mathcal{B}_{ij}} \sum_{aacc}\chi_{aacc}(P_a\otimes P_a \otimes P_c\otimes P_c) \ket{\mathcal{B}_{ij}}.
+\end{equation}
+Expectation values $\lambda_{ij} = \bra{\mathcal{B}_{ij}} \Lambda \ket{\mathcal{B}_{ij}}$ are non-negative for all valid (PSD) Choi states $\Lambda$. Furthermore, if $\Lambda$ is diagonal in the Bell product basis, which is true for all $\Lambda_\mathcal{T}$, then $\sum_{ij}\lambda_{ij} = 1$. As a result $\Lambda_\mathcal{T}$ can be written as a convex sum of Bell product states, hence is separable along even-number bipartitions.
+\begin{equation}
+    \Lambda_\mathcal{T} = \sum_{ij}\lambda_{ij} \left(\ket{\beta_i}\bra{\beta_i}\otimes \ket{\beta_j}\bra{\beta_j}\right)
+\end{equation}
+We can express $\lambda_{ij}$ as an eigendecomposition of $\tilde{\chi}_{ac} = \chi_{aacc}$. Define
+\begin{equation}
+    M_{ia} \coloneq \bra{\beta_i}(P_a\otimes P_a) \ket{\beta_i},
+\end{equation}
+with $M_{ia} \in \{+1, -1\}$. 
+Then
+\begin{equation}
+    \lambda_{ij} = \sum_{ac} \tilde{\chi}_{ac}M_{ia}M_{jc}.
+\end{equation}
+$\bm{M}$ is a Hadamard matrix (I'm not sure why).
+
+\subsubsection{Kavan's state}
+Example $\Lambda_k$:
+\begin{equation}
+    \Lambda_K = \frac{1}{16}\sum_a P_a \otimes P_a \otimes P_a \otimes P_a,
+\end{equation}
+or more generally
+\begin{equation}
+    \Lambda_K^{(n)}  = \frac{1}{2^n}\sum_a P_a^{\otimes n}.
+\end{equation}
+Interestingly, $\Lambda_K^{(n)}$ is only a valid state for $n = 4t, t\in \mathbb{Z^+}$. For $n=4$,
+\begin{equation}
+    \begin{split}
+        \Lambda_K &= \frac{1}{4}\sum_i\ket{\beta_i}\!\bra{\beta_i}\otimes \ket{\beta_i}\!\bra{\beta_i} \\
+        &= \frac{1}{4} \left(\ket{\Phi^+}\!\bra{\Phi^+}^{\otimes 2} + \ket{\Phi^-}\!\bra{\Phi^-}^{\otimes 2} + \ket{\Psi^+}\!\bra{\Psi^+}^{\otimes 2} + \ket{\Psi^-}\!\bra{\Psi^-}^{\otimes 2}\right).
+    \end{split}
+\end{equation}
+
+\subsection{Process Tensor Tomography}
+Let us consider the situation in which
+% Removed obsolete \bold command, use only \mathbf
+a $k$-step process is driven by a sequence $\mathbf{A}_{k-1:0}$ of control operations, each represented mathematically by CP maps—$\mathbf{A}_{k-1:0} \coloneqq \{\mathcal{A}_0, \mathcal{A}_1,\dots, \mathcal{A}_k\}$—after which we obtain a final state $\rho_k(\mathbf{A}_{k-1:0})$ conditioned on this choice of interventions. These controlled dynamics have the form
+$$
+\rho_k(\mathbf{A}_{k-1:0}) = \text{Tr}_E[\mathcal{U}_{k:k-1}\mathcal{A}_{k-1}\cdots \mathcal{U}_{1:0}\mathcal{A}_0(\rho_0^{SE})],
+$$
+where $\mathcal{U}_{k:k-1}(\cdot) = U_{k:k-1}(\cdot)U_{k:k-1}^\dagger$. The action of a multi-time process tensor on $\mathbf{A}_{k-1:0}$ is therefore
+$$
+\mathcal{T}_{k:0}[\mathbf{A}_{k-1:0}] = \rho_k(\mathbf{A}_{k-1:0}).
+$$
+
+The Choi state of the process tensor can be tomographically reconstructed as
+$$
+\Upsilon_{k:0} \sum_{\vec{\mu}}\rho_k^{\vec{\mu}} \otimes (\hat{\Delta}_{k-1:0}^{\vec{\mu}})^T,
+$$
+where $\{\hat{\Delta}_{k-1:0}^{\vec{\mu}}\} = \{\bigotimes_{j=0}^{k-1}\hat{D}_j^{\mu_j}\}$ satisfies $\text{Tr}[\hat{A}^{\vec{\mu}}_{k-1:0}, (\hat{\Delta}_{k-1:0}^{\vec{\nu}})^T]=\delta_{\vec{\mu}\vec{\nu}}$, and $\{\hat{A}^{\vec{\mu}}_{k-1:0}\}=\{\bigotimes_{j=0}^{k-1}\hat{\mathcal{A}}_j^{\mu_j}\}$, where the subscript $j$ in $\mu_j$ allows for the possibility of a different basis each time.
+
+Hence the action of the process tensor using its Choi representation is
+$$\rho_k(\mathbf{A}_{k-1:0}) \!=\! \text{Tr}_{\overline{\mathfrak{o}}_k} \! \left[\Upsilon_{k:0}\left(\mathbb{I}_{\mathfrak{o}_k}\otimes \hat{\mathcal{A}}_{k-1}\otimes \cdots \otimes\hat{\mathcal{A}}_0\right)^\text{T}\right]$$
+
+\section{Questions}
+\begin{enumerate}
+    \item Under what specific conditions on the original process tensor does the resulting spatiotemporal Pauli channel become completely uncorrelated (i.e., Markovian)
+    \item Can the degree of quantum correlation in the original process tensor be used to establish a bound on the strength of the classical correlations in the SPC?
+    \item How do positivity conditions of the Pauli process tensor relate to the mathematical properties of the original process?
+    \item For a specific, physically motivated model (e.g., a set of qubits coupled to a common bosonic bath or a central spin), what is the explicit structure of the resulting spatiotemporal Pauli channel?
+    \item How do key physical parameters of the underlying process---such as the environment's size, temperature, or locality of the system-environment Hamiltonian---manifest as features in the Pauli error correlations (e.g., correlation legnth, temporal decay)
+    \item How does is the performance of the standard QEC code relate to correlations in the SPC
+    \item Does fault-tolerant threshold change as a function of the correlation strength?
+\end{enumerate}
+
+\section{Potential Results}
+\begin{enumerate}
+    \item 2D plots of pairwise Pauli error correlation as a function of spacetime distance for different process tensors
+    \item How correlation strength varies with parameters of physical noise model?
+    \item QEC experiments under different SPC's
+    
+\end{enumerate}
+
+
+\section{Literature Review}
+
+As discussed in \cite{figueroa-romerooperational2024}, operational Markovianization in randomized benchmarking provides important insights.
+
+\subsection{Operational Markovianization in Randomized Benchmarking}
+Ref: \cite{figueroa-romerooperational2024}
+\subsubsection*{Notes}
+\begin{itemize}
+    \item ``The first statement means that Pauli-twirling does
+not Markovianize the average sequence fidelity as
+DD does, i.e., it does not turn non-Markovian nonexponential RB decays into exponential ones. ... The reason behind this result, and for the apparent contradiction, is that average gate-fidelity as a figure of merit only takes into
+account the probability of no error happening on S
+and not all the other error terms that Pauli-twirling eliminates. That is, average gate-fidelity by definition is proportional only to the zeroth (identity) element of the $\chi$-matrix"
+\end{itemize}
+
+\subsection{Non-markovian noise suppression simplified through channel representation}
+Ref: \cite{liunonmarkovian2024}
+
+\subsection{Improved quantum error correction with randomized compiling}
+\begin{itemize}
+    \item ``Hence, performing Pauli twirling on non-Markovian
+noise is the same as performing Pauli twirling on individual noise layers as if they are Markovian."
+\item ``The output
+channel in Eq. (6) is thus Pauli noise happening at different time steps with classical correlations. All quantum coherence between the two time steps has been removed."
+\end{itemize}
+
+\subsection{Logical error rate in the Pauli twirling approximation
+}
+
+\subsection{A dynamical interpretation of the Pauli Twirling Approximation and Quantum Error
+Correction}
+
+\printbibliography
+
+\end{document}

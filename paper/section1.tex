@@ -1,0 +1,19 @@
+\Fidel{\begin{itemize}
+    \item \textbf{Central narrative:} We have built a bridge from the fundamental physics of system-environment Hamiltonians to the effective stochastic error models relevant for quantum error correction.
+    \item \textbf{Our contributions:}
+    \begin{enumerate}
+        \item We formally define Spatiotemporal Pauli Channels (SPCs) via multi-time Pauli twirling of process tensors.
+        \item Theorem: The twirling process maps a quantum process tensor to a classical stochastic process.
+        \item SPCs admit an efficient tensor network representation (MPS) that can be built from the system-environment Hamiltonian.
+        \item \textbf{Narrative: We build an essential bridge between theory and practice.}
+        \item Theorem: Bounds for mutual information (based on environment size) and Markovianisation conditions.
+        \item Relate SPC MPS to hidden Markov models to characterise memory length, correlation gap, and make other useful statements about the underlying noise structure.
+        \item \textbf{Primary application: Efficient QEC simulation.} Frame the work as providing new tools for understanding and mitigating correlated noise in quantum devices.
+        \item Other applications: Discuss bond truncation, characterisation (tomography), decoding.
+    \end{enumerate}
+    \item \textbf{Limitations:} We note two primary limitations.
+    \begin{enumerate}
+        \item \textbf{The Pauli twirling approximation.} Pauli twirling removes all coherent structure. It is a best case Pauli channel approximation of an arbitrary noise channel, so alternatively, we could twirl as a \emph{worst-case} or \emph{average-case} equivalent stochastic model \cite{magesanmodeling2013}. On the other hand, Pauli twirling may be justified when using randomised compiling, and there have been previous results showing the accuracy of Pauli error models for quantum error correction experiments (in certain instances) \Fidel{(Cite experimental result)}.
+        \item \textbf{Scalability.} While tensor networks are effective at making certain complex calculations tractable, there are limits to their ability to represent high dimensional, highly correlated data. In particular, combining spatial and temporal noise data generates a two-dimensional tensor network, whose contraction is not easy in general.
+    \end{enumerate}
+\end{itemize}}

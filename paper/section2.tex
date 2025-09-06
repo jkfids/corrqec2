@@ -1,0 +1,72 @@
+\Fidel{This section provides all the necessary background theory. It will be divided into three main subsections:
+\begin{enumerate}
+    \item Quantum maps, open quantum system dynamics, and process tensors.
+    \item Pauli channels and twirling.
+    \item Tensor networks, tensor network representations of process tensors.
+\end{enumerate}}
+
+% \subsection{Quantum Channels}
+% \begin{itemize}
+%     \item CPTP Maps
+%     \item Stinespring?
+%     \item CJ Isomorphism
+%     \item Representations ($\chi$-matrix)
+%     \item Pauli Channels
+%     \item Introduce twirling for quantum channels
+% \end{itemize}
+% \subsubsection{Completely Positive Trace-Preserving Maps}
+% In the general formulation of quantum information theory, the dynamical evolution of a quantum state, represented by a density matrix $\rho\in\mathcal{L}(\Hilbert)$, is described by a linear map or \emph{quantum map} $\mathcal{M}:\mathcal{L}(\Hilbert_{\mathrm{in}}) \to \mathcal{L}(\Hilbert_{\mathrm{out}})$. A \emph{quantum channel} is a quantum map that is Completely Positive and Trace-preserving (CPTP), meaning it maps valid input density matrices to valid output density matrices, even when acting on a subspace of a larger Hilbert space. Mathematically, a quantum channel $\channel$ satisfies three key properties:
+% \begin{enumerate}
+%     \item Linearity
+%     \begin{equation}\label{eq:linearity}
+%         \channel[a\rho_1 + b\rho_2] = a\channel[\rho_1] + b\channel[\rho_2] \quad\forall \rho_1,\rho_2
+%     \end{equation}
+%     \item Complete Positivity
+%     \begin{equation}\label{eq:cp}
+%         (\channel_A \otimes \Idchannel_B)[\rho_{AB}] \geq 0 \quad\forall \rho_{AB}\in\mathcal{B}(\Hilbert_A\otimes\Hilbert_B) \text{ where }\rho_{AB} \geq 0
+%     \end{equation}
+%     \item Trace Preservation
+%     \begin{equation}\label{eq:tp}
+%         \Tr[\channel(\rho_\mathrm{in})] = \Tr[\rho_\mathrm{in}]
+%     \end{equation}
+% \end{enumerate}
+
+% \subsubsection{Choi-Jamiołkowski Isomorphism}
+
+% \subsubsection{Pauli Twirling}
+% \begin{equation}
+%     \mathcal{T}_P(\channel)[\rho] = \frac{1}{|\mathcal{P}^{(n)}|}\sum_{P\in\mathcal{P}^{(n)}} P\channel[P\rho P]P
+% \end{equation}
+
+% \begin{equation}
+%     \mathcal{T}_P(\Lambda) = \frac{1}{|\mathcal{P}^{(n)}|}\sum_{P\in\mathcal{P}^{(n)}} (P^T \otimes P)\Lambda(P^T \otimes P)
+% \end{equation}
+% \begin{equation}
+%     \mathcal{T}_P(\chi)_{ij} = \delta_{ij}\chi_{ij}
+% \end{equation}
+
+% \subsection{Motivating correlated noise}
+% \subsection{Process Tensors}
+% \begin{itemize}
+%     \item Introduce process tensor
+%     \item Table of hierarchy of quantum maps?
+%     \item Mathematical properties: Linearity, CP, affine/causal constraints
+
+% \begin{gather}
+%     \mathbf{T}_k \coloneq \{t_0, t_1, \dots, t_k\} \\
+%     \mathbf{J}_{k:0} \coloneq \{\mathcal{J}_0, \mathcal{J}_1, \dots, \mathcal{J}_k\} \\
+%     \mathbf{x}_{k:0} \coloneq \{x_0, x_1, \dots, x_k\} \\
+%     \mathbf{A}_{k:0} \coloneq \{\mathcal{A}_{x_0}, \mathcal{A}_{x_1}, \dots, \mathcal{A}_{x_k}\}
+% \end{gather}
+
+% \begin{equation}
+%     \rho[\mathbf{A}_{k-1:0}] = \Tr_E\left[ \bigcirc^{k-1}_{j=0} \mathcal{U}_{j+1:j} \circ \mathcal{A}_{x_j}[\rho_0^{SE}] \right] \eqcolon \mathbb{T}[\mathbf{A}_{k-1:0}]
+% \end{equation}
+
+% \begin{equation}
+%     \rho[\mathbf{A}_{k-1:0}] = \Tr_E \left[\mathcal{U}_{k:k-1}\mathcal{A}_{k-1}\cdots \mathcal{U}_{1:0}\mathcal{A}_0(\rho_0^{SE})\right] \eqcolon \mathcal{T}[\mathbf{A}_{k-1:0}]
+% \end{equation}
+
+% \begin{equation}
+%     \rho_k(\mathbf{A}_{k-1:0}) \!=\! \Tr_{\overline{\mathfrak{o}}_k} \! \left[\Upsilon_{k:0}\left(\mathbb{I}_{\mathfrak{o}_k}\otimes \hat{\mathcal{A}}_{k-1}\otimes \cdots \otimes\hat{\mathcal{A}}_0\right)^\text{T}\right]
+% \end{equation}

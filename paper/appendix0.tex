@@ -1,0 +1,133 @@
+\Fidel{This is probably something I'm never going to be 100\% happy with. Please feel free to suggest any improvements.}
+
+\begin{table}[h!]
+\centering
+\caption{General mathematical symbols and operators}
+\begin{tabular}{ll}
+\hline
+\textbf{Symbol} & \textbf{Meaning} \\
+\hline
+\multicolumn{2}{l}{General mathematical symbols and operators} \\
+\hline
+$\mathcal{H}$ & Hilbert space \\
+$\mathcal{L}(\mathcal{H}_1, \mathcal{H}_2)$ & Space of linear maps from $\mathcal{H}_1$ to $\mathcal{H}_2$ \\ % CHANGED from \mathscr{L} and \mathscr{H}
+$\mathrm{Tr}$ & Trace operation  \\
+$\mathrm{Tr}_{\text{out}}$ & Partial trace over output space  \\
+$\mathrm{vec}$ & Vectorization operation  \\
+$\mathbb{I}$ & Identity operator  \\
+$\mathbb{I}_{\text{in}}, \mathbb{I}_{\text{out}}$ & Identity on input/output spaces  \\
+$\Pr{\cdot}$ & Probability measure  \\
+$\argmin{}, \argmax{}$ & Argument of minimum/maximum  \\
+\hline
+\multicolumn{2}{l}{Quantum map and process tensor notation.} \\
+\hline
+$\mathcal{E}$ & General quantum channel  \\
+$\mathcal{I}$ & Identity channel  \\
+$\mathcal{T}[\mathcal{A}_{k-1:0}]$ & Process tensor as multilinear map acting on CP maps  \\
+$\Upsilon_{k:0}$ & Choi matrix representation of $k$-step process tensor  \\
+$\Upsilon_{k:0}^{\mathcal{T}_P}$ & Pauli-twirled process tensor  \\
+$\mathcal{A}_j$ & CP map at timestep $j$  \\ % CHANGED from \mathscr{A}
+$\text{in}, \text{out}$ & Input and output space labels  \\
+\hline
+\multicolumn{2}{l}{Paulis, Paulis everywhere} \\
+\hline
+$\sigma \in \{I, X, Y, Z\}$ & Single-qubit Pauli operators  \\
+$P \in \mathcal{P}^{(n)}$ & $n$-qubit Pauli string (tensor product of single-qubit Paulis)  \\
+$\mathcal{P}^{(n)}$ & Pauli group on $n$ qubits \\
+$\mathbf{P} \in \mathcal{P}^{(n,k)}$ & Spatiotemporal Pauli string on $n$ qubits, $k$ timesteps  \\
+$\mathcal{P}^{(n,k)}$ & Set of all spatiotemporal Pauli strings  \\
+$\hat{P} = P \otimes P^*$ & Superoperator representation of Pauli string $P$  \\
+$\tilde{\mathbf{P}} = \bigotimes_{j=0}^{k-1} \hat{P}_j$ & Time-ordered tensor product of Pauli superoperators  \\
+$\tilde{\mathcal{P}}^{(n,k)}$ & Set of all time-ordered Pauli superoperator products  \\
+$|\tilde{\mathcal{P}}^{(n,k)}| = 4^{nk}$ & Cardinality of spatiotemporal Pauli superoperator set  \\
+$\mathcal{T}_P(\mathcal{E})$ & Single-time Pauli twirling of quantum channel $\mathcal{E}$  \\
+$\mathcal{T}^{(k)}_P(\Upsilon_{k:0})$ & Multi-time Pauli twirling of $k$-step process tensor  \\ % CHANGED from \mathscr{T}
+$\mathbf{\Lambda}$ & Spatiotemporal Pauli Channel (SPC)  \\
+$\mathbf{\Lambda}_{\mathbf{P}}$ & SPC corresponding to deterministic Pauli string $\mathbf{P}$  \\
+$\Pr{\mathbf{P}}$ & Probability of spatiotemporal Pauli string $\mathbf{P}$  \\
+$\Upsilon_{\bm{\Lambda}}$ & Choi matrix of SPC $\mathbf{\Lambda}$  \\
+$\Upsilon_{\mathbf{P}}$ & Choi matrix of deterministic Pauli process $\mathbf{P}$  \\
+$\Pi_j$ & Pauli projector at timestep $j$  \\
+$\mathbf{\Pi}$ & Multi-time Pauli projector  \\
+\hline
+\end{tabular}
+\label{tab:spc-notation}
+\end{table}
+
+% \subsection*{Bell States and Tensor Networks}
+% \begin{table}[h!]
+% \centering
+% \caption{Bell state and tensor network notation}
+% \begin{tabular}{ll}
+% \hline
+% \textbf{Symbol} & \textbf{Meaning} \\
+% \hline
+% $\ket{\Phi^+}, \ket{\Phi^-}, \ket{\Psi^+}, \ket{\Psi^-}$ & Two-qubit Bell states  \\
+% $\ket{\beta_i}$ & Generic Bell state label  \\
+% $\ket{\mathcal{B}_{\vec{\alpha}}}$ & Bell product state across multiple timesteps  \\
+% $\lambda_{\alpha_1\alpha_2\cdots\alpha_k}$ & Bell state coefficients in twirled process tensor  \\
+% $\chi_{\mu_1,\mu_2,\ldots,\mu_{2k}}$ & Pauli expansion coefficients  \\
+% $\tilde{\chi}_{\xi_1,\ldots,\xi_k}$ & Reduced Pauli coefficients after twirling  \\
+% $\chi$ & Bond dimension of MPS/MPO  \\
+% $d_E$ & Environment dimension  \\
+% $d_S$ & System dimension  \\
+% \hline
+% \end{tabular}
+% \label{tab:bell-tensor-notation}
+% \end{table}
+
+% \subsection*{Quantum Error Correction}
+% \begin{table}[h!]
+% \centering
+% \caption{Quantum error correction notation}
+% \begin{tabular}{ll}
+% \hline
+% \textbf{Symbol} & \textbf{Meaning} \\
+% \hline
+% $\mathcal{C}$ & Quantum error correcting code \\
+% $\mathcal{D}$ & Decoder \\
+% $\mathcal{R}$ & Recovery operation \\
+% $\mathcal{G}$ & Stabilizer group \\
+% $\mathcal{L}$ & Logical operators \\
+% $\pi$ & Projector (general) \\
+% $\mathbf{x}_j$ & Measurement outcomes at timestep $j$ \\
+% $[[n,k,d]]$ & Quantum code parameters: $n$ physical, $k$ logical qubits, distance $d$ \\
+% \hline
+% \end{tabular}
+% \label{tab:qec-notation}
+% \end{table}
+
+% \subsection*{Special Bracket Notation}
+% \begin{table}[h!]
+% \centering
+% \caption{Special bracket and inner product notation}
+% \begin{tabular}{ll}
+% \hline
+% \textbf{Symbol} & \textbf{Meaning} \\
+% \hline
+% $\ket{\cdot}$ & Standard Dirac ket  \\
+% $\bra{\cdot}$ & Standard Dirac bra  \\
+% $|\cdot\rangle\!\rangle$ & Double ket (vectorized operator)  \\
+% $\langle\!\langle\cdot|$ & Double bra (dual of vectorized operator)  \\
+% $\langle\!\langle\cdot|\cdot\rangle\!\rangle$ & Inner product in vectorized space  \\
+% $\braket{\cdot}$ & Expectation value notation  \\
+% \hline
+% \end{tabular}
+% \label{tab:bracket-notation}
+% \end{table}
+
+% --- REVISED FONT SYSTEM ---
+% \subsection*{Font Convention System}
+% \begin{itemize}
+% \item \textbf{Normal fonts} ($P, \Upsilon, \chi, \ldots$): Used for \emph{scalars}, \emph{coefficients}, and \emph{single operators} or \emph{matrices}.
+% \item \textbf{Bold symbols} ($\mathbf{P}, \mathbf{\Lambda}, \mathbf{x}, \ldots$): Used for \emph{vectors} and \emph{spatiotemporal objects} (i.e., sequences or collections across time/space).
+% \item \textbf{Caligraphic fonts} ($\mathcal{H}, \mathcal{E}, \mathcal{T}, \mathcal{P}, \ldots$): Used for all \emph{sets}, \emph{spaces}, and \emph{operations/maps} (both single and multi-time).
+% \item \textbf{Blackboard bold} ($\mathbb{P}, \mathbb{I}, \ldots$): Reserved for \emph{foundational structures} or \emph{special, large sets}.
+% \item \textbf{Tildes} ($\tilde{\mathbf{P}}, \tilde{\chi}, \ldots$): Indicate objects in \emph{superoperator representation} or after \emph{specific transformations}.
+% \end{itemize}
+
+% \subsection*{Index Conventions}
+% \begin{itemize}
+% \item Greek indices ($\mu, \nu, \xi, \alpha, \beta, \ldots$) typically denote Pauli operator labels.
+% \item Latin indices ($i, j, k, l, m, n, \ldots$) typically denote qubit positions or time steps.
+% \end{itemize}
