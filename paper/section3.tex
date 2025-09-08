@@ -8,17 +8,23 @@
 }
 % \subsection{Formally define SPCs from twirled process tensors}
 \begin{definition}\label{def:multitime-twirl}
-    Define multi-time Pauli twirl.
+    The multi-time Pauli twirling operation $\mathcal{T}_P^{(k)}$ is defined as
+    \begin{equation}\label{eq:twirl-upsilon}
+        \mathcal{T}_P^{(k)}(\Upsilon_{k:0}) = \frac{1}{|\tilde{\mathcal{P}}^{(n,k)}|}\sum_{\tilde{\mathbf{P}} \in \tilde{\mathcal{P}}^{(n,k)}}\tilde{\mathbf{P}}\Upsilon_{k:0}\tilde{\mathbf{P}}^\dagger
+    \end{equation}
+    where $\tilde{\mathbf{P}} = \bigotimes_{j=0}^{k-1}(P_j^T\otimes P_j) = \bigotimes_{j=0}^{k-1} \hat{P}_j$ is the time-ordered tensor product of Pauli superoperators, and $\tilde{\mathcal{P}}^{(n,k)}$ denotes the set of all such Pauli superoperator products with cardinality $|\tilde{\mathcal{P}}^{(n,k)}|=4^{nk}$.
+
+    Intuitively, the multi-time Pauli twirling operation extends the concept of single-time Pauli twirling by applying independent, uniformly sampled Pauli operators at each timestep, effectively randomizing the quantum process while preserving its causal structure.
 \end{definition}
 
-\begin{lemma}\label{lem:multi-time-twirl-cptp}
-    The multi-time Pauli twirl operator is a local CPTP superprocess (or a super-superchannel in the language of higher order quantum maps \cite{tarantohigherorder2025}).
+\begin{lemma}\label{lem:twirl-cptp}
+    The multi-time Pauli twirl operator $\mathcal{T}_P^{(k)}$ is a time-local completely positive trace-preserving (CPTP) superprocess (or a super-superchannel in the language of higher order quantum maps \textnormal{\cite{tarantohigherorder2025}}).
 \end{lemma}
 
 
 % \subsection{First theorem}
 \begin{theorem}\label{thm:pt-to-spc}
-  Pauli twirling a multi-time process removes all quantum temporal correlations, resulting in a spatiotemporal Pauli channel.
+  The multi-time Pauli twirl $\mathcal{T}_P^{(k)}$ projects any quantum process tensor $\Upsilon_{k:0}$ into a spatiotemporal Pauli channel (SPC). The resulting SPC describes a classical stochastic process of Pauli errors, fully characterized by a probability distribution over multi-time Pauli error sequences. This projection removes all non-classical temporal correlations from the original process tensor.
 \end{theorem}
 
 
@@ -26,15 +32,15 @@
     Define SPCs. (Maybe make this definition 1?)
 \end{definition}
 
-Spatiotemporal Pauli string $\mathbf{P}\in\mathbb{P}^{(n,k)}$:
+Spatiotemporal Pauli string $\mathbf{P}\in\mathcal{P}^{(n,k)}$:
 $\mathbf{P} = \bigotimes_{j=0}^{k-1}P_j$. \\
-A Spatiotemporal Pauli Channel (SPC) $\mathbf{\Lambda}_\mathbf{P}$ is entirely characterised by a probability distribution over the set of SPCs, $\mathbb{P}^{(n,k)}$.
+A Spatiotemporal Pauli Channel (SPC) $\mathbf{\Lambda}_\mathbf{P}$ is entirely characterised by a probability distribution over the set of SPCs, $\mathcal{P}^{(n,k)}$.
 \begin{equation}
-    \Pr{\mathbf{P}} \geq 0, \quad \sum_{\mathbf{P}\in\mathbb{P}^{(n,k)}} \Pr{\mathbf{P}} = 1
+    \Pr{\mathbf{P}} \geq 0, \quad \sum_{\mathbf{P}\in\mathcal{P}^{(n,k)}} \Pr{\mathbf{P}} = 1
 \end{equation}
 The Choi matrix representation of $\mathbf{\Lambda}$ is the convex sum of Choi matrices for each deterministic Pauli string process $\Upsilon_{\bm{\Lambda}}$ weighted by their respective probabilities
 \begin{equation}
-    \Upsilon_{\bm{\Lambda}} = \sum_{\mathbf{P}\in\mathbb{P}^{(n,k)}} \Pr{\mathbf{P}} \Upsilon_{\mathbf{P}}
+    \Upsilon_{\bm{\Lambda}} = \sum_{\mathbf{P}\in\mathcal{P}^{(n,k)}} \Pr{\mathbf{P}} \Upsilon_{\mathbf{P}}
 \end{equation}
 \begin{equation}
     \Upsilon_{\mathbf{P}} = \bigotimes_{j=0}^{k-1}\Pi_j
@@ -42,11 +48,6 @@ The Choi matrix representation of $\mathbf{\Lambda}$ is the convex sum of Choi m
 $\Pi_j = \kketbbra{P_j}{P_j}$ and $
 \{\kket{I}, \kket{X}, \kket{Y}, \kket{Z}\} = \{\ket{\Phi^+}, \ket{\Phi^-}, \ket{\Psi^+}, \ket{\Psi^-}\}
 $
-
-\begin{equation}\label{eq:twirl-upsilon}
-    \mathcal{T}_P^{(k)}(\Upsilon_{k:0}) = \frac{1}{|\tilde{\mathbb{P}}^{(n,k)}|}\sum_{\tilde{\mathbf{P}} \in \tilde{\mathbb{P}}^{(n,k)}}\tilde{\mathbf{P}}\Upsilon_{k:0}\tilde{\mathbf{P}}^\dagger
-\end{equation}
-where $\tilde{\mathbf{P}} = \bigotimes_{j=0}^{k-1}(P_j^T\otimes P_j) = \bigotimes_{j=0}^{k-1} \hat{P}_j$ is the time-ordered tensor product of Pauli superoperators. $|\tilde{\mathbb{P}}^{(n,k)}|=4^{nk}$.
 
 \begin{equation}\label{eq:spc-probabilities}
     \Pr{\mathbf{P}} = \Tr\left[\left(\bigotimes_{j=0}^{k-1}\Pi_j\right)\Upsilon_{k:0}\right]

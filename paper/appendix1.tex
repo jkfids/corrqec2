@@ -1,7 +1,9 @@
 \Fidel{This appendix will contain the detailed proofs of each theorem, if required.}
 \subsection{Theorem 1}
+\Fidel{\Cref{eq:spc-probabilities} and mapping of $\lambda_{\vec{\alpha}}$ (Pauli probabilities) 
+from $\tilde{\chi}_{\vec{\xi}}$ can be seen as the multi-time generalisation of Section II B. of 
+\cite{flammiaefficient2020}} \\
 \Cref{thm:pt-to-spc}
-\Fidel{\Cref{eq:spc-probabilities} and mapping of $\lambda_{\vec{\alpha}}$ (Pauli probabilities) from $\tilde{\chi}_{\vec{\xi}}$ can be seen as the multi-time generalisation of Section II B. of \cite{flammiaefficient2020}}
 \begin{proof}
     The dynamics of a quantum process over $k$ timesteps can be described by its Choi state, $\Upsilon_{k:0}$, which exists on the Hilbert space $\Hilbert_{\Upsilon_{k:0}}=\bigotimes_{j=1}^k(\Hilbert_{\inp_j}\otimes\Hilbert_{\out_j})$. We can express this state in the Pauli basis as
     \begin{equation}\label{eq:pauli-expansion}
@@ -18,7 +20,7 @@ Here, the coefficients $\chi_{\mu_1,\mu_2,\cdots,\mu_{2k}}$ are real numbers det
 The Pauli twirling superoperator $\mathcal{T}_P^{(k)}$ applies a local Pauli twirl at each timestep. We denote the twirled state as $\Upsilon_{k:0}^{\mathcal{T}_P} \coloneq \mathcal{T}_P^{(k)}(\Upsilon_{k:0})$. Substituting in the Pauli expansion from \cref{eq:pauli-expansion} yields
 \begin{equation}
     \begin{split}
-    \Upsilon_{k:0}^{\mathcal{T}_P} &= \frac{1}{|\tilde{\mathbb{P}}^{(n,k)}|}\sum_{\tilde{\mathbf{P}} \in \tilde{\mathbb{P}}^{(n,k)}}\tilde{\mathbf{P}}\left(\sum_{{\mu_1,\mu_2,\cdots,\mu_{2k}}}\chi_{\mu_1,\mu_2,\cdots,\mu_{2k}} \bigotimes_{j=1}^{k-1}(P_{\mu_{2j-1}}\otimes P_{\mu_{2j}})\right)\tilde{\mathbf{P}}^\dagger\\
+    \Upsilon_{k:0}^{\mathcal{T}_P} &= \frac{1}{|\tilde{\mathcal{P}}^{(n,k)}|}\sum_{\tilde{\mathbf{P}} \in \tilde{\mathcal{P}}^{(n,k)}}\tilde{\mathbf{P}}\left(\sum_{{\mu_1,\mu_2,\cdots,\mu_{2k}}}\chi_{\mu_1,\mu_2,\cdots,\mu_{2k}} \bigotimes_{j=1}^{k-1}(P_{\mu_{2j-1}}\otimes P_{\mu_{2j}})\right)\tilde{\mathbf{P}}^\dagger\\
     &=  \sum_{\mu_1,\mu_2,\cdots,\mu_{2k}}\frac{1}{4^{nk}} \sum_{\nu_1,\cdots,\nu_k} \chi_{\mu_1,\mu_2,\cdots,\mu_{2k}} \bigotimes_{j=1}^{k-1}(P_{\nu_j}^TP_{\mu_{2j-1}}P_{\nu_j}^T\otimes P_{\nu_j}P_{\mu_{2j}}P_{\nu_j}).
     \end{split}
 \end{equation}
