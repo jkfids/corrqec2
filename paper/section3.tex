@@ -1,77 +1,83 @@
 \Fidel{This subsection formally introduces and defines SPCs.
 \begin{enumerate}
     \item Define the multi-time Pauli twirling operation.
-    \item Theorem: Twirling projects a quantum process tensor to a stochastic (correlated) Pauli error distribution.
+    \item Theorem: Twirling projects a quantum process tensor to a stochastic (correlated) Pauli distribution.
     \item Formally define SPCs.
     \item Worked examples?
 \end{enumerate}
 }
-% \subsection{Formally define SPCs from twirled process tensors}
-\begin{definition}\label{def:multitime-twirl}
-    The multi-time Pauli twirling operation $\mathcal{T}_P^{(k)}$ is defined as
-    \begin{equation}\label{eq:twirl-upsilon}
-        \mathcal{T}_P^{(k)}(\Upsilon_{k:0}) = \frac{1}{|\tilde{\mathcal{P}}^{(n,k)}|}\sum_{\tilde{\mathbf{P}} \in \tilde{\mathcal{P}}^{(n,k)}}\tilde{\mathbf{P}}\Upsilon_{k:0}\tilde{\mathbf{P}}^\dagger
-    \end{equation}
-    where $\tilde{\mathbf{P}} = \bigotimes_{j=0}^{k-1}(P_j^T\otimes P_j) = \bigotimes_{j=0}^{k-1} \hat{P}_j$ is the time-ordered tensor product of Pauli superoperators, and $\tilde{\mathcal{P}}^{(n,k)}$ denotes the set of all such Pauli superoperator products with cardinality $|\tilde{\mathcal{P}}^{(n,k)}|=4^{nk}$.
+\noindent We now formally introduce and define \emph{spatiotemporal Pauli channels} (SPCs) by applying the multi-time Pauli twirl to a quantum process tensor. The construction maps quantum non-Markovian dynamics to a classical stochastic process over trajectories of Pauli operators. The procedure eliminates all genuine quantum temporal correlations while preserving classical correlations.
 
-    Intuitively, the multi-time Pauli twirling operation extends the concept of single-time Pauli twirling by applying independent, uniformly sampled Pauli operators at each timestep, effectively randomizing the quantum process while preserving its causal structure.
+\begin{definition}[Multi-time Pauli twirl]\label{def:multitime-twirl}
+    Let $\mathcal{P}^{(n)}$ denote the $n$-qubit Pauli group. The Choi state of a $k$-step process tensor $\Upsilon_{k:0}$ acts on the Hilbert space
+    \begin{equation}
+        \mathcal{H}_{\Upsilon_{k:0}} = \bigotimes_{j=0}^{k-1}(\mathcal{H}_{\inp_j} \otimes \mathcal{H}_{\out_j}).
+    \end{equation}
+    % Define the \emph{time-ordered} lifted Pauli operators
+    % \begin{equation}
+    %     \tilde{\mathcal{P}}^{(n,k)} \coloneq \left\{ \bigotimes_{j=0}^{k-1}(P^T_j \otimes P_j) : P_j \in \mathcal{P}^{(n)} \right\}.
+    % \end{equation}
+    The multi-time Pauli twirl $\mathcal{T}_P^{(k)}$ is the linear CPTP map
+    \begin{equation}\label{eq:twirl-upsilon}
+        \mathcal{T}_P^{(k)}(\Upsilon_{k:0}) = \frac{1}{|4^{nk}|}\sum_{P_0,\dots,P_{k-1}\in\mathcal{P}^{(n)}}\left(\bigotimes_{j=0}^{k-1}(P_j^T\otimes P_j)\right)\Upsilon_{k:0}\left(\bigotimes_{j=0}^{k-1}(P_j^T\otimes P_j)\right).
+    \end{equation}
+    Intuitively, $\mathcal{T}_P^{(k)}$ applies an independent, uniform Pauli twirl at each timestep while preserving the causal structure of the process tensor. In the language of higher-order quantum maps \cite{tarantohigherorder2025}, the multi-time Pauli twirl is a time-local \emph{superprocess} (or super-superchannel).
 \end{definition}
 
-\begin{lemma}\label{lem:twirl-cptp}
-    The multi-time Pauli twirl operator $\mathcal{T}_P^{(k)}$ is a time-local completely positive trace-preserving (CPTP) superprocess (or a super-superchannel in the language of higher order quantum maps \textnormal{\cite{tarantohigherorder2025}}).
-\end{lemma}
+\begin{proposition}[Properties of the multi-time Pauli twirl]
+    The map $\mathcal{T}_P^{(k)}$ has the following properties:
+    \begin{enumerate}
+        \item \emph{Validity:} For any valid process tensor $\Upsilon_{k:0}$, the twirled tensor $\mathcal{T}_P^{(k)}(\Upsilon_{k:0})$ is also a valid process tensor.
+        \item \emph{Projector:} $\mathcal{T}_P^{(k)}$ is an idempotent projector ($\mathcal{T}_P^{(k)} \circ \mathcal{T}_P^{(k)} = \mathcal{T}_P^{(k)}$) and is self-adjoint (it has real eigenvalues and orthogonal eigenvectors).
+        \item \emph{Causality:} The twirling operation preserves all affine constraints that encode process tensor causality.
+    \end{enumerate}
+\end{proposition}
 
-
-% \subsection{First theorem}
-\begin{theorem}\label{thm:pt-to-spc}
-  The multi-time Pauli twirl $\mathcal{T}_P^{(k)}$ projects any quantum process tensor $\Upsilon_{k:0}$ into a spatiotemporal Pauli channel (SPC). The resulting SPC describes a classical stochastic process of Pauli errors, fully characterized by a probability distribution over multi-time Pauli error sequences. This projection removes all non-classical temporal correlations from the original process tensor.
+\begin{theorem}[Twirling projects a process tensor to a stochastic Pauli process]
+    \label{thm:pt-to-spc}
+  For any process tensor $\Upsilon_{k:0}$, its twirl
+  \begin{equation}
+    \Upsilon_{k:0}^{\mathcal{T}_P} = \mathcal{T}_P^{(k)}(\Upsilon_{k:0})
+  \end{equation}
+  admits the decomposition
+  \begin{equation}
+    \Upsilon_{k:0}^{\mathcal{T}_P} = \sum_{\mathbf{P}\in\mathcal{P}^{(n,k)}}\Pr{\mathbf{P}}\Upsilon_\mathbf{P}, \quad \Upsilon_\mathbf{P} = \bigotimes_{j=0}^{k-1}\Pi_j.
+  \end{equation}
+  where $\mathbf{P} = (P_0, P_1, \ldots, P_{k-1})$ is a spatiotemporal Pauli trajectory with each $P_j \in \mathcal{P}^{(n)}$, and $\Pi_j = \doubleketbra{P_j}{P_j}$ are the corresponding lifted Pauli projectors. Probabilities $\Pr{\mathbf{P}}$ form a valid probability distribution given by
+  \begin{equation}\label{eq:spc-probabilities}
+    \Pr{\mathbf{P}} = \Tr\left[\left(\bigotimes_{j=0}^{k-1}\Pi_j\right)\Upsilon_{k:0}\right] \geq 0, \quad \sum_{\mathbf{P}\in\mathcal{P}^{(n,k)}} \Pr{\mathbf{P}} = 1.
+  \end{equation}
+  The resulting twirled process tensor $\Upsilon_{k:0}^{\mathcal{T}_P}$ is separable across all temporal bipartitions and corresponds to a joint probability distribution over Pauli trajectories. The twirl removes all genuinely quantum temporal correlations, while preserving classical correlations.
 \end{theorem}
 
-
-\begin{definition}\label{def:def-spc}
-    Define SPCs. (Maybe make this definition 1?)
+\begin{definition}[Spatiotemporal Pauli channel]\label{def:def-spc}
+    A \emph{spatiotemporal Pauli channel} (SPC), denoted $\mathbf{\Lambda}$, is a process tensor that is fully described by a probability distribution $\Pr_{\mathbf{\Lambda}}$ over spatiotemporal Pauli trajectories $\mathbf{P}=(P_0,\dots,P_{k-1})\in\mathcal{P}^{(n,k)}$. Its Choi representation is
+    \begin{equation}
+    \Upsilon_{\mathbf{\Lambda}} = \sum_{\mathbf{P}\in\mathcal{P}^{(n,k)}}\Pr(\mathbf{P}) \bigotimes_{j=0}^{k-1}\Pi_j,
+    \end{equation}
+    where $\Pi_j = \doubleketbra{P_j}{P_j}$. All temporal correlations are encoded entirely within $\Pr_{\mathbf{\Lambda}}$.
 \end{definition}
 
-Spatiotemporal Pauli string $\mathbf{P}\in\mathcal{P}^{(n,k)}$:
-$\mathbf{P} = \bigotimes_{j=0}^{k-1}P_j$. \\
-A Spatiotemporal Pauli Channel (SPC) $\mathbf{\Lambda}_\mathbf{P}$ is entirely characterised by a probability distribution over the set of SPCs, $\mathcal{P}^{(n,k)}$.
-\begin{equation}
-    \Pr{\mathbf{P}} \geq 0, \quad \sum_{\mathbf{P}\in\mathcal{P}^{(n,k)}} \Pr{\mathbf{P}} = 1
-\end{equation}
-The Choi matrix representation of $\mathbf{\Lambda}$ is the convex sum of Choi matrices for each deterministic Pauli string process $\Upsilon_{\bm{\Lambda}}$ weighted by their respective probabilities
-\begin{equation}
-    \Upsilon_{\bm{\Lambda}} = \sum_{\mathbf{P}\in\mathcal{P}^{(n,k)}} \Pr{\mathbf{P}} \Upsilon_{\mathbf{P}}
-\end{equation}
-\begin{equation}
-    \Upsilon_{\mathbf{P}} = \bigotimes_{j=0}^{k-1}\Pi_j
-\end{equation}
-$\Pi_j = \kketbbra{P_j}{P_j}$ and $
-\{\kket{I}, \kket{X}, \kket{Y}, \kket{Z}\} = \{\ket{\Phi^+}, \ket{\Phi^-}, \ket{\Psi^+}, \ket{\Psi^-}\}
-$
+% Spatiotemporal Pauli string $\mathbf{P}\in\mathcal{P}^{(n,k)}$:
+% $\mathbf{P} = \bigotimes_{j=0}^{k-1}P_j$. \\
+% A Spatiotemporal Pauli Channel (SPC) $\mathbf{\Lambda}_\mathbf{P}$ is entirely characterised by a probability distribution over the set of SPCs, $\mathcal{P}^{(n,k)}$.
+% \begin{equation}
+%     \Pr{\mathbf{P}} \geq 0, \quad \sum_{\mathbf{P}\in\mathcal{P}^{(n,k)}} \Pr{\mathbf{P}} = 1
+% \end{equation}
+% The Choi matrix representation of $\mathbf{\Lambda}$ is the convex sum of Choi matrices for each deterministic Pauli string process $\Upsilon_{\bm{\Lambda}}$ weighted by their respective probabilities
+% \begin{equation}
+%     \Upsilon_{\bm{\Lambda}} = \sum_{\mathbf{P}\in\mathcal{P}^{(n,k)}} \Pr{\mathbf{P}} \Upsilon_{\mathbf{P}}
+% \end{equation}
+% \begin{equation}
+%     \Upsilon_{\mathbf{P}} = \bigotimes_{j=0}^{k-1}\Pi_j
+% \end{equation}
+% $\Pi_j = \doubleketbra{P_j}{P_j}$ and $
+% \{\doubleket{I}, \doubleket{X}, \doubleket{Y}, \doubleket{Z}\} = \{\ket{\Phi^+}, \ket{\Phi^-}, \ket{\Psi^+}, \ket{\Psi^-}\}
+% $
 
-\begin{equation}\label{eq:spc-probabilities}
-    \Pr{\mathbf{P}} = \Tr\left[\left(\bigotimes_{j=0}^{k-1}\Pi_j\right)\Upsilon_{k:0}\right]
-\end{equation}
-
-\subsection*{Validity of Pauli process tensor}
-\begin{enumerate}
-    % \item Probabilities: $\sum_$
-    \item Positivity constraint: $\Upsilon_{k:0}\geq0$\\
-    This condition is fulfilled for $\Upsilon_{k:0}^{\mathcal{T}_P}$ as seen in \cref{eq:ppt-bell-basis}.
-    \item Affine constraint: $\Tr_\out[\Upsilon_{k:0}] = \mathbb{I}_\inp \otimes \Upsilon_{k-1:0} \forall k$ \\
-    Denoting $\braket{P_{\mu_1}\cdots P_{\mu_{2k}}} \coloneq \Tr{[(P_{\mu_1}\otimes \cdots\otimes P_{\mu_{2k}})\Upsilon_{k:0}]}$, this condition can be rewritten as
-    \begin{equation}
-        \begin{split}
-            &\braket{P_{\inp_1}^{\mu_1}\cdots P_{\out_{k-1}}^{\mu_{2k-2}}\tilde{P}_{\inp_k}^{\mu_{2k-1}}\mathbb{I}_{\out_k}^{\mu_{2k}}} = 0 \\
-            &\braket{P_{\inp_1}^{\mu_1}\cdots \tilde{P}_{\inp_{k-1}}^{\mu_{2k-3}}\mathbb{I}_{\out_{k-1}}^{\mu_{2k-2}}\mathbb{I}_{\inp_k}^{\mu_{2k-1}}\mathbb{I}_{\out_k}^{\mu_{2k}}} = 0 \\
-            &\vdots \\
-            &\braket{\tilde{P}_{\inp_1}^{\mu_1}\mathbb{I}_{\out_1}^{\mu_{2}}\cdots \mathbb{I}_{\inp_k}^{\mu_{2k-1}}\mathbb{I}_{\out_k}^{\mu_{2k}}} = 0,
-        \end{split}
-    \end{equation}
-where $\tilde{P}\in\{X,Y,Z\}$. This condition is naturally fulfilled \cref{eq:ppt-pauli-basis}.
-
-\textcolor{red}{Angus: these affine constraints might make sampling more efficient -- you don't need the full process tensor for times $t > k$ if you only want samples of the first $k$ timesteps, because all the partial traces over the latter timesteps simply give identities.}
-\end{enumerate}
+% \begin{equation}\label{eq:spc-probabilities}
+%     \Pr{\mathbf{P}} = \Tr\left[\left(\bigotimes_{j=0}^{k-1}\Pi_j\right)\Upsilon_{k:0}\right]
+% \end{equation}
 
 
 % \subsection{Mathematical properties}

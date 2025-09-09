@@ -5,6 +5,26 @@
     \item Tensor networks, tensor network representations of process tensors.
 \end{enumerate}}
 
+\subsection*{Validity of Pauli process tensor}
+\begin{enumerate}
+    % \item Probabilities: $\sum_$
+    \item Positivity constraint: $\Upsilon_{k:0}\geq0$\\
+    This condition is fulfilled for $\Upsilon_{k:0}^{\mathcal{T}_P}$ as seen in \cref{eq:ppt-bell-basis}.
+    \item Affine constraint: $\Tr_\out[\Upsilon_{k:0}] = \mathbb{I}_\inp \otimes \Upsilon_{k-1:0} \forall k$ \\
+    Denoting $\braket{P_{\mu_1}\cdots P_{\mu_{2k}}} \coloneq \Tr{[(P_{\mu_1}\otimes \cdots\otimes P_{\mu_{2k}})\Upsilon_{k:0}]}$, this condition can be rewritten as
+    \begin{equation}
+        \begin{split}
+            &\braket{P_{\inp_1}^{\mu_1}\cdots P_{\out_{k-1}}^{\mu_{2k-2}}\tilde{P}_{\inp_k}^{\mu_{2k-1}}\mathbb{I}_{\out_k}^{\mu_{2k}}} = 0 \\
+            &\braket{P_{\inp_1}^{\mu_1}\cdots \tilde{P}_{\inp_{k-1}}^{\mu_{2k-3}}\mathbb{I}_{\out_{k-1}}^{\mu_{2k-2}}\mathbb{I}_{\inp_k}^{\mu_{2k-1}}\mathbb{I}_{\out_k}^{\mu_{2k}}} = 0 \\
+            &\vdots \\
+            &\braket{\tilde{P}_{\inp_1}^{\mu_1}\mathbb{I}_{\out_1}^{\mu_{2}}\cdots \mathbb{I}_{\inp_k}^{\mu_{2k-1}}\mathbb{I}_{\out_k}^{\mu_{2k}}} = 0,
+        \end{split}
+    \end{equation}
+where $\tilde{P}\in\{X,Y,Z\}$. This condition is naturally fulfilled \cref{eq:ppt-pauli-basis}.
+
+\textcolor{red}{Angus: these affine constraints might make sampling more efficient -- you don't need the full process tensor for times $t > k$ if you only want samples of the first $k$ timesteps, because all the partial traces over the latter timesteps simply give identities.}
+\end{enumerate}
+
 % \subsection{Quantum Channels}
 % \begin{itemize}
 %     \item CPTP Maps

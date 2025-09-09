@@ -16,4 +16,9 @@
         \item \textbf{The Pauli twirling approximation.} Pauli twirling removes all coherent structure. It is a best case Pauli channel approximation of an arbitrary noise channel, so alternatively, we could twirl as a \emph{worst-case} or \emph{average-case} equivalent stochastic model \cite{magesanmodeling2013}. On the other hand, Pauli twirling may be justified when using randomised compiling, and there have been previous results showing the accuracy of Pauli error models for quantum error correction experiments (in certain instances) \Fidel{(Cite experimental result)}.
         \item \textbf{Scalability.} While tensor networks are effective at making certain complex calculations tractable, there are limits to their ability to represent high dimensional, highly correlated data. In particular, combining spatial and temporal noise data generates a two-dimensional tensor network, whose contraction is not easy in general.
     \end{enumerate}
+    \item \textbf{Related work:}
+    \begin{enumerate}
+        \item \textbf{Non-Markovian noise suppression simplified through channel representation} \cite{liunonmarkovian2024}: They apply Pauli twirling to the Choi channel representation of a superchannel, similarly finding that the quantum non-markovianity is removed, leaving only classically correlated Pauli noise.
+        \item \textbf{Operational Markovianization in randomized benchmarking} \cite{figueroa-romerooperational2024}: They apply multi-time randomised compiling (Pauli twirling) in the context of non-Markovian randomised
+    \end{enumerate}
 \end{itemize}}

@@ -20,51 +20,53 @@
 \usepackage{tikz}
 \usepackage{lipsum}
 
-\renewcommand{\Pr}[1]{\mathrm{Pr}\!\left(#1\right)}
+% \renewcommand{\Pr}[1]{\mathrm{Pr}\!\left(#1\right)}
 
 % Commands for notation consistency
 \newcommand{\Hilbert}{\mathcal{H}}
-\newcommand{\Hilbertspace}{\mathscr{H}}  % Alternative notation
-\newcommand{\channel}{\mathcal{E}}
-\newcommand{\Idchannel}{\mathcal{I}}
+% \newcommand{\channel}{\mathcal{E}}
+% \newcommand{\Idchannel}{\mathcal{I}}
 \newcommand{\Tr}{\mathrm{Tr}}
 \newcommand{\where}{\text{where}}
-\newcommand{\inp}{\text{in}}
-\newcommand{\out}{\text{out}}
+% \newcommand{\inp}{\text{in}}
+% \newcommand{\out}{\text{out}}
+\newcommand{\inp}{\mathfrak{i}}
+\newcommand{\out}{\mathfrak{o}}
 
 % Process tensor and twirling operations (redesigned for clarity)
-\newcommand{\ProcessTensor}{\mathscr{T}}    % Process tensor multilinear map
-\newcommand{\SingleTwirl}{\mathcal{T}}      % Single-time Pauli twirling
-\newcommand{\MultiTwirl}{\mathscr{T}}       % Multi-time Pauli twirling (same as process tensor)
+% \newcommand{\ProcessTensor}{\mathscr{T}}    % Process tensor multilinear map
+% \newcommand{\SingleTwirl}{\mathcal{T}}      % Single-time Pauli twirling
+% \newcommand{\MultiTwirl}{\mathscr{T}}       % Multi-time Pauli twirling (same as process tensor)
 
 % Pauli group notation (standardized)
-\newcommand{\PauliSet}[1]{\mathcal{P}^{(#1)}}      % Set of n-qubit Pauli strings
-\newcommand{\PauliGroup}[1]{\mathscr{P}_{#1}}      % Pauli group on n qubits
+% \newcommand{\PauliSet}[1]{\mathcal{P}^{(#1)}}      % Set of n-qubit Pauli strings
+% \newcommand{\PauliGroup}[1]{\mathscr{P}_{#1}}      % Pauli group on n qubits
 
 % Specialized bracket notation
-\newcommand{\bbra}[1]{\langle \! \langle #1 |}  % Double bra (same as \doublebra)
-\newcommand{\kket}[1]{| #1 \rangle \! \rangle}  % Double ket (same as \doubleket)
-\newcommand{\kketbbra}[2]{\kket{#1}\!\bbra{#2}}  % Double ket-bra
+% \newcommand{\bbra}[1]{\langle \! \langle #1 |}  % Double bra (same as \doublebra)
+% \newcommand{\kket}[1]{| #1 \rangle \! \rangle}  % Double ket (same as \doubleket)
+% \newcommand{\kketbbra}[2]{\kket{#1}\!\bbra{#2}}  % Double ket-bra
 \newcommand{\doubleket}[1]{| #1 \rangle \! \rangle}  % Alias for \kket
 \newcommand{\doublebra}[1]{\langle \! \langle #1 |}  % Alias for \bbra
 \newcommand{\doublebraket}[2]{\langle \! \langle #1 | #2 \rangle \! \rangle}
+\newcommand{\doubleketbra}[2]{| #1 \rangle \! \rangle \langle \! \langle #2 |}
 
 % Mathematical operations and spaces
-\newcommand{\Linearmap}[2]{\mathscr{L}(#1, #2)}
-\newcommand{\vectorisation}{\mathrm{vec}}
-\newcommand{\1}{\mbox{1}\hspace{-0.25em}\mbox{l}}
+% \newcommand{\Linearmap}[2]{\mathscr{L}(#1, #2)}
+% \newcommand{\vectorisation}{\mathrm{vec}}
+% \newcommand{\1}{\mbox{1}\hspace{-0.25em}\mbox{l}}
 
 % Additional math commands for notation tables
-\usepackage{mathrsfs}  % For proper script font rendering
-\newcommand{\argmin}[1]{\underset{#1}{\operatorname{argmin}}\:}
-\newcommand{\argmax}[1]{\underset{#1}{\operatorname{argmax}}\:}
+% \usepackage{mathrsfs}  % For proper script font rendering
+% \newcommand{\argmin}[1]{\underset{#1}{\operatorname{argmin}}\:}
+% \newcommand{\argmax}[1]{\underset{#1}{\operatorname{argmax}}\:}
 
 % Process tensor and quantum channel notation
-\newcommand{\standerdmatrixbasis}[1]{\hat{\Delta}_{#1}}
-\newcommand{\Choimatrix}[1]{\Upsilon_{#1}}
-\newcommand{\timesteps}[1]{\mathbf{T}_{{#1}}}
-\newcommand{\outcomes}[1]{\mathbf{x}_{{#1}}}
-\newcommand{\CPmaps}[1]{\mathscr{A}_{{#1}}}
+% \newcommand{\standerdmatrixbasis}[1]{\hat{\Delta}_{#1}}
+% \newcommand{\Choimatrix}[1]{\Upsilon_{#1}}
+% \newcommand{\timesteps}[1]{\mathbf{T}_{{#1}}}
+% \newcommand{\outcomes}[1]{\mathbf{x}_{{#1}}}
+% \newcommand{\CPmaps}[1]{\mathscr{A}_{{#1}}}
 
 % Quantum error correction?
 % \newcommand{\code}{\mathcal{C}}
@@ -90,7 +92,11 @@
 \newtheorem{corollary}[theorem]{Corollary}
 
 \theoremstyle{definition}
+\newtheorem{proposition}[theorem]{Proposition}
+
+\theoremstyle{definition}
 \newtheorem{definition}[theorem]{Definition}
+
 
 % \theoremstyle{remark}
 % \newtheorem*{remark}{Remark}
