@@ -6,7 +6,7 @@
     \item Worked examples?
 \end{enumerate}
 }
-\noindent We now formally introduce and define \emph{spatiotemporal Pauli channels} (SPCs) by applying the multi-time Pauli twirl to a quantum process tensor. The construction maps quantum non-Markovian dynamics to a classical stochastic process over trajectories of Pauli operators. The procedure eliminates all genuine quantum temporal correlations while preserving classical correlations.
+\noindent We now formally define \emph{spatiotemporal Pauli channels} (SPCs) by applying the multi-time Pauli twirl to a quantum process tensor. The construction maps quantum non-Markovian dynamics to a classical stochastic process over trajectories of Pauli operators. The procedure eliminates all genuine quantum temporal correlations while preserving classical correlations.
 
 \begin{definition}[Multi-time Pauli twirl]\label{def:multitime-twirl}
     Let $\mathcal{P}^{(n)}$ denote the $n$-qubit Pauli group. The Choi state of a $k$-step process tensor $\Upsilon_{k:0}$ acts on the Hilbert space
@@ -27,7 +27,7 @@
 \begin{proposition}[Properties of the multi-time Pauli twirl]
     The map $\mathcal{T}_P^{(k)}$ has the following properties:
     \begin{enumerate}
-        \item \emph{Validity:} For any valid process tensor $\Upsilon_{k:0}$, the twirled tensor $\mathcal{T}_P^{(k)}(\Upsilon_{k:0})$ is also a valid process tensor.
+        \item \emph{Validity:} For any valid process tensor $\Upsilon_{k:0}$, its twirl $\mathcal{T}_P^{(k)}(\Upsilon_{k:0})$ is also a valid process tensor.
         \item \emph{Projector:} $\mathcal{T}_P^{(k)}$ is an idempotent projector ($\mathcal{T}_P^{(k)} \circ \mathcal{T}_P^{(k)} = \mathcal{T}_P^{(k)}$) and is self-adjoint (it has real eigenvalues and orthogonal eigenvectors).
         \item \emph{Causality:} The twirling operation preserves all affine constraints that encode process tensor causality.
     \end{enumerate}
@@ -41,17 +41,17 @@
   \end{equation}
   admits the decomposition
   \begin{equation}
-    \Upsilon_{k:0}^{\mathcal{T}_P} = \sum_{\mathbf{P}\in\mathcal{P}^{(n,k)}}\Pr{\mathbf{P}}\Upsilon_\mathbf{P}, \quad \Upsilon_\mathbf{P} = \bigotimes_{j=0}^{k-1}\Pi_j.
+    \Upsilon_{k:0}^{\mathcal{T}_P} = \sum_{\mathbf{P}\in\mathcal{P}^{(n,k)}}\Pr{(\mathbf{P})}\Upsilon_\mathbf{P}, \quad \Upsilon_\mathbf{P} = \bigotimes_{j=0}^{k-1}\Pi_j.
   \end{equation}
-  where $\mathbf{P} = (P_0, P_1, \ldots, P_{k-1})$ is a spatiotemporal Pauli trajectory with each $P_j \in \mathcal{P}^{(n)}$, and $\Pi_j = \doubleketbra{P_j}{P_j}$ are the corresponding lifted Pauli projectors. Probabilities $\Pr{\mathbf{P}}$ form a valid probability distribution given by
+  where $\mathbf{P} = (P_0, P_1, \ldots, P_{k-1})$ is a spatiotemporal Pauli trajectory with each $P_j \in \mathcal{P}^{(n)}$, and $\Pi_j = \doubleketbra{P_j}{P_j}$ are the corresponding lifted Pauli projectors. Probabilities $\Pr{(\mathbf{P})}$ form a valid probability distribution given by
   \begin{equation}\label{eq:spc-probabilities}
-    \Pr{\mathbf{P}} = \Tr\left[\left(\bigotimes_{j=0}^{k-1}\Pi_j\right)\Upsilon_{k:0}\right] \geq 0, \quad \sum_{\mathbf{P}\in\mathcal{P}^{(n,k)}} \Pr{\mathbf{P}} = 1.
+    \Pr{(\mathbf{P})} = \Tr\left[\left(\bigotimes_{j=0}^{k-1}\Pi_j\right)\Upsilon_{k:0}\right] \geq 0, \quad \sum_{\mathbf{P}\in\mathcal{P}^{(n,k)}} \Pr{(\mathbf{P})} = 1.
   \end{equation}
   The resulting twirled process tensor $\Upsilon_{k:0}^{\mathcal{T}_P}$ is separable across all temporal bipartitions and corresponds to a joint probability distribution over Pauli trajectories. The twirl removes all genuinely quantum temporal correlations, while preserving classical correlations.
 \end{theorem}
 
 \begin{definition}[Spatiotemporal Pauli channel]\label{def:def-spc}
-    A \emph{spatiotemporal Pauli channel} (SPC), denoted $\mathbf{\Lambda}$, is a process tensor that is fully described by a probability distribution $\Pr_{\mathbf{\Lambda}}$ over spatiotemporal Pauli trajectories $\mathbf{P}=(P_0,\dots,P_{k-1})\in\mathcal{P}^{(n,k)}$. Its Choi representation is
+    A \emph{spatiotemporal Pauli channel} (SPC), denoted $\mathbf{\Lambda}$, is a process tensor that is fully described by a probability distribution $\Pr_{\mathbf{\Lambda}}$ over spatiotemporal Pauli trajectories $\mathbf{P}=(P_0,\dots,P_{k-1})\in\mathcal{P}^{(n,k)}$. Its Choi representation is given by
     \begin{equation}
     \Upsilon_{\mathbf{\Lambda}} = \sum_{\mathbf{P}\in\mathcal{P}^{(n,k)}}\Pr(\mathbf{P}) \bigotimes_{j=0}^{k-1}\Pi_j,
     \end{equation}
