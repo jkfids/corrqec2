@@ -1,8 +1,8 @@
 \Fidel{This appendix will contain the detailed proofs of each theorem, if required.}
 \subsection{Theorem 1}
 \Fidel{\Cref{eq:spc-probabilities} and mapping of $\lambda_{\vec{\alpha}}$ (Pauli probabilities) 
-from $\tilde{\chi}_{\vec{\xi}}$ can be seen as the multi-time generalisation of Section II B. of 
-\cite{flammiaefficient2020}} \\
+from $\tilde{\chi}_{\vec{\xi}}$ can be seen as the multitime generalisation of Section II B. of 
+~\cite{flammiaefficient2020}}
 
 \Cref{thm:pt-to-spc}
 \begin{proof}
@@ -33,7 +33,7 @@ this expression simplifies to
 \begin{equation}
     \Upsilon_{k:0}^{\mathcal{T}_P} =  \sum_{\mu_2,\mu_4,\cdots,\mu_{2k}}\chi_{\mu_2,\mu_2,\cdots,\mu_{2k},\mu_{2k}} \bigotimes_{j=1}^{k-1}(P_{\mu_{2j}}\otimes P_{\mu_{2j}}),
 \end{equation}
-and relabeling indices $\xi_j = \mu_{2j}$ and coefficients $\tilde{\chi}_{\mu_2,\mu_4,\cdots,\mu_{2k}} = \chi_{\mu_2,\mu_2,\cdots,\mu_{2k},\mu_{2k}}$, we obtain
+and relabelling indices $\xi_j = \mu_{2j}$ and coefficients $\tilde{\chi}_{\mu_2,\mu_4,\cdots,\mu_{2k}} = \chi_{\mu_2,\mu_2,\cdots,\mu_{2k},\mu_{2k}}$, we obtain
 \begin{equation}\label{eq:ppt-pauli-basis}
     \Upsilon_{k:0}^{\mathcal{T}_P}  = \sum_{\xi_1,\cdots,\xi_k} \tilde{\chi}_{\xi_1,\cdots,\xi_k} \bigotimes_{j=1}^{k-1}(P_{\xi_j}\otimes P_{\xi_j}).
 \end{equation}
@@ -50,7 +50,7 @@ where the last line follows since $\ket{\mathcal{B}_{
 \begin{equation}
     \lambda_{\alpha_1\alpha_2\cdots\alpha_k} \coloneq \bra{\mathcal{B}_{\vec{\alpha}}} \Upsilon_{k:0}^{\mathcal{T}_P} \ket{\mathcal{B}_{\vec{\alpha}}} = \bra{\mathcal{B}_{\vec{\alpha}}} \sum_{\xi_1,\cdots,\xi_k} \tilde{\chi}_{\xi_1,\cdots,\xi_k} \bigotimes_{j=1}^{k}(P_{\xi_j}\otimes P_{\xi_j})\ket{\mathcal{B}_{\vec{\alpha}}},
 \end{equation}
-we see expectation values $\lambda_{\alpha_1\alpha_2\cdots\alpha_k} = \bra{\mathcal{B}_{\vec{\alpha}}} \Upsilon_{k:0} \ket{\mathcal{B}_{\vec{\alpha}}}$ are non-negative for all positive semidefinite Choi states $\Upsilon_{k:0}$. Furthermore, if $\Upsilon_{k:0}$ is diagonal in the Bell product basis, which is true for all $\Upsilon_{k:0}^{\mathcal{T}_P}$, then $\sum_{\alpha_1\alpha_2\cdots\alpha_k}\lambda_{\alpha_1\alpha_2\cdots\alpha_k} = 1$. Hence $\Upsilon_{k:0}^{\mathcal{T}_P}$ can be written as a convex sum of Bell product states that are separable along temporal bipartitions.
+we see expectation values $\lambda_{\alpha_1\alpha_2\cdots\alpha_k} = \bra{\mathcal{B}_{\vec{\alpha}}} \Upsilon_{k:0} \ket{\mathcal{B}_{\vec{\alpha}}}$ are non-negative for all positive semidefinite Choi states $\Upsilon_{k:0}$. Furthermore, if $\Upsilon_{k:0}$ is diagonal in the Bell product basis, which is true for all $\Upsilon_{k:0}^{\mathcal{T}_P}$, then $\sum_{\alpha_1\alpha_2\cdots\alpha_k}\lambda_{\alpha_1\alpha_2\cdots\alpha_k} = 1$. Hence, $\Upsilon_{k:0}^{\mathcal{T}_P}$ can be written as a convex sum of Bell product states that are separable along temporal bipartitions.
 \begin{equation}\label{eq:ppt-bell-basis}
     \Upsilon_{k:0}^{\mathcal{T}_P} = \sum_{\alpha_1\alpha_2\cdots\alpha_k}\lambda_{\alpha_1\alpha_2\cdots\alpha_k}\left(\bigotimes_{j=1}^k\Pi_{\alpha_j}\right)
 \end{equation}

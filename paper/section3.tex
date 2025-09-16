@@ -1,14 +1,14 @@
 \Fidel{This subsection formally introduces and defines SPCs.
 \begin{enumerate}
-    \item Define the multi-time Pauli twirling operation.
+    \item Define the multitime Pauli twirling operation.
     \item Theorem: Twirling projects a quantum process tensor to a stochastic (correlated) Pauli distribution.
     \item Formally define SPCs.
     \item Worked examples?
 \end{enumerate}
 }
-\noindent We now formally define \emph{spatiotemporal Pauli channels} (SPCs) by applying the multi-time Pauli twirl to a quantum process tensor. The construction maps quantum non-Markovian dynamics to a classical stochastic process over trajectories of Pauli operators. The procedure eliminates all genuine quantum temporal correlations while preserving classical correlations.
+\noindent We now formally define \emph{spatiotemporal Pauli channels} (SPCs) by applying the multitime Pauli twirl to a quantum process tensor. The construction maps quantum non-Markovian dynamics to a classical stochastic process over trajectories of Pauli operators. The procedure eliminates all genuine quantum temporal correlations while preserving classical correlations.
 
-\begin{definition}[Multi-time Pauli twirl]\label{def:multitime-twirl}
+\begin{definition}[multitime Pauli twirl]\label{def:multitime-twirl}
     Let $\mathcal{P}^{(n)}$ denote the $n$-qubit Pauli group. The Choi state of a $k$-step process tensor $\Upsilon_{k:0}$ acts on the Hilbert space
     \begin{equation}
         \mathcal{H}_{\Upsilon_{k:0}} = \bigotimes_{j=0}^{k-1}(\mathcal{H}_{\inp_j} \otimes \mathcal{H}_{\out_j}).
@@ -17,18 +17,18 @@
     % \begin{equation}
     %     \tilde{\mathcal{P}}^{(n,k)} \coloneq \left\{ \bigotimes_{j=0}^{k-1}(P^T_j \otimes P_j) : P_j \in \mathcal{P}^{(n)} \right\}.
     % \end{equation}
-    The multi-time Pauli twirl $\mathcal{T}_P^{(k)}$ is the linear CPTP map
+    The multitime Pauli twirl $\mathcal{T}_P^{(k)}$ is the linear CPTP map
     \begin{equation}\label{eq:twirl-upsilon}
         \mathcal{T}_P^{(k)}(\Upsilon_{k:0}) = \frac{1}{|4^{nk}|}\sum_{P_0,\dots,P_{k-1}\in\mathcal{P}^{(n)}}\left(\bigotimes_{j=0}^{k-1}(P_j^T\otimes P_j)\right)\Upsilon_{k:0}\left(\bigotimes_{j=0}^{k-1}(P_j^T\otimes P_j)\right).
     \end{equation}
-    Intuitively, $\mathcal{T}_P^{(k)}$ applies an independent, uniform Pauli twirl at each timestep while preserving the causal structure of the process tensor. In the language of higher-order quantum maps \cite{tarantohigherorder2025}, the multi-time Pauli twirl is a time-local \emph{superprocess} (or super-superchannel).
+    Intuitively, $\mathcal{T}_P^{(k)}$ applies an independent, uniform Pauli twirl at each timestep while preserving the causal structure of the process tensor. In the language of higher-order quantum maps ~\cite{tarantohigherorder2025}, the multitime Pauli twirl is a time-local \emph{superprocess} (or super-superchannel).
 \end{definition}
 
-\begin{proposition}[Properties of the multi-time Pauli twirl]
+\begin{proposition}[Properties of the multitime Pauli twirl]
     The map $\mathcal{T}_P^{(k)}$ has the following properties:
     \begin{enumerate}
         \item \emph{Validity:} For any valid process tensor $\Upsilon_{k:0}$, its twirl $\mathcal{T}_P^{(k)}(\Upsilon_{k:0})$ is also a valid process tensor.
-        \item \emph{Projector:} $\mathcal{T}_P^{(k)}$ is an idempotent projector ($\mathcal{T}_P^{(k)} \circ \mathcal{T}_P^{(k)} = \mathcal{T}_P^{(k)}$) and is self-adjoint (it has real eigenvalues and orthogonal eigenvectors).
+        \item \emph{Projector:} $\mathcal{T}_P^{(k)}$ is an idempotent projector ($\mathcal{T}_P^{(k)} \circ \mathcal{T}_P^{(k)} = \mathcal{T}_P^{(k)}$) and is self-adjoint.
         \item \emph{Causality:} The twirling operation preserves all affine constraints that encode process tensor causality.
     \end{enumerate}
 \end{proposition}
@@ -41,7 +41,7 @@
   \end{equation}
   admits the decomposition
   \begin{equation}
-    \Upsilon_{k:0}^{\mathcal{T}_P} = \sum_{\mathbf{P}\in\mathcal{P}^{(n,k)}}\Pr{(\mathbf{P})}\Upsilon_\mathbf{P}, \quad \Upsilon_\mathbf{P} = \bigotimes_{j=0}^{k-1}\Pi_j.
+    \Upsilon_{k:0}^{\mathcal{T}_P} = \sum_{\mathbf{P}\in\mathcal{P}^{(n,k)}}\Pr{(\mathbf{P})}\Upsilon_\mathbf{P}, \quad \Upsilon_\mathbf{P} = \bigotimes_{j=0}^{k-1}\Pi_j,
   \end{equation}
   where $\mathbf{P} = (P_0, P_1, \ldots, P_{k-1})$ is a spatiotemporal Pauli trajectory with each $P_j \in \mathcal{P}^{(n)}$, and $\Pi_j = \doubleketbra{P_j}{P_j}$ are the corresponding lifted Pauli projectors. Probabilities $\Pr{(\mathbf{P})}$ form a valid probability distribution given by
   \begin{equation}\label{eq:spc-probabilities}
@@ -55,7 +55,7 @@
     \begin{equation}
     \Upsilon_{\mathbf{\Lambda}} = \sum_{\mathbf{P}\in\mathcal{P}^{(n,k)}}\Pr(\mathbf{P}) \bigotimes_{j=0}^{k-1}\Pi_j,
     \end{equation}
-    where $\Pi_j = \doubleketbra{P_j}{P_j}$. All temporal correlations are encoded entirely within $\Pr_{\mathbf{\Lambda}}$.
+    where $\Pi_j = \doubleketbra{P_j}{P_j}$. Temporal correlations are encoded entirely within $\Pr_{\mathbf{\Lambda}}$.
 \end{definition}
 
 % Spatiotemporal Pauli string $\mathbf{P}\in\mathcal{P}^{(n,k)}$:

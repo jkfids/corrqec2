@@ -6,15 +6,74 @@
 \end{enumerate}}
 
 \subsection{Quantum channels}
-The physical evolution of a quantum state $\rho \in \mathcal{B}(\mathcal{H})$ is described by a \emph{quantum channel}, a linear map $\mathcal{E}: \mathcal{B}(\mathcal{H}_{\mathrm{in}}) \to \mathcal{B}(\mathcal{H}_{\mathrm{out}})$ that is Completely Positive and Trace Preserving (CPTP). Concretely, $\mathcal{E}$ satisfies:
+The physical evolution of a quantum state $\rho \in \mathcal{B}(\mathcal{H})$, where $\mathcal{B}(\mathcal{H})$ is the space of bounded linear operators on a Hilbert space $\mathcal{H}$, is entirely described by a \emph{quantum channel}. A quantum channel is a linear map $\mathcal{E}: \mathcal{B}(\mathcal{H}_{\mathrm{in}}) \to \mathcal{B}(\mathcal{H}_{\mathrm{out}})$ that is completely positive and trace preserving (CPTP). Formally, a quantum channel $\mathcal{E}$ satisfies:
 \begin{enumerate}
-\item \textbf{Linearity:} $\mathcal{E}[a\rho_1+b\rho_2]=a\mathcal{E}[\rho_1]+b\mathcal{E}[\rho_2]$.
-\item \textbf{Complete positivity:} $(\mathcal{I}_A\otimes \mathcal{E}_B)[\rho_{AB}]\geq 0$ for all $\rho_{AB}$.
-\item \textbf{Trace preservation:} $\Tr(\mathcal{E}[\rho]) = \Tr(\rho)$.
+\item Linearity: $\mathcal{E}[a\rho_1+b\rho_2]=a\mathcal{E}[\rho_1]+b\mathcal{E}[\rho_2]$.
+\item Complete positivity (CP): $(\mathcal{I}_A\otimes \mathcal{E}_B)[\rho_{AB}]\geq 0 \quad \forall \rho_{AB}$.
+\item Trace preservation (TP): $\Tr(\mathcal{E}[\rho]) = \Tr(\rho)$.
 \end{enumerate}
-Thus, a channel represents a \emph{two-time} quantum map of the form, $\mathcal{E}: \rho(t_0) \mapsto \rho(t_1)$.
+Thus, a channel represents a \emph{two-time} quantum map evolving an initial state $\rho(t_0)$ at time $t_0$ to a final state $\rho(t_1)$ at time $t_1$, i.e., $\mathcal{E}: \rho(t_0) \mapsto \rho(t_1)$. A quantum channel admits several equivalent representations, each useful in different contexts. The most well-known representation, the Kraus (operator-sum) representation, expresses the channel's action on an input state $\rho$ as
+\begin{equation}
+    \mathcal{E}[\rho] = \sum_i K_i \rho K_i^\dagger,
+\end{equation}
+where the Kraus operators $\{K_i\}$ satisfy $\sum_i K_i^\dagger K_i = \mathbb{I}$ to ensure trace preservation. Another important representation is the Choi-Jamiołkowski isomorphism, which establishes a bijection between CP maps $\mathcal{E}: \mathcal{B}(\mathcal{H}_{\mathrm{in}}) \to \mathcal{B}(\mathcal{H}_{\mathrm{out}})$ and positive semidefinite operators $\Lambda \in \mathcal{B}(\mathcal{H}_{\mathrm{in}} \otimes \mathcal{H}_{\mathrm{out}})$. The action of the Choi matrix $\Lambda$ is given by
+\begin{equation}\label{eq:choi-rep}
+    \mathcal{E}[\rho] = \Tr_{\mathrm{in}}[(\rho^T \otimes \mathbb{I}_{\mathrm{out}})\Lambda].
+\end{equation}
+The Stinespring dilation theorem provides another critical, physically motivated perspective. It states that any CPTP map acting on a system space $\mathcal{B}(\mathcal{H}_S)$ can be represented as a unitary operation $U$ on a larger, dilated space $\mathcal{B}(\mathcal{H}_S \otimes \mathcal{H}_E)$, followed by a partial trace over the auxiliary environment space $\mathcal{H}_E$. This is expressed as
+\begin{equation}
+    \mathcal{E}[\rho_S] = \Tr_E[U(\rho_S \otimes \sigma_E)U^\dagger].
+\end{equation}
+Throughout this work, we also employ other representations, such as the $\chi$-matrix\footnote{Also known as a process matrix, a term we avoid using due to a terminological clash with a higher-order quantum object with potentially indefinite causal order.} representation and the (Liouville-)superoperator representation. The $\chi$-matrix is related to the Choi matrix via a change of basis to the Pauli basis, while the superoperator representation is convenient for numerical calculations and tensor network construction. We do not explicitly cover these nor the detailed mappings between the various representations. For a comprehensive overview of quantum channel representations and the transformations between them using a graphical calculus, we refer the reader to ref.~\cite{woodtensor2015}.
+
+\subsection{Pauli channels and twirling (WIP)}
+An important class of quantum channels, particularly in quantum error correction, is the class of Pauli channels. A Pauli channel $\mathcal{E}_P$ acting on $n$ qubits can be expressed as a convex combination of Pauli operators
+\begin{equation}
+    \mathcal{E}_P[\rho] = \sum_{P \in \mathcal{P}^{(n)}} p_P P \rho P,
+\end{equation}
+where $\mathcal{P}^{(n)} = \{I, X, Y, Z\}^{\otimes n}$ is the $n$-qubit Pauli group.
 
 \subsection{Process tensors}
+While quantum channels fully describe two-time dynamics, they are insufficient for capturing multitime quantum processes, especially in the presence of non-Markovian memory effects. The quantum \emph{process tensor} provides a general spatiotemporal framework that encodes all such correlations. It can be viewed as a \emph{higher-order quantum map}, or quantum comb, that takes as input a sequence of $k$ instruments (CP maps) $\mathbf{A}_{0:k-1}=(\mathcal{A}_0,\dots,\mathcal{A}_{k-1})$, and outputs the resulting system state $\rho_\mathrm{out}$. For the purposes of modelling the multitime dynamics starting from an initial system state $\rho_\mathrm{in}$\footnote{For cases where the system and environment are initially correlated, the process tensor acts purely on a sequence of instruments $\mathbf{A}_{0:k-1}$, where the initial map $\mathcal{A}_0$ serves as a preparation map. Correspondingly, a \emph{superchannel} can be described as a 1-slot process tensor.}, we define a \emph{$k$-slot} process tensor $\mathcal{T}_{0:k}$ as a multilinear map
+\begin{equation}
+\mathcal{T}_{0:k}[\rho_\mathrm{in},\mathbf{A}_{0:k-1}] = \rho_\mathrm{out}.
+\end{equation}
+Like quantum channels, a process tensor admits several equivalent representations, the most prevalent being the Choi representation. Just as the Choi-Jamiołkowski isomorphism establishes a channel-state duality, there exists a process-state duality that maps a quantum process $\mathcal{T}_{0:k}$ to a positive semidefinite operator $\Upsilon_{0:k} \in \mathcal{B}(\bigotimes_{j=0}^k \mathcal{H}_{\mathrm{in}_j} \otimes \mathcal{H}_{\mathrm{out}_j})$. Its action on an initial state $\rho_{\mathrm{in}}$ and sequence $\mathbf{A}_{0:k-1}$ is given by
+\begin{equation}\label{eq:pt-choi-rep}
+    \rho_\mathrm{out}(\rho_\mathrm{in}, \mathbf{A}_{0:k-1}) = \Tr_{\overline{\mathrm{out}}} \left[\left(\rho_{\mathrm{in}}^T\otimes \hat{\mathcal{A}}_0^T\otimes \cdots \otimes\hat{\mathcal{A}}_{k-1}^T \otimes \mathbb{I}_{\mathrm{out}}\right)\Upsilon_{k:0}\right],
+\end{equation}
+where $\Tr_{\overline{\mathrm{out}}}$ denotes the partial trace over all subspaces except the final output space $\mathcal{H}_{\mathrm{out}_k}$, and $\hat{\mathcal{A}}_j \in \mathcal{B}(\mathcal{H}_{\mathrm{out}_j} \otimes \mathcal{H}_{\mathrm{in}_{j+1}})$ is the Choi state of the CP map $\mathcal{A}_j$. We remark that for $k=0$, the above expression reduces to the case for quantum channels in \cref{eq:choi-rep}. The Choi representation is particularly convenient because it translates the physical properties of a quantum process into computable, mathematical properties of the operator $\Upsilon_{0:k}$. Crucially, a process tensor $\mathcal{T}_{0:k}$ represents a valid, physical process if and only if its Choi representation $\Upsilon_{0:k}$ satisfies the following conditions:
+\begin{enumerate}
+    \item \textbf{Positive semidefiniteness.} \\
+    This is the direct generalisation of the CP condition for quantum channels. The Choi matrix must be positive semidefinite:
+    \begin{equation}
+        \Upsilon_{0:k} \geq 0.
+    \end{equation}
+    This ensures that, for any valid initial state and sequence of physical instruments, the output state is also positive semidefinite.
+    \item \textbf{Causal (or affine) constraints.} \\
+    Also known as the containment property, these constraints are a more intricate generalisation of the TP condition to multitime processes. The Choi state must satisfy the recursive relations,
+    \begin{equation}\label{eq:affine-constraint}
+        \begin{split}
+            &\Tr_{\mathrm{out}_j}[\Upsilon_{0:j}] = \Upsilon_{0:j-1} \otimes \mathbb{I}_{\mathrm{in}_j}, \quad \forall j=1,\dots,k, \\
+            &\Tr_{\mathrm{out}_0}[\Upsilon_{0:0}] = \mathbb{I}_{\mathrm{in}_0}.
+        \end{split}
+    \end{equation}
+    Operationally, these constraints ensure that instruments performed at future times cannot influence outcome statistics at earlier times, thereby enforcing causality. Equivalently, these constraints can be expressed as a linear system of Pauli expectation values. Denoting
+    \begin{equation*}
+        \braket{P_{\mathrm{in}_0}P_{\mathrm{out}_0}\cdots P_{\mathrm{in}_k}P_{\mathrm{out}_k}} = \Tr\!\left[(P_{\mathrm{in}_0}\otimes P_{\mathrm{out}_0} \otimes\cdots\otimes P_{\mathrm{in}_k}\otimes P_{\mathrm{out}_k})\,\Upsilon_{0:k}\right],
+    \end{equation*}
+with Pauli strings \(P_j \in \mathcal{P}^{(n)}\), and non-identity Pauli strings \(Q_j \in \mathcal{P}^{(n)} \setminus \{\mathbb{I}\}\), \cref{eq:affine-constraint} can be rewritten as $(k+1)(4^n-1)$ independent linear equations:
+    \begin{equation}
+        \begin{split}
+            &\braket{P_{\mathrm{in}_0}P_{\mathrm{out}_0}\cdots P_{\mathrm{out}_{k-1}}Q_{\mathrm{in}_k}\mathbb{I}_{\mathrm{out}_k}} = 0, \\
+            &\braket{P_{\mathrm{in}_0}P_{\mathrm{out}_0}\cdots P_{\mathrm{out}_{k-2}}Q_{\mathrm{in}_{k-1}}\mathbb{I}_{\mathrm{out}_{k-1}}\mathbb{I}_{\mathrm{in}_k}\mathbb{I}_{\mathrm{out}_k}} = 0, \\
+            &\quad\vdots \\
+            &\braket{Q_{\mathrm{in}_0}\mathbb{I}_{\mathrm{out}_0}\cdots \mathbb{I}_{\mathrm{in}_k}\mathbb{I}_{\mathrm{out}_k}} = 0.
+        \end{split}
+    \end{equation}
+\end{enumerate}
+\subsection{Tensor network representation of process tensors}
+
 
 \subsection*{Validity of Pauli process tensor}
 \begin{enumerate}
@@ -75,13 +134,13 @@ where $\tilde{P}\in\{X,Y,Z\}$. This condition is naturally fulfilled \cref{eq:pp
 % \end{gather}
 
 % \begin{equation}
-%     \rho[\mathbf{A}_{k-1:0}] = \Tr_E\left[ \bigcirc^{k-1}_{j=0} \mathcal{U}_{j+1:j} \circ \mathcal{A}_{x_j}[\rho_0^{SE}] \right] \eqcolon \mathbb{T}[\mathbf{A}_{k-1:0}]
+%     \rho[\mathbf{A}_{k-1:0}] = \Tr_E\left[ \bigcirc^{k-1}_{j=0} \mathcal{U}_{j+1:j} \circ \mathcal{A}_{x_j}[\rho_\mathrm{in}^{SE}] \right] \eqcolon \mathbb{T}[\mathbf{A}_{k-1:0}]
 % \end{equation}
 
 % \begin{equation}
-%     \rho[\mathbf{A}_{k-1:0}] = \Tr_E \left[\mathcal{U}_{k:k-1}\mathcal{A}_{k-1}\cdots \mathcal{U}_{1:0}\mathcal{A}_0(\rho_0^{SE})\right] \eqcolon \mathcal{T}[\mathbf{A}_{k-1:0}]
+%     \rho[\mathbf{A}_{k-1:0}] = \Tr_E \left[\mathcal{U}_{k:k-1}\mathcal{A}_{k-1}\cdots \mathcal{U}_{1:0}\mathcal{A}_0(\rho_\mathrm{in}^{SE})\right] \eqcolon \mathcal{T}[\mathbf{A}_{k-1:0}]
 % \end{equation}
 
 % \begin{equation}
-%     \rho_k(\mathbf{A}_{k-1:0}) \!=\! \Tr_{\overline{\mathfrak{o}}_k} \! \left[\Upsilon_{k:0}\left(\mathbb{I}_{\mathfrak{o}_k}\otimes \hat{\mathcal{A}}_{k-1}\otimes \cdots \otimes\hat{\mathcal{A}}_0\right)^\text{T}\right]
+%     \rho_\mathrm{out}(\mathbf{A}_{k-1:0}) \!=\! \Tr_{\overline{\mathfrak{o}}_k} \! \left[\Upsilon_{k:0}\left(\mathbb{I}_{\mathfrak{o}_k}\otimes \hat{\mathcal{A}}_{k-1}\otimes \cdots \otimes\hat{\mathcal{A}}_0\right)^\text{T}\right]
 % \end{equation}
