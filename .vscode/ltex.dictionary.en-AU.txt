@@ -12,3 +12,8 @@ superprocess
 super-superchannel
 bipartitions
 qubit
+non-Markovianity
+superchannel
+Markovian
+unitaries
+Non-Markovianity
