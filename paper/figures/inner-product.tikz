@@ -1,0 +1,11 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=lefttriangle] (0) at (0, 0) {\(\phi\)};
+		\node [style=righttriangle] (1) at (1.25, 0) {\(\psi\)};
+		\node [style=none] (2) at (0, 0.5) {};
+		\node [style=none] (3) at (0, -0.5) {};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw (0) to (1);
+	\end{pgfonlayer}
+\end{tikzpicture}

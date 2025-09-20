@@ -1,0 +1,387 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{nty/global//global/global/global}
+    \entry{figueroa-romerooperational2024}{article}{}{}
+      \name{author}{6}{}{%
+        {{hash=d4b2d2edf3132e962908c2ba062c86d1}{%
+           family={Figueroa-Romero},
+           familyi={F\bibinithyphendelim R\bibinitperiod},
+           given={P},
+           giveni={P\bibinitperiod}}}%
+        {{hash=9b87772295f928b47c24d16e92869d6a}{%
+           family={Papič},
+           familyi={P\bibinitperiod},
+           given={M},
+           giveni={M\bibinitperiod}}}%
+        {{hash=41537ebb9d3ecdbc79c89f6f58b9bdc3}{%
+           family={Auer},
+           familyi={A\bibinitperiod},
+           given={A},
+           giveni={A\bibinitperiod}}}%
+        {{hash=f92af38b7c73c2620de2bf74f662eb5e}{%
+           family={Hsieh},
+           familyi={H\bibinitperiod},
+           given={M-H},
+           giveni={M\bibinithyphendelim H\bibinitperiod}}}%
+        {{hash=38dde52e3a0570b284e41b7100bbadc8}{%
+           family={Modi},
+           familyi={M\bibinitperiod},
+           given={K},
+           giveni={K\bibinitperiod}}}%
+        {{useprefix=true,hash=01e0dfdecd40718556eb5c4c35e3eaf0}{%
+           family={Vega},
+           familyi={V\bibinitperiod},
+           given={I},
+           giveni={I\bibinitperiod},
+           prefix={de},
+           prefixi={d\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {IOP Publishing}%
+      }
+      \strng{namehash}{77a40de8d90ad6e8fec915853620bf4f}
+      \strng{fullhash}{cd44052ef12b2f943509003e6fc0c3ab}
+      \strng{fullhashraw}{cd44052ef12b2f943509003e6fc0c3ab}
+      \strng{bibnamehash}{77a40de8d90ad6e8fec915853620bf4f}
+      \strng{authorbibnamehash}{77a40de8d90ad6e8fec915853620bf4f}
+      \strng{authornamehash}{77a40de8d90ad6e8fec915853620bf4f}
+      \strng{authorfullhash}{cd44052ef12b2f943509003e6fc0c3ab}
+      \strng{authorfullhashraw}{cd44052ef12b2f943509003e6fc0c3ab}
+      \field{sortinit}{F}
+      \field{sortinithash}{2638baaa20439f1b5a8f80c6c08a13b4}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{A crucial task to obtain optimal and reliable quantum devices is to quantify their overall performance. The average fidelity of quantum gates is a particular figure of merit that can be estimated efficiently by randomized benchmarking (RB). However, the concept of gate-fidelity itself relies on the crucial assumption that noise behaves in a predictable, time-local, or so-called Markovian manner, whose breakdown can naturally become the leading source of errors as quantum devices scale in size and depth. We analytically show that error suppression techniques such as dynamical decoupling (DD) and Pauli-twirling can operationally Markovianize RB: (i) fast DD reduces non-Markovian RB to an exponential decay plus longer-time corrections, while on the other hand, (ii) Pauli-twirling generally does not affect the average, but (iii) it always suppresses the variance of such RB outputs. We demonstrate these effects numerically with a qubit noise model. Our results show that simple and efficient error suppression methods can simultaneously tame non-Markovian noise and allow for standard and reliable gate quality estimation, a fundamentally important task in the path toward fully functional quantum devices.}
+      \field{journaltitle}{Quantum Science and Technology}
+      \field{month}{4}
+      \field{number}{3}
+      \field{title}{Operational {{Markovianization}} in Randomized Benchmarking}
+      \field{volume}{9}
+      \field{year}{2024}
+      \field{dateera}{ce}
+      \field{pages}{035020}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.1088/2058-9565/ad3f44
+      \endverb
+      \verb{file}
+      \verb /home/fidel/Zotero/storage/SJT5XESW/Figueroa-Romero et al. - 2024 - Operational Markovianization in randomized benchmarking.pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://dx.doi.org/10.1088/2058-9565/ad3f44
+      \endverb
+      \verb{url}
+      \verb https://dx.doi.org/10.1088/2058-9565/ad3f44
+      \endverb
+    \endentry
+    \entry{flammiaefficient2020}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=d272326829f2b0f1f6825478b4fc8458}{%
+           family={Flammia},
+           familyi={F\bibinitperiod},
+           given={Steven\bibnamedelima T},
+           giveni={S\bibinitperiod\bibinitdelim T\bibinitperiod}}}%
+        {{hash=fe17b64cf002ba88d3ae28dbe3e9092c}{%
+           family={Wallman},
+           familyi={W\bibinitperiod},
+           given={Joel\bibnamedelima J},
+           giveni={J\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {ACM New York, NY, USA}%
+      }
+      \strng{namehash}{41019e3d041ea93ebbe6a3007f7f17b0}
+      \strng{fullhash}{41019e3d041ea93ebbe6a3007f7f17b0}
+      \strng{fullhashraw}{41019e3d041ea93ebbe6a3007f7f17b0}
+      \strng{bibnamehash}{41019e3d041ea93ebbe6a3007f7f17b0}
+      \strng{authorbibnamehash}{41019e3d041ea93ebbe6a3007f7f17b0}
+      \strng{authornamehash}{41019e3d041ea93ebbe6a3007f7f17b0}
+      \strng{authorfullhash}{41019e3d041ea93ebbe6a3007f7f17b0}
+      \strng{authorfullhashraw}{41019e3d041ea93ebbe6a3007f7f17b0}
+      \field{sortinit}{F}
+      \field{sortinithash}{2638baaa20439f1b5a8f80c6c08a13b4}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{2643-6809}
+      \field{journaltitle}{ACM Transactions on Quantum Computing}
+      \field{number}{1}
+      \field{shortjournal}{ACM Transactions on Quantum Computing}
+      \field{title}{Efficient Estimation of {{Pauli}} Channels}
+      \field{volume}{1}
+      \field{year}{2020}
+      \field{dateera}{ce}
+      \field{pages}{1\bibrangedash 32}
+      \range{pages}{32}
+      \verb{file}
+      \verb /home/fidel/Zotero/storage/AZMWG8EC/Flammia and Wallman - 2020 - Efficient estimation of Pauli channels.pdf
+      \endverb
+    \endentry
+    \entry{liunonmarkovian2024}{online}{}{}
+      \name{author}{3}{}{%
+        {{hash=73b54da20c733735cfa98677acb3d66c}{%
+           family={Liu},
+           familyi={L\bibinitperiod},
+           given={Zhenhuan},
+           giveni={Z\bibinitperiod}}}%
+        {{hash=dfe8ea6716d2409df8be3eae128c853c}{%
+           family={Xiao},
+           familyi={X\bibinitperiod},
+           given={Yunlong},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=8ea41cf3838b8cbd7dfef5c651f8c244}{%
+           family={Cai},
+           familyi={C\bibinitperiod},
+           given={Zhenyu},
+           giveni={Z\bibinitperiod}}}%
+      }
+      \strng{namehash}{277536923c7f4f047ad9809e37527d1d}
+      \strng{fullhash}{277536923c7f4f047ad9809e37527d1d}
+      \strng{fullhashraw}{277536923c7f4f047ad9809e37527d1d}
+      \strng{bibnamehash}{277536923c7f4f047ad9809e37527d1d}
+      \strng{authorbibnamehash}{277536923c7f4f047ad9809e37527d1d}
+      \strng{authornamehash}{277536923c7f4f047ad9809e37527d1d}
+      \strng{authorfullhash}{277536923c7f4f047ad9809e37527d1d}
+      \strng{authorfullhashraw}{277536923c7f4f047ad9809e37527d1d}
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Non-Markovian noise, arising from the memory effect in the environment, poses substantial challenges to conventional quantum noise suppression protocols, including quantum error correction and mitigation. We introduce a channel representation for arbitrary non-Markovian quantum dynamics, termed the Choi channel, as it operates on the Choi states of the ideal gate layers. This representation translates the complex dynamics of non-Markovian noise into the familiar picture of noise channels acting on ideal states, allowing us to directly apply many existing error suppression protocols originally designed for Markovian noise. These protocols can then be translated from the Choi channel picture back to the circuit picture, yielding non-Markovian noise suppression protocols. With this framework, we have devised new protocols using Pauli twirling, probabilistic error cancellation and virtual channel purification. In particular, Pauli twirling can transform any non-Markovian noise into noise that exhibits only classical temporal correlations, thereby extending the proven noise resilience of single-shot quantum error correction to arbitrary non-Markovian noise. Through these examples, the Choi channel demonstrates significant potential as a foundational bridge for connecting existing techniques and inspiring the development of novel non-Markovian noise suppression protocols.}
+      \field{day}{15}
+      \field{eprintclass}{quant-ph}
+      \field{eprinttype}{arXiv}
+      \field{month}{12}
+      \field{pubstate}{prepublished}
+      \field{title}{Non-{{Markovian Noise Suppression Simplified}} through {{Channel Representation}}}
+      \field{urlday}{9}
+      \field{urlmonth}{9}
+      \field{urlyear}{2025}
+      \field{year}{2024}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{doi}
+      \verb 10.48550/arXiv.2412.11220
+      \endverb
+      \verb{eprint}
+      \verb 2412.11220
+      \endverb
+      \verb{file}
+      \verb /home/fidel/Zotero/storage/6SPLDDNF/Liu et al. - 2024 - Non-Markovian Noise Suppression Simplified through Channel Representation.pdf;/home/fidel/Zotero/storage/Q93GCFZI/2412.html
+      \endverb
+      \verb{urlraw}
+      \verb http://arxiv.org/abs/2412.11220
+      \endverb
+      \verb{url}
+      \verb http://arxiv.org/abs/2412.11220
+      \endverb
+      \keyw{Quantum Physics}
+    \endentry
+    \entry{magesanmodeling2013}{article}{}{}
+      \name{author}{4}{}{%
+        {{hash=2daf207680d6347dbd300ef9b8a397f8}{%
+           family={Magesan},
+           familyi={M\bibinitperiod},
+           given={Easwar},
+           giveni={E\bibinitperiod}}}%
+        {{hash=99a167f251d34a81483e7b7a89189e28}{%
+           family={Puzzuoli},
+           familyi={P\bibinitperiod},
+           given={Daniel},
+           giveni={D\bibinitperiod}}}%
+        {{hash=5a5a0cff8f5639987cc38f155afdfd4c}{%
+           family={Granade},
+           familyi={G\bibinitperiod},
+           given={Christopher\bibnamedelima E.},
+           giveni={C\bibinitperiod\bibinitdelim E\bibinitperiod}}}%
+        {{hash=689d644eb252f6b0b7d33e07a33ba316}{%
+           family={Cory},
+           familyi={C\bibinitperiod},
+           given={David\bibnamedelima G.},
+           giveni={D\bibinitperiod\bibinitdelim G\bibinitperiod}}}%
+      }
+      \strng{namehash}{2a69f9061f481d0aadfbc10602a3fd2a}
+      \strng{fullhash}{990c7b53ba858f8baeaa6bc74d020085}
+      \strng{fullhashraw}{990c7b53ba858f8baeaa6bc74d020085}
+      \strng{bibnamehash}{2a69f9061f481d0aadfbc10602a3fd2a}
+      \strng{authorbibnamehash}{2a69f9061f481d0aadfbc10602a3fd2a}
+      \strng{authornamehash}{2a69f9061f481d0aadfbc10602a3fd2a}
+      \strng{authorfullhash}{990c7b53ba858f8baeaa6bc74d020085}
+      \strng{authorfullhashraw}{990c7b53ba858f8baeaa6bc74d020085}
+      \field{sortinit}{M}
+      \field{sortinithash}{4625c616857f13d17ce56f7d4f97d451}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{day}{22}
+      \field{issn}{1050-2947, 1094-1622}
+      \field{journaltitle}{Physical Review A}
+      \field{langid}{english}
+      \field{month}{1}
+      \field{number}{1}
+      \field{shortjournal}{Phys. Rev. A}
+      \field{title}{Modeling Quantum Noise for Efficient Testing of Fault-Tolerant Circuits}
+      \field{urlday}{5}
+      \field{urlmonth}{9}
+      \field{urlyear}{2025}
+      \field{volume}{87}
+      \field{year}{2013}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{012324}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.1103/PhysRevA.87.012324
+      \endverb
+      \verb{file}
+      \verb /home/fidel/Zotero/storage/4BFRDUBQ/Magesan et al. - 2013 - Modeling quantum noise for efficient testing of fault-tolerant circuits.pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://link.aps.org/doi/10.1103/PhysRevA.87.012324
+      \endverb
+      \verb{url}
+      \verb https://link.aps.org/doi/10.1103/PhysRevA.87.012324
+      \endverb
+    \endentry
+    \entry{tarantohigherorder2025}{online}{}{}
+      \name{author}{5}{}{%
+        {{hash=187b25da2b17e98183642a3177bc7078}{%
+           family={Taranto},
+           familyi={T\bibinitperiod},
+           given={Philip},
+           giveni={P\bibinitperiod}}}%
+        {{hash=5c5cf998611bd50c2f4098faff22ccdd}{%
+           family={Milz},
+           familyi={M\bibinitperiod},
+           given={Simon},
+           giveni={S\bibinitperiod}}}%
+        {{hash=77c64f3e4807f56e1f33a11a37c0f49e}{%
+           family={Murao},
+           familyi={M\bibinitperiod},
+           given={Mio},
+           giveni={M\bibinitperiod}}}%
+        {{hash=17860b8cca5e5120f207b54e321b7e43}{%
+           family={Quintino},
+           familyi={Q\bibinitperiod},
+           given={Marco\bibnamedelima Túlio},
+           giveni={M\bibinitperiod\bibinitdelim T\bibinitperiod}}}%
+        {{hash=ce00b86b390ff6b81cfb70347d113e9e}{%
+           family={Modi},
+           familyi={M\bibinitperiod},
+           given={Kavan},
+           giveni={K\bibinitperiod}}}%
+      }
+      \strng{namehash}{e114921adbce5cb64cef42c672561e3a}
+      \strng{fullhash}{65b85876d9c4c9bc8b1e0dbe9ad8d020}
+      \strng{fullhashraw}{65b85876d9c4c9bc8b1e0dbe9ad8d020}
+      \strng{bibnamehash}{e114921adbce5cb64cef42c672561e3a}
+      \strng{authorbibnamehash}{e114921adbce5cb64cef42c672561e3a}
+      \strng{authornamehash}{e114921adbce5cb64cef42c672561e3a}
+      \strng{authorfullhash}{65b85876d9c4c9bc8b1e0dbe9ad8d020}
+      \strng{authorfullhashraw}{65b85876d9c4c9bc8b1e0dbe9ad8d020}
+      \field{sortinit}{T}
+      \field{sortinithash}{9af77f0292593c26bde9a56e688eaee9}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{An operational description of quantum phenomena concerns developing models that describe experimentally observed behaviour. \$\textbackslash textit\{Higher-order quantum operations\}\textbackslash unicode\{x2014\}\$quantum operations that transform quantum operations\$\textbackslash unicode\{x2014\}\$are fundamental to modern quantum theory, extending beyond basic state preparations, evolutions, and measurements described by the Born rule. These operations naturally emerge in quantum circuit architectures, correlated open dynamics, and investigations of quantum causality, to name but a few fields of application. This Review Article provides both a pedagogical introduction to the framework of higher-order quantum operations and a comprehensive survey of current literature, illustrated through physical examples. We conclude by identifying open problems and future research directions in this rapidly evolving field.}
+      \field{day}{12}
+      \field{eprintclass}{quant-ph}
+      \field{eprinttype}{arXiv}
+      \field{month}{3}
+      \field{pubstate}{prepublished}
+      \field{title}{Higher-{{Order Quantum Operations}}}
+      \field{urlday}{16}
+      \field{urlmonth}{7}
+      \field{urlyear}{2025}
+      \field{year}{2025}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{doi}
+      \verb 10.48550/arXiv.2503.09693
+      \endverb
+      \verb{eprint}
+      \verb 2503.09693
+      \endverb
+      \verb{file}
+      \verb /home/fidel/Zotero/storage/FYIAAK85/Taranto et al. - 2025 - Higher-Order Quantum Operations.pdf;/home/fidel/Zotero/storage/EZNRBCQB/2503.html
+      \endverb
+      \verb{urlraw}
+      \verb http://arxiv.org/abs/2503.09693
+      \endverb
+      \verb{url}
+      \verb http://arxiv.org/abs/2503.09693
+      \endverb
+      \keyw{Quantum Physics}
+    \endentry
+    \entry{woodtensor2015}{article}{}{}
+      \name{author}{3}{}{%
+        {{hash=bc4a77bac59c7c82cc2b1428d662ff47}{%
+           family={Wood},
+           familyi={W\bibinitperiod},
+           given={Christopher\bibnamedelima J.},
+           giveni={C\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+        {{hash=233cda4f3c07d8ca1b076ada05afc118}{%
+           family={Biamonte},
+           familyi={B\bibinitperiod},
+           given={Jacob\bibnamedelima D.},
+           giveni={J\bibinitperiod\bibinitdelim D\bibinitperiod}}}%
+        {{hash=689d644eb252f6b0b7d33e07a33ba316}{%
+           family={Cory},
+           familyi={C\bibinitperiod},
+           given={David\bibnamedelima G.},
+           giveni={D\bibinitperiod\bibinitdelim G\bibinitperiod}}}%
+      }
+      \strng{namehash}{c35732b545d3f705d75129a223e84933}
+      \strng{fullhash}{c35732b545d3f705d75129a223e84933}
+      \strng{fullhashraw}{c35732b545d3f705d75129a223e84933}
+      \strng{bibnamehash}{c35732b545d3f705d75129a223e84933}
+      \strng{authorbibnamehash}{c35732b545d3f705d75129a223e84933}
+      \strng{authornamehash}{c35732b545d3f705d75129a223e84933}
+      \strng{authorfullhash}{c35732b545d3f705d75129a223e84933}
+      \strng{authorfullhashraw}{c35732b545d3f705d75129a223e84933}
+      \field{sortinit}{W}
+      \field{sortinithash}{4315d78024d0cea9b57a0c6f0e35ed0d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{eprintclass}{quant-ph}
+      \field{eprinttype}{arXiv}
+      \field{issn}{1533-7146}
+      \field{journaltitle}{Quantum Information and Computation}
+      \field{number}{9--10}
+      \field{shortjournal}{Quant. Inf. Comput.}
+      \field{title}{Tensor Networks and Graphical Calculus for Open Quantum Systems}
+      \field{volume}{15}
+      \field{year}{2015}
+      \field{dateera}{ce}
+      \field{pages}{0759\bibrangedash 0811}
+      \range{pages}{53}
+      \verb{doi}
+      \verb 10.26421/QIC15.9-10-3
+      \endverb
+      \verb{eprint}
+      \verb 1111.6950
+      \endverb
+      \verb{file}
+      \verb /home/fidel/Zotero/storage/MU7HJQ6V/Wood et al. - 2015 - Tensor networks and graphical calculus for open quantum systems.pdf
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

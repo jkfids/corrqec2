@@ -1,0 +1,13 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=righttriangleviolet] (0) at (0.75, 0.25) {\(\rho\)};
+		\node [style=none] (1) at (0, 0.5) {};
+		\node [style=none] (2) at (0, 0) {};
+		\node [style=none] (3) at (0.75, 0.5) {};
+		\node [style=none] (4) at (0.75, 0) {};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw (2.center) to (4.center);
+		\draw (1.center) to (3.center);
+	\end{pgfonlayer}
+\end{tikzpicture}

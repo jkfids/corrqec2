@@ -43,7 +43,7 @@
   \begin{equation}
     \Upsilon_{k:0}^{\mathcal{T}_P} = \sum_{\mathbf{P}\in\mathcal{P}^{(n,k)}}\Pr{(\mathbf{P})}\Upsilon_\mathbf{P}, \quad \Upsilon_\mathbf{P} = \bigotimes_{j=0}^{k-1}\Pi_j,
   \end{equation}
-  where \(\mathbf{P} = (P_0, P_1, \ldots, P_{k-1})\) is a spatiotemporal Pauli trajectory with each \(P_j \in \mathcal{P}^{(n)}\), and \(\Pi_j = \doubleketbra{P_j}{P_j}\) are the corresponding lifted Pauli projectors. Probabilities \(\Pr{(\mathbf{P})}\) form a valid probability distribution given by
+  where \(\mathbf{P} = (P_0, P_1, \ldots, P_{k-1})\) is a spatiotemporal Pauli trajectory with each \(P_j \in \mathcal{P}^{(n)}\), and \(\Pi_j = \dketbra{P_j}{P_j}\) are the corresponding lifted Pauli projectors. Probabilities \(\Pr{(\mathbf{P})}\) form a valid probability distribution given by
   \begin{equation}\label{eq:spc-probabilities}
     \Pr{(\mathbf{P})} = \Tr\left[\left(\bigotimes_{j=0}^{k-1}\Pi_j\right)\Upsilon_{k:0}\right] \geq 0, \quad \sum_{\mathbf{P}\in\mathcal{P}^{(n,k)}} \Pr{(\mathbf{P})} = 1.
   \end{equation}
@@ -55,7 +55,7 @@
     \begin{equation}
     \Upsilon_{\mathbf{\Lambda}} = \sum_{\mathbf{P}\in\mathcal{P}^{(n,k)}}\Pr(\mathbf{P}) \bigotimes_{j=0}^{k-1}\Pi_j,
     \end{equation}
-    where \(\Pi_j = \doubleketbra{P_j}{P_j}\). Temporal correlations are encoded entirely within \(\Pr_{\mathbf{\Lambda}}\).
+    where \(\Pi_j = \dketbra{P_j}{P_j}\). Temporal correlations are encoded entirely within \(\Pr_{\mathbf{\Lambda}}\).
 \end{definition}
 
 % Spatiotemporal Pauli string \(\mathbf{P}\in\mathcal{P}^{(n,k)}\):
@@ -71,8 +71,8 @@
 % \begin{equation}
 %     \Upsilon_{\mathbf{P}} = \bigotimes_{j=0}^{k-1}\Pi_j
 % \end{equation}
-% \(\Pi_j = \doubleketbra{P_j}{P_j}\) and $
-% \{\doubleket{I}, \doubleket{X}, \doubleket{Y}, \doubleket{Z}\} = \{\ket{\Phi^+}, \ket{\Phi^-}, \ket{\Psi^+}, \ket{\Psi^-}\}
+% \(\Pi_j = \dketbra{P_j}{P_j}\) and $
+% \{\dket{I}, \dket{X}, \dket{Y}, \dket{Z}\} = \{\ket{\Phi^+}, \ket{\Phi^-}, \ket{\Psi^+}, \ket{\Psi^-}\}
 % $
 
 % \begin{equation}\label{eq:spc-probabilities}

@@ -20,7 +20,7 @@ where the Kraus operators \(\{K_i\}\) satisfy \(\sum_i K_i^\dagger K_i = \mathbb
 \begin{equation}\label{eq:choi-rep}
     \mathcal{E}[\rho] = \Tr_{\mathrm{in}}[(\rho^T \otimes \mathbb{I}_{\mathrm{out}})\Lambda].
 \end{equation}
-The Stinespring dilation theorem provides another critical, physically motivated perspective. It states that any CPTP map acting on a system space \(\mathcal{B}(\mathcal{H}_S)\) can be represented as a unitary operation \(U\) on a larger, dilated space \(\mathcal{B}(\mathcal{H}_S \otimes \mathcal{H}_E)\), followed by a partial trace over the auxiliary environment space \(\mathcal{H}_E\). This is expressed as
+The Stinespring dilation theorem provides an additional critical, physically motivated perspective. It states that any CPTP map acting on a system space \(\mathcal{B}(\mathcal{H}_S)\) can be represented as a unitary operation \(U\) on a larger, dilated space \(\mathcal{B}(\mathcal{H}_S \otimes \mathcal{H}_E)\), followed by a partial trace over the auxiliary environment space \(\mathcal{H}_E\). This is expressed as
 \begin{equation}
     \mathcal{E}[\rho_S] = \Tr_E[U(\rho_S \otimes \sigma_E)U^\dagger].
 \end{equation}
@@ -44,7 +44,7 @@ Like quantum channels, a process tensor admits several equivalent representation
 \end{equation}
 where \(\Tr_{\overline{\mathrm{out}}}\) denotes the partial trace over all subspaces except the final output space \(\mathcal{H}_{\mathrm{out}_k}\), and \(\hat{\mathcal{A}}_j \in \mathcal{B}(\mathcal{H}_{\mathrm{out}_j} \otimes \mathcal{H}_{\mathrm{in}_{j+1}})\) is the Choi state of the CP map \(\mathcal{A}_j\). We remark that for \(k=0\), the above expression reduces to the quantum channel case in \cref{eq:choi-rep}. 
 
-Equivalent Kraus, superoperator, and \(\chi\)-matrix representations can be derived from the Choi form in direct analogy to quantum channels. The Choi representation is convenient because it translates the physical properties of a quantum process into concrete, computable properties of the operator \(\Upsilon_{0:k}\). Crucially, a process tensor \(\mathcal{T}_{0:k}\) represents a valid, physical process if and only if its Choi representation \(\Upsilon_{0:k}\) satisfies the following conditions:
+Equivalent Kraus, superoperator, and \(\chi\)-matrix representations can be derived from the Choi form analogously as for quantum channels. The Choi representation is convenient because it translates the physical properties of a quantum process into concrete, computable properties of the operator \(\Upsilon_{0:k}\). Crucially, a process tensor \(\mathcal{T}_{0:k}\) represents a valid, physical process if and only if its Choi representation \(\Upsilon_{0:k}\) satisfies the following conditions:
 \begin{enumerate}
     \item \textbf{Positive semidefiniteness.} \\
     This is the direct generalisation of the CP condition for quantum channels. The Choi matrix must be positive semidefinite:
@@ -53,7 +53,7 @@ Equivalent Kraus, superoperator, and \(\chi\)-matrix representations can be deri
     \end{equation}
     This ensures that, for any valid initial state and sequence of physical instruments, the output state is also positive semidefinite.
     \item \textbf{Causal (or affine) constraints.} \\
-    Also known as the containment property, these constraints are a more intricate generalisation of the TP condition to multitime processes. The Choi state must satisfy the recursive conditions,
+    Also known as the containment property, these constraints are a more intricate generalisation of the TP condition to multitime processes. The Choi state must satisfy the recursive constraints,
     \begin{equation}\label{eq:affine-constraint}
         \begin{split}
             &\Tr_{\mathrm{out}_j}[\Upsilon_{0:j}] = \Upsilon_{0:j-1} \otimes \mathbb{I}_{\mathrm{in}_j}, \quad \forall j=1,\dots,k, \\
@@ -64,7 +64,7 @@ Equivalent Kraus, superoperator, and \(\chi\)-matrix representations can be deri
     \begin{equation*}
         \braket{P_{\mathrm{in}_0}P_{\mathrm{out}_0}\cdots P_{\mathrm{in}_k}P_{\mathrm{out}_k}} = \Tr\!\left[(P_{\mathrm{in}_0}\otimes P_{\mathrm{out}_0} \otimes\cdots\otimes P_{\mathrm{in}_k}\otimes P_{\mathrm{out}_k})\,\Upsilon_{0:k}\right],
     \end{equation*}
-with Pauli strings \(P_j \in \mathcal{P}^{(n)}\), and non-identity Pauli strings \(Q_j \in \mathcal{P}^{(n)} \setminus \{\mathbb{I}\}\), with cardinality \(|\mathcal{P}^{(n)} \setminus \{\mathbb{I}\}| = 4^n - 1\), \cref{eq:affine-constraint} can be rewritten as the following \((k+1)(4^n-1)\) independent linear equations:
+with Pauli strings \(P_j \in \mathcal{P}^{(n)}\), and non-identity Pauli strings \(Q_j \in \mathcal{P}^{(n)} \setminus \{\mathbb{I}\}\), with cardinality \(|\mathcal{P}^{(n)} \setminus \{\mathbb{I}\}| = 4^n - 1\), \cref{eq:affine-constraint} can be rewritten as \((k+1)(4^n-1)\) independent linear equations,
     \begin{equation}
         \begin{split}
             &\braket{P_{\mathrm{in}_0}P_{\mathrm{out}_0}\cdots P_{\mathrm{out}_{k-1}}Q_{\mathrm{in}_k}\mathbb{I}_{\mathrm{out}_k}} = 0, \\
@@ -73,12 +73,12 @@ with Pauli strings \(P_j \in \mathcal{P}^{(n)}\), and non-identity Pauli strings
             &\braket{Q_{\mathrm{in}_0}\mathbb{I}_{\mathrm{out}_0}\cdots \mathbb{I}_{\mathrm{in}_k}\mathbb{I}_{\mathrm{out}_k}} = 0.
         \end{split}
     \end{equation}
-    \Fidel{Possible WIP: Write a couple of sentences on how \(\braket{\mathbb{I}_{\mathrm{in}_0}\mathbb{I}_{\mathrm{out}_0}\cdots \mathbb{I}_{\mathrm{in}_k}\mathbb{I}_{\mathrm{out}_k}} = d^{k+1}\), i.e., normalisation is an additional linear constraint, however we often work with the unnormalised Choi state (although I'm not sure if that means its unaffected by the extra linear constraint).} \\
+    \Fidel{Possible WIP: Write a couple of sentences on how \(\braket{\mathbb{I}_{\mathrm{in}_0}\mathbb{I}_{\mathrm{out}_0}\cdots \mathbb{I}_{\mathrm{in}_k}\mathbb{I}_{\mathrm{out}_k}} = d^{k+1}\), i.e., normalisation is an additional linear constraint, however we often work with the unnormalised Choi state (although I'm not sure if that means it's unaffected by the extra linear constraint).} \\
     \Angus{These affine constraints might make sampling more efficient -- you don't need the full process tensor for times \(t > k\) if you only want samples of the first \(k\) timesteps, because all the partial traces over the latter timesteps simply give identities.}
 \end{enumerate}
 The set of Choi states representing physically valid quantum processes \(\{\Upsilon_{0:k}\}\) thus lies in the intersection of the convex cone of positive semidefinite operators and an affine subspace defined by the causal constraints on the process tensor.
 
-Beyond the general validity conditions, the structural features of a process tensor reflect the physical nature of the underlying dynamics. Notably, entanglement across temporal partitions of the Choi state \(\Upsilon_{0:k}\)---referred to as \emph{temporal entanglement}---indicates that the process is genuinely quantum non-Markovian. Concretely, a process exhibits genuinely quantum temporal correlations if and only if its Choi state cannot be written as a convex mixture of products, 
+Beyond the general validity conditions, the structural features of a process tensor reflect the physical nature of the underlying dynamics. Notably, entanglement across temporal partitions of a Choi state \(\Upsilon_{0:k}\)---referred to as \emph{temporal entanglement}---indicates that a process is \emph{genuinely quantum non-Markovian}. Concretely, a process exhibits genuinely quantum temporal correlations if and only if its Choi state cannot be written as a convex mixture of products, 
 \begin{equation}
 \Upsilon_{0:k} = \sum_\alpha p_\alpha \Lambda_0^\alpha \otimes \Lambda_1^\alpha \otimes \cdots \otimes \Lambda_k^\alpha,
 \end{equation}
@@ -90,13 +90,72 @@ where each \(\Lambda_{j:j+1}\) is required to be CPTP. Equivalently, the dynamic
 
 The physical origin of these structures can be traced back to the system--environment picture. By a natural extension of the Stinespring dilation theorem, any \(k\)-slot process tensor can be realised as the joint dynamics of a system \(S\) and an environment \(E\), followed by a partial trace over the environment. This is represented by the equation,
 \begin{equation}
-    \mathcal{T}_{0:k}[\rho_S, \mathbf{A}_{k-1:0}] = \Tr_E\left[\mathcal{U}_k \circ \mathcal{A}_{k-1} \circ \dots \circ \mathcal{U}_1 \circ \mathcal{A}_0 \circ \mathcal{U}_0(\sigma_E\otimes\rho_S) \right],
+    \mathcal{T}_{0:k}[\rho_S, \mathbf{A}_{k-1:0}] = \Tr_E\left[\mathcal{U}_k \circ \mathcal{A}_{k-1} \circ \mathcal{U}_{k-1} \circ \dots \circ \mathcal{A}_0 \circ \mathcal{U}_0(\sigma_E\otimes\rho_S) \right],
 \end{equation}
 where \(\mathcal{U}(\cdot) = U(\cdot)U^\dagger\) implements a joint system--environment unitary, \(\mathbf{A}_{k-1:0}\) is a sequence of CP maps acting only on \(S\), and we have assumed an initially separable system and environment state \(\sigma_E \otimes \rho_S\).
 
-We assert that the Stinespring dilation is more than a mathematical device; it depicts the fundamental physics governing open quantum dynamics. Non-Markovianity arises when the environment retains information about the system’s past and feeds it back into its future evolution. The process tensor thus compactly encapsulates all uncontrolled system--environment interactions. Operationally, non-Markovianity can be viewed as the ignorance of a larger Hilbert space, where the joint system--environment dynamics are Markovian.
+We emphasise that the Stinespring dilation is more than a mathematical device; it depicts the fundamental physics governing open quantum dynamics. Non-Markovianity arises when the environment retains information about the system’s past and feeds it back into its future evolution. The process tensor thus compactly encapsulates all uncontrollable system--environment interactions. Operationally, non-Markovianity can be viewed as the ignorance of a larger Hilbert space, where the joint system--environment dynamics are Markovian.
 
-The dilation also provides a natural bridge to tensor network representations of process tensors, which we discuss next. Whereas process tensors are traditionally presented as compositions of CPTP maps via the link product, we instead opt to construct them using tensor network language, which offers a potentially more intuitive and scalable framework for both analysis and computation.
+The dilation also provides a natural bridge to tensor network representations of process tensors, which we discuss next. Whereas process tensors are traditionally presented as compositions of CPTP maps via the link product, we instead opt to construct them in tensor network language, which potentially offers a more intuitive and scalable framework for both analysis and computation.
 
 \subsection{Tensor network representation of process tensors}
 
+Quantum maps are tensors. When these tensors exhibit structured correlations across their indices, they often admit compact tensor network representations. <Sentence about applications of tensor networks in quantum information>. Process tensors are arguably more naturally represented by tensor networks than even many-body quantum states.
+
+We use column stacking: \( X \rho Y^\dagger \longleftrightarrow (Y^* \otimes X) \dket{\rho}\). For a unitary $U$, we have \(U \rho U^\dagger \longleftrightarrow (U^* \otimes U) \dket{\rho}\). Consider a bipartite unitary \(U\) acting on $\mathcal{H}_E \otimes \mathcal{H}_S\), with Hilbert dimensions \(d_E\) and \(d_S\) respectively.
+
+\begin{equation*}
+    \mathcal{U} = U^* \otimes U \Longleftrightarrow
+    \mathcal{U}^{e'_i s'_i e_i s_i}{}_{e'_o s'_o e_o s_o} = \overline{U}^{e'_i s'_i}{}_{e'_o s'_o} U^{e_i s_i}{}_{e_o s_o}
+\end{equation*}
+\begin{equation*}
+    \mathcal{U}^{e'_i s'_i e_i s_i}{}_{e'_o s'_o e_o s_o} \to \mathcal{U}^{e'_i e_i s'_i s_i}{}_{e'_o e_o s'_o s_o} \to \mathbf{U}^{\mu_i \alpha_i}{}_{\mu_o \alpha_o}
+\end{equation*}
+Fusing indices as \(e'_i e_i \to \mu_i\) and \(s'_i s_i \to z\alpha_i\), with \(\mathrm{dim}e'_i = \mathrm{dim}e_i = d_E\), and \(\mathrm{dim}\mu_i = d_E^2\), similarly \(\mathrm{dim}\alpha_i = d_S^2\).
+
+For a bipartite density operator \(\rho \in \mathcal{B}(\mathcal{H}_E \otimes \mathcal{H}_S)\)
+\begin{equation*}
+    \mathcal{\rho} \longleftrightarrow \dket{\rho} 
+\end{equation*}
+\begin{equation*}
+    \rho^{e's'}_{es} \to \rho_{e's'es} \to \rho_{e'es's} \to \mathbf{\rho}_{\mu \alpha}
+\end{equation*}
+Using our index notation system, \(U \rho U^\dagger \to \mathcal{U}\dket{\rho}\) is written as
+\begin{equation*}
+    \dket{\rho_\mathrm{out}} = \mathcal{U}\dket{\rho_\mathrm{in}} \longleftrightarrow \mathbf{\rho}_{\mu_o \alpha_o} = \sum_{\mu_i\alpha_i} \mathbf{\rho}_{\mu_i \alpha_i}\mathbf{U}^{\mu_i \alpha_i}{}_{\mu_o \alpha_o}.
+\end{equation*}
+
+\begin{equation}
+    \Upsilon^{\alpha_0,\dots,\alpha_k}{}_{\beta_0,\dots,\beta_k} = \sum_{\mu} \mathbf{\rho}_{\mu_0}\mathbf{U}^{\mu_0\alpha_0}{}_{\mu_1\beta_0}\mathbf{U}^{\mu_1\alpha_1}{}_{\mu_2\beta_1}\cdots\mathbf{U}^{\mu_k\alpha_k}{}_{\mu_{k+1}\beta_k}\mathbf{\delta}^{\mu_{k+1}}.
+\end{equation}
+Process tensor:
+\begin{equation*}
+    \Upsilon^{\alpha_0 \dots \alpha_k}{}_{\beta_0 \dots \beta_k} \to \Upsilon^{a'_0a_0 \dots a'_ka_k}{}_{b'_0b_0 \dots b'_kb_k} \to \Upsilon^{a'_0b'_0 \dots a'_kb'_k}{}_{a_0b_0 \dots a_kb_k}
+\end{equation*}
+(The third term is the standard Choi representation.)
+
+\begin{table}
+    \centering
+    \begin{tabularx}{\linewidth}{YYY}
+        \toprule
+        Dirac notation & Abstract index notation & Graphical calculus \\
+        \midrule
+        \makecell{State vector (ket)\\\(\ket{\psi}\)} & \(\psi^a\) & \adjustbox{valign=c}{\input{figures/ket-psi.tikz}} \\
+        \makecell{Dual vector (bra)\\\(\bra{\psi}\)} & \(\psi_{a'}\) & \adjustbox{valign=c}{\input{figures/bra-psi.tikz}} \\
+        \makecell{Inner product\\\(\braket{\phi | \psi}\)} & \(\phi_a\psi^a\) & \adjustbox{valign=c}{\input{figures/inner-product.tikz}}\\
+        \makecell{Outer product\\\(\ketbra{\psi}{\phi}\)} & \(\psi^a\phi_{a'}\) & \adjustbox{valign=c}{\input{figures/outer-product.tikz}}\\
+        \makecell{Vectorised operator\\\(\dket{\rho}\)} & \(\rho^{a'a} = \rho^a{}_i\delta^{a'i}\) & \adjustbox{valign=c}{\input{figures/vectorized-rho.tikz}} \(\!=\!\) \adjustbox{valign=c}{\input{figures/vectorize-rho.tikz}}\\
+        \makecell{Operator\\\(A\)} & \(A^a{}_b\) & \adjustbox{valign=c}{\input{figures/operator.tikz}}\\
+        \makecell{Multipartite operator\\\(A\)} & \(A^{a_0\dots a_{n-1}}{}_{b_0\dots b_{n-1}}\) & \adjustbox{valign=c}{\input{figures/multi-operator.tikz}}\\
+        % \makecell{Composition\\\(BA\)} & \(A^a{}_iB^i{}_b\) & \adjustbox{valign=c}{\input{figures/composition.tikz}}\\
+        \makecell{Tensor product\\\(A\otimes B\)} & \(A^a{}_bB^c{}_d\) & \adjustbox{valign=c}{\input{figures/tensor-product.tikz}}\\
+        \makecell{Unnorm. Bell state \\\(\ket{\Phi^+}\)} & \(\delta_{ab}\) & \adjustbox{valign=c}{\input{figures/bell-state.tikz}}\\
+        SWAP & \(\delta^{a}{}_{d} \delta^{c}{}_{b}\) & \adjustbox{valign=c}{\input{figures/swap.tikz}}\\
+        % \makecell{Trace\\\(\Tr{(A)}\)} & \(A^i{}_i = \delta_{ia} A^a{}_b \delta^{ib}\) & \adjustbox{valign=c}{\input{figures/trace.tikz}}\\
+        \makecell{Trace\\\(\Tr{(A)}\)} & \(A^i{}_i\) & \adjustbox{valign=c}{\input{figures/trace.tikz}}\\
+        % \makecell{Partial trace\\\(\Tr_0{(A)}\)} & \(\delta_{ia_0} A^{a_0a_1}{}_{b_0b_1}\delta^{ib_0} = A^{ia_1}{}_{ib_1}\) & \\
+        \makecell{Transpose\\\(A\to A^T\)} & \(A^a{}_b \to A^{b}{}_{a}\) & \adjustbox{valign=c}{\input{figures/transpose.tikz}}\\
+        \bottomrule
+    \end{tabularx}
+    \caption{\Fidel{Not sure if this will stay here or go in the appendix. Also open suggestions of what to add/subtract.}}
+\end{table}
