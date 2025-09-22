@@ -6,8 +6,6 @@
 		\node [style=none] (3) at (-1, 1) {};
 		\node [style=none] (4) at (-1, 0) {};
 		\node [style=none] (5) at (1, 0) {};
-		\node [style=none] (6) at (0, 1.25) {};
-		\node [style=none] (7) at (0, -0.25) {};
 		\node [style=none] (8) at (1.125, 1) {\({}_b\)};
 		\node [style=none] (9) at (1.125, 0) {\({}_d\)};
 		\node [style=none] (10) at (-1.125, 1) {\({}_a\)};

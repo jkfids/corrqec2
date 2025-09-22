@@ -11,8 +11,6 @@
 		\node [style=none] (11) at (1.75, 0.475) {\(\vdots\)};
 		\node [style=none] (12) at (0.25, 0.475) {\(\vdots\)};
 		\node [style=tallboxyellow] (13) at (1, 0.375) {\(A\)};
-		\node [style=none] (14) at (0, -0.5) {};
-		\node [style=none] (15) at (0, 1.25) {};
 		\node [style=none] (16) at (2.25, 0.75) {\({}_{b_0}\)};
 		\node [style=none] (17) at (2.375, 0) {\({}_{b_{n-1}}\)};
 		\node [style=none] (18) at (-0.375, 0) {\({}_{a_{n-1}}\)};

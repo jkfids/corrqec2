@@ -6,7 +6,8 @@
     \item Worked examples?
 \end{enumerate}
 }
-\noindent We now formally define \emph{spatiotemporal Pauli channels} (SPCs) by applying the multitime Pauli twirl to a quantum process tensor. The construction maps quantum non-Markovian dynamics to a classical stochastic process over trajectories of Pauli operators. The procedure eliminates all genuine quantum temporal correlations while preserving classical correlations.
+\subsection{Formal definition}
+We now formally define \emph{spatiotemporal Pauli channels} (SPCs) by applying the multitime Pauli twirl to a quantum process tensor. The construction maps quantum non-Markovian dynamics to a classical stochastic process over trajectories of Pauli operators. The procedure eliminates all genuine quantum temporal correlations while preserving classical correlations.
 
 \begin{definition}[multitime Pauli twirl]\label{def:multitime-twirl}
     Let \(\mathcal{P}^{(n)}\) denote the \(n\)-qubit Pauli group. The Choi state of a \(k\)-step process tensor \(\Upsilon_{k:0}\) acts on the Hilbert space
@@ -57,6 +58,8 @@
     \end{equation}
     where \(\Pi_j = \dketbra{P_j}{P_j}\). Temporal correlations are encoded entirely within \(\Pr_{\mathbf{\Lambda}}\).
 \end{definition}
+
+\subsection{Tensor network representation}
 
 % Spatiotemporal Pauli string \(\mathbf{P}\in\mathcal{P}^{(n,k)}\):
 % \(\mathbf{P} = \bigotimes_{j=0}^{k-1}P_j\). \\

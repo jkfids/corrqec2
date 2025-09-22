@@ -1,0 +1,10 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=lefttriangle] (0) at (0, 0) {\(\pmb{\sigma}\)};
+		\node [style=none] (1) at (0.75, 0) {};
+		\node [style=none] (2) at (0.975, 0) {\({}_{\mu_0}\)};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [style=fusedwire] (0) to (1.center);
+	\end{pgfonlayer}
+\end{tikzpicture}

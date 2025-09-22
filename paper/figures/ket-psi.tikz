@@ -2,8 +2,7 @@
 	\begin{pgfonlayer}{nodelayer}
 		\node [style=righttriangle] (0) at (1, 0) {\(\psi\)};
 		\node [style=none] (1) at (0, 0) {};
-		\node [style=none] (3) at (0, 0.5) {};
-		\node [style=none] (4) at (0, -0.5) {};
+		\node [style=none] (5) at (-0.1, 0) {\({}_a\)};
 	\end{pgfonlayer}
 	\begin{pgfonlayer}{edgelayer}
 		\draw (0) to (1.center);

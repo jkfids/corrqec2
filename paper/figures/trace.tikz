@@ -5,8 +5,6 @@
 		\node [style=none] (2) at (-0.5, 0) {};
 		\node [style=none] (3) at (-0.5, 0.75) {};
 		\node [style=none] (4) at (0.5, 0.75) {};
-		\node [style=none] (5) at (-0.5, 1) {};
-		\node [style=none] (6) at (-0.5, -0.5) {};
 	\end{pgfonlayer}
 	\begin{pgfonlayer}{edgelayer}
 		\draw (2.center) to (0);

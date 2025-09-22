@@ -4,7 +4,6 @@ Stinespring
 superoperator
 Stinespring
 qubits
-multitime
 non-Markovian
 timesteps
 timestep

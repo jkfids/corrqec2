@@ -13,6 +13,6 @@ notes.pdf: paper/notes.tex paper/references.bib
 
 # Clean only auxiliary files, keep PDFs and .bbl files
 clean:
-	cd paper && rm -f *.aux *.bcf *.blg *.log *.out *.run.xml *.toc *.fls *.fdb_latexmk *.synctex.gz *.bbl *.gz
+	cd paper && rm -f *.aux *.bcf *.blg *.log *.out *.run.xml *.toc *.fls *.fdb_latexmk *.synctex.gz *.bbl *.gz *SAVE-ERROR
 
 .PHONY: all clean

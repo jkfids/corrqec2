@@ -1,0 +1,6 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=boxgreen] (0) at (0, 0) {};
+		\node [style=boxviolet] (1) at (0, 1) {};
+	\end{pgfonlayer}
+\end{tikzpicture}

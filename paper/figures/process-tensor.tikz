@@ -1,0 +1,69 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=bigboxyellow] (0) at (2, 0) {\(\mathbf{U}_0\)};
+		\node [style=lefttriangle] (1) at (0.125, 0.5) {\(\pmb{\sigma}\)};
+		\node [style=none] (2) at (1.5, 0.5) {};
+		\node [style=none] (3) at (2.5, 0.5) {};
+		\node [style=bigboxyellow] (4) at (4.5, 0) {\(\mathbf{U}_1\)};
+		\node [style=none] (5) at (4, 0.5) {};
+		\node [style=none] (6) at (5, 0.5) {};
+		\node [style=none] (7) at (8.75, 0.5) {};
+		\node [style=bigboxyellow] (8) at (9.25, 0) {\(\mathbf{U}_k\)};
+		\node [style=none] (9) at (9.75, 0.5) {};
+		\node [style=none] (10) at (11, 0.5) {};
+		\node [style=none] (11) at (10.875, 0.25) {};
+		\node [style=none] (12) at (11.125, 0.75) {};
+		\node [style=none] (13) at (7.75, 0.5) {};
+		\node [style=none] (14) at (6, 0.5) {};
+		\node [style=none] (15) at (0.875, 0.7) {\({}_{\mu_0}\)};
+		\node [style=none] (16) at (3.25, 0.7) {\({}_{\mu_1}\)};
+		\node [style=none] (17) at (5.75, 0.7) {\({}_{\mu_2}\)};
+		\node [style=none] (18) at (8, 0.7) {\({}_{\mu_k}\)};
+		\node [style=none] (19) at (10.5, 0.7) {\({}_{\mu_{k+1}}\)};
+		\node [style=none] (20) at (1.5, -0.5) {};
+		\node [style=none] (21) at (2.5, -0.5) {};
+		\node [style=none] (27) at (1.125, -1.25) {};
+		\node [style=none] (28) at (2.875, -1.25) {};
+		\node [style=none] (29) at (2.875, -0.875) {};
+		\node [style=none] (30) at (1.125, -0.875) {};
+		\node [style=none] (31) at (1.125, -1.45) {\({}_{\alpha_0}\)};
+		\node [style=none] (32) at (2.875, -1.45) {\({}_{\beta_0}\)};
+		\node [style=none] (33) at (4, -0.5) {};
+		\node [style=none] (34) at (5, -0.5) {};
+		\node [style=none] (35) at (3.625, -1.25) {};
+		\node [style=none] (36) at (5.375, -1.25) {};
+		\node [style=none] (37) at (5.375, -0.875) {};
+		\node [style=none] (38) at (3.625, -0.875) {};
+		\node [style=none] (39) at (3.625, -1.45) {\({}_{\alpha_1}\)};
+		\node [style=none] (40) at (5.375, -1.45) {\({}_{\beta_1}\)};
+		\node [style=none] (41) at (8.75, -0.5) {};
+		\node [style=none] (42) at (9.75, -0.5) {};
+		\node [style=none] (43) at (8.375, -1.25) {};
+		\node [style=none] (44) at (10.125, -1.25) {};
+		\node [style=none] (45) at (10.125, -0.875) {};
+		\node [style=none] (46) at (8.375, -0.875) {};
+		\node [style=none] (47) at (8.375, -1.45) {\({}_{\alpha_k}\)};
+		\node [style=none] (48) at (10.125, -1.45) {\({}_{\beta_k}\)};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [style=fusedwire] (1) to (2.center);
+		\draw [style=fusedwire] (3.center) to (5.center);
+		\draw [style=fusedwire] (9.center) to (10.center);
+		\draw (11.center) to (12.center);
+		\draw [style=fusedwire] (6.center) to (14.center);
+		\draw [style=fusedwire] (13.center) to (7.center);
+		\draw [style=fuseddashedwire] (14.center) to (13.center);
+		\draw [style=fusedwire, bend left=45, looseness=1.75] (21.center) to (29.center);
+		\draw [style=fusedwire] (29.center) to (28.center);
+		\draw [style=fusedwire, bend right=45, looseness=1.75] (20.center) to (30.center);
+		\draw [style=fusedwire] (30.center) to (27.center);
+		\draw [style=fusedwire, bend left=45, looseness=1.75] (34.center) to (37.center);
+		\draw [style=fusedwire] (37.center) to (36.center);
+		\draw [style=fusedwire, bend right=45, looseness=1.75] (33.center) to (38.center);
+		\draw [style=fusedwire] (38.center) to (35.center);
+		\draw [style=fusedwire, bend left=45, looseness=1.75] (42.center) to (45.center);
+		\draw [style=fusedwire] (45.center) to (44.center);
+		\draw [style=fusedwire, bend right=45, looseness=1.75] (41.center) to (46.center);
+		\draw [style=fusedwire] (46.center) to (43.center);
+	\end{pgfonlayer}
+\end{tikzpicture}
