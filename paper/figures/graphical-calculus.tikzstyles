@@ -13,6 +13,9 @@
 \tikzstyle{righttriangleviolet}=[isosceles triangle, isosceles triangle apex angle=90, draw=black, fill={violet!20}, inner sep=0ex, minimum height=5.5mm]
 \tikzstyle{lefttrianglegreen}=[isosceles triangle, isosceles triangle apex angle=90, shape border rotate=180, draw=black, fill={olive!20}, inner sep=0ex, minimum height=5.5mm]
 \tikzstyle{bigboxyellow}=[rounded corners=1mm, fill={yellow!40}, draw=black, shape=rectangle, inner sep=0ex, minimum height=21.5mm, minimum width=12mm]
+\tikzstyle{boxblue}=[rounded corners=1mm, fill={blue!20}, draw=black, shape=rectangle, inner sep=0ex, minimum height=9mm, minimum width=9mm]
+\tikzstyle{boxred}=[rounded corners=1mm, fill={red!20}, draw=black, shape=rectangle, inner sep=0ex, minimum height=9mm, minimum width=9mm]
+
 
 % Edge styles
 \tikzstyle{fusedwire}=[-, draw=black, fill=none, very thick]

@@ -1,7 +1,7 @@
 \begin{tikzpicture}
 	\begin{pgfonlayer}{nodelayer}
-		\node [style=boxgreen] (0) at (0, 0) {\(U\)};
-		\node [style=boxviolet] (1) at (0, 1) {\(\overline{U}\)};
+		\node [style=boxblue] (0) at (0, 0) {\(U_j\)};
+		\node [style=boxred] (1) at (0, 1) {\(\overline{U}_j\)};
 		\node [style=none] (2) at (0.25, 1.25) {};
 		\node [style=none] (3) at (0.25, 0.75) {};
 		\node [style=none] (4) at (-0.25, 0.75) {};

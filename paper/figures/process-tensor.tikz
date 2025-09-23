@@ -1,14 +1,14 @@
 \begin{tikzpicture}
 	\begin{pgfonlayer}{nodelayer}
-		\node [style=bigboxyellow] (0) at (2, 0) {\(\mathbf{U}_0\)};
+		\node [style=bigboxyellow] (0) at (2, 0) {\(\mathbf{U}_{(0)}\)};
 		\node [style=lefttriangle] (1) at (0.125, 0.5) {\(\pmb{\sigma}\)};
 		\node [style=none] (2) at (1.5, 0.5) {};
 		\node [style=none] (3) at (2.5, 0.5) {};
-		\node [style=bigboxyellow] (4) at (4.5, 0) {\(\mathbf{U}_1\)};
+		\node [style=bigboxyellow] (4) at (4.5, 0) {\(\mathbf{U}_{(1)}\)};
 		\node [style=none] (5) at (4, 0.5) {};
 		\node [style=none] (6) at (5, 0.5) {};
 		\node [style=none] (7) at (8.75, 0.5) {};
-		\node [style=bigboxyellow] (8) at (9.25, 0) {\(\mathbf{U}_k\)};
+		\node [style=bigboxyellow] (8) at (9.25, 0) {\(\mathbf{U}_{(k)}\)};
 		\node [style=none] (9) at (9.75, 0.5) {};
 		\node [style=none] (10) at (11, 0.5) {};
 		\node [style=none] (11) at (10.875, 0.25) {};
