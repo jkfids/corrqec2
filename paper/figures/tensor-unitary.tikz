@@ -1,6 +1,6 @@
 \begin{tikzpicture}
 	\begin{pgfonlayer}{nodelayer}
-		\node [style=bigboxyellow] (0) at (0, 0) {\(\mathbf{U}_{(j)}\)};
+		\node [style=bigtallboxyellow] (0) at (0, 0) {\(\mathbf{U}_{(j)}\)};
 		\node [style=none] (1) at (-0.5, 0.5) {};
 		\node [style=none] (2) at (0.5, 0.5) {};
 		\node [style=none] (3) at (-0.5, -0.5) {};

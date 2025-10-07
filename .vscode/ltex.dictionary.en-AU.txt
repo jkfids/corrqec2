@@ -16,3 +16,9 @@ superchannel
 Markovian
 unitaries
 Non-Markovianity
+quantumly
+ket
+MPOs
+LPDOs
+MPO
+PEPO

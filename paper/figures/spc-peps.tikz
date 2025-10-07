@@ -1,0 +1,62 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=circleorangescaled] (2) at (3.5, 0) {\(\mathbf{a}_{0,0}\)};
+		\node [style=circleorangescaled] (3) at (5.5, 0) {\(\mathbf{a}_{0,1}\)};
+		\node [style=circleorangescaled] (4) at (7.5, 0) {\(\mathbf{a}_{0,k}\)};
+		\node [style=none] (31) at (3.5, -0.75) {};
+		\node [style=none] (33) at (3.5, -0.975) {\({}_{x^0_0}\)};
+		\node [style=none] (35) at (5.5, -0.75) {};
+		\node [style=none] (37) at (5.5, -0.975) {\({}_{x^0_1}\)};
+		\node [style=none] (39) at (7.5, -0.75) {};
+		\node [style=none] (41) at (7.5, -0.975) {\({}_{x^0_k}\)};
+		\node [style=circleorangescaled] (44) at (4.5, 1.25) {};
+		\node [style=circleorangescaled] (45) at (6.5, 1.25) {};
+		\node [style=circleorangescaled] (46) at (8.5, 1.25) {};
+		\node [style=none] (53) at (4.5, 0.5) {};
+		\node [style=none] (55) at (6.5, 0.5) {};
+		\node [style=none] (57) at (8.5, 0.5) {};
+		\node [style=circleorangescaled] (60) at (5.5, 2.5) {};
+		\node [style=circleorangescaled] (61) at (7.5, 2.5) {};
+		\node [style=circleorangescaled] (62) at (9.5, 2.5) {};
+		\node [style=none] (69) at (5.5, 1.75) {};
+		\node [style=none] (71) at (7.5, 1.75) {};
+		\node [style=none] (73) at (9.5, 1.75) {};
+		\node [style=none] (76) at (4.5, -0.25) {\({}_{\mu^0_1}\)};
+		\node [style=none] (81) at (4.2, 0.5) {\({}_{\nu^0_0}\)};
+		\node [style=none] (82) at (6.125, 0) {};
+		\node [style=none] (83) at (6.875, 0) {};
+		\node [style=none] (84) at (7.125, 1.25) {};
+		\node [style=none] (85) at (7.875, 1.25) {};
+		\node [style=none] (86) at (8.125, 2.5) {};
+		\node [style=none] (87) at (8.875, 2.5) {};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [style=fusedwire] (2) to (3);
+		\draw (2) to (31.center);
+		\draw (3) to (35.center);
+		\draw (4) to (39.center);
+		\draw [style=fusedwire] (44) to (45);
+		\draw (44) to (53.center);
+		\draw (45) to (55.center);
+		\draw (46) to (57.center);
+		\draw [style=fusedwire] (60) to (61);
+		\draw (60) to (69.center);
+		\draw (61) to (71.center);
+		\draw (62) to (73.center);
+		\draw [style=fuseddotted] (44) to (60);
+		\draw [style=fusedwire] (2) to (44);
+		\draw [style=fuseddotted] (45) to (61);
+		\draw [style=fusedwire] (3) to (45);
+		\draw [style=fusedwire] (4) to (46);
+		\draw [style=fuseddotted] (46) to (62);
+		\draw [style=fusedwire] (82.center) to (3);
+		\draw [style=fusedwire] (83.center) to (4);
+		\draw [style=fuseddotted] (82.center) to (83.center);
+		\draw [style=fuseddotted] (86.center) to (87.center);
+		\draw [style=fuseddotted] (84.center) to (85.center);
+		\draw [style=fusedwire] (87.center) to (62);
+		\draw [style=fusedwire] (86.center) to (61);
+		\draw [style=fusedwire] (85.center) to (46);
+		\draw [style=fusedwire] (84.center) to (45);
+	\end{pgfonlayer}
+\end{tikzpicture}

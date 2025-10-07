@@ -11,7 +11,7 @@
 \usepackage{amssymb}
 \usepackage{bm}
 \usepackage[colorlinks=true, linkcolor=blue]{hyperref}
-\usepackage[nameinlink]{cleveref}
+\usepackage[nameinlink,capitalize]{cleveref}
 \usepackage{mathtools}
 \usepackage{braket}
 \usepackage{tabularx}
@@ -19,6 +19,8 @@
 \usepackage{booktabs}
 \usepackage{makecell}
 \usepackage{adjustbox}
+\usepackage{subcaption}
+\usepackage{float}
 
 % Table formatting
 \renewcommand{\tabularxcolumn}[1]{p{#1}}
@@ -227,13 +229,16 @@
 
 % If you want your appendices to appear in \texttt{onecolumn} mode but the rest of the document in \texttt{twocolumn} mode, you can insert the command \texttt{\textbackslash{}onecolumn\textbackslash{}newpage} before \texttt{\textbackslash{}appendix}.
 
-\section*{Summary of notation}
-\input{appendix0.tex}
-
-\section{Theorem proofs}
+\section{Table of notations}\label{app:notation}
 \input{appendix1.tex}
 
-\section{Worked examples}
+\section{Theorem proofs}\label{app:proofs}
 \input{appendix2.tex}
+
+% \section{Worked examples}
+% \input{appendix3.tex}
+
+\section*{Summary of notation}
+\input{appendix0.tex}
 
 \end{document}

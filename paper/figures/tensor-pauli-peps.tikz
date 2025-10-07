@@ -1,0 +1,22 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=circleorange] (9) at (0, 1.5) {\(\mathbf{a}_{(i,j)}\)};
+		\node [style=none] (13) at (0, 0.5) {};
+		\node [style=none] (18) at (0, 0.375) {\({}_x\)};
+		\node [style=none] (19) at (0.95, 1.5) {};
+		\node [style=none] (20) at (-0.95, 1.5) {};
+		\node [style=none] (21) at (-1.15, 1.5) {\({}_{\mu_j}\)};
+		\node [style=none] (22) at (1.35, 1.5) {\({}_{\mu_{j+1}}\)};
+		\node [style=none] (23) at (0.475, 2.325) {};
+		\node [style=none] (24) at (-0.475, 2.325) {};
+		\node [style=none] (27) at (0.55, 2.45) {\({}_{\nu_i}\)};
+		\node [style=none] (28) at (-0.55, 2.45) {\({}_{\nu_{i-1}}\)};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [style=fusedwire] (9) to (19.center);
+		\draw [style=fusedwire] (20.center) to (9);
+		\draw [style=fusedwire] (9) to (23.center);
+		\draw [style=fusedwire] (9) to (24.center);
+		\draw (9) to (13.center);
+	\end{pgfonlayer}
+\end{tikzpicture}

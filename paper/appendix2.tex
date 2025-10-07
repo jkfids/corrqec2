@@ -1,10 +1,62 @@
-\Fidel{If I don't just incorporate worked examples throughout the main body, this appendix will contain worked examples of theorems and results presented throughout the paper. Examples:
-\begin{enumerate}
-    \item Heisenberg interaction. An example where a highly non-Markovian process twirls down to a temporally independent process.
-    \begin{equation}
-        H(\theta) = \theta( X\otimes X + Y\otimes Y + Z\otimes Z)
+\Fidel{This appendix will contain the detailed proofs of each theorem, if required.}
+\subsection{Theorem 1}\label{app:proof-pt-to-spc}
+\Fidel{\Cref{eq:spc-probabilities} and mapping of \(\lambda_{\vec{\alpha}}\) (Pauli probabilities) 
+from \(\tilde{\chi}_{\vec{\xi}}\) can be seen as the multi-time generalisation of Section II B. of 
+~\cite{flammiaefficient2020}}
+
+\Cref{thm:pt-to-spc}
+\begin{proof}
+    The dynamics of a quantum process over \(k\) timesteps can be described by its Choi state, \(\Upsilon_{k:0}\), which exists on the Hilbert space \(\Hilbert_{\Upsilon_{k:0}}=\bigotimes_{j=1}^k(\Hilbert_{\inp_j}\otimes\Hilbert_{\out_j})\). We can express this state in the Pauli basis as
+    \begin{equation}\label{eq:pauli-expansion}
+    \begin{split}
+    \Upsilon_{k:0} &= \sum_{\mu_1,\mu_2,\cdots,\mu_{2k}} \chi_{\mu_1,\mu_2,\cdots,\mu_{2k}}P_{\mu_1}\otimes P_{\mu_2} \otimes \cdots \otimes P_{\mu_{2k-1}} \otimes  P_{\mu_{2k}} \\
+    &=\sum_{{\mu_1,\mu_2,\cdots,\mu_{2k}}}\chi_{\mu_1,\mu_2,\cdots,\mu_{2k}} \bigotimes_{j=1}^k(P_{\mu_{2j-1}}\otimes P_{\mu_{2j}})
+    \end{split}
     \end{equation}
-    \item Environment-controlled unitary (e.g., CZ). An example where the resultant SPC has non-trivial mutual information.
-    \item An example with both quantum non-Markovianity and classical non-Markovianity.
-\end{enumerate}
-}
+    % \begin{equation}\label{eq:pauli-expansion}
+    % \Upsilon_{k:0} =\sum_{{\mu_1,\mu_2,\cdots,\mu_{2k}}}\chi_{\mu_1,\mu_2,\cdots,\mu_{2k}} \bigotimes_{j=1}^k(P_{\mu_{2j-1}}\otimes P_{\mu_{2j}}).
+    % \end{equation}
+Here, the coefficients \(\chi_{\mu_1,\mu_2,\cdots,\mu_{2k}}\) are real numbers determined by \(\chi_{\mu_1,\cdots,\mu_{2k}} = \Tr[(P_{\mu_1}\otimes P_{\mu_2} \otimes \cdots \otimes P_{\mu_{2k-1}} \otimes  P_{\mu_{2k}})\Upsilon_{k:0}]\). The Pauli operator \(P_{\mu_{2j-1}}\) acts on the input Hilbert space of the \(j\)-th step, \(\Hilbert_{\inp_j}\), while \(P_{\mu_{2j}}\) acts on the output space, \(\Hilbert_{\out_j}\).
+
+The Pauli twirling superoperator \(\mathcal{T}_P^{(k)}\) applies a local Pauli twirl at each timestep. We denote the twirled state as \(\Upsilon_{k:0}^{\mathcal{T}_P} \coloneq \mathcal{T}_P^{(k)}(\Upsilon_{k:0})\). Substituting in the Pauli expansion from \cref{eq:pauli-expansion} yields
+\begin{equation}
+    \begin{split}
+    \Upsilon_{k:0}^{\mathcal{T}_P} &= \frac{1}{|\tilde{\mathbb{P}}^{(n,k)}|}\sum_{\tilde{\mathcal{P}} \in \tilde{\mathbb{P}}^{(n,k)}}\tilde{\mathcal{P}}\left(\sum_{{\mu_1,\mu_2,\cdots,\mu_{2k}}}\chi_{\mu_1,\mu_2,\cdots,\mu_{2k}} \bigotimes_{j=1}^{k-1}(P_{\mu_{2j-1}}\otimes P_{\mu_{2j}})\right)\tilde{\mathcal{P}}^\dagger\\
+    &=  \sum_{\mu_1,\mu_2,\cdots,\mu_{2k}}\frac{1}{4^{nk}} \sum_{\nu_1,\cdots,\nu_k} \chi_{\mu_1,\mu_2,\cdots,\mu_{2k}} \bigotimes_{j=1}^{k-1}(P_{\nu_j}^TP_{\mu_{2j-1}}P_{\nu_j}^T\otimes P_{\nu_j}P_{\mu_{2j}}P_{\nu_j}).
+    \end{split}
+\end{equation}
+Then, using the identity
+\begin{equation}
+    \sum_\nu (P_\nu P_k P_\nu) \otimes (P_\nu P_l P_\nu) = \delta_{kl}(P_k \otimes P_l),
+\end{equation}
+this expression simplifies to
+\begin{equation}
+    \Upsilon_{k:0}^{\mathcal{T}_P} =  \sum_{\mu_2,\mu_4,\cdots,\mu_{2k}}\chi_{\mu_2,\mu_2,\cdots,\mu_{2k},\mu_{2k}} \bigotimes_{j=1}^{k-1}(P_{\mu_{2j}}\otimes P_{\mu_{2j}}),
+\end{equation}
+and relabelling indices \(\xi_j = \mu_{2j}\) and coefficients \(\tilde{\chi}_{\mu_2,\mu_4,\cdots,\mu_{2k}} = \chi_{\mu_2,\mu_2,\cdots,\mu_{2k},\mu_{2k}}\), we obtain
+\begin{equation}\label{eq:ppt-pauli-basis}
+    \Upsilon_{k:0}^{\mathcal{T}_P}  = \sum_{\xi_1,\cdots,\xi_k} \tilde{\chi}_{\xi_1,\cdots,\xi_k} \bigotimes_{j=1}^{k-1}(P_{\xi_j}\otimes P_{\xi_j}).
+\end{equation}
+To demonstrate the absence of quantum temporal correlations, we must show that \(\Upsilon_{k:0}^{\mathcal{T}_P}\) is separable across the bipartitions between different timesteps. The key insight is that the maximally entangled Bell states, \(\ket{\beta_i} \in \{\ket{\Phi^+}, \ket{\Phi^-}, \ket{\Psi^+}, \ket{\Psi^-}\}\) (for a single qubit example), are simultaneous eigenvectors of operators of the form \(P_\xi \otimes P_\xi\). Consequently, \(\Upsilon_{k:0}^{\mathcal{T_P}}\) is diagonal in the Bell product basis \(\ket{\mathcal{B}_{\vec{\alpha}}}=\bigotimes_{j=1}^k \ket{\beta_{\alpha_j}}\). Explicitly:
+\begin{equation}
+    \begin{split}
+    \Upsilon_{k:0}^{\mathcal{T}_P} &= \sum_{{\vec{\alpha}}{\vec{\beta}}} \bra{\mathcal{B}_{\vec{\alpha}}} \sum_{\xi_1,\cdots,\xi_k} \tilde{\chi}_{\xi_1,\cdots,\xi_k} \bigotimes_{j=1}^{k}(P_{\xi_j}\otimes P_{\xi_j})\ket{\mathcal{B}_{\vec{\beta}}} \ket{\mathcal{B}_{\vec{\alpha}}}\bra{\mathcal{B}_{\vec{\beta}}} \\ 
+    &= \sum_{{\vec{\alpha}}} \bra{\mathcal{B}_{\vec{\alpha}}} \sum_{\xi_1,\cdots,\xi_k} \tilde{\chi}_{\xi_1,\cdots,\xi_k} \bigotimes_{j=1}^{k}(P_{\xi_j}\otimes P_{\xi_j})\ket{\mathcal{B}_{\vec{\alpha}}} \ket{\mathcal{B}_{\vec{\alpha}}}\bra{\mathcal{B}_{\vec{\alpha}}},
+    \end{split}
+\end{equation}
+where the last line follows since \(\ket{\mathcal{B}_{\vec{\alpha}}}\) are eigenvectors of \(\bigotimes_{j=1}^{k}(P_{\xi_j}\otimes P_{\xi_j})\). Defining
+\begin{equation}
+    \lambda_{\alpha_1\alpha_2\cdots\alpha_k} \coloneq \bra{\mathcal{B}_{\vec{\alpha}}} \Upsilon_{k:0}^{\mathcal{T}_P} \ket{\mathcal{B}_{\vec{\alpha}}} = \bra{\mathcal{B}_{\vec{\alpha}}} \sum_{\xi_1,\cdots,\xi_k} \tilde{\chi}_{\xi_1,\cdots,\xi_k} \bigotimes_{j=1}^{k}(P_{\xi_j}\otimes P_{\xi_j})\ket{\mathcal{B}_{\vec{\alpha}}},
+\end{equation}
+we see expectation values \(\lambda_{\alpha_1\alpha_2\cdots\alpha_k} = \bra{\mathcal{B}_{\vec{\alpha}}} \Upsilon_{k:0} \ket{\mathcal{B}_{\vec{\alpha}}}\) are non-negative for all positive semidefinite Choi states \(\Upsilon_{k:0}\). Furthermore, if \(\Upsilon_{k:0}\) is diagonal in the Bell product basis, which is true for all \(\Upsilon_{k:0}^{\mathcal{T}_P}\), then \(\sum_{\alpha_1\alpha_2\cdots\alpha_k}\lambda_{\alpha_1\alpha_2\cdots\alpha_k} = 1\). Hence, \(\Upsilon_{k:0}^{\mathcal{T}_P}\) can be written as a convex sum of Bell product states that are separable along temporal bipartitions.
+\begin{equation}\label{eq:ppt-bell-basis}
+    \Upsilon_{k:0}^{\mathcal{T}_P} = \sum_{\alpha_1\alpha_2\cdots\alpha_k}\lambda_{\alpha_1\alpha_2\cdots\alpha_k}\left(\bigotimes_{j=1}^k\Pi_{\alpha_j}\right)
+\end{equation}
+The coefficients \(\lambda_{\alpha_1\alpha_2\cdots\alpha_k}\) can also be related back to the process coefficients \(\tilde{\chi}_{\xi_1,\cdots,\xi_k}\) through a Walsh-Hadamard transform:
+\begin{equation}
+    \begin{split}
+        \lambda_{\alpha_1\alpha_2\cdots\alpha_k} = \sum_{\vec{\alpha}\vec{\xi}} \tilde{\chi}_{\xi_1,\cdots,\xi_k}\prod_{j=1}^k M_{\alpha_j\xi_j},
+    \end{split}
+\end{equation}
+where \(M_{\alpha\xi} \coloneq \bra{\beta_\alpha}(P_\xi\otimes P_\xi)\ket{\beta_\alpha}\) is an element of the Walsh-Hadamard matrix.
+\end{proof}

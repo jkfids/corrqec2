@@ -5,18 +5,27 @@
 
 % Node styles
 \tikzstyle{lefttriangle}=[isosceles triangle, isosceles triangle apex angle=90, shape border rotate=180, draw=black, fill={red!20}, inner sep=0ex, minimum height=5.5mm]
+\tikzstyle{lefttrianglegreen}=[isosceles triangle, isosceles triangle apex angle=90, shape border rotate=180, draw=black, fill={olive!20}, inner sep=0ex, minimum height=5.5mm]
 \tikzstyle{righttriangle}=[isosceles triangle, isosceles triangle apex angle=90, draw=black, fill={blue!20}, inner sep=0ex, minimum height=5.5mm]
+\tikzstyle{righttriangleviolet}=[isosceles triangle, isosceles triangle apex angle=90, draw=black, fill={violet!20}, inner sep=0ex, minimum height=5.5mm]
+\tikzstyle{downtriangleorange}=[isosceles triangle, isosceles triangle apex angle=90, draw=black, fill={orange!30}, inner sep=0ex, minimum height=6.5mm, shape border rotate=-90]
 \tikzstyle{boxyellow}=[rounded corners=1mm, fill={yellow!40}, draw=black, shape=rectangle, inner sep=0ex, minimum height=9mm, minimum width=9mm]
-\tikzstyle{tallboxyellow}=[rounded corners=1mm, fill={yellow!40}, draw=black, shape=rectangle, inner sep=0ex, minimum height=13mm, minimum width=9mm]
+\tikzstyle{boxblue}=[rounded corners=1mm, fill={blue!20}, draw=black, shape=rectangle, inner sep=0ex, minimum height=9mm, minimum width=9mm]
 \tikzstyle{boxgreen}=[rounded corners=1mm, fill={olive!20}, draw=black, shape=rectangle, inner sep=0ex, minimum height=9mm, minimum width=9mm]
 \tikzstyle{boxviolet}=[fill={violet!20}, draw=black, shape=rectangle, rounded corners=1mm, inner sep=0pt, minimum height=9mm, minimum width=9mm]
-\tikzstyle{righttriangleviolet}=[isosceles triangle, isosceles triangle apex angle=90, draw=black, fill={violet!20}, inner sep=0ex, minimum height=5.5mm]
-\tikzstyle{lefttrianglegreen}=[isosceles triangle, isosceles triangle apex angle=90, shape border rotate=180, draw=black, fill={olive!20}, inner sep=0ex, minimum height=5.5mm]
-\tikzstyle{bigboxyellow}=[rounded corners=1mm, fill={yellow!40}, draw=black, shape=rectangle, inner sep=0ex, minimum height=21.5mm, minimum width=12mm]
-\tikzstyle{boxblue}=[rounded corners=1mm, fill={blue!20}, draw=black, shape=rectangle, inner sep=0ex, minimum height=9mm, minimum width=9mm]
 \tikzstyle{boxred}=[rounded corners=1mm, fill={red!20}, draw=black, shape=rectangle, inner sep=0ex, minimum height=9mm, minimum width=9mm]
-
+\tikzstyle{boxorange}=[rounded corners=1mm, fill={orange!30}, draw=black, shape=rectangle, inner sep=0ex, minimum height=9mm, minimum width=9mm]
+\tikzstyle{tallboxyellow}=[rounded corners=1mm, fill={yellow!40}, draw=black, shape=rectangle, inner sep=0ex, minimum height=13mm, minimum width=9mm]
+\tikzstyle{bigboxyellow}=[rounded corners=1mm, fill={yellow!40}, draw=black, shape=rectangle, inner sep=0ex, minimum height=12mm, minimum width=12mm]
+\tikzstyle{bigboxblue}=[rounded corners=1mm, fill={blue!20}, draw=black, shape=rectangle, inner sep=0ex, minimum height=12mm, minimum width=12mm]
+\tikzstyle{bigtallboxyellow}=[rounded corners=1mm, fill={yellow!40}, draw=black, shape=rectangle, inner sep=0ex, minimum height=21.5mm, minimum width=12mm]
+\tikzstyle{lefttriangleredscaled}=[isosceles triangle, isosceles triangle apex angle=90, shape border rotate=180, draw=black, fill={red!20}, inner sep=0ex, minimum height=6.5mm, scale=0.8]
+\tikzstyle{circleyellow}=[fill={yellow!40}, draw=black, shape=circle, minimum size=11.5mm, inner sep=0pt]
+\tikzstyle{circleorange}=[fill={orange!30}, draw=black, shape=circle, inner sep=0pt, minimum size=11.5mm]
+\tikzstyle{circleyellowscaled}=[fill={yellow!40}, draw=black, shape=circle, inner sep=0pt, minimum size=10.5mm, scale=0.8]
+\tikzstyle{circleorangescaled}=[fill={orange!30}, draw=black, shape=circle, inner sep=0pt, minimum size=10.5mm, scale=0.8]
 
 % Edge styles
 \tikzstyle{fusedwire}=[-, draw=black, fill=none, very thick]
 \tikzstyle{fuseddashedwire}=[-, very thick, fill=none, draw=black, dashed]
+\tikzstyle{fuseddotted}=[-, very thick, fill=none, draw=black, dotted]
