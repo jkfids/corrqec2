@@ -1,10 +1,27 @@
-\Fidel{This is an experimental section to explore connections between SPCs and hidden Markov models.
+\section{Structural properties of SPCs}
+\Fidel{Structural properties of SPCs.
 \begin{enumerate}
-    \item An MPS with non-negative elements can be exactly represented as a hidden Markov model (HMM), where you treat the bond index as the hidden state. You can write the HMM transition and emission matrices in terms of the MPS tensors. This may be a way to leverage existing HMM theory to study SPCs.
-    \item Side note: I've read a bit about entangled hidden Markov models (EHMMs), where it seems like there's a very straightforward correspondence with process tensors. An EHMMs is a quantum generalisation of HMMs, where the hidden system can be entangled with the observed system.
-    \item Avenues to explore:
-    \item Transfer matrix spectral gap and correlation length.
-    \item Effective Markov order.
-    \item There seems to be a body of literature of HMMs and model learning. Might be very useful for tomography? Decoding even? There's a connection between HMMs and belief propagation.
+    \item \textbf{High level:} Quantify explicit bounds on the mutual information, correlation length and strength in terms of physical parameters (e.g., coupling strength, environment size).
+    \item Introduce mapping from process tensor MPO to SPC MPS. (And PEPO TO PEPS?)
+    \item Theorem (lemma?): MPS bond dimension \(\leq d^2_E\).
+    \item Theorem (corollary?): Mutual information bound \(I(A, B)\leq2\log \chi \leq 4\log d_E\)
+    \item Theorem: Sufficient condition for marginalisation (non-Markovian quantum process maps to temporally uncorrelated classical process). Not certain yet whether this should be before or after the bond dimension theorem.
+    \item Remarks on scalability; canonicalisation and truncation.
 \end{enumerate}
 }
+
+\begin{definition}
+    Define how the multitime twirling operation maps a process tensor MPO to an SPC MPS.
+\end{definition}
+
+\begin{theorem}
+    The MPS bond dimension of an SPC is upper bounded by the effective environment dimension \(d_E\) of the underlying system-environment model.
+\end{theorem}
+
+\begin{theorem}
+    The mutual information between Pauli channels in two disjoint spacetime regions is bounded by the environment dimension.
+\end{theorem}
+
+\begin{theorem}
+    Markovianisation condition.
+\end{theorem}

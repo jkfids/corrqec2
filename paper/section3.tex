@@ -1,212 +1,107 @@
-\Fidel{This subsection formally introduces and defines SPCs.
-\begin{enumerate}
-    \item Define the multi-time Pauli twirling operation.
-    \item Theorem: Twirling projects a quantum process tensor to a stochastic (correlated) Pauli distribution.
-    \item Formally define SPCs.
-    \item Tensor network representation and construction of SPCs.
-\end{enumerate}
-TODO:
+\section{Tensor network representations of multi-time processes}\label{sec:pt-tn}
+\Fidel{Originally merged with the previous section, this section has been split off to provide the formalism and notational tools needed to construct tensor network representations of multi-time processes. TODO:
 \begin{itemize}
-  \item Define SE unitary from Hamiltonian.
-  \item Relate multi-time Pauli twirl to standard randomised compiling protocol.
-  \item Worked examples subsection? If not here, then in appendix.
+    \item Citations (Greg, Neil, Scottish guys)
+    \item Figure for Pauli twirling channels?
+    \item Justify our notation system (convenient to translate to code)
+    \item Remark 2D TNs are not trivial to contract unlike 1D TNs
+    \item Worked example
 \end{itemize}
 }
-\subsection{Formal definition}
-We now formally introduce \emph{spatiotemporal Pauli channels} (SPCs)---classical stochastic processes obtainable by applying the \emph{multi-time Pauli twirl} to a quantum process tensor. This construction maps any quantum, possibly non-Markovian, process onto a probability distribution over trajectories of Pauli operators. It removes all genuinely quantum temporal correlations while retaining classical correlations. We begin by defining the multi-time Pauli twirl.
-\begin{definition}[Multi-time Pauli twirl]\label{def:multi-time-twirl}
-    Let \(\mathbb{P}^{(n)}\) denote the \(n\)-qubit Pauli group (ignoring phase factors). For a \(k\)-slot process with Choi operator \(\Upsilon_{0:k}\) acting on
-    \begin{equation*}
-        \mathcal{H}_{\Upsilon_{0:k}} = \bigotimes_{j=0}^k(\mathcal{H}_{\inp_j} \otimes \mathcal{H}_{\out_j}),
-    \end{equation*}
-    the multi-time Pauli twirl \(\mathcal{T}_P^{(k)}\) is the CPTP map
-    \begin{equation}\label{eq:twirl-upsilon}
-        \mathcal{T}_P^{(k)}(\Upsilon_{0:k}) = 
-        \frac{1}{|\mathbb{P}^{(n)}|^k}
-        \sum_{P_0,\dots,P_k\in\mathbb{P}^{(n)}}
-        \Bigg(\bigotimes_{j=0}^k P_j^*\otimes P_j\Bigg)
-        \Upsilon_{0:k}
-        \Bigg(\bigotimes_{j=0}^k P_j^*\otimes P_j\Bigg).
-    \end{equation}
-\end{definition}
-Intuitively, \(\mathcal{T}_P^{(k)}\) applies an independent, uniform Pauli twirl at each timestep while preserving the causal structure of the process tensor. In the language of higher-order quantum maps~\cite{tarantohigherorder2025}, the multi-time Pauli twirl constitutes a time-local \emph{superprocess} (or super-superchannel). We now summarise its key properties.
-\begin{proposition}[Properties]
-    The map \(\mathcal{T}_P^{(k)}\) satisfies the following properties:
-    \begin{enumerate}
-        \item \textbf{Validity}: For any valid process tensor \(\Upsilon_{0:k}\), its twirl \(\mathcal{T}_P^{(k)}(\Upsilon_{0:k})\) is also a valid process tensor.
-        \item \textbf{Projector}: \(\mathcal{T}_P^{(k)}\) is an idempotent projector (\(\mathcal{T}_P^{(k)} \circ \mathcal{T}_P^{(k)} = \mathcal{T}_P^{(k)}\)) and self-adjoint.
-        \item \textbf{Causality}: The affine (causal) constraints are preserved under twirling.
-    \end{enumerate}
-\end{proposition}
-The first two properties generalise those of single-time Pauli twirling for quantum channels, while the third follows from the unitality of Pauli operators (\(\mathcal{E}_P[\mathbb{I}] = \mathbb{I}\)). We now demonstrate that this projection removes all quantum temporal correlations, yielding a classical stochastic process over Pauli trajectories.
-\begin{theorem}[Twirling yields a stochastic Pauli process]
-    \label{thm:pt-to-spc}
-  For any process tensor \(\Upsilon_{0:k}\), its twirl
-  \begin{equation*}
-    \Upsilon_{0:k}^{\mathcal{T}_P} = \mathcal{T}_P^{(k)}(\Upsilon_{0:k})
-  \end{equation*}
-  admits the decomposition
-  \begin{equation}
-    \Upsilon_{0:k}^{\mathcal{T}_P} = \sum_{\mathcal{P}\in\mathbb{P}^{(n,k)}}\Pr{(\mathcal{P})}\Upsilon_\mathcal{P}, \quad \Upsilon_\mathcal{P} = \bigotimes_{j=0}^k\Pi_j,
-  \end{equation}
-  where \(\mathcal{P} = (P_0, P_1, \ldots, P_k)\) is a spatiotemporal Pauli trajectory with each \(P_j \in \mathbb{P}^{(n)}\), and \(\Pi_j = \dketbra{P_j}{P_j}\) are the corresponding Pauli Choi operators. Probabilities \(\Pr{(\mathcal{P})}\) form a valid probability distribution given by
-  \begin{equation}\label{eq:spc-probabilities}
-    \Pr{(\mathcal{P})} = \Tr\Bigg[\Bigg(\bigotimes_{j=0}^k\Pi_j\Bigg)\Upsilon_{0:k}\Bigg] \geq 0, \quad \sum_{\mathcal{P}\in\mathbb{P}^{(n,k)}} \Pr{(\mathcal{P})} = 1.
-  \end{equation}
-  The resulting twirled process tensor \(\Upsilon_{0:k}^{\mathcal{T}_P}\) is separable across all temporal bipartitions and corresponds to a joint probability distribution over Pauli trajectories. The twirl removes all genuinely quantum temporal correlations, while preserving classical correlations. A detailed proof is provided in \cref{app:proof-pt-to-spc}.
-\end{theorem}
-We now formalise this class of processes under the name \emph{spatiotemporal Pauli channels}.
-\begin{definition}[Spatiotemporal Pauli channel]\label{def:def-spc}
-A \emph{spatiotemporal Pauli channel} (SPC), denoted \(\Lambda\), is a process tensor that is fully characterised by a probability distribution 
-\(p_\Lambda(\mathcal{P}) \equiv \Pr{(\mathcal{P})}\) over spatiotemporal Pauli trajectories 
-\(\mathcal{P} = (P_0, P_1, \dots, P_k) \in \mathbb{P}^{(n,k)}\). 
-Its Choi representation is
-\begin{equation}
-    \Upsilon_{\Lambda} = 
-    \sum_{\mathcal{P}\in\mathbb{P}^{(n,k)}}
-        p_\Lambda(\mathcal{P})
-        \bigotimes_{j=0}^k\Pi_j,
-\end{equation}
-where \(\Pi_j = \dketbra{P_j}{P_j}\) are the Pauli Choi operators. All temporal correlations are encoded entirely within the classical distribution \(p_\Lambda\).
-\end{definition}
-Although SPCs can be defined abstractly as stochastic processes over trajectories of Pauli operators, our formulation derives them directly from the underlying quantum process. This connection endows SPCs with the same rich internal structure as process tensors, enabling a straightforward and efficient tensor network construction.
+% \clearpage
+Quantum maps are tensors; when correlations between their indices are sufficiently constrained, they often admit compact tensor network representations. A paradigmatic example is the matrix product state (MPS) description of quantum many-body states with area-law entanglement. The same principle extends to quantum processes: process tensors are high-rank objects whose temporal correlations are typically structured, making tensor network representations both natural and efficient. Accordingly, process tensors have been represented as matrix product operators (MPOs), locally purified density operators (LPDOs), and tree tensor networks (TTNs). In what follows, we present a tensor network construction of process tensors directly linked to the Stinespring dilation. Throughout, we utilise abstract index notation supplemented by a graphical tensor network calculus. A detailed dictionary translating between Dirac notation, abstract indices, and graphical calculus is given in \cref{tab:notations}.
+% For vectorisation, we adopt the column-stacking convention \( X \rho Y^\dagger \longleftrightarrow (Y^* \otimes X) \dket{\rho}\).
 
-\subsection{Tensor network representation}
-We now construct an explicit tensor network representation of SPCs. We begin by defining the Pauli tensor, obtained from the Pauli superoperator \(P^* \otimes P\) via the reorder--fuse--transpose (RFT) operation (see \cref{sec:pt-tn}):
+From the Stinespring dilation, a \(k\)-slot process tensor is fully specified by a sequence of joint system--environment unitaries \(\{U_j\}_{j=0}^k\) together with an initial environment state \(\sigma_E\). For a unitary \(U\) acting on \(\mathcal{H}_E \otimes \mathcal{H}_S\) of dimensions \(d_E\) and \(d_S\), its Liouville superoperator form is \(\mathcal{U} = \overline{U} \otimes U\), where \(\overline{U} = U^*\) denotes elementwise conjugation. In index notation, this reads
 \begin{equation*}
-  \overline{P}_{(x)}^{b'}{}_{a'} P_{(x)}^b{}_a \xmapsto{\;\mathrm{RFT}\;}
-  \mathbf{P}^\alpha{}_{\beta x}
-  \quad\longleftrightarrow\quad
-  \valignbox{\input{figures/tensor-pauli.tikz}}
-  \equiv
-  \valignbox{\input{figures/tensor-pauli-vec.tikz}},
+    \mathcal{U}^{e'_\out s'_\out e_\out s_\out}{}_{e'_\inp s'_\inp e_\inp s_\inp} = \overline{U}^{e'_\out s'_\out}{}_{e'_\inp s'_\inp} U^{e_\out s_\out}{}_{e_\inp s_\inp},
 \end{equation*}
-where the index \(x\) (\(\dim{x} = 4^n\)) enumerates the \(n\)-qubit Pauli operators. Computing the multi-time twirl of a process tensor \(\widetilde{\mathbf{T}} = \mathcal{T}_P(\mathbf{T})\), as in \cref{eq:twirl-upsilon}, can then be written as the tensor contraction
+where \(e_\inp, s_\inp\) (\(e_\out, s_\out\)) label the environment and system input (output) indices, and primed (\('\)) indices mark dual (bra) spaces, with unprimed indices denoting ket space. To make the connection between the Stinespring dilation and tensor networks transparent, we introduce a specialised tensor representation derived from the Liouville form via a \emph{reorder--fuse--transpose} (RFT) operation:
+\begin{enumerate}
+    \item \textbf{Reorder} indices to group each ket index with its corresponding bra index.
+    \item \textbf{Fuse} each bra--ket (primed--unprimed) pair into a single compound index.
+    \item \textbf{Transpose} globally so that time flows from left to right, consistent with standard tensor network diagrams.
+\end{enumerate}
+Explicitly, for a superoperator \(\mathcal{S}\),
+\begin{equation*}
+    \begin{split}
+    &\mathcal{S}^{b'_0 b'_1 \dots b_0 b_1}{}_{a'_0 a'_1 \dots a_0 a_1} \\
+    &\qquad\qquad\xmapsto{\;\text{reorder}\;}
+    \mathcal{S}^{b'_0 b_0 b'_1 b_1 \dots}{}_{a'_0 a_0 a'_1 a_1 \dots}
+    \xmapsto{\;\text{fuse}\;}
+    \mathcal{S}^{\beta_0 \beta_1 \dots}{}_{\alpha_0 \alpha_1 \dots}
+    \xmapsto{\;\text{transpose}\;}
+    \mathbf{S}^{\alpha_0 \alpha_1 \dots}{}_{\beta_0 \beta_1 \dots},
+    \end{split}
+\end{equation*}
+where \(\alpha_j = (a'_j a_j)\) and \(\beta_j = (b'_j b_j)\) are fused indices of dimension \(\dim(\alpha_j) = \dim(a_j)^2\). Latin letters denote basic indices and Greek letters fused indices. Applying RFT to a unitary superoperator \(\mathcal{U}_j\) yields a 4-legged tensor \(\mathbf{U}_{(j)}\),
+\begin{equation*}
+    \mathcal{U}_j^{e'_{j+1} e_{j+1} b'_j b_j}{}_{e'_j e_j a'_j a_j} \xmapsto{\;\mathrm{RFT}\;} \mathbf{U}_{(j)}^{\mu_j \alpha_j}{}_{\mu_{j+1} \beta_j},
+\end{equation*}
+with fused indices \(\mu_j = (e'_j e_j)\) for the environment and \(\alpha_j=(a'_j a_j)\), \(\beta_j=(b'_j b_j)\) for the system input and output, respectively. Their dimensions are \(\dim(\mu_j) = d_E^2\) and \(\dim(\alpha_j) = \dim(\beta_j) = d_S^2\). The mapping is graphically depicted as
+\begin{equation*}
+    \valignbox{\input{figures/tensor-unitary.tikz}} 
+    = 
+    \left(\valignbox{\input{figures/unitary-to-tensor.tikz}}\right)^T,
+\end{equation*}
+where thick wires denote fused indices. The initial environment state \(\dket{\sigma_E}\) is mapped similarly,
+\begin{equation*}
+    \sigma^{e'_0e_0} \xmapsto {\;RFT\;} \pmb{\sigma}_{\mu_0} 
+    \quad\longleftrightarrow\quad
+    \valignbox{\input{figures/tensor-env-init.tikz}} = \left(\valignbox{\input{figures/vectorize-sigma.tikz}}\right)^T.
+\end{equation*}
+To represent the final partial trace over the environment, we include a trace tensor \(\mathbf{t}\), corresponding to the unnormalised Bell state \(\ket{\Phi^+} = \dket{\mathbb{I}}\),
+\begin{equation*}
+    \mathbf{t}^{\mu_{k+1}} = \delta^{e'_{k+1}e_{k+1}}
+    \quad\longleftrightarrow\quad
+    \valignbox{\input{figures/tensor-trace-env.tikz}} = \valignbox{\input{figures/trace-env.tikz}}.
+\end{equation*}
+The full \(k\)-slot process tensor is then constructed as an MPO by contracting the environment indices \(\mu_j\) across all time. This yields a tensor \(\mathbf{T}\) with open system indices corresponding to the inputs (\(\alpha_j\)) and outputs (\(\beta_j\)) at each time \(j\). Formally, we define:
+\begin{definition}[MPO representation of a process tensor]\label{def:pt-mpo}
+A $k$-slot process tensor $\Upsilon_{0:k}$ admits a matrix product operator (MPO) representation,
 \begin{equation}
-  \widetilde{\mathbf{T}}^{\alpha_0\dots \alpha_k}{}_{\beta_0 \dots \beta_k} = 
-  \mathbf{T}^{\alpha'_0 \dots \alpha'_k}{}_{\beta'_0 \dots \beta'_k}
-  \prod_{j=0}^k
-  \left(
-    \mathbf{P}^{\alpha'_j\alpha_j}{}_{x_j}
-    \mathbf{P}^{x_j}{}_{\beta'_j\beta_j}
-  \right),
+    \mathbf{T}^{\alpha_0,\dots,\alpha_k}{}_{\beta_0,\dots,\beta_k} = \sum_{\mu_0,\dots,\mu_{k+1}} \pmb{\sigma}_{\mu_0}\mathbf{U}_{(0)}^{\mu_0\alpha_0}{}_{\mu_1\beta_0}\mathbf{U}_{(1)}^{\mu_1\alpha_1}{}_{\mu_2\beta_1}\cdots\mathbf{U}_{(k)}^{\mu_k\alpha_k}{}_{\mu_{k+1}\beta_k}\mathbf{t}^{\mu_{k+1}}.
 \end{equation}
-where primed indices are summed over. This contraction is graphically depicted as
+Here $\pmb{\sigma}$, $\mathbf{U}_{(j)}$, and $\mathbf{t}$ are tensor representations of the initial environment state, the joint $SE$ unitary at time $j$, and the final environment trace, respectively; the environment indices $\mu_j$ are the MPO's virtual bonds of dimension \(\chi_\mathrm{bond} = \dim{(\mu_j)} \le d_E^2\).
+\end{definition}
+In graphical form,
 \begin{equation*}
-  \valignbox{\input{figures/process-tensor-twirl.tikz}}.
+    \valignbox{\input{figures/process-tensor.tikz}}.
 \end{equation*}
-The contraction with the Pauli tensors acts only on system indices, leaving the environment bonds untouched. Moreover, the order of contraction over the environment bonds \(\mu_j\) and the local Pauli tensors (over primed indices \(\alpha', \beta'\)) is interchangeable. The resulting tensor \(\widetilde{\mathbf{T}}\) is related to the standard Choi representation of the twirled process tensor via \cref{eq:pt-tensor-to-choi}.
+To recover the standard Choi form, we simply reorder and reshape the fused indices,
+\begin{equation}\label{eq:pt-tensor-to-choi}
+    \mathbf{T}^{\alpha_0,\dots,\alpha_k}{}_{\beta_0,\dots,\beta_k} \mapsto \mathbf{T}_{\mathrm{Choi}}^{a_0b_0\dots a_kb_k}{}_{a'_0b'_0\dots a'_kb'_k} \longleftrightarrow \Upsilon_{0:k}.
+\end{equation}
+In the tensor network picture, the action of \(\mathbf{T}\) on an initial state and sequence of instruments is realised as a network contraction between the `top comb' process tensor and the `bottom comb' instruments. The initial system state \(\dket{\rho_\mathrm{in}}\) and each instrument superoperator \(\mathcal{A}_j\) are mapped into their corresponding tensors \(\pmb{\rho}^\mathrm{in}\) and \(\mathbf{A}_{(j)}\) via the RFT operation. The final output state \(\pmb{\rho}^\mathrm{out}\) is then given by
+\begin{equation}
+    \pmb{\rho}^\mathrm{out}_{\alpha_{k+1}} = \pmb{\sigma}_{\mu_0}\pmb{\rho}^\mathrm{in}_{\alpha_0}\mathbf{U}_{(0)}^{\mu_0\alpha_0}{}_{\mu_1\beta_0}\mathbf{A}_{(0)}^{\beta_0}{}_{\alpha_1}\mathbf{U}_{(1)}^{\mu_1\alpha_1}{}_{\mu_2\beta_1}\mathbf{A}_{(1)}^{\beta_1}{}_{\alpha_2}\cdots\mathbf{U}_{(k)}^{\mu_k\alpha_k}{}_{\mu_{k+1}\beta_k}\mathbf{t}^{\mu_{k+1}}\mathbf{A}_{(k)}^{\beta_k}{}_{\alpha_{k+1}},
+\end{equation}
+where repeated indices imply summation (contraction). Graphically,
+\begin{equation*}
+    \valignbox{\input{figures/process-tensor-action.tikz}}.
+\end{equation*}
+This contraction naturally generalises to cases where the instruments are themselves classically or quantumly correlated across time, in which case the product of local instrument tensors is replaced by a more general tensor network.
 
-The probability of a particular spatiotemporal Pauli trajectory \(\mathbf{x}_{0:k} = (x_0, x_1, \ldots, x_k)\) can be sampled directly from the untwirled tensor \(\mathbf{T}\) as
-\begin{equation}
-  \Pr(\mathbf{x}_{0:k}) = \mathbf{T}^{\alpha_0 \dots \alpha_k}{}_{\beta_0 \dots \beta_k} \prod_{j=0}^k \mathbf{P}^{\alpha_j}{}_{\beta_jx_j},
-\end{equation}
-which reproduces \cref{eq:spc-probabilities}. This expression can be combined with tensor network sampling algorithms (e.g., MPS sampling) to generate Pauli trajectories for arbitrary process tensors. Alternatively, one may compute the tensors defining the SPC tensor network directly from the Stinespring dilation of the underlying process. For a dilation \(\{\mathbf{U}_{(j)}, \pmb{\sigma}\}\), the local SPC tensors are given by
-\begin{equation}
-  \begin{aligned}
-    \mathbf{A}_{x_0\mu_{1}} 
-    &= \pmb{\sigma}_{\mu_0}\mathbf{U}^{\mu_0\alpha_0}{}_{\mu_{1}\beta_0} \mathbf{P}^{\alpha_0}{}_{\beta_0 x_0} \\
-    \mathbf{A}^{\mu_j}{}_{x_j\mu_{j+1}} 
-    &= \mathbf{U}^{\mu_j\alpha_j}{}_{\mu_{j+1}\beta_j} \mathbf{P}^{\alpha_j}{}_{\beta_j x_j} \\
-    \mathbf{A}^{\mu_k}{}_{x_k} 
-    &= \mathbf{U}^{\mu_k\alpha_k}{}_{\mu_{k+1}\beta_k}\mathbf{t}^{\mu_{k+1}}
-    \mathbf{P}^{\alpha_k}{}_{\beta_k x_k},
-  \end{aligned}
-\end{equation}
-where the initial environment tensor \(\pmb{\sigma}\) and the final trace \(\mathbf{t}\) have been absorbed into the boundary tensors. The tensors \(\{\mathbf{A}_{(j)}\}\) thus form an MPS representation of the SPC:
+So far we have considered only the one-dimensional (temporal) structure of process tensors, where each tensor carries dense system indices of size \(d^2_S\). For composite systems---such as spin chains---these indices can be further factorised along spatial degrees of freedom, promoting the MPO to a two-dimensional tensor network with time along one axis and space along the other. For a unitary tensor \(\mathbf{U}_{(j)}\) acting on an \(n\)-partite system, we can perform a series of singular value decompositions (SVDs) along subsystem indices, yielding
 \begin{equation*}
-  \mathbf{p}_{x_0\dots x_k} =
-  \mathbf{A}_{x_0\mu_1}
-  \Bigg[\prod_{j=1}^{k-1} 
-  \mathbf{A}^{\mu_j}{}_{x_j\mu_{j+1} }\Bigg]
-  \mathbf{A}^{\mu_k}{}_{x_k}.
+    \mathbf{U}_{(j)}^{\mu_j\alpha_j}{}_{\mu_{j+1}\beta_j} 
+    = \sum_{\nu_j^0,\dots,\nu_j^{n-2}}
+    \mathbf{u}_{(0,j)}^{\mu_j^0\alpha_j^0}{}_{\beta_j^0\mu_{j+1}^0\nu_j^0}
+    \mathbf{u}_{(1,j)}^{\nu_j^0\mu_j^1\alpha_j^1}{}_{\beta_j^1\mu_{j+1}^1\nu_j^1}\dots 
+    \mathbf{u}_{(n-1,j)}^{\nu_j^{n-2}\mu_j^{n-1}\alpha_j^{n-1}}{}_{\beta_j^{n-1}\mu_{j+1}^{n-1}},
 \end{equation*}
-Sampling this tensor network directly yields a Pauli trajectory \(\mathbf{x}_{0:k}\) with probability \(\Pr(\mathbf{x}_{0:k})\). This construction is illustrated in \cref{fig:spc-mps}.
+where index superscripts \(i=0,\dots,n-1\) label subsystems (spatial coordinates) and index subscripts \(j=0,\dots,k\) label timesteps. Performing this decomposition for all \(j\) and similarly for the initial environment tensor \(\pmb{\sigma}\), we obtain a 2D tensor network representation of the process tensor,
+\begin{equation*}
+    \mathbf{T}^{\{\alpha_j^i\}}{}_{\{\beta_j^i\}} = 
+    \sum_{\{\mu_j^i\}} \sum_{\{\lambda^i\}} \sum_{\{\nu_j^i\}}
+    \Biggl[\prod_{i=0}^{n-1}\pmb{\sigma}_{(i)}^{\lambda^{i-1}}{}_{\mu_0^i\lambda^i}\Biggr]
+    \Biggl[\prod_{j=0}^{k}\prod_{i=0}^{n-1}\mathbf{u}_{(i, j)}^{\nu^{i-1}_j\mu_j^i\alpha_j^i}{}_{\beta_j^i\mu_{j+1}^i\nu_j^i}\Biggr]
+    \Biggl[\prod_{i=0}^{n-1}\mathbf{t}_{(i)}^{\mu_{k+1}^i}\Biggr],
+\end{equation*}
+with spatial boundary conditions such that left indices \(\lambda^{-1}, \nu^{-1}_j\) and right indices \(\lambda^{n-1}, \nu^{n-1}_j\) are absent. The spatial bond dimensions \(\chi_s = \dim(\nu_j^i)\) are set by the SVD truncation, while the temporal bond dimensions remain bounded by the environment size, \(\chi_t = \dim(\mu_j^i) \le d_E^2\). \Cref{fig:tensor-network-2d} displays a graphical representation of this 2D tensor network.
 \begin{figure}
     \centering
-    \begin{subfigure}{0.49\textwidth}
-      \centering
-      \[
-      \valignbox{\input{figures/tensor-pauli-mps.tikz}} 
-      \!=\!
-      \valignbox{\input{figures/unitary-pauli.tikz}}
-      \]
-      \caption{Local 1D tensor.}
-    \end{subfigure}
-    \begin{subfigure}{0.50\textwidth}
-      \centering
-      \input{figures/spc-mps.tikz}
-      \vspace{8mm}
-      \caption{Spatiotemporal Pauli channel MPS.}
-    \end{subfigure}
-    \caption{}
-    \label{fig:spc-mps}
+    \input{figures/process-tensor-2d.tikz}
+    \caption{Two-dimensional tensor network representation of a process tensor \(\mathbf{T}^{\{\alpha_j^i\}}{}_{\{\beta_j^i\}}\). Horizontal bonds \(\mu_j^i\) encode temporal correlations, bonds \(\nu_j^i\) carry spatial correlations, and open indices \(\alpha_j^i\), \(\beta_j^i\) correspond to system inputs and outputs at each time \(j \in [0,k]\) and subsystem \(i \in [0,n)\).}
+    \label{fig:tensor-network-2d}
 \end{figure}
-This construction generalises straightforwardly to higher-dimensional tensor networks. For a two-dimensional network, where spatial correlations lie along one axis and temporal correlations along the other (\cref{fig:tensor-network-2d}), the constituent tensors take the form
-\begin{equation*}
-  \mathbf{a}_{(i, j)}^{\nu^{i-1}_j\mu_j^i}{}_{x_j^i\mu_{j+1}^i\nu_j^i} = 
-  \mathbf{u}_{(i, j)}^{\nu^{i-1}_j\mu_j^i\alpha_j^i}{}_{\beta_j^i\mu_{j+1}^i\nu_j^i}
-  \mathbf{P}^{\beta_j^i}{}_{\alpha_j^i x_j^i}.
-\end{equation*}
-A graphical representation is shown in \cref{fig:spc-peps}.
-\begin{figure}
-    \centering
-    \begin{subfigure}{0.49\textwidth}
-      \[
-      \valignbox{\input{figures/tensor-pauli-peps.tikz}} 
-      \!=\!
-      \valignbox{\input{figures/unitary-pauli-2d.tikz}}
-      \]
-      \caption{Local 2D tensor.}
-    \end{subfigure}
-    \begin{subfigure}{0.50\textwidth}
-      \centering
-      \input{figures/spc-peps.tikz}
-      \caption{Spatiotemporal Pauli channel PEPS.}
-    \end{subfigure}
-    \caption{}
-    \label{fig:spc-peps}
-\end{figure}
-
-
-% \subsection{Worked examples}
-
-% Spatiotemporal Pauli string \(\mathbf{P}\in\mathbb{P}^{(n,k)}\):
-% \(\mathbf{P} = \bigotimes_{j=0}^{k-1}P_j\). \\
-% A Spatiotemporal Pauli Channel (SPC) \(\mathbf{\Lambda}_\mathbf{P}\) is entirely characterised by a probability distribution over the set of SPCs, \(\mathbb{P}^{(n,k)}\).
-% \begin{equation}
-%     \Pr{\mathbf{P}} \geq 0, \quad \sum_{\mathbf{P}\in\mathbb{P}^{(n,k)}} \Pr{\mathbf{P}} = 1
-% \end{equation}
-% The Choi matrix representation of \(\mathbf{\Lambda}\) is the convex sum of Choi matrices for each deterministic Pauli string process \(\Upsilon_{\bm{\Lambda}}\) weighted by their respective probabilities
-% \begin{equation}
-%     \Upsilon_{\bm{\Lambda}} = \sum_{\mathbf{P}\in\mathbb{P}^{(n,k)}} \Pr{\mathbf{P}} \Upsilon_{\mathbf{P}}
-% \end{equation}
-% \begin{equation}
-%     \Upsilon_{\mathbf{P}} = \bigotimes_{j=0}^{k-1}\Pi_j
-% \end{equation}
-% \(\Pi_j = \dketbra{P_j}{P_j}\) and $
-% \{\dket{I}, \dket{X}, \dket{Y}, \dket{Z}\} = \{\ket{\Phi^+}, \ket{\Phi^-}, \ket{\Psi^+}, \ket{\Psi^-}\}
-% $
-
-% \begin{equation}\label{eq:spc-probabilities}
-%     \Pr{\mathbf{P}} = \Tr\left[\left(\bigotimes_{j=0}^{k-1}\Pi_j\right)\Upsilon_{0:k}\right]
-% \end{equation}
-
-
-% \subsection{Mathematical properties}
-% \begin{enumerate}
-%     \item Are Pauli process tensors equivalent to pseudo-density matrices up to some conjugation?
-%     \item Pauli process tensor \(\chi\)-matrix positivity conditions?
-%     \item Can the Pauli process tensor be expressed by a classical distribution?
-%     \item When does a process tensor map to a Markovian distribution after twirling?
-%     \item Can we bound the correlations of process tensor from the twirled process 
-%     tensor?
-% \end{enumerate}
-% \subsection{Interpretation}
-% \subsection{Pauli process tensor metrics}
-% \begin{enumerate}
-%     \item Pairwise correlation as a function of spacetime distance
-%     \item Based on the underlying process (size of environment, locality of interaction Hamiltonian, quantum correlations) what can we say about the space-time correlations of Pauli channels?
-    
-% \end{enumerate}
-% \subsection{Tomographic construction?}
