@@ -18,7 +18,7 @@ TODO:
 \subsection{Formal definition}
 We now formally introduce \emph{spatiotemporal Pauli channels} (SPCs)---classical stochastic processes obtainable by applying the \emph{multi-time Pauli twirl} to a quantum process tensor. This construction maps any quantum, possibly non-Markovian, process onto a probability distribution over trajectories of Pauli operators. It removes all genuinely quantum temporal correlations while retaining classical correlations. We begin by defining the multi-time Pauli twirl.
 \begin{definition}[Multi-time Pauli twirl]\label{def:multi-time-twirl}
-    Let \(\mathbb{P}^{(n)}\) denote the \(n\)-qubit Pauli group (ignoring phase factors). For a \(k\)-slot process with Choi operator \(\Upsilon_{0:k}\) acting on
+    Let \(\mathbb{P}^{(n)}\) denote the \(n\)-qubit Pauli group without phase factors. For a \(k\)-slot process with Choi operator \(\Upsilon_{0:k}\) acting on
     \begin{equation*}
         \mathcal{H}_{\Upsilon_{0:k}} = \bigotimes_{j=0}^k(\mathcal{H}_{\inp_j} \otimes \mathcal{H}_{\out_j}),
     \end{equation*}
@@ -104,8 +104,11 @@ A specific spatiotemporal Pauli trajectory \(\mathbf{x}_{0:k} = (x_0, x_1, \ldot
 \begin{equation}
   \Pr(\mathbf{x}_{0:k}) = \mathbf{T}^{\alpha_0 \dots \alpha_k}{}_{\beta_0 \dots \beta_k} \prod_{j=0}^k \mathbf{P}^{\alpha_j}{}_{\beta_jx_j},
 \end{equation}
-reproducing \cref{eq:spc-probabilities}. This expression can be integrated with tensor network sampling algorithms (e.g., MPS sampling) to sample Pauli trajectories for arbitrary process tensors. Alternatively, one may directly compute the tensors encoding the SPC probability distribution from the Stinespring dilation of the underlying dynamics. Explicitly, for a dilation \(\{\mathbf{U}_{(j)}, \pmb{\sigma}\}\), the SPC tensors are given by
-\begin{equation}
+reproducing \cref{eq:spc-probabilities}. This expression can be integrated with tensor network sampling algorithms (e.g., MPS sampling) to draw Pauli trajectories for arbitrary process tensors. Alternatively, one may directly compute the tensors encoding the SPC probability distribution from the Stinespring dilation of the underlying dynamics. We formalise this direct construction procedure below.
+
+\begin{definition}[Process tensor MPO to SPC MPS]
+  Given a process tensor $\mathbf T$ with Stinespring dilation $\{\mathbf U_{(j)}, \pmb\sigma\}$, the spatiotemporal Pauli channel obtained by multi-time twirling admits an MPS representation with tensors
+  \begin{equation}
   \begin{aligned}
     \mathbf{A}_{x_0\mu_{1}} 
     &= \pmb{\sigma}_{\mu_0}\mathbf{U}^{\mu_0\alpha_0}{}_{\mu_{1}\beta_0} \mathbf{P}^{\alpha_0}{}_{\beta_0 x_0} \\
@@ -115,16 +118,18 @@ reproducing \cref{eq:spc-probabilities}. This expression can be integrated with 
     &= \mathbf{U}^{\mu_k\alpha_k}{}_{\mu_{k+1}\beta_k}\mathbf{t}^{\mu_{k+1}}
     \mathbf{P}^{\alpha_k}{}_{\beta_k x_k},
   \end{aligned}
-\end{equation}
-where the initial environment tensor \(\pmb{\sigma}\) and the final trace \(\mathbf{t}\) have been absorbed into the boundary tensors. The tensors \(\{\mathbf{A}_{(j)}\}\) thus form a matrix product state (MPS) representation of the SPC,
-\begin{equation*}
-  \mathbf{p}_{x_0\dots x_k} =
-  \mathbf{A}_{x_0\mu_1}
-  \Bigg(\prod_{j=1}^{k-1} 
-  \mathbf{A}^{\mu_j}{}_{x_j\mu_{j+1} }\Bigg)
-  \mathbf{A}^{\mu_k}{}_{x_k}.
-\end{equation*}
-Direct sampling of this network yields a Pauli trajectory \(\mathbf{x}_{0:k}\) with probability \(\Pr(\mathbf{x}_{0:k})\). This construction is illustrated in \cref{fig:spc-mps}.
+  \end{equation}
+  where the initial environment tensor \(\pmb{\sigma}\) and the final trace \(\mathbf{t}\) have been absorbed into the boundary tensors. The resulting MPS,
+  \begin{equation}
+    \mathbf{p}_{x_0\dots x_k} =
+    \mathbf{A}_{x_0\mu_1}
+    \Bigg(\prod_{j=1}^{k-1} 
+    \mathbf{A}^{\mu_j}{}_{x_j\mu_{j+1} }\Bigg)
+    \mathbf{A}^{\mu_k}{}_{x_k},
+  \end{equation}
+  encodes the joint probability distribution over Pauli trajectories, where \(\Pr(\mathbf{x}_{0:k}) = \mathbf{p}_{x_0\dots x_k}\).
+\end{definition}
+This construction, illustrated in \cref{fig:spc-mps}, provides a direct method for sampling Pauli trajectories from the joint distribution \(\Pr(\mathbf{x}_{0:k})\) using standard tensor network algorithms.
 \begin{figure}
     \centering
     \begin{subfigure}{0.49\textwidth}
@@ -146,12 +151,12 @@ Direct sampling of this network yields a Pauli trajectory \(\mathbf{x}_{0:k}\) w
 }
     \label{fig:spc-mps}
 \end{figure}
-This construction generalises straightforwardly to higher-dimensional tensor networks. For a two-dimensional network where spatial correlations are encoded along one axis and temporal along the other, the constituent tensors adopt the form
-\begin{equation*}
+This approach extends to systems with spatial structure, where the process tensor is represented by a higher-dimensional tensor network. In the 2D case, for example, the multi-time Pauli twirl maps the process tensor's PEPO representation to a projected entangled-pair state (PEPS) representation of the SPC. The constituent tensors of this PEPS are given by
+\begin{equation}
   \mathbf{a}_{(i, j)}^{\nu^{i-1}_j\mu_j^i}{}_{x_j^i\mu_{j+1}^i\nu_j^i} = 
   \mathbf{u}_{(i, j)}^{\nu^{i-1}_j\mu_j^i\alpha_j^i}{}_{\beta_j^i\mu_{j+1}^i\nu_j^i}
   \mathbf{P}^{\beta_j^i}{}_{\alpha_j^i x_j^i},
-\end{equation*}
+\end{equation}
 yielding a projected entangled-pair state (PEPS) representation of the SPC. A graphical depiction is shown in \cref{fig:spc-peps}.
 \begin{figure}
     \centering
@@ -173,6 +178,28 @@ yielding a projected entangled-pair state (PEPS) representation of the SPC. A gr
     \label{fig:spc-peps}
 \end{figure}
 
+% Explicitly, for a dilation \(\{\mathbf{U}_{(j)}, \pmb{\sigma}\}\), the SPC tensors are given by
+% \begin{equation}
+%   \begin{aligned}
+%     \mathbf{A}_{x_0\mu_{1}} 
+%     &= \pmb{\sigma}_{\mu_0}\mathbf{U}^{\mu_0\alpha_0}{}_{\mu_{1}\beta_0} \mathbf{P}^{\alpha_0}{}_{\beta_0 x_0} \\
+%     \mathbf{A}^{\mu_j}{}_{x_j\mu_{j+1}} 
+%     &= \mathbf{U}^{\mu_j\alpha_j}{}_{\mu_{j+1}\beta_j} \mathbf{P}^{\alpha_j}{}_{\beta_j x_j} \\
+%     \mathbf{A}^{\mu_k}{}_{x_k} 
+%     &= \mathbf{U}^{\mu_k\alpha_k}{}_{\mu_{k+1}\beta_k}\mathbf{t}^{\mu_{k+1}}
+%     \mathbf{P}^{\alpha_k}{}_{\beta_k x_k},
+%   \end{aligned}
+% \end{equation}
+% where the initial environment tensor \(\pmb{\sigma}\) and the final trace \(\mathbf{t}\) have been absorbed into the boundary tensors. 
+
+% The tensors \(\{\mathbf{A}_{(j)}\}\) thus form a matrix product state (MPS) representation of the SPC,
+% \begin{equation}
+%   \mathbf{p}_{x_0\dots x_k} =
+%   \mathbf{A}_{x_0\mu_1}
+%   \Bigg(\prod_{j=1}^{k-1} 
+%   \mathbf{A}^{\mu_j}{}_{x_j\mu_{j+1} }\Bigg)
+%   \mathbf{A}^{\mu_k}{}_{x_k}.
+% \end{equation}
 
 % \subsection{Worked examples}
 
