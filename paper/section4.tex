@@ -41,7 +41,7 @@ Intuitively, \(\mathcal{T}_P^{(k)}\) independently twirls each timestep’s inpu
         \item \textbf{Causality}: The affine (causal) constraints are preserved under twirling.
     \end{enumerate}
 \end{proposition}
-The first two properties generalise those of single-time Pauli twirling for quantum channels, while the third follows from the unitality of Pauli operators (\(\mathcal{E}_P[\mathbb{I}] = \mathbb{I}\)). We now demonstrate that this projection removes all quantum temporal correlations, yielding a classical stochastic process over Pauli trajectories.
+The first two properties generalise those of standard Pauli twirling for quantum channels, while the third follows from the unitality of Pauli operators (\(\mathcal{E}_P[\mathbb{I}] = \mathbb{I}\)). We now demonstrate that this projection removes all quantum temporal correlations, yielding a classical stochastic process over Pauli trajectories.
 \begin{theorem}[Twirling yields a stochastic Pauli process]
     \label{thm:pt-to-spc}
   For any process tensor \(\Upsilon_{0:k}\), its twirl
@@ -75,7 +75,7 @@ where \(\Pi_j = \dketbra{P_j}{P_j}\) are the corresponding Pauli Choi operators 
 Although SPCs can be defined abstractly as stochastic processes over trajectories of Pauli operators, our formulation derives them directly from the underlying quantum process. This connection endows SPCs with the same rich internal structure as process tensors, enabling a straightforward and efficient tensor network construction.
 
 \subsection{Tensor network representation}
-We now construct an explicit tensor network representation of SPCs. Starting from the Pauli superoperator \(P^* \otimes P\), we define the Pauli tensor \(\mathbf{P}\) via the reorder--fuse--transpose (RFT) operation introduced in \cref{sec:pt-tn}:
+We now construct an explicit tensor network representation of SPCs. Starting from the Pauli superoperator \(P^* \otimes P\), we define the Pauli tensor \(\mathbf{P}\) via the reorder--fuse--transpose (RFT) operation introduced in \cref{sec:pt-tn} as
 \begin{equation*}
   \overline{P}_{(x)}^{b'}{}_{a'} P_{(x)}^b{}_a \xmapsto{\;\mathrm{RFT}\;}
   \mathbf{P}^\alpha{}_{\beta x}
@@ -129,7 +129,7 @@ reproducing \cref{eq:spc-probabilities}. This expression can be integrated with 
   \end{equation}
   encodes the joint probability distribution over Pauli trajectories, where \(\Pr(\mathbf{x}_{0:k}) = \mathbf{p}_{x_0\dots x_k}\).
 \end{definition}
-This construction, illustrated in \cref{fig:spc-mps}, provides a direct method for sampling Pauli trajectories from the joint distribution \(\Pr(\mathbf{x}_{0:k})\) using standard tensor network algorithms.
+This construction, illustrated in \cref{fig:spc-mps}, provides a direct method for sampling Pauli trajectories from the joint distribution \(\Pr(\mathbf{x}_{0:k})\) using standard tensor network sampling algorithms.
 \begin{figure}
     \centering
     \begin{subfigure}{0.49\textwidth}

@@ -1,50 +1,9 @@
-\section{Notes on SPC transition matrices}
-\Fidel{This is a placeholder for my notes on the structural properties of SPC MPS'.}
+\section{Applications to quantum error correction}
+\Fidel{This section will explore potential applications of SPCs to quantum error correction.
 \begin{itemize}
-    \item The first results I came up with to potentially include in this section were the upper bound on the bond dimension of the SPC MPS, which it inherits from the process tensor, and consequently the upper bound on the mutual information between bipartitions of the chain. Specifically:
-    \[
-    I(A,B) \leq 2\log \chi_{\mathrm{bond}} \leq 4\log d_E
-    \]
-    \item I ran into trouble trying to explore the literature of MPS correlation properties, as most of it is in the context of studying many-body quantum systems in condensed matter physics. One key difference is that for quantum states the tensor encodes the state amplitudes (probability in the \(\ell_2\) norm), whereas the SPC MPS directly encodes the probability tensor (\(\ell_1\) norm). Many algorithms assume an MPS encodes a quantum wavefunction, so I needed to be careful when translating concepts and algorithms, in particular canonicalisation and how to define the transfer operator. A good resource for quantum MPS' is \href{https://arxiv.org/abs/1008.3477}{The density-matrix renormalization group in the age of matrix product states}.
-    \item For example, for a quantum MPS, the transfer operator is defined as 
-    \[T = \sum_x A_{(x)} \otimes \overline{A}_{(x)}.\]
-    This form comes from how you compute correlators for quantum states (you stick two copies of the MPS together). However, for SPC MPS', the transfer operator should be defined as 
-    \[
-    T = \sum_x A_{(x)},
-    \]
-    or in tensor notation
-    \[\mathbf{T}^{\mu_j}{}_{\mu_{j+1}} = \sum_{x_j} \mathbf{A}^{\mu_j}{}_{x_j \mu_{j+1}}.\]
-    \item Another lead I initially had was the correspondence between hidden Markov models and MPS'. Every classical stochastic process encoded by a positive joint probability distribution can be represented as an MPS with non-negative tensors, which mathematically exactly describes a hidden Markov model. But since the SPC MPS tensors are not necessarily non-negative, as it inherits its elements from the process tensor, I have not explored this direction thoroughly. A good resource I found for this was a paper on stochastic MPS': \href{https://arxiv.org/abs/1003.2545}{Stochastic matrix product states}.
-    \item 
+    \item The main application is using SPC tensor networks to ``efficiently'' simulate correlated noise in large-scale QEC simulations''. Some specific details:
+    \item Can we map the SPC TN directly to a detector error model? This may enable a robust approach to studying correlated noise in the context of circuit-level noise.
+    \item Experiments of interest: surface code stability, Floquet codes.
+    \item There is an inherent scaling problem with Monte Carlo sampling QEC experiments, in that the number of samples required to estimate a logical error rate \(p_L\) scales as \(1/p_L\). This is particularly problematic when \(p_L\) is (exponentially) small and/or the noise is very sparse. Some approaches to mitigate this is importance sampling and splitting methods. One lead is using ``normalizing flows''.
 \end{itemize}
-
-\begin{itemize}
-    \item The density-matrix renormalization group in the age of matrix product states: https://arxiv.org/abs/1008.3477
-    \item Transition matrix \(T\) defined as
-    \[
-    T = \sum_x A_{(x)}
-    \]
-    \[\mathbf{T}^{\mu_j}{}_{\mu_{j+1}} = \sum_{x_j} \mathbf{A}^{\mu_j}{}_{x_j \mu_{j+1}}\]
-    \item Spectral gap
-    \[
-    \Delta = |\lambda_1| - |\lambda_2|
-    \]
-    \item Correlation length
-    \[
-    \xi = \frac{1}{-\ln{(|\lambda_2|/|\lambda_1|)}}
-    \]
-    \item Mutual information bound and decay
-    \[
-    I(A,B) \leq 2\log \chi \leq 4\log d_E
-    \]
-    \[
-    I(A,B) \propto e^{-r/\xi}
-    \]
-    \item Approximate Markov order
-    \[\ell_\epsilon \approx  \ln (1/\epsilon)/\Delta\]
-    \item Mutual information decay
-    \item Bond entropy
-    \item Degeneracy of eigenvalues \(\lambda\)
-    \item Canonicalisation and gauge degrees
-    \item Bond dimension/environment size bounds spectral gap
-\end{itemize}
+}

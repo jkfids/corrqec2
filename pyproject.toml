@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools >= 77.0.3"]
+build-backend = "setuptools.build_meta"
+
+[project]
+dynamic = ["version"]
+name = "corrqec2"
+description = "Repository for SPC paper and related code."
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [{ name = "John Fidel Kam", email = "jfidelkam@gmail.com" }]
+# maintainers = [
+#   { name = "John Smith", email = "john.smith@example.com" },
+# ]
+keywords = ["example", "python", "template"] # Keywords for your project
+classifiers = [ # Trove classifiers (https://pypi.org/classifiers/)
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+]
+dependencies = [ # Runtime dependencies for your project
+  "numpy",
+]
+
+[tool.setuptools.dynamic]
+version = { attr = "corrqec2.__version__" }
+
+[tool.setuptools.packages.find]
+where = ["src"]

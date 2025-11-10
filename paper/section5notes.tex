@@ -1,0 +1,58 @@
+\section*{Notes on SPC transition matrices}
+\Fidel{This is a placeholder for my notes on the structural properties of SPC MPS'.}
+\begin{itemize}
+    \item Now that we've established the framework of SPCs and their tensor network representations, what can we say about their structural properties? In particular, how do the physical parameters of the underlying system-environment model (e.g., environment dimension, coupling strength) influence the correlations present in the SPC? When does a quantum process under the multi-time twirl become Markovian? Can we formalise canonical forms and truncation procedures? How connections can we draw to literature on tensor networks, stochastic processes, and hidden Markov model?
+    \item The first results I came up with to potentially include in this section were the upper bound on the bond dimension of the SPC MPS, which it inherits from the process tensor, and consequently the upper bound on the mutual information between bipartitions of the chain. Specifically:
+    \[
+    I(A,B) \leq 2\log \chi_{\mathrm{bond}} \leq 4\log d_E.
+    \]
+    An interesting and potentially related paper: \href{https://arxiv.org/abs/2404.01287}{Understanding and utilizing the inner bonds of a process tensor}.
+    \item I ran into trouble trying to explore the literature of MPS correlation properties, as most of it is in the context of studying many-body quantum systems in condensed matter physics. One key difference is that for quantum states the tensor encodes the state amplitudes (probability in the \(\ell_2\) norm), whereas the SPC MPS directly encodes the probability tensor (\(\ell_1\) norm). Many algorithms assume an MPS encodes a quantum wavefunction, so I needed to be careful when translating concepts and algorithms, in particular canonicalisation and how to define the transfer operator. A good resource for quantum MPS' is \href{https://arxiv.org/abs/1008.3477}{The density-matrix renormalization group in the age of matrix product states}.
+    \item For example, for a quantum MPS, the transfer operator is defined as 
+    \[T = \sum_x A_{(x)} \otimes \overline{A}_{(x)}.\]
+    This form comes from how you compute correlators for quantum states (operators are sandwiched between two MPS'). However, for an SPC MPS, the transfer operator should be defined as 
+    \[
+    T = \sum_x A_{(x)},
+    \]
+    or in tensor notation
+    \[\mathbf{T}^{\mu_j}{}_{\mu_{j+1}} = \sum_{x_j} \mathbf{A}^{\mu_j}{}_{x_j \mu_{j+1}}.\]
+    \item Another lead I initially had was the correspondence between hidden Markov models and MPS'. Every classical stochastic process encoded by a positive joint probability distribution can be represented as an MPS with non-negative tensors, which mathematically exactly describes a hidden Markov model. But since the SPC MPS tensors are not necessarily non-negative, as it inherits its elements from the process tensor, I have not explored this direction very far. Part of the issue is there doesn't seem to be an easy way to map the non-positive tensors to positive tensors with optimal bond dimension. A good resource I found for this was a paper on stochastic MPS': \href{https://arxiv.org/abs/1003.2545}{Stochastic matrix product states}.
+    \item I have been wrestling with analysing the structural properties of SPC MPS' for a while now, and I think have a good grasp of what to present. Our analysis mainly revolves around two objects: the transfer matrix and the emission matrices. The transfer matrix describes how correlations propagate along the chain, and the emission matrices describe how the physical indices are generated from the `hidden' bond states.
+    \item We'll start with the transfer matrix which we perform spectral analysis on. A key quantity is the spectral gap
+    \[\Delta = |\lambda_1| - |\lambda_2|,\]
+    where \(\lambda_1\) and \(\lambda_2\) are the leading and subleading eigenvalues of the transfer matrix respectively. The spectral gap quantifies how fast correlations decay along the chain, with a larger gap indicating faster decay.
+    \item Besides the spectral gap, the eigenvalues themselves can reveal useful information. For example, eigenvalues are not necessarily real, where complex values can indicate oscillatory behaviour in correlations. Degenerate leading eigenvalues imply multiple steady states, \(T\) is ergodic (\(
+    \lim_{t\to\infty} T^n\) results in a stationary distribution) if \(\lambda_1 = 1\) is simple and all other eigenvalues satisfy \(|\lambda_i| < 1\).
+    \item From the spectral gap $\Delta$ we can calculate the correlation length \(\xi\) as
+    \[\xi = \frac{1}{-\ln{(|\lambda_1|/|\lambda_2|)}} = \frac{1}{-\ln{|\lambda_2|}},
+    \]
+    where we've normalised s.t. \(|\lambda_1| = 1\).
+    \item For processes with sufficiently large spectral gaps, correlator functions such as the covariance decay as
+    \[
+    C_{XY}(\tau) = \langle X_t Y_{t+\tau} \rangle - \langle X_t \rangle \langle Y_{t+\tau} \rangle \sim e^{-\tau/\xi}.
+    \]
+    Similarly, for the mutual information
+    \[
+    I(X_t, Y_{t+\tau}) \sim e^{-2\tau/\xi}.
+    \]
+    This breaks for small-gap/critical processes, since $\xi$ diverges.
+    \item From the above you can define some approximate Markov order \(\ell_\epsilon\) based on when the correlation/mutual information drops below some $\epsilon$. E.g.
+    \[\ell_\epsilon \sim \frac{\xi}{2} ln(1/\epsilon).\]
+    \item We could also make some information theoretic remarks about the bond (Shanon) entropy.
+    \item The transfer matrix by itself is not sufficient to predict all correlation properties of the SPC MPS. For example an identity operator for the system--environment unitary results in a trivial process tensor with no correlations, but the transfer matrix is just the identity matrix with all eigenvalues equal to 1 (no spectral gap). The additional ingredient we need are the emission matrices which describe how the physical indices, in this case Pauli operators, `see' the hidden bond states:
+    \[
+    E_f \coloneq \sum_x f(x) A_{(x)}.
+    \]
+    Where $f(x)$ is some scalar function on the physical indices. Additionally, if we define
+    \[
+    \widetilde{E}_f \coloneq E_f - \langle f \rangle T,
+    \]
+    where \(\langle f \rangle = \langle L | E_f | R \rangle\) and \(|L\rangle, |R\rangle\) are the left and right steady states, then we can express the two-point correlator as 
+    \[
+    C_{f,g}(\tau) = \langle L | \widetilde{E}_f T^{\tau - 1} \widetilde{E}_g | R \rangle.
+    \]
+    Essentially, this is gives the same result as computing the correlator directly from contracting the SPC MPS, but expressed in terms of transfer and emission matrices. For $E_f = T$, we can see that the correlator vanishes, as the physical indices are uncorrelated from the bond states.
+    \item Another quantity to measure how much access the physical indices have to the bond states is the rank of the matrix \(A_{(\mu_j \mu_{j+1}),(x_j)}\).
+    \item One of the main things I still need to figure out the details of is canonicalisation of the SPC MPS. I can still perform spectral gap analysis of the transfer operator without canonicalisation, but it will be important for truncation and numerical stability. I need to work out how to do left and right canonical forms for the SPC MPS, and exactly what the gauge degrees of freedom are and what they correspond to.
+    \item I will potentially dedicate an additional section after this that will focus on the spatiotemporal 2D SPC PEPS case, though it will likely be more numerical in nature. We'll pick some good measures, an interesting model and go from there.
+\end{itemize}

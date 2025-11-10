@@ -1,0 +1,155 @@
+from typing import List
+
+import numpy as np
+import stim
+
+from ..experiments.base_experiment import Experiment
+from ..experiments.experiment_utils import (
+    combine_split_circuits,
+    get_noisy_qubits,
+    error_matrix_shape,
+    format_noisy_qubits,
+    parse_noisy_qubit_types,
+)
+
+# CURRENTLY MISSING MPP
+from ..stim_gates import (
+    single_qubit_clifford,
+    two_qubit_clifford,
+    measure_X,
+    measure_Y,
+    measure_Z,
+    reset_X,
+    reset_Y,
+    reset_Z,
+)
+
+gate_noise_special_strings = [
+    "after_identity_depolarization",
+    "after_clifford_depolarization",
+    "before_measure_flip_probability",
+    "after_reset_flip_probability",
+]
+
+
+class NoiseModel:
+    def __init__(
+        self, gate_noise: dict | None = None, noisy_qubit_types: str | List[str] = "all"
+    ):
+        self.noisy_qubit_types = noisy_qubit_types
+        self.gate_noise = gate_noise
+        if gate_noise is None or gate_noise == {}:
+            self._no_gate_noise = True
+        else:
+            self._no_gate_noise = False
+
+    def gen_noisy_circuit(
+        self, circuit: stim.Circuit | Experiment, split_circuit: bool = False
+    ) -> stim.Circuit | List[stim.Circuit | tuple[int, stim.Circuit]]:
+        """Inject Stim circuit with built-in Stim noise channels
+
+        Args:
+            circuit (stim.Circuit | Experiment): _description_
+            split_circuit (bool, optional): _description_. Defaults to False.
+
+        Returns:
+            stim.Circuit | List[stim.Circuit | tuple[int, stim.Circuit]]: _description_
+        """
+
+        if not isinstance(circuit, Experiment):
+            raise ValueError(f"Invalid circuit type: {type(circuit)}")
+
+        noisy_split_circuits = []
+        for subcircuit in circuit.split_circuits:
+            repeat_count, base_circuit = (
+                subcircuit if isinstance(subcircuit, tuple) else (None, subcircuit)
+            )
+            noisy_circuit = self._inject_gate_noise(base_circuit, self.gate_noise)
+            noisy_split_circuits.append(
+                (repeat_count, noisy_circuit) if repeat_count else noisy_circuit
+            )
+
+        if not split_circuit:
+            noisy_circuit = combine_split_circuits(noisy_split_circuits)
+            return noisy_circuit
+        else:
+            return noisy_split_circuits
+
+    def gen_error_matrix(
+        self, circuit: stim.Circuit | Experiment, n_samples: int = 1
+    ) -> np.ndarray:
+        raise NotImplementedError("This method should be implemented in a subclass.")
+
+    def gen_marginalised_circuit(
+        self, circuit: stim.Circuit | Experiment
+    ) -> stim.Circuit:
+        raise NotImplementedError("This method should be implemented in a subclass.")
+
+    @staticmethod
+    def _inject_gate_noise(
+        circuit: stim.Circuit, gate_noise_dict: dict
+    ) -> stim.Circuit:
+        noisy_circuit = stim.Circuit()
+        for instr in circuit:
+            # Handle before_measure_flip_probability
+            # CURRENTLY APPLIES Z FLIP IF MEASURING IN THE X OR Y BASIS
+            if (
+                instr.name in measure_X + measure_Y + measure_Z
+                and "before_measure_flip_probability" in gate_noise_dict
+            ):
+                channel_name = "X_ERROR" if instr.name in measure_Z else "Z_ERROR"
+                noisy_circuit.append(
+                    channel_name,
+                    instr.targets_copy(),
+                    gate_noise_dict["before_measure_flip_probability"],
+                )
+
+            # Append the original instruction
+            noisy_circuit.append(instr)
+
+            # Handle after_identity_depolarization
+            if (
+                instr.name in ["I", "II"]
+                and "after_identity_depolarization" in gate_noise_dict
+            ):
+                channel_name = "DEPOLARIZE1" if instr.name == "I" else "DEPOLARIZE2"
+                noisy_circuit.append(
+                    channel_name,
+                    instr.targets_copy(),
+                    gate_noise_dict["after_identity_depolarization"],
+                )
+
+            # Handle after_clifford_depolarization (doesn't include identity gates)
+            elif (
+                instr.name in single_qubit_clifford + two_qubit_clifford
+                and "after_clifford_depolarization" in gate_noise_dict
+            ):
+                channel_name = (
+                    "DEPOLARIZE1"
+                    if instr.name in single_qubit_clifford
+                    else "DEPOLARIZE2"
+                )
+                noisy_circuit.append(
+                    channel_name,
+                    instr.targets_copy(),
+                    gate_noise_dict["after_clifford_depolarization"],
+                )
+
+            # Handle after_reset_flip_probability
+            # CURRENTLY APPLIES Z FLIP IF RESETING IN THE X OR Y BASIS
+            elif (
+                instr.name in reset_X + reset_Y + reset_Z
+                and "after_reset_flip_probability" in gate_noise_dict
+            ):
+                channel_name = "X_ERROR" if instr.name in reset_Z else "Z_ERROR"
+                noisy_circuit.append(
+                    channel_name,
+                    instr.targets_copy(),
+                    gate_noise_dict["after_reset_flip_probability"],
+                )
+
+        return noisy_circuit
+
+
+if __name__ == "__main__":
+    pass
