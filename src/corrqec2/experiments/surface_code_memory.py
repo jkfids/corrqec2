@@ -10,7 +10,6 @@ from .base_experiment import Experiment
 
 
 class SurfaceCodeMemory(Experiment):
-    # def __init__(self, distance: int, rounds: Union[int, str] = 'd', noisy_qubit_types: Union[str, List[str]] = 'all', memory_type: str = 'Z'):
     def __init__(
         self, distance: int, rounds: Union[int, str] = "d", memory_type: str = "Z"
     ):
@@ -19,8 +18,17 @@ class SurfaceCodeMemory(Experiment):
 
         self._circuit_generated = False
         self.all_qubit_types = ["data", "syndrome"]
-        # self.noisy_qubit_types = self._parse_noisy_qubit_types(noisy_qubit_types)
         self.memory_type = memory_type
+
+        self.circuit = None
+        self.split_circuits = None
+
+        self.all_qubit_coords = None
+        self.all_qubits = None
+        self.qubit_coords = None
+        self.qubits = None
+
+        self.gen_stim_circuit()
 
     def _parse_rounds(self, rounds: Union[int, str]) -> int:
         """_summary_
@@ -46,29 +54,6 @@ class SurfaceCodeMemory(Experiment):
 
         raise ValueError(f"Invalid rounds value: {rounds}")
 
-    # def _parse_noisy_qubit_types(self, noisy_qubit_types: Union[str, List[str]]) -> List[str]:
-    #     """_summary_
-
-    #     Args:
-    #         noisy_qubit_types (Union[str, List[str]]): _description_
-
-    #     Raises:
-    #         ValueError: _description_
-
-    #     Returns:
-    #         List[str]: _description_
-    #     """
-    #     if isinstance(noisy_qubit_types, str):
-    #         if noisy_qubit_types == 'all':
-    #             return self.all_qubit_types
-    #         elif noisy_qubit_types in self.all_qubit_types:
-    #             return [noisy_qubit_types]
-    #     elif isinstance(noisy_qubit_types, list):
-    #         if all(type in self.all_qubit_types for type in noisy_qubit_types):
-    #             return noisy_qubit_types
-
-    #     raise ValueError(f"Invalid noisy_qubit_types value: {noisy_qubit_types}")
-
     def gen_stim_circuit(self) -> stim.Circuit:
         self.circuit = self._gen_stim_circuit()
         self.split_circuits = self._get_split_circuits()
@@ -80,9 +65,6 @@ class SurfaceCodeMemory(Experiment):
             type: list(qubit_coords.keys())
             for type, qubit_coords in self.qubit_coords.items()
         }
-
-        # self.noisy_qubits = self._get_noisy_qubits()
-        # self.error_matrix_dims = self._get_error_matrix_dims()
 
         self._circuit_generated = True
 
@@ -178,37 +160,23 @@ class SurfaceCodeMemory(Experiment):
         }
         return qubit_coords
 
-    # def _get_noisy_qubits(self) -> list:
-    #     """_summary_
+    def get_qubits_by_type(self, qubit_types: str | List) -> List[int]:
+        """Returns a list of qubit indices for the specified qubit type(s)."""
+        if isinstance(qubit_types, str):
+            qubit_types = [qubit_types]
+        if "all" in qubit_types:
+            return self.all_qubits
+        qubits = []
+        for qt in qubit_types:
+            qubits += self.qubits[qt]
+        return qubits
 
-    #     Returns:
-    #         list: _description_
-    #     """
-    #     unsorted = []
-    #     for qubit_type in self.noisy_qubit_types:
-    #         unsorted += self.qubits[qubit_type]
-    #     return [q for q in self.all_qubits if q in unsorted]
-
-    # def _get_error_matrix_dims(self) -> tuple[int, int]:
-    #     """_summary_
-
-    #     Returns:
-    #         tuple[int, int]: _description_
-    #     """
-    #     return len(self.noisy_qubits), self.rounds
-
-    # def list_noisy_qubits(self) -> List[str]:
-    #     """_summary_
-
-    #     Returns:
-    #         _type_: _description_
-    #     """
-    #     qubit_list = np.empty(len(self.noisy_qubits), dtype=object)
-    #     for type in self.noisy_qubit_types:
-    #         for q, coords in self.qubit_coords[type].items():
-    #             index = self.noisy_qubits.index(q)
-    #             qubit_list[index] = f'{type}{tuple(coords)}'
-    #     return qubit_list.tolist()
+    def error_matrix_shape(self, qubit_types: str | List) -> tuple[int, int]:
+        """Returns the dimensions of the error matrix: (# noisy qubits, # rounds)."""
+        if isinstance(qubit_types, str):
+            qubit_types = [qubit_types]
+        n_qubits = len(self.get_qubits_by_type(qubit_types))
+        return n_qubits, self.rounds
 
 
 if __name__ == "__main__":

@@ -76,13 +76,34 @@ class NoiseModel:
             return noisy_split_circuits
 
     def gen_error_matrix(
-        self, circuit: stim.Circuit | Experiment, n_samples: int = 1
+        self, experiment: Experiment, n_samples: int = 1
     ) -> np.ndarray:
+        """Generate error matrix for custom Pauli noise model for experiment batches.
+
+        Args:
+            experiment (Experiment): _description_
+            n_samples (int, optional): _description_. Defaults to 1.
+
+        Raises:
+            NotImplementedError: _description_
+
+        Returns:
+            np.ndarray: _description_
+        """
         raise NotImplementedError("This method should be implemented in a subclass.")
 
-    def gen_marginalised_circuit(
-        self, circuit: stim.Circuit | Experiment
-    ) -> stim.Circuit:
+    def gen_marginalized_circuit(self, experiment: Experiment) -> stim.Circuit:
+        """_summary_
+
+        Args:
+            experiment (Experiment): _description_
+
+        Raises:
+            NotImplementedError: _description_
+
+        Returns:
+            stim.Circuit: _description_
+        """
         raise NotImplementedError("This method should be implemented in a subclass.")
 
     @staticmethod
