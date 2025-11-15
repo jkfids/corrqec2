@@ -12,7 +12,7 @@ from ..experiments.experiment_utils import combine_split_circuits
 from .base_noise_model import NoiseModel
 
 
-class Storm(NoiseModel):
+class StormModel(NoiseModel):
     def __init__(
         self,
         model_params: dict,

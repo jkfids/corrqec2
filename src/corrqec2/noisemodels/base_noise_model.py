@@ -1,3 +1,4 @@
+from abc import abstractmethod
 from typing import List
 
 import numpy as np
@@ -36,6 +37,8 @@ class NoiseModel:
     def __init__(
         self, gate_noise: dict | None = None, noisy_qubit_types: str | List[str] = "all"
     ):
+        if isinstance(noisy_qubit_types, str):
+            noisy_qubit_types = [noisy_qubit_types]
         self.noisy_qubit_types = noisy_qubit_types
         self.gate_noise = gate_noise
         if gate_noise is None or gate_noise == {}:
@@ -75,6 +78,7 @@ class NoiseModel:
         else:
             return noisy_split_circuits
 
+    @abstractmethod
     def gen_error_matrix(
         self, experiment: Experiment, n_samples: int = 1
     ) -> np.ndarray:
@@ -92,8 +96,9 @@ class NoiseModel:
         """
         raise NotImplementedError("This method should be implemented in a subclass.")
 
+    @abstractmethod
     def gen_marginalized_circuit(self, experiment: Experiment) -> stim.Circuit:
-        """_summary_
+        """Generate noisy circuit with marginalized, independent noise.
 
         Args:
             experiment (Experiment): _description_
@@ -105,6 +110,30 @@ class NoiseModel:
             stim.Circuit: _description_
         """
         raise NotImplementedError("This method should be implemented in a subclass.")
+
+    @abstractmethod
+    def gen_detector_error_model(
+        self, experiment: Experiment
+    ) -> stim.DetectorErrorModel:
+        """Generate the detector error model for the correlated noise model.
+
+        Args:
+            experiment (Experiment): _description_
+
+        Raises:
+            NotImplementedError: _description_
+
+        Returns:
+            stim.DetectorErrorModel: _description_
+        """
+        raise NotImplementedError("This method should be implemented in a subclass.")
+
+    def gen_marginalized_detector_error_model(
+        self, experiment: Experiment
+    ) -> stim.DetectorErrorModel:
+        """Generate the detector error model corresponding to marginalized independent noise."""
+        circuit = self.gen_marginalized_circuit(experiment)
+        return circuit.detector_error_model()
 
     @staticmethod
     def _inject_gate_noise(
