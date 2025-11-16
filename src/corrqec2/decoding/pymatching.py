@@ -4,7 +4,7 @@ from .base_decoder import Decoder
 
 
 class Pymatching(Decoder):
-    def __init__(self, enable_correlations):
+    def __init__(self, enable_correlations=False):
         self.enable_correlations = enable_correlations
         self.matcher = None
 

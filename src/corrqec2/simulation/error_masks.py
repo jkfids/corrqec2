@@ -70,7 +70,6 @@ class ErrorMaskConverter:
         """Convert full error matrix to boolean masks."""
         # Transpose to (n_rounds, n_qubits, n_samples)
         transposed = padded_error_matrix.transpose(2, 1, 0)
-        X_mask = transposed == 1
-        Y_mask = transposed == 2
-        Z_mask = transposed == 3
-        return ErrorMasks(X_mask=X_mask, Y_mask=Y_mask, Z_mask=Z_mask)
+        return ErrorMasks(
+            X_mask=(transposed == 1), Y_mask=(transposed == 2), Z_mask=(transposed == 3)
+        )

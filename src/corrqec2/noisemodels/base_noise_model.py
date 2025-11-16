@@ -1,4 +1,4 @@
-from abc import abstractmethod
+from abc import ABC, abstractmethod
 from typing import List
 
 import numpy as np
@@ -33,7 +33,7 @@ gate_noise_special_strings = [
 ]
 
 
-class NoiseModel:
+class NoiseModel(ABC):
     def __init__(
         self, gate_noise: dict | None = None, noisy_qubit_types: str | List[str] = "all"
     ):
@@ -47,7 +47,7 @@ class NoiseModel:
             self._no_gate_noise = False
 
     def gen_noisy_circuit(
-        self, circuit: stim.Circuit | Experiment, split_circuit: bool = False
+        self, experiment: Experiment, split_circuit: bool = False
     ) -> stim.Circuit | List[stim.Circuit | tuple[int, stim.Circuit]]:
         """Inject Stim circuit with built-in Stim noise channels
 
@@ -59,11 +59,11 @@ class NoiseModel:
             stim.Circuit | List[stim.Circuit | tuple[int, stim.Circuit]]: _description_
         """
 
-        if not isinstance(circuit, Experiment):
-            raise ValueError(f"Invalid circuit type: {type(circuit)}")
+        if not isinstance(experiment, Experiment):
+            raise ValueError(f"Invalid experiment type: {type(experiment)}")
 
         noisy_split_circuits = []
-        for subcircuit in circuit.split_circuits:
+        for subcircuit in experiment.split_circuits:
             repeat_count, base_circuit = (
                 subcircuit if isinstance(subcircuit, tuple) else (None, subcircuit)
             )

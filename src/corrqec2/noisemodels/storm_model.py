@@ -1,5 +1,11 @@
+import os
 import numpy as np
 import stim
+
+# Set JAX platform before import
+_JAX_DEVICE = os.environ.get("JAX_PLATFORMS", "cpu")
+if "JAX_PLATFORMS" not in os.environ:
+    os.environ["JAX_PLATFORMS"] = _JAX_DEVICE
 
 import jax
 import jax.numpy as jnp
@@ -44,7 +50,7 @@ class StormModel(NoiseModel):
         pi_a = a / (a + b)  # stationary prob. of being in stormy state
         pi_b = b / (a + b)  # stationary prob. of being in calm state
 
-        n_qubits, n_rounds = experiment.error_matrix_shape(
+        n_qubits, n_rounds = experiment.get_error_matrix_shape(
             qubit_types=self.noisy_qubit_types
         )
         # num_states: Number of hidden states
@@ -116,3 +122,8 @@ class StormModel(NoiseModel):
         )
 
         return new_circuit
+
+    def gen_detector_error_model(
+        self, experiment: Experiment
+    ) -> stim.DetectorErrorModel:
+        pass

@@ -10,72 +10,16 @@ from .base_experiment import Experiment
 
 
 class SurfaceCodeMemory(Experiment):
-    def __init__(
-        self, distance: int, rounds: Union[int, str] = "d", memory_type: str = "Z"
-    ):
-        self.distance = distance
-        self.rounds = self._parse_rounds(rounds)
+    def __init__(self, distance: int, rounds: int | str, memory_type: str = "Z"):
 
-        self._circuit_generated = False
-        self.all_qubit_types = ["data", "syndrome"]
         self.memory_type = memory_type
+        super().__init__(distance=distance, rounds=rounds)
 
-        self.circuit = None
-        self.split_circuits = None
-
-        self.all_qubit_coords = None
-        self.all_qubits = None
-        self.qubit_coords = None
-        self.qubits = None
-
-        self.gen_stim_circuit()
-
-    def _parse_rounds(self, rounds: Union[int, str]) -> int:
-        """_summary_
-
-        Args:
-            rounds (Union[int, str]): _description_
-
-        Raises:
-            ValueError: _description_
-
-        Returns:
-            int: _description_
-        """
-        if isinstance(rounds, int):
-            return rounds
-        elif isinstance(rounds, str):
-            if rounds == "d":
-                return self.distance
-            elif (
-                rounds.endswith("d") and rounds[:-1].isdigit() and int(rounds[:-1]) > 0
-            ):
-                return self.distance * int(rounds[:-1])
-
-        raise ValueError(f"Invalid rounds value: {rounds}")
+    @property
+    def all_qubit_types(self) -> list[str]:
+        return ["data", "syndrome"]
 
     def gen_stim_circuit(self) -> stim.Circuit:
-        self.circuit = self._gen_stim_circuit()
-        self.split_circuits = self._get_split_circuits()
-
-        self.all_qubit_coords = self.circuit.get_final_qubit_coordinates()
-        self.all_qubits = list(self.all_qubit_coords.keys())
-        self.qubit_coords = self._group_qubit_coords_by_type()
-        self.qubits = {
-            type: list(qubit_coords.keys())
-            for type, qubit_coords in self.qubit_coords.items()
-        }
-
-        self._circuit_generated = True
-
-        return self.circuit
-
-    def _gen_stim_circuit(self) -> stim.Circuit:
-        """_summary_
-
-        Returns:
-            _type_: _description_
-        """
         circuit = stim.Circuit()
         code_task = "surface_code:rotated_memory_" + self.memory_type.lower()
 
@@ -107,9 +51,7 @@ class SurfaceCodeMemory(Experiment):
 
         return circuit
 
-    def _get_split_circuits(
-        self,
-    ) -> List[Union[stim.Circuit, tuple[int, stim.Circuit]]]:
+    def gen_split_circuits(self) -> list[stim.Circuit | tuple[int, stim.Circuit]]:
         """_summary_
 
         Returns:
@@ -138,46 +80,18 @@ class SurfaceCodeMemory(Experiment):
             circuit_final,
         ]
 
-    def _group_qubit_coords_by_type(self) -> dict:
-        """_summary_
-
-        Returns:
-            _type_: _description_
-        """
+    def group_qubit_coords_by_type(self) -> dict[str, dict[int, list[float]]]:
         qubit_coords = {type: {} for type in self.all_qubit_types}
+        all_qubit_coords = self.circuit.get_final_qubit_coordinates()
+        all_qubits = list(all_qubit_coords.keys())
         for instr in self.circuit[::-1]:
             if instr.name == "MX" or instr.name == "M":
                 qubit_coords["data"] = {
-                    q.value: self.all_qubit_coords[q.value]
-                    for q in instr.targets_copy()
+                    q.value: all_qubit_coords[q.value] for q in instr.targets_copy()
                 }
                 break
 
         qubit_coords["syndrome"] = {
-            q: self.all_qubit_coords[q]
-            for q in self.all_qubits
-            if q not in qubit_coords["data"]
+            q: all_qubit_coords[q] for q in all_qubits if q not in qubit_coords["data"]
         }
         return qubit_coords
-
-    def get_qubits_by_type(self, qubit_types: str | List) -> List[int]:
-        """Returns a list of qubit indices for the specified qubit type(s)."""
-        if isinstance(qubit_types, str):
-            qubit_types = [qubit_types]
-        if "all" in qubit_types:
-            return self.all_qubits
-        qubits = []
-        for qt in qubit_types:
-            qubits += self.qubits[qt]
-        return qubits
-
-    def error_matrix_shape(self, qubit_types: str | List) -> tuple[int, int]:
-        """Returns the dimensions of the error matrix: (# noisy qubits, # rounds)."""
-        if isinstance(qubit_types, str):
-            qubit_types = [qubit_types]
-        n_qubits = len(self.get_qubits_by_type(qubit_types))
-        return n_qubits, self.rounds
-
-
-if __name__ == "__main__":
-    pass

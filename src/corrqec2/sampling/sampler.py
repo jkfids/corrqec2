@@ -1,5 +1,6 @@
 from typing import Type
 import numpy as np
+import sinter
 from ..experiments import Experiment
 from ..noisemodels import NoiseModel
 from ..decoding import Decoder
@@ -15,15 +16,34 @@ class Sampler:
         experiment: Experiment,
         noise_model: NoiseModel,
         decoder: Decoder,
+        marginalized_detector_error_model: bool = False,
     ):
         self.experiment = experiment
         self.noise_model = noise_model
         self.simulator = CircuitSimulator(experiment, noise_model)
 
         # Configure detector error model
-        detector_error_model = noise_model.gen_detector_error_model(experiment)
+        if marginalized_detector_error_model:
+            detector_error_model = noise_model.gen_marginalized_detector_error_model(
+                experiment
+            )
+        else:
+            detector_error_model = noise_model.gen_detector_error_model(experiment)
         decoder.configure_from_detector_error_model(detector_error_model)
         self.decoder = decoder
+
+    def sample_for_sinter(
+        self,
+        suggested_shots: int,
+    ) -> sinter.AnonTaskStats:
+
+        error_masks = self.gen_error_masks(batch_size=suggested_shots)
+        detection_events, observable_flips = self.simulate_with_errors(error_masks)
+        predictions = self.decode_batch(detection_events).flatten()
+        n_errors = int(np.count_nonzero(predictions != observable_flips))
+        n_shots = len(observable_flips)
+
+        return sinter.AnonTaskStats(shots=n_shots, errors=n_errors)
 
     def gen_error_masks(self, batch_size: int) -> ErrorMasks:
         """_summary_
@@ -54,7 +74,7 @@ class Sampler:
 
         return self.simulator.simulate_batch(error_masks)
 
-    def decode_errors(self, detection_events: np.ndarray) -> np.ndarray:
+    def decode_batch(self, detection_events: np.ndarray) -> np.ndarray:
         """_summary_
 
         Args:
