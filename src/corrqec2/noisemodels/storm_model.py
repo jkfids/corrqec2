@@ -86,13 +86,9 @@ class StormModel(NoiseModel):
 
         # Get base circuit
         if self.gate_noise is not None:
-            init, init_round, (repeat_count, repeat_block), final = (
-                self.gen_noisy_circuit(experiment, split_circuit=True)
-            )
+            split_circuits = self.gen_noisy_circuit(experiment, split_circuit=True)
         else:
-            init, init_round, (repeat_count, repeat_block), final = (
-                experiment.split_circuits
-            )
+            split_circuits = experiment.split_circuits
 
         # Calculate marginal error probabilities
         a = self.model_params["a"]
@@ -106,22 +102,78 @@ class StormModel(NoiseModel):
         # Get qubit targets for marginal channel injection
         targets = experiment.get_qubits_by_type(self.noisy_qubit_types)
 
-        # Append marginalized depolarization to the start of init_round
-        init_round_new = stim.Circuit()
-        init_round_new.append("DEPOLARIZE1", targets, p_D)
-        init_round_new += init_round
-
-        # Append marginalized depolarization to the start of repeat_block
-        repeat_block_new = stim.Circuit()
-        repeat_block_new.append("DEPOLARIZE1", targets, p_D)
-        repeat_block_new += repeat_block
+        subcircuits_new = []
+        for subcircuit in split_circuits[1:-1]:
+            if isinstance(subcircuit, stim.Circuit):
+                subcircuit_new = stim.Circuit()
+                subcircuit_new.append("DEPOLARIZE1", targets, p_D)
+                subcircuit_new += subcircuit
+            elif isinstance(subcircuit, tuple):
+                repeat_count, repeat_block = subcircuit
+                repeat_block_new = stim.Circuit()
+                repeat_block_new.append("DEPOLARIZE1", targets, p_D)
+                repeat_block_new += repeat_block
+                subcircuit_new = (repeat_count, repeat_block_new)
+            subcircuits_new.append(subcircuit_new)
 
         # Combine all parts back into a single circuit
         new_circuit = combine_split_circuits(
-            [init, init_round_new, (repeat_count, repeat_block_new), final]
+            [split_circuits[0]] + subcircuits_new + [split_circuits[-1]]
         )
 
         return new_circuit
+
+    # def gen_marginalized_circuit(self, experiment: Experiment) -> stim.Circuit:
+    #     """_summary_
+
+    #     Args:
+    #         experiment (Experiment): _description_
+
+    #     Raises:
+    #         NotImplementedError: _description_
+
+    #     Returns:
+    #         stim.Circuit: _description_
+    #     """
+
+    #     # Get base circuit
+    #     if self.gate_noise is not None:
+    #         init, init_round, (repeat_count, repeat_block), final = (
+    #             self.gen_noisy_circuit(experiment, split_circuit=True)
+    #         )
+    #     else:
+    #         init, init_round, (repeat_count, repeat_block), final = (
+    #             experiment.split_circuits
+    #         )
+
+    #     # Calculate marginal error probabilities
+    #     a = self.model_params["a"]
+    #     b = self.model_params["b"]
+    #     emissions = self.model_params["emissions"]
+    #     calm_fraction = b / (a + b)
+    #     storm_fraction = a / (a + b)
+    #     p_I = calm_fraction * emissions[0][0] + storm_fraction * emissions[1][0]
+    #     p_D = 1 - p_I  # Marginal independent depolarizing probability
+
+    #     # Get qubit targets for marginal channel injection
+    #     targets = experiment.get_qubits_by_type(self.noisy_qubit_types)
+
+    #     # Append marginalized depolarization to the start of init_round
+    #     init_round_new = stim.Circuit()
+    #     init_round_new.append("DEPOLARIZE1", targets, p_D)
+    #     init_round_new += init_round
+
+    #     # Append marginalized depolarization to the start of repeat_block
+    #     repeat_block_new = stim.Circuit()
+    #     repeat_block_new.append("DEPOLARIZE1", targets, p_D)
+    #     repeat_block_new += repeat_block
+
+    #     # Combine all parts back into a single circuit
+    #     new_circuit = combine_split_circuits(
+    #         [init, init_round_new, (repeat_count, repeat_block_new), final]
+    #     )
+
+    #     return new_circuit
 
     def gen_detector_error_model(
         self, experiment: Experiment

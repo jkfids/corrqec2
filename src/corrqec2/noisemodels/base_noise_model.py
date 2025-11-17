@@ -5,13 +5,7 @@ import numpy as np
 import stim
 
 from ..experiments.base_experiment import Experiment
-from ..experiments.experiment_utils import (
-    combine_split_circuits,
-    get_noisy_qubits,
-    error_matrix_shape,
-    format_noisy_qubits,
-    parse_noisy_qubit_types,
-)
+from ..experiments.experiment_utils import combine_split_circuits
 
 # CURRENTLY MISSING MPP
 from ..stim_gates import (

@@ -1,11 +1,12 @@
 import sinter
 from .sampler import Sampler
-from ..experiments import SurfaceCodeMemory
+from ..experiments import SurfaceCodeMemory, SurfaceCodeStability
 from ..noisemodels import StandardCircuitLevel, StormModel
 from ..decoding import Pymatching
 
 EXPERIMENTS = {
     "SurfaceCodeMemory": SurfaceCodeMemory,
+    "SurfaceCodeStability": SurfaceCodeStability,
 }
 
 NOISE_MODELS = {

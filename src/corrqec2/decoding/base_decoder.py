@@ -7,7 +7,7 @@ class Decoder(ABC):
     """Abstract base class for QEC decoders."""
 
     @abstractmethod
-    def configure_from_detector_error_model(dem: stim.DetectorErrorModel):
+    def configure_from_detector_error_model(self, dem: stim.DetectorErrorModel):
         """Configure the decoder instance from the detector error model."""
         pass
 

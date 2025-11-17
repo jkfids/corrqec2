@@ -257,3 +257,6 @@ __marimo__/
 # The final PDF document
 # (You build this locally, don't version it)
 paper/*.pdf
+
+# Deprecated folder
+deprecated/
