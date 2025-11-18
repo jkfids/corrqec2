@@ -20,8 +20,6 @@ DECODERS = {
 
 
 class SinterSampler(sinter.Sampler):
-    def __init__(self):
-        pass
 
     def compiled_sampler_for_task(self, task: sinter.Task) -> sinter.CompiledSampler:
 

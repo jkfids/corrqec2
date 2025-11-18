@@ -1,9 +1,15 @@
+from pathlib import Path
 import stim
 import sinter
 from corrqec2.sampling import SinterSampler
 
 
 def main():
+
+    save_dir = Path.home() / "mx95_scratch2" / "corrqec2_results"
+    save_dir.mkdir(parents=True, exist_ok=True)
+    output_path = save_dir / "test_run.csv"
+
     sampler = SinterSampler()
     # Noise model parameters
     p_gate = 0.01
@@ -43,11 +49,13 @@ def main():
         custom_decoders={"custom_sampler": sampler},
         max_shots=80,
         print_progress=False,
+        save_resume_filepath=output_path,
     )
 
     print("Test script successful!")
     print(f"Collected {stats[0].shots} shots")
     print(f"Observed {stats[0].errors} errors")
+    print(f"Results saved to {output_path}")
 
 
 if __name__ == "__main__":
