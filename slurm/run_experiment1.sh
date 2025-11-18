@@ -35,8 +35,8 @@ echo ""
 # Run the Python script
 # ============================================================================
 
-python scripts/experiment1.py --num-workers $SLURM_CPUS_PER_TASK "$@"
-# python scripts/experiment1.py --num-workers $SLURM_CPUS_PER_TASK --max-shots 1_000_000 --batch-size 10_000
+# python scripts/experiment1.py --num-workers $SLURM_CPUS_PER_TASK "$@"
+python scripts/experiment1.py --num-workers $SLURM_CPUS_PER_TASK --max-shots 1_000_000 --batch-size 10_000
 
 # ============================================================================
 # Job finished
