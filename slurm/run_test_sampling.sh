@@ -5,13 +5,16 @@
 #SBATCH --cpus-per-task=4
 #SBATCH --mem-per-cpu=2000
 #SBATCH --time=0-00:30:00
-#SBATCH --output=~/mx95_scratch2/corrqec2_results/logs/test_sampling_%j.out
-#SBATCH --error=~/mx95_scratch2/corrqec2_results/logs/test_sampling_%j.err
+#SBATCH --output=/home/jkam/mx95_scratch2/corrqec2_results/logs/test_sampling_%j.out
+#SBATCH --error=/home/jkam/mx95_scratch2/corrqec2_results/logs/test_sampling_%j.err
 
 
 # ============================================================================
 # Environment setup
 # ============================================================================
+
+# Create logs directory if it doesn't exist
+mkdir -p /home/jkam/mx95_scratch2/corrqec2_results/logs
 
 # Load module and conda environment
 module load miniforge3
