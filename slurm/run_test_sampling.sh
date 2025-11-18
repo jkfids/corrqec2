@@ -5,8 +5,9 @@
 #SBATCH --cpus-per-task=4
 #SBATCH --mem-per-cpu=2000
 #SBATCH --time=0-00:30:00
-#SBATCH --output=logs/test_sampling_%j.out
-#SBATCH --error=logs/test_sampling_%j.err
+#SBATCH --output=~/mx95_scratch2/corrqec2_results/logs/test_sampling_%j.out
+#SBATCH --error=~/mx95_scratch2/corrqec2_results/logs/test_sampling_%j.err
+
 
 # ============================================================================
 # Environment setup
