@@ -100,6 +100,9 @@ def main():
     print(f"Marginal error rate (p_gate and p_bar): {p_gate}")
     print(f"Total shots per task: {args.max_shots}")
 
+    if resume_path.exists():
+        print(f"Resuming from existing file: {resume_path}")
+
     sampler = SinterSampler()
     stats = sinter.collect(
         tasks=tasks,
