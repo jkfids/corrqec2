@@ -52,7 +52,7 @@ def main():
     output_path = save_dir / "experiment1.csv"
 
     # Fixed noise model parameters
-    p_gate = 0.005
+    p_gate = 0.001
     gate_noise = {
         "after_identity_depolarization": p_gate,
         "after_clifford_depolarization": p_gate,
@@ -110,7 +110,7 @@ def main():
         decoders="custom_sampler",
         custom_decoders={"custom_sampler": sampler},
         max_shots=args.max_shots,
-        print_progress=False,
+        print_progress=True,
         save_resume_filepath=resume_path,
     )
 

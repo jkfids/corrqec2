@@ -1,3 +1,4 @@
+import time
 import sinter
 from .sampler import Sampler
 from ..experiments import SurfaceCodeMemory, SurfaceCodeStability
@@ -56,4 +57,10 @@ class SinterCompiledSampler(sinter.CompiledSampler):
 
         suggested_shots = max(suggested_shots, self.min_batch_size)
 
-        return self.sampler.sample_for_sinter(suggested_shots)
+        start_time = time.perf_counter()
+        n_errors, n_shots = self.sampler.sample_for_sinter(suggested_shots)
+        elapsed_time = time.perf_counter() - start_time
+
+        return sinter.AnonTaskStats(
+            shots=n_shots, errors=n_errors, seconds=elapsed_time
+        )

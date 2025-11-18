@@ -43,7 +43,7 @@ class Sampler:
         n_errors = int(np.count_nonzero(predictions != observable_flips))
         n_shots = len(observable_flips)
 
-        return sinter.AnonTaskStats(shots=n_shots, errors=n_errors)
+        return n_errors, n_shots
 
     def gen_error_masks(self, batch_size: int) -> ErrorMasks:
         """_summary_
