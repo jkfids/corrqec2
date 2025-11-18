@@ -1,16 +1,38 @@
 from pathlib import Path
+import argparse
 import stim
 import sinter
 from corrqec2.sampling import SinterSampler
 
 
 def main():
+    # Parse command-line arguments
+    parser = argparse.ArgumentParser(description="Test script for sampling via Sinter.")
+    parser.add_argument(
+        "--num-workers",
+        type=int,
+        default=4,
+        help="Number of worker processes (default: 4)",
+    )
+    parser.add_argument(
+        "--total-shots",
+        type=int,
+        default=50,
+        help="Maximum number of shots to simulate (default: 50)",
+    )
+    parser.add_argument(
+        "--batch-size",
+        type=int,
+        default=10,
+        help="Minimum batch size for each worker (default: 10)",
+    )
+    args = parser.parse_args()
 
+    # Configure output path
     save_dir = Path.home() / "mx95_scratch2" / "corrqec2_results"
     save_dir.mkdir(parents=True, exist_ok=True)
     output_path = save_dir / "test_run.csv"
 
-    sampler = SinterSampler()
     # Noise model parameters
     p_gate = 0.01
     gate_noise = {
@@ -37,17 +59,21 @@ def main():
         "noise_model": "StormModel",
         "noise_model_args": noise_model_args,
         "decoder": "Pymatching",
-        "min_batch_size": 10,
+        "min_batch_size": args.batch_size,
         "marginalized_detector_error_model": True,
     }
 
+    print("Starting test sampling run...")
+    print(f"Number of workers: {args.num_workers}")
+
+    sampler = SinterSampler()
     task = sinter.Task(circuit=stim.Circuit(), json_metadata=metadata)
     stats = sinter.collect(
         tasks=[task],
-        num_workers=4,
+        num_workers=args.num_workers,
         decoders="custom_sampler",
         custom_decoders={"custom_sampler": sampler},
-        max_shots=80,
+        max_shots=args.total_shots,
         print_progress=False,
         save_resume_filepath=output_path,
     )
