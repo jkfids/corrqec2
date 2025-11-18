@@ -29,7 +29,7 @@ def main():
     args = parser.parse_args()
 
     # Configure output path
-    save_dir = Path.home() / "mx95_scratch2" / "corrqec2_results"
+    save_dir = Path.home() / "mx95_scratch2" / "jkam" / "corrqec2_results"
     save_dir.mkdir(parents=True, exist_ok=True)
     output_path = save_dir / "test_run.csv"
 
