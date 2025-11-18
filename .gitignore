@@ -260,3 +260,6 @@ paper/*.pdf
 
 # Deprecated folder
 deprecated/
+
+# Data folder (for now)
+data/

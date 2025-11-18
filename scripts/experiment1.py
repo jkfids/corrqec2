@@ -103,14 +103,14 @@ def main():
     if resume_path.exists():
         print(f"Resuming from existing file: {resume_path}")
 
-    sampler = SinterSampler()
+    sampler = SinterSampler(print_progress=True)
     stats = sinter.collect(
         tasks=tasks,
         num_workers=args.num_workers,
         decoders="custom_sampler",
         custom_decoders={"custom_sampler": sampler},
         max_shots=args.max_shots,
-        print_progress=True,
+        print_progress=False,
         save_resume_filepath=resume_path,
     )
 
