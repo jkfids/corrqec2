@@ -2,8 +2,9 @@
 #SBATCH --account=mx95
 #SBATCH --ntasks=1
 #SBATCH --ntasks-per-node=1
-#SBATCH --cpus-per-task=48
-#SBATCH --mem-per-cpu=4000
+#SBATCH --cpus-per-task=64
+# SBATCH --mem-per-cpu=8000
+#SBATCH --mem=400G
 #SBATCH --time=0-08:00:00
 #SBATCH --output=/home/jkam/mx95_scratch2/jkam/corrqec2_results/logs/experiment1_%j.out
 #SBATCH --error=/home/jkam/mx95_scratch2/jkam/corrqec2_results/logs/experiment1_%j.err
@@ -12,6 +13,9 @@
 # ============================================================================
 # Environment setup
 # ============================================================================
+
+# To prevent JAX preallocation out of memory issues
+export XLA_PYTHON_CLIENT_PREALLOCATE=false
 
 # Create logs directory if it doesn't exist
 mkdir -p /home/jkam/mx95_scratch2/jkam/corrqec2_results/logs
