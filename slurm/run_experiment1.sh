@@ -2,9 +2,9 @@
 #SBATCH --account=mx95
 #SBATCH --ntasks=1
 #SBATCH --ntasks-per-node=1
-#SBATCH --cpus-per-task=64
+#SBATCH --cpus-per-task=32
 # SBATCH --mem-per-cpu=8000
-#SBATCH --mem=400G
+#SBATCH --mem=300G
 #SBATCH --time=0-08:00:00
 #SBATCH --output=/home/jkam/mx95_scratch2/jkam/corrqec2_results/logs/experiment1_%j.out
 #SBATCH --error=/home/jkam/mx95_scratch2/jkam/corrqec2_results/logs/experiment1_%j.err
@@ -14,22 +14,18 @@
 # Environment setup
 # ============================================================================
 
-# To prevent JAX preallocation out of memory issues
-export XLA_PYTHON_CLIENT_PREALLOCATE=false
+# Thread limiting for BLAS/OpenMP stuff
+# export OMP_NUM_THREADS=1
+# export MKL_NUM_THREADS=1
+# export OPENBLAS_NUM_THREADS=1
+# export NUMEXPR_NUM_THREADS=1
+# FLEXIBLAS is optional; only matters if you’re actually using it:
+# export FLEXIBLAS_NUM_THREADS=1
 
-# Use platform allocator for better memory management in multiprocessing
-export XLA_PYTHON_CLIENT_ALLOCATOR=platform
-
-# Disable multi-threading in XLA/LLVM compilation
-export XLA_FLAGS="--xla_cpu_multi_thread_eigen=false"
-
-# Limit threading in NumPy/BLAS
-export OMP_NUM_THREADS=1
-export MKL_NUM_THREADS=1
-export OPENBLAS_NUM_THREADS=1
-export NUMEXPR_NUM_THREADS=1
-# FlexiBLAS-specific threading control
-export FLEXIBLAS_NUM_THREADS=1
+# JAX/XLA behaviour
+# export JAX_PLATFORMS=cpu
+# export XLA_FLAGS="--xla_cpu_multi_thread_eigen=false intra_op_parallelism_threads=1"
+# export XLA_PYTHON_CLIENT_PREALLOCATE=false
 
 
 # Create logs directory if it doesn't exist

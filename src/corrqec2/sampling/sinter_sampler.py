@@ -62,7 +62,8 @@ class SinterCompiledSampler(sinter.CompiledSampler):
         suggested_shots: int,
     ) -> sinter.AnonTaskStats:
 
-        suggested_shots = max(suggested_shots, self.min_batch_size)
+        # suggested_shots = max(suggested_shots, self.min_batch_size)
+        suggested_shots = self.min_batch_size
 
         start_time = time.perf_counter()
         n_errors, n_shots = self.sampler.sample_for_sinter(suggested_shots)

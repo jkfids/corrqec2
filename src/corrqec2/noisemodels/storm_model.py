@@ -29,6 +29,27 @@ class StormModel(NoiseModel):
         self.model_params = model_params
         self._no_error_matrix = False
 
+        self.hmm, self.hmm_params = self._init_hmm()
+
+    def _init_hmm(self):
+        a = self.model_params["a"]  # transition prob. from calm state to stormy state
+        b = self.model_params["b"]  # transition prob. from stormy state to calm state
+        emissions = self.model_params["emissions"]
+        pi_a = a / (a + b)  # stationary prob. of being in stormy state
+        pi_b = b / (a + b)  # stationary prob. of being in calm state
+
+        # num_states: Number of hidden states
+        # emission_dim: Dimension of the emission space
+        # num_classes: Size of the discrete emission alphabet
+        hmm = CategoricalHMM(num_states=2, emission_dim=1, num_classes=4)
+        params, _ = hmm.initialize(
+            initial_probs=jnp.array([pi_b, pi_a]),
+            transition_matrix=jnp.array([[1.0 - a, a], [b, 1.0 - b]]),
+            emission_probs=jnp.array(emissions).reshape(2, 1, 4),
+        )
+
+        return hmm, params
+
     def gen_error_matrix(
         self, experiment: Experiment, n_samples: int = 1
     ) -> np.ndarray:
@@ -44,25 +65,12 @@ class StormModel(NoiseModel):
         Returns:
             np.ndarray: _description_
         """
-        a = self.model_params["a"]  # transition prob. from calm state to stormy state
-        b = self.model_params["b"]  # transition prob. from stormy state to calm state
-        emissions = self.model_params["emissions"]
-        pi_a = a / (a + b)  # stationary prob. of being in stormy state
-        pi_b = b / (a + b)  # stationary prob. of being in calm state
-
         n_qubits, n_rounds = experiment.get_error_matrix_shape(
             qubit_types=self.noisy_qubit_types
         )
-        # num_states: Number of hidden states
-        # emission_dim: Dimension of the emission space
-        # num_classes: Size of the discrete emission alphabet
-        hmm = CategoricalHMM(num_states=2, emission_dim=1, num_classes=4)
 
-        params, _ = hmm.initialize(
-            initial_probs=jnp.array([pi_b, pi_a]),
-            transition_matrix=jnp.array([[1.0 - a, a], [b, 1.0 - b]]),
-            emission_probs=jnp.array(emissions).reshape(2, 1, 4),
-        )
+        hmm = self.hmm
+        params = self.hmm_params
 
         key = jr.PRNGKey(np.random.randint(0, 2**32))
         keys = jr.split(key, n_qubits * n_samples)
