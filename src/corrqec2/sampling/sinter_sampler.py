@@ -22,7 +22,8 @@ DECODERS = {
 
 class SinterSampler(sinter.Sampler):
 
-    def __init__(self, print_progress: bool = False):
+    def __init__(self, min_batch_size: int = 1000, print_progress: bool = False):
+        self.min_batch_size = min_batch_size
         self.print_progress = print_progress
         super().__init__()
 
@@ -38,7 +39,6 @@ class SinterSampler(sinter.Sampler):
         decoder_args = metadata.get("decoder_args", {})
 
         marginalized_dem = metadata.get("marginalized_detector_error_model", None)
-        min_batch_size = metadata.get("min_batch_size", 1000)
 
         experiment = EXPERIMENTS[experiment](**experiment_args)
         noise_model = NOISE_MODELS[noise_model](**noise_model_args)
@@ -46,7 +46,7 @@ class SinterSampler(sinter.Sampler):
 
         sampler = Sampler(experiment, noise_model, decoder, marginalized_dem)
 
-        return SinterCompiledSampler(sampler, min_batch_size, self.print_progress)
+        return SinterCompiledSampler(sampler, self.min_batch_size, self.print_progress)
 
 
 class SinterCompiledSampler(sinter.CompiledSampler):

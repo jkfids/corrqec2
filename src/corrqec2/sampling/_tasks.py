@@ -16,7 +16,6 @@ def _gen_task_metadata(
     noise_model_args: dict,
     decoder: str | type[Decoder],
     decoder_args: dict | None = None,
-    min_batch_size: int = 1000,
     marginalized_detector_error_model: bool = False,
 ) -> dict:
     """Generate metadata dictionary for a Sinter task."""
@@ -33,7 +32,6 @@ def _gen_task_metadata(
         "noise_model_args": noise_model_args,
         "decoder": decoder,
         "decoder_args": decoder_args or {},
-        "min_batch_size": min_batch_size,
         "marginalized_detector_error_model": marginalized_detector_error_model,
     }
 
@@ -52,7 +50,6 @@ def create_task(
     noise_model_args: dict,
     decoder: str | type[Decoder],
     decoder_args: dict | None = None,
-    min_batch_size: int = 1000,
     marginalized_detector_error_model: bool = False,
 ) -> sinter.Task:
     """Create a Sinter task with the given experiment, noise model, and decoder.
@@ -64,7 +61,6 @@ def create_task(
         noise_model_args: Arguments to initialize the noise model.
         decoder: Decoder class or name.
         decoder_args: Arguments to initialize the decoder.
-        min_batch_size: Minimum batch size for sampling.
         marginalized_detector_error_model: Whether to use marginalized detector error model.
 
     Returns:
@@ -77,7 +73,6 @@ def create_task(
         noise_model_args=noise_model_args,
         decoder=decoder,
         decoder_args=decoder_args,
-        min_batch_size=min_batch_size,
         marginalized_detector_error_model=marginalized_detector_error_model,
     )
     return _task_from_metadata(metadata)
@@ -87,6 +82,7 @@ def run_tasks_to_csv(
     tasks: list[sinter.Task],
     n_workers: int,
     max_shots: int,
+    min_batch_size: int,
     output_dir: Path,
     filename: str,
     print_progress: bool = True,
@@ -114,6 +110,7 @@ def run_tasks_to_csv(
         tasks=tasks,
         n_workers=n_workers,
         max_shots=max_shots,
+        min_batch_size=min_batch_size,
         save_resume_filepath=resume_path,
         print_progress=print_progress,
     )
@@ -132,6 +129,7 @@ def run_tasks(
     tasks: list[sinter.Task],
     n_workers: int,
     max_shots: int,
+    min_batch_size: int = 1000,
     save_resume_filepath: Path | None = None,
     print_progress: bool = False,
 ):
@@ -147,7 +145,9 @@ def run_tasks(
     Returns:
         _type_: _description_
     """
-    sampler = SinterSampler(print_progress=print_progress)
+    sampler = SinterSampler(
+        min_batch_size=min_batch_size, print_progress=print_progress
+    )
     stats = sinter.collect(
         tasks=tasks,
         num_workers=n_workers,
