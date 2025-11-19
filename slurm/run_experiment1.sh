@@ -17,6 +17,19 @@
 # To prevent JAX preallocation out of memory issues
 export XLA_PYTHON_CLIENT_PREALLOCATE=false
 
+# Use platform allocator for better memory management in multiprocessing
+export XLA_PYTHON_CLIENT_ALLOCATOR=platform
+
+# Disable multi-threading in XLA/LLVM compilation
+export XLA_FLAGS="--xla_cpu_multi_thread_eigen=false"
+
+# Limit threading in NumPy/BLAS (THIS IS THE KEY FIX)
+export OMP_NUM_THREADS=1
+# export MKL_NUM_THREADS=1
+export OPENBLAS_NUM_THREADS=1
+export NUMEXPR_NUM_THREADS=1
+
+
 # Create logs directory if it doesn't exist
 mkdir -p /home/jkam/mx95_scratch2/jkam/corrqec2_results/logs
 
