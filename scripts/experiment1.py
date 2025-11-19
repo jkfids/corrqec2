@@ -70,13 +70,13 @@ def main():
     print(f"Correlation lengths (ξ): {xis}")
     print(f"Marginal error rate (p_gate and p_bar): {p_gate}")
     print(f"Total shots per task: {args.max_shots}")
-    print(f"Minimum batch size: {args.min_batch_size}")
+    print(f"Minimum batch size: {args.batch_size}")
 
     run_tasks_to_csv(
         tasks=tasks,
         n_workers=args.num_workers,
         max_shots=args.max_shots,
-        min_batch_size=args.min_batch_size,
+        min_batch_size=args.batch_size,
         output_dir=output_dir,
         filename=Path(__file__).stem + "_results",
         print_progress=True,
