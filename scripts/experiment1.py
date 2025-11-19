@@ -1,3 +1,11 @@
+import os
+
+os.environ["OMP_NUM_THREADS"] = "1"
+os.environ["MKL_NUM_THREADS"] = "1"
+os.environ["OPENBLAS_NUM_THREADS"] = "1"
+os.environ["NUMEXPR_NUM_THREADS"] = "1"
+os.environ["FLEXIBLAS_NUM_THREADS"] = "1"
+
 from pathlib import Path
 import numpy as np
 from corrqec2.sampling import create_task, run_tasks_to_csv, get_default_parser
@@ -20,6 +28,7 @@ def calc_a_b_from_xi(p_bar, xi):
 
 
 def main():
+
     # Parse command-line arguments
     parser = get_default_parser()
     args = parser.parse_args()
