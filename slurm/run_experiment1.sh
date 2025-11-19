@@ -14,7 +14,7 @@
 # Environment setup
 # ============================================================================
 
-Thread limiting for BLAS/OpenMP stuff
+# Thread limiting for BLAS/OpenMP stuff
 export OMP_NUM_THREADS=1
 export MKL_NUM_THREADS=1
 export OPENBLAS_NUM_THREADS=1

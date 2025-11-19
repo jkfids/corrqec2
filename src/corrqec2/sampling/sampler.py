@@ -7,6 +7,8 @@ from ..decoding import Decoder
 from ..simulation.simulator import CircuitSimulator
 from ..simulation.error_masks import ErrorMasks, ErrorMaskConverter
 
+import time
+
 
 class Sampler:
     """Orchestrates custom error generation, circuit simulation, and decoding for QEC experiments."""
@@ -37,11 +39,19 @@ class Sampler:
         suggested_shots: int,
     ) -> sinter.AnonTaskStats:
 
+        t0 = time.perf_counter()
         error_masks = self.gen_error_masks(batch_size=suggested_shots)
+        t1 = time.perf_counter()
         detection_events, observable_flips = self.simulate_with_errors(error_masks)
+        t2 = time.perf_counter()
         predictions = self.decode_batch(detection_events).flatten()
+        t3 = time.perf_counter()
         n_errors = int(np.count_nonzero(predictions != observable_flips))
         n_shots = len(observable_flips)
+
+        print(
+            f"Error sampling: {t1 - t0:.2f} s | Simulation: {t2 - t1:.2f} s | Decoding: {t3 - t2:.2f} s"
+        )
 
         return n_errors, n_shots
 
