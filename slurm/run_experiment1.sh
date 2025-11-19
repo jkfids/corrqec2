@@ -2,9 +2,9 @@
 #SBATCH --account=mx95
 #SBATCH --ntasks=1
 #SBATCH --ntasks-per-node=1
-#SBATCH --cpus-per-task=40
-# SBATCH --mem-per-cpu=6000
-#SBATCH --mem=256G
+#SBATCH --cpus-per-task=64
+#SBATCH --mem-per-cpu=2000
+# SBATCH --mem=256G
 #SBATCH --time=0-08:00:00
 #SBATCH --output=/home/jkam/mx95_scratch2/jkam/corrqec2_results/logs/experiment1_%j.out
 #SBATCH --error=/home/jkam/mx95_scratch2/jkam/corrqec2_results/logs/experiment1_%j.err
@@ -14,7 +14,7 @@
 # Environment setup
 # ============================================================================
 
-# Thread limiting for BLAS/OpenMP stuff
+Thread limiting for BLAS/OpenMP stuff
 export OMP_NUM_THREADS=1
 export MKL_NUM_THREADS=1
 export OPENBLAS_NUM_THREADS=1
@@ -22,9 +22,9 @@ export NUMEXPR_NUM_THREADS=1
 export FLEXIBLAS_NUM_THREADS=1
 
 # JAX/XLA behaviour
-export JAX_PLATFORMS=cpu
-export XLA_FLAGS="--xla_cpu_multi_thread_eigen=false intra_op_parallelism_threads=1"
-export XLA_PYTHON_CLIENT_PREALLOCATE=false
+# export JAX_PLATFORMS=cpu
+# export XLA_FLAGS="--xla_cpu_multi_thread_eigen=false intra_op_parallelism_threads=1"
+# export XLA_PYTHON_CLIENT_PREALLOCATE=false
 
 
 # Create logs directory if it doesn't exist
@@ -50,7 +50,7 @@ echo ""
 # ============================================================================
 
 # python scripts/experiment1.py --num-workers $SLURM_CPUS_PER_TASK "$@"
-python scripts/experiment1.py --num-workers 32 --max-shots 10_000_000 --batch-size 10_000
+python scripts/experiment1.py --num-workers $((SLURM_CPUS_PER_TASK - 4)) --max-shots 10_000_000 --batch-size 10_000
 
 # ============================================================================
 # Job finished
