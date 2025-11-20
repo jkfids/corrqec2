@@ -31,7 +31,7 @@ def main():
     # Sweep over distances and correlation lengths
     tasks = []
     xis = [2, 4, 6, 8, 12, 16, 20, 28]
-    distances = [5, 7, 9, 11, 13, 15]
+    distances = [5, 7, 9, 11, 13, 15, 17]
 
     # Fixed noise model parameters
     p_gate = 0.001
