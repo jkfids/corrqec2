@@ -80,11 +80,8 @@ class Experiment(ABC):
 
     @property
     def all_qubits(self) -> list[int]:
-        """Sorted list of all qubit indices."""
-        all_qubits = []
-        for qubit_list in self.qubits.values():
-            all_qubits.extend(qubit_list)
-        return sorted(set(all_qubits))  # Remove duplicates
+        """List of all qubit indices."""
+        all_qubits = list(self.circuit.get_final_qubit_coordinates().keys())
 
     # ABSTRACT PROPERTIES (NEED TO BE IMPLEMENTED IN SUBCLASS)
 

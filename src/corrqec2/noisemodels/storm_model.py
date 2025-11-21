@@ -1,10 +1,9 @@
-import os
 import numpy as np
 from numba import njit
 import stim
 
-from ..experiments.base_experiment import Experiment
-from ..experiments.experiment_utils import combine_split_circuits
+from ..experiments import Experiment
+from ..experiments import combine_split_circuits
 from .base_noise_model import NoiseModel
 
 
@@ -54,6 +53,10 @@ def _sample_storm_hmm_batch(
 
 
 class StormModel(NoiseModel):
+    """
+    Noise model based on a two-state hidden Markov model (HMM) representing 'stormy' and 'calm' states.
+    """
+
     def __init__(
         self,
         model_params: dict,
