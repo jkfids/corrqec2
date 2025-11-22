@@ -20,6 +20,10 @@ classifiers = [ # Trove classifiers (https://pypi.org/classifiers/)
 ]
 dependencies = [ # Runtime dependencies for your project
   "numpy",
+  "stim",
+  "sinter",
+  "PyMatching",
+  "numba",
 ]
 
 [tool.setuptools.dynamic]

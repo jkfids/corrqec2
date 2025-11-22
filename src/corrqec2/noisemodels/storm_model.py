@@ -12,10 +12,10 @@ def _sample_storm_hmm_batch(
     n_chains: int,
     n_rounds: int,
     initial_probs: np.ndarray,  # shape (2,)
-    transition_matrix: np.ndarray,  # shape (2, 2)
+    transfer_matrix: np.ndarray,  # shape (2, 2)
     emission_probs: np.ndarray,  # shape (2, 4)
 ) -> np.ndarray:
-    """_summary_
+    """Numba JIT implementation of batch sampling from storm HMM model.
 
     Args:
         n_chains (int): _description_
@@ -28,23 +28,29 @@ def _sample_storm_hmm_batch(
     samples = np.empty((n_chains, n_rounds), dtype=np.int8)
 
     for i in range(n_chains):
+        # Initial bath state
         u = np.random.rand()
         if u < initial_probs[0]:
             state = 0
         else:
             state = 1
 
+        # Generate samples for this chain
         for j in range(n_rounds):
+            # Emission
             v = np.random.rand()
             cumulative = 0.0
+            k_chosen = 3  # Default fallback value
             for k in range(4):
                 cumulative += emission_probs[state, k]
                 if v < cumulative:
+                    k_chosen = k
                     break
-            samples[i, j] = k
+            samples[i, j] = k_chosen
 
+            # Transition
             w = np.random.rand()
-            if w < transition_matrix[state, 0]:
+            if w < transfer_matrix[state, 0]:
                 state = 0
             else:
                 state = 1
@@ -75,9 +81,9 @@ class StormModel(NoiseModel):
         self._T = np.array([[1.0 - a, a], [b, 1.0 - b]])
         # Emission probabilities
         self._emissions = np.array(model_params["emissions"])
-        # stationary prob. of being in stormy state
+        # Stationary prob. of being in stormy state
         self._pi_a = a / (a + b)
-        # stationary prob. of being in calm state
+        # Stationary prob. of being in calm state
         self._pi_b = b / (a + b)
         # Initial probabilities
         self._initial_probs = np.array([self._pi_b, self._pi_a])
@@ -97,15 +103,13 @@ class StormModel(NoiseModel):
         Returns:
             np.ndarray: _description_
         """
-        n_qubits, n_rounds = experiment.get_error_matrix_shape(
-            qubit_types=self.noisy_qubit_types
-        )
+        n_qubits, n_rounds = experiment.get_error_matrix_shape(self.noisy_qubit_types)
 
         samples = _sample_storm_hmm_batch(
             n_chains=n_qubits * n_samples,
             n_rounds=n_rounds,
             initial_probs=self._initial_probs,
-            transition_matrix=self._T,
+            transfer_matrix=self._T,
             emission_probs=self._emissions,
         )
 
