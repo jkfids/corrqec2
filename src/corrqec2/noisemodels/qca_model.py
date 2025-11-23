@@ -216,11 +216,15 @@ def _get_adjacencies(experiment: Experiment, tol: float = 1e-5) -> np.ndarray:
 def _get_update_probs(theta: float, max_deg: int) -> np.ndarray:
     """Compute update probabilities vector for QCA model."""
     ks = np.arange(0, max_deg + 1, dtype=np.float64)
-    update_probs = np.sin(ks * theta / 2) ** 2
+    update_probs = np.sin(ks * theta * 0.5) ** 2
     return update_probs
 
 
-class QCAModel(NoiseModel):
+class StormQCAModel(NoiseModel):
+    """
+    Spatiotemporal noise model based on a quantum cellular automaton (QCA) combined with a storm HMM.
+    """
+
     def __init__(
         self,
         model_params: dict,
@@ -236,8 +240,10 @@ class QCAModel(NoiseModel):
         self._b = b
         self._theta = model_params["theta"]
         self._emissions = np.array(model_params["emissions"])
-        # TODO: compute stationary distribution (non-trivial?) for initial probs
-        self._initial_probs = None
+        # TODO: Stationary probabilities (approximate), may not be accurate for QCA
+        self._pi_a = a / (a + b)
+        self._pi_b = b / (a + b)
+        self._initial_probs = np.array([self._pi_b, self._pi_a])
 
         # Setup experiment-specific geometry placeholders
         self._red_indices = None
@@ -275,3 +281,11 @@ class QCAModel(NoiseModel):
         )
 
         return samples
+
+    def gen_marginalized_circuit(self, experiment) -> stim.Circuit:
+        pass
+
+    def gen_detector_error_model(
+        self, experiment: Experiment
+    ) -> stim.DetectorErrorModel:
+        pass

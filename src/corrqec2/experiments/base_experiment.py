@@ -81,7 +81,7 @@ class Experiment(ABC):
     @property
     def all_qubits(self) -> list[int]:
         """List of all qubit indices."""
-        all_qubits = list(self.circuit.get_final_qubit_coordinates().keys())
+        return list(self.circuit.get_final_qubit_coordinates().keys())
 
     # ABSTRACT PROPERTIES (NEED TO BE IMPLEMENTED IN SUBCLASS)
 
