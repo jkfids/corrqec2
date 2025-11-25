@@ -28,10 +28,10 @@ def main():
     # Configure output path
     output_dir = Path.home() / "mx95_scratch2" / "jkam" / "corrqec2_results"
 
-    # Sweep over distances and correlation lengths
+    # Sweep over number of rounds and correlation lengths
     tasks = []
     xis = [2, 4, 6, 8, 12, 16, 20, 28]
-    rounds_list = [5, 10, 15, 20, 25, 30, 35]
+    rounds_list = [5, 10, 15, 20, 25, 30, 35, 40]
 
     # Fixed noise model parameters
     p_gate = 0.001
