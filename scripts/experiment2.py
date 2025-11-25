@@ -31,24 +31,24 @@ def main():
     # Sweep over distances and correlation lengths
     tasks = []
     xis = [2, 4, 6, 8, 12, 16, 20, 28]
-    distances = [5, 7, 9, 11, 13, 15, 17]
+    rounds_list = [5, 10, 15, 20, 25, 30, 35]
 
     # Fixed noise model parameters
     p_gate = 0.001
     gate_noise = {
-        # "after_identity_depolarization": p_gate,
+        "after_identity_depolarization": p_gate,
         "after_clifford_depolarization": p_gate,
         "before_measure_flip_probability": p_gate,
-        "after_reset_flip_probability": p_gate,
+        # "after_reset_flip_probability": p_gate,
     }
 
-    for distance in distances:
+    for rounds in rounds_list:
         for xi in xis:
             a, b = calc_a_b_from_xi(p_bar=p_gate, xi=xi)
 
             task = create_task(
-                experiment="SurfaceCodeMemory",
-                experiment_args={"distance": distance, "rounds": "3d", "basis": "Z"},
+                experiment="SurfaceCodeStability",
+                experiment_args={"distance": 6, "rounds": rounds, "basis": "Z"},
                 noise_model="StormModel",
                 noise_model_args={
                     "model_params": {
@@ -57,7 +57,7 @@ def main():
                         "emissions": [[1.0, 0.0, 0.0, 0.0], [0.25, 0.25, 0.25, 0.25]],
                     },
                     "gate_noise": gate_noise,
-                    "noisy_qubit_types": "data",
+                    "noisy_qubit_types": "all",
                 },
                 decoder="Pymatching",
                 marginalized_detector_error_model=True,
@@ -67,7 +67,7 @@ def main():
     print(f"Starting {Path(__file__).stem}")
     print(f"Number of workers: {args.num_workers}")
     print(f"Number of tasks: {len(tasks)}")
-    print(f"Distances: {distances}")
+    print(f"Rounds: {rounds}")
     print(f"Correlation lengths (ξ): {xis}")
     print(f"Marginal error rate (p_gate and p_bar): {p_gate}")
     print(f"Total shots per task: {args.max_shots}")
