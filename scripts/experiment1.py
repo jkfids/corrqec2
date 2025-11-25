@@ -31,7 +31,7 @@ def main():
     # Sweep over distances and correlation lengths
     tasks = []
     xis = [2, 4, 6, 8, 12, 16, 20, 28]
-    distances = [5, 7, 9, 11, 13, 15, 17]
+    distances = [5, 7, 9, 11, 13, 15]
 
     # Fixed noise model parameters
     p_gate = 0.001
@@ -56,7 +56,7 @@ def main():
                         "emissions": [[1.0, 0.0, 0.0, 0.0], [0.25, 0.25, 0.25, 0.25]],
                     },
                     "gate_noise": gate_noise,
-                    "noisy_qubit_types": "syndrome",
+                    "noisy_qubit_types": "all",
                 },
                 decoder="Pymatching",
                 marginalized_detector_error_model=True,
