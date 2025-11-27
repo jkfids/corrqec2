@@ -145,11 +145,11 @@ The asymptotic, long-time behaviour is dominated by the subleading eigenvalue wi
     the spectral gap quantifies the rate of convergence to the stationary distribution. A large gap (\(\lambda_* \ll 1\)) implies correlations decay rapidly, indicating a short memory time. Conversely, a small gap (\(\lambda_* \approx 1\)) signifies long-lived temporal correlations.
     \item \textbf{The correlation length} (\(\xi\)): The characteristic timescale of the decay is given by the correlation length,
     \begin{equation}
-        \xi = \frac{1}{-\ln \lambda_*}.
+        \xi = -\frac{1}{\ln \lambda_*}.
     \end{equation}
     This means the asymptotic decay is governed by this timescale, with \(|C_{f,g}(\tau)| \sim e^{-(\tau - 1)/\xi}\) for sufficiently large \(\tau\).
 \end{enumerate}
-The eigenspectrum provides further qualitative insights into the nature of the process. For instance, eigenvalues are not necessarily real; complex eigenvalues indicate oscillatory behaviour in the correlation functions. The properties of the leading eigenvalues are particularly important. The process is ergodic (converges to a unique stationary distribution) if the leading eigenvalue \(\lambda_1 = 1\) is non-degenerate (simple). Degenerate leading eigenvalues (\(|lambda_i| = 1\) for multiple \(i\)) imply multiple, disconnected stationary states.
+The eigenspectrum provides further qualitative insights into the nature of the process. For instance, eigenvalues are not necessarily real; complex eigenvalues indicate oscillatory behaviour in the correlation functions. The properties of the leading eigenvalues are particularly important. The process is ergodic (converges to a unique stationary distribution) if the leading eigenvalue \(\lambda_1 = 1\) is non-degenerate (simple). Degenerate leading eigenvalues (\(|\lambda_i| = 1\) for multiple \(i\)) imply multiple, disconnected stationary states.
 
 A more formal bound on the covariance can be established. Let \(S \coloneq \{i \geq 2: \braket{l|\widetilde{E}_f \ketbra{r_i}{l_i} \widetilde{E}_g|r} \neq 0\}\) and \(k \coloneq |S| \leq \chi - 1\). In other words, \(S\) is the set of eigenmodes that contribute non-trivially to the correlation function for the given observables \(f\) and \(g\), and \(k\) is the number of such modes. For a diagonlisable \(T\) working in the canonical gauge \(\braket{l|r} = 1\) and with any submultiplicative norm \(\|\cdot\|\), we obtain the bound,
 \begin{proposition}
