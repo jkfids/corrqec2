@@ -11,14 +11,14 @@
 \section{Temporal storm model}
 
 \subsection{Model}
-We now instantiate the general SPC formalism in a one-dimensional, analytically tractable setting, which we refer to as the \emph{temporal storm model}. Each system qubit $S_i$ is coupled to its own two-level environment $E_i$ with classical basis states $\{\ket{0},\ket{1}\}$, representing \emph{calm} and \emph{storm} conditions, respectively. For clarity we focus on a single site and suppress the index $i$ in what follows.
+We now instantiate the general SPC formalism in a one-dimensional, analytically tractable setting, which we refer to as the \emph{temporal storm model}. Each system qubit $S_i$ is coupled to its own two-level environment $E_i$ with classical basis states $\{\ket{0},\ket{1}\}$, representing \emph{calm} and \emph{storm} conditions, respectively. For clarity, we focus on a single site and suppress the index $i$ in what follows.
 
-The environment undergoes a time-homogeneous classical Markov chain with transition rates $\Gamma_{i\to j}$ between calm and storm (Fig.~X). The system–environment interaction is modelled as a quantum channel conditioned on the environment state. When the environment is in state $\ket{j}$, the system evolves according to
+The environment undergoes a time-homogeneous classical Markov chain with transition probabilities $\Gamma_{i\to j}$ between calm and storm (Fig.~X). The system–environment interaction is modelled as a quantum channel conditioned on the environment state. When the environment is in state $\ket{j}$, the system evolves according to
 \begin{equation*}
     \mathcal{E}_j[\rho_S]
     = \sum_x q^{(x)}_j \,\sigma^{(x)} \rho_S \sigma^{(x)},
 \end{equation*}
-where $\{\sigma^{(x)}\}$ denotes the Pauli operators indexed by $x$, and $q^{(x)}_j$ are probabilities satisfying \(\sum_x q^{(x)}_j = 1\). The joint system–environment evolution over a single time step is thus described by the CPTP map
+where $\sigma^{(x)}$ denotes the Pauli operators indexed by $x$, and $q^{(x)}_j$ are probabilities satisfying \(\sum_x q^{(x)}_j = 1\). The joint system–environment evolution over a single time step is thus described by the CPTP map
 \begin{equation*}
     \Phi_{SE}[\rho_{SE}]
     = \sum_{i,j,x} K^{(x)}_{ij} \,\rho_{SE}\, K^{(x)\dagger}_{ij},
@@ -27,9 +27,9 @@ where $\{\sigma^{(x)}\}$ denotes the Pauli operators indexed by $x$, and $q^{(x)
     = \sqrt{\Gamma_{i\to j}\,q^{(x)}_j}\;
       \ketbra{j}{i}_E \otimes \sigma^{(x)}_S.
 \end{equation*}
-By construction, the associated process tensor of this process is invariant under the multi-time Pauli twirl in \cref{eq:twirl-upsilon}, in other words, this model directly specifies an SPC. 
+Because the environment dynamics are classical and the conditional system channels \(\mathcal{E}_j\) are Pauli, the corresponding process tensor is invariant under the multi-time Pauli twirl in \cref{eq:twirl-upsilon}; in other words, this construction directly specifies an SPC. (\Fidel{Mention that this SPC represents the image of a family of process tensors under the twirling map?})
 
-Labelling the environment transition rates as $a = \Gamma_{0\to 1}$ and $b = \Gamma_{1\to 0}$, the corresponding transfer operator $T$ and SPC matrices $A^{(x)}$ are
+Labelling the environment transition probabilities as $a = \Gamma_{0\to 1}$ and $b = \Gamma_{1\to 0}$, the corresponding transfer operator $T$ and SPC matrices $A^{(x)}$ are
 \begin{equation*}
     T
     =
@@ -40,11 +40,11 @@ Labelling the environment transition rates as $a = \Gamma_{0\to 1}$ and $b = \Ga
     \qquad
     A^{(x)} = T\,\mathrm{diag}\big(q_0^{(x)}, q_1^{(x)}\big).
 \end{equation*}
-The spectrum of $T$ is easily obtained with \(\lambda_1 = 1, \lambda_2 = 1 - a - b\), with spectral gap and correlation length given by
+The spectrum of $T$ is easily obtained with \(\lambda_1 = 1, \lambda_2 = 1 - a - b\). The subleading eigenvalue \(\lambda_2\) sets the spectral gap \(\Delta\) and correlation length \(\xi\),
 \begin{equation*}
     \Delta = a + b, \quad \xi = -\frac{1}{\ln(1-a-b)},
 \end{equation*}
-respectively. The left and right eigenvectors associated to $\lambda_1$ are
+The left and right eigenvectors associated to $\lambda_1$, corresponding to the left and right stationary states, are
 \begin{equation*}
     \bra{l} =
     \begin{pmatrix}
@@ -57,7 +57,7 @@ respectively. The left and right eigenvectors associated to $\lambda_1$ are
         1
     \end{pmatrix},
 \end{equation*}
-where \(\pi_0 = \frac{b}{a+b}\) and \(\pi_1 = \frac{a}{a+b}\) are the stationary calm and storm fractions, respectively. The stationary fractions directly lead to the marginal Pauli error rates,
+where \(\pi_0 = b/(a+b)\) and \(\pi_1 = a/(a+b)\) are the stationary calm and storm fractions, respectively. These immediately lead to the marginal Pauli error rates,
 \begin{equation*}
     \bar{p}^{(x)}
     = \pi_0 q_0^{(x)} + \pi_1 q_1^{(x)} = \frac{bq_0^{(x)} + aq_1^{(x)}}{a+b}.
