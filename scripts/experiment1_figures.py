@@ -1,7 +1,9 @@
 import numpy as np
 from scipy.stats import beta
 import matplotlib.pyplot as plt
+from matplotlib.lines import Line2D
 import sinter
+import seaborn as sns
 
 
 def calc_xi(a, b):
@@ -57,7 +59,7 @@ def calc_per_round(per_shot: float, rounds: int):
 
 
 def binomial_interval(failures, shots, level=0.95):
-    alpha = 0.5
+    alpha = 0.01
     a_post = failures + alpha
     b_post = shots - failures + alpha
     center = a_post / (a_post + b_post)
@@ -125,8 +127,10 @@ if __name__ == "__main__":
     xi_sorted = sorted(results_dict[distance].keys())
     distance_sorted = sorted(results_dict.keys())
 
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(6.8, 3), sharey=True)
-    colors = plt.rcParams["axes.prop_cycle"].by_key()["color"]
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(6.8, 3.0), sharey=True)
+    # cycle = plt.cycler(color=plt.cm.tab10.colors)
+    # colors = cycle.by_key()["color"]
+    colors = sns.color_palette("muted")
 
     for i, distance in enumerate(distances):
         center = [results_dict[distance][xi][0] for xi in xi_sorted]
@@ -138,11 +142,11 @@ if __name__ == "__main__":
             marker=".",
             label=f"$d={distance}$",
             linestyle="-",
-            linewidth=1,
+            linewidth=0.8,
             color=colors[i],
         )
         ax1.fill_between(
-            xi_sorted, lower, upper, alpha=0.3, linewidth=0, color=colors[i]
+            xi_sorted, lower, upper, alpha=0.5, linewidth=0, color=colors[i]
         )
     ax1.set_ylabel("Logical error rate per round, $p_{L}$")
     ax1.set_xlabel("Correlation length, $\\xi$")
@@ -153,9 +157,9 @@ if __name__ == "__main__":
     secax1.set_xlabel("Spectral gap, $\\Delta$")
     delta_ticks = [0.4, 0.2, 0.1, 0.06, 0.04]
     secax1.set_xticks(delta_ticks)
-    secax1.tick_params(direction="in")
+    secax1.tick_params(direction="in", width=0.6)
 
-    for i, xi in enumerate(xis):
+    for j, xi in enumerate(xis):
         center = [results_dict[distance][xi][0] for distance in distance_sorted]
         lower = [results_dict[distance][xi][1] for distance in distance_sorted]
         upper = [results_dict[distance][xi][2] for distance in distance_sorted]
@@ -167,35 +171,68 @@ if __name__ == "__main__":
                 np.array(upper) - np.array(center),
             ],
             fmt=".",
-            color=colors[i],
+            linewidth=0.8,
+            color=colors[j],
+            # label=f"$\\xi={xi}$",
+        )
+
+        # Exponentional fits
+        logy = np.log(center)
+        # sigma_logy = 0.5 * (np.log(upper) - np.log(lower))
+        # w = 1.0 / sigma_logy**2
+
+        b, a = np.polyfit(distance_sorted[1:], logy[1:], 1)
+
+        x_fit = np.linspace(7, 20, 100)
+        y_fit = np.exp(a + b * x_fit)
+
+        ax2.plot(
+            x_fit,
+            y_fit,
+            linestyle="--",
+            linewidth=0.8,
+            color=colors[j],
+        )
+
+        # For legend
+        ax2.errorbar(
+            [],
+            [],
+            yerr=[[], []],
+            fmt=".",
+            linestyle="--",
+            linewidth=0.8,
+            color=colors[j],
             label=f"$\\xi={xi}$",
         )
 
     ax2.legend(loc="lower left")
     ax2.set_xlabel("Code distance, $d$")
     ax2.set_xlim(4, 20)
-    ax2.set_xticks([5, 10, 15, 19])
+    ax2.set_xticks([5, 10, 15, 20])
 
     secax2 = ax2.secondary_xaxis(
         "top", functions=(distance_to_qubits, qubits_to_distance)
     )
-    secax2.set_xlabel("Total qubits")
+    secax2.set_xlabel("Total no. qubits")
     qubit_ticks = [50, 100, 200, 400, 750]
     secax2.set_xticks(qubit_ticks)
-    secax2.tick_params(direction="in")
+    secax2.tick_params(direction="in", width=0.6)
 
     ax1.text(-0.155, 1.14, "(a)", transform=ax1.transAxes, va="top", ha="left", size=9)
-    ax2.text(-0.075, 1.14, "(b)", transform=ax2.transAxes, va="top", ha="left", size=9)
+    ax2.text(-0.07, 1.14, "(b)", transform=ax2.transAxes, va="top", ha="left", size=9)
 
     for ax in (ax1, ax2):
         ax.grid(axis="y", alpha=0.5)
         ax.semilogy()
         # ax.spines["top"].set_visible(False)
         # ax.spines["right"].set_visible(False)
-        ax.tick_params(direction="in")
+        ax.tick_params(direction="in", which="both", width=0.6)
+        for spine in ax.spines.values():
+            spine.set_linewidth(0.5)
 
     fig.tight_layout()
-    fig.subplots_adjust(wspace=0.1)
+    fig.subplots_adjust(wspace=0.09)
     fig.savefig(
         "./project/paper/figures/experiment1.pdf",
         dpi=600,

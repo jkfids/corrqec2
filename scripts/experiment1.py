@@ -10,8 +10,20 @@ def calc_a_b(p_bar, Delta):
     return a, b
 
 
+# def calc_Delta_from_xi(xi):
+#     return 1 - np.exp(-1 / xi)
+
+
 def calc_Delta_from_xi(xi):
-    return 1 - np.exp(-1 / xi)
+    if isinstance(xi, (int, float)):
+        xi = [xi]
+    out = np.empty_like(xi)
+    for i in range(len(xi)):
+        if xi[i] == 0:
+            out[i] = 1.0
+        else:
+            out[i] = 1 - np.exp(-1 / xi[i])
+    return out if len(out) > 1 else out[0]
 
 
 def calc_a_b_from_xi(p_bar, xi):
