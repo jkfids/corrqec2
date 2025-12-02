@@ -24,8 +24,17 @@
 \tikzstyle{circleorange}=[fill={orange!30}, draw=black, shape=circle, inner sep=0pt, minimum size=11.5mm]
 \tikzstyle{circleyellowscaled}=[fill={yellow!40}, draw=black, shape=circle, inner sep=0pt, minimum size=10.5mm, scale=0.8]
 \tikzstyle{circleorangescaled}=[fill={orange!30}, draw=black, shape=circle, inner sep=0pt, minimum size=10.5mm, scale=0.8]
+\tikzstyle{smallcircleorange}=[fill={orange!30}, draw=black, shape=circle, inner sep=0pt, minimum size=7.5mm]
+\tikzstyle{smallboxyellow}=[rounded corners=1mm, fill={yellow!40}, draw=black, shape=rectangle, inner sep=0ex, minimum height=7.5mm, minimum width=7.5mm]
+\tikzstyle{smallboxblue}=[rounded corners=1mm, fill={olive!20}, draw=black, shape=rectangle, inner sep=0ex, minimum height=7.5mm, minimum width=7.5mm]
+\tikzstyle{downtriangleblue}=[isosceles triangle, isosceles triangle apex angle=60, shape border rotate=-90, draw=black, fill={violet!20}, inner sep=0ex, minimum height=6mm, scale=0.8]
+\tikzstyle{lefttrianglesmall}=[isosceles triangle, isosceles triangle apex angle=90, shape border rotate=180, draw=black, fill={red!20}, inner sep=0ex, minimum height=4.5mm, scale=0.8]
+\tikzstyle{righttrianglesmall}=[isosceles triangle, isosceles triangle apex angle=90, shape border rotate=0, draw=black, fill={blue!20}, inner sep=0ex, minimum height=4.5mm, scale=0.8]
+
+
 
 % Edge styles
 \tikzstyle{fusedwire}=[-, draw=black, fill=none, very thick]
 \tikzstyle{fuseddashedwire}=[-, very thick, fill=none, draw=black, dashed]
 \tikzstyle{fuseddotted}=[-, very thick, fill=none, draw=black, dotted]
+\tikzstyle{braceunder}=[-, decorate, decoration={brace, mirror, amplitude=2mm, raise=0pt}]

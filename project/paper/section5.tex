@@ -39,11 +39,11 @@
 % }
 \Fidel{TODO
 \begin{itemize}
-    \item Briefly mention non-diagonalisable transfer operators?
-    \item Mention how transfer operator analysis extends to spatial correlations in 2D SPCs? Transfer operator becomes an MPO. Solving eigenspectrum becomes a boundary MPS problem.
+    \item Justify why we're calculating the covariance or correlation functions.
+    \item More detail on non-diagonalisable transfer operators.
+    \item Investigate when transfer operator is non-Hermitian, are transfer operators always normal or diagonalisable?
+    \item Include a generalisation of the transfer operator to higher dimensional SPCs. For example, for a SPC PEPS, the transfer operator itself has an MPO representation. Solving the eigenspectrum then becomes a boundary MPS problem.
     \item Conditional mutual information based definition of approximate Markov order.
-    \item Will probably end up skipping heavy-tail theory.
-    \item Example for this section on top of section 6?
     \item HMM representation and mapping.
 \end{itemize}
 }
@@ -129,6 +129,38 @@ We have thus expressed the covariance entirely in terms of the transfer and emis
 \end{equation}
 where \(\Delta t_j = t_{j+1} - t_j - 1\). We now turn to the spectral properties of the transfer operator to characterise the decay of these correlations over time.
 
+\begin{figure}[t]
+    \centering
+    \begin{subfigure}{0.33\textwidth}\captionsetup{skip=-1mm}
+        \centering
+        \[
+        \valignboxnopad{\input{figures/transfer-op.tikz}} 
+        \!=\;
+        \sum_x \valignboxnopad{\input{figures/tensor-pauli-small.tikz}}
+        \]
+        \caption{}
+    \end{subfigure}
+    \begin{subfigure}{0.33\textwidth}\captionsetup{skip=-1mm}
+        \centering
+        \[
+        \valignboxnopad{\input{figures/emission-op.tikz}} 
+        \!=
+        \valignboxnopad{\input{figures/emission-contract.tikz}}
+        \]
+        \caption{}
+    \end{subfigure}
+    \begin{subfigure}{0.7\textwidth}\captionsetup{skip=-2mm}
+        \centering
+        \[
+        C_{f,g}(\tau) \;=\;
+        \raisebox{-1mm}{\valignboxnopad{\input{figures/covariance-tensors.tikz}}}
+        \]
+        \caption{}
+    \end{subfigure}
+    \caption{}
+    \label{}
+\end{figure}
+
 \subsection{Spectral analysis of SPC transfer operators}
 For clarity, we begin by assuming that the transfer operator \(T\) is diagonalisable. Its spectral decomposition is given by
 \begin{equation*}
@@ -169,4 +201,4 @@ If only a few modes matter, k may be much smaller than \(\chi - 1\). Furthermore
 %     \end{equation}
 % \end{proposition}
 
-\subsection{Heavy-tailed correlations and criticality}
+% \subsection{Heavy-tailed correlations and criticality}

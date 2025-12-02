@@ -7,7 +7,6 @@
 \end{enumerate}
 TODO:
 \begin{itemize}
-    \item Examples of Pauli twirling vs channel
     \item Define \(\Lambda\) (Choi matrix)
     \item Bridging sentence between Pauli twirling and process tensors
     \item Acknowledge that we assume we can prepare \(\rho_\mathrm{in}\) perfectly
@@ -16,6 +15,7 @@ TODO:
 \end{itemize}
 }
 \newcommand{\valignbox}{\adjustbox{valign=c,padding=0 0.1em}}
+\newcommand{\valignboxnopad}{\adjustbox{valign=c,padding=0 0em}}
 % \newcommand{\valignbox}{\adjustbox{valign=c,padding=0 0}}
 \clearpage
 \subsection{Quantum channels}
@@ -54,7 +54,7 @@ where \(|\mathbb{P}^{(n)}| = 4^n\). The image of the twirling operation takes th
 \begin{equation}
     \mathcal{T}_P(\Lambda_\mathcal{E}) = \frac{1}{4^n} \sum_{P \in \mathbb{P}^{(n)}} (P \otimes P) \Lambda (P \otimes P).
 \end{equation}
-(\Fidel{Concise discussion about the utility and efficacy of Pauli channel models for QEC, its limitations, and how it can be implemented in practice via randomised compiling.})
+(\Fidel{Concise discussion about the utility and efficacy of Pauli channel models for QEC, its limitations, and how it can be implemented in practice via randomised compiling. Couple of sentences in introduction, maybe more details here. Reference to work on Pauli channel characterisation, Robin Harper et al., Pauli channels from syndromes.})
 
 \subsection{Process tensors}
 While quantum channels describe two-time dynamics, they are insufficient for capturing multi-time quantum processes, especially in the presence of non-Markovian memory effects. The quantum \emph{process tensor} provides a general spatiotemporal framework that encodes all such correlations. It can be viewed as a \emph{higher-order quantum map}, or quantum comb, that takes as input a sequence of \(k\) instruments (CP maps) \(\mathbf{A}_{0:k-1}=(\mathcal{A}_0,\dots,\mathcal{A}_{k-1})\), and outputs the resulting system state \(\rho_\mathrm{out}\). For the purposes of modelling the multi-time dynamics starting from an initial system state \(\rho_\mathrm{in}\)\footnote{For cases where the system and environment are initially correlated, the process tensor acts purely on a sequence of instruments \(\mathbf{A}_{0:k-1}\), where the initial map \(\mathcal{A}_0\) serves as a preparation map. Correspondingly, a \emph{superchannel} can be described as a 1-slot process tensor.}, we define a \emph{\(k\)-slot} process tensor \(\mathcal{T}_{0:k}\) as a multilinear map

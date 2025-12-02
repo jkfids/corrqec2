@@ -1,12 +1,12 @@
 \section{Tensor network representations of multi-time processes}\label{sec:pt-tn}
 \Fidel{Originally merged with the previous section, this section has been split off to provide the formalism and notational tools needed to construct tensor network representations of multi-time processes. TODO:
 \begin{itemize}
-    \item Citations (Greg, Neil, Scottish guys)
+    \item Citations (Greg, Neil, St. Andrew researchers)
     \item Figure for Pauli twirling channels?
     \item Justify our notation system (convenient to translate to code)
     \item Remark 2D TNs are not trivial to contract unlike 1D TNs
-    \item Brief comment on deep connection between Stinespring dilation and TNs (gauge degree of freedom, etc)
-    \item Worked example
+    \item Brief comment on physcal interpretation of tensor network representation? Cite Understanding and utilizing the inner bonds of process tensors.
+    \item Worked example: Heisenberg interaction over two SE unitaries.
 \end{itemize}
 }
 % \clearpage
@@ -106,3 +106,5 @@ with spatial boundary conditions such that left indices \(\lambda^{-1}, \nu^{-1}
     \caption{Two-dimensional tensor network representation of a process tensor \(\mathbf{T}^{\{\alpha_j^i\}}{}_{\{\beta_j^i\}}\). Horizontal bonds \(\mu_j^i\) encode temporal correlations, bonds \(\nu_j^i\) carry spatial correlations, and open indices \(\alpha_j^i\), \(\beta_j^i\) correspond to system inputs and outputs at each time \(j \in [0,k]\) and subsystem \(i \in [0,n)\).}
     \label{fig:tensor-network-2d}
 \end{figure}
+
+\subsection{Worked example}

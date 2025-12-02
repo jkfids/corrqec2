@@ -1,0 +1,14 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=smallcircleorange] (0) at (0, 0) {\(\mathbf{A}\)};
+		\node [style=none] (1) at (0.75, 0) {};
+		\node [style=none] (2) at (-0.75, 0) {};
+		\node [style=none] (3) at (0, -0.675) {};
+		\node [style=none] (4) at (0, -0.8) {\({}_x\)};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [style=fusedwire] (0) to (1.center);
+		\draw [style=fusedwire] (2.center) to (0);
+		\draw (3.center) to (0);
+	\end{pgfonlayer}
+\end{tikzpicture}

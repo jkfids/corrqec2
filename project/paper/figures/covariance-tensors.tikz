@@ -1,0 +1,25 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=smallboxblue] (0) at (0.75, 0) {\(\widetilde{E}_f\)};
+		\node [style=smallboxyellow] (1) at (1.75, 0) {\(T\)};
+		\node [style=smallboxyellow] (2) at (3.25, 0) {\(T\)};
+		\node [style=lefttrianglesmall] (3) at (0, 0) {\(l\)};
+		\node [style=smallboxblue] (4) at (4.25, 0) {\(\widetilde{E}_g\)};
+		\node [style=righttrianglesmall] (5) at (5, 0) {\(r\)};
+		\node [style=none] (6) at (2.75, 0) {};
+		\node [style=none] (7) at (2.25, 0) {};
+		\node [style=none] (8) at (1.375, -0.475) {};
+		\node [style=none] (9) at (3.625, -0.475) {};
+		\node [style=none] (10) at (2.5, -0.875) {\({}_{\tau - 1}\)};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [style=fusedwire] (3) to (0);
+		\draw [style=fusedwire] (0) to (1);
+		\draw [style=fusedwire] (4) to (2);
+		\draw [style=fusedwire] (4) to (5);
+		\draw [style=fusedwire] (2) to (6.center);
+		\draw [style=fusedwire] (1) to (7.center);
+		\draw [style=fuseddotted] (7.center) to (6.center);
+		\draw [style=braceunder, in=180, out=0] (8.center) to (9.center);
+	\end{pgfonlayer}
+\end{tikzpicture}
