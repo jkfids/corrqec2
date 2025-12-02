@@ -17,7 +17,7 @@ def calc_a_b(p_bar, Delta):
 def calc_Delta_from_xi(xi):
     if isinstance(xi, (int, float)):
         xi = [xi]
-    out = np.empty_like(xi)
+    out = np.zeros_like(xi, dtype=float)
     for i in range(len(xi)):
         if xi[i] == 0:
             out[i] = 1.0
