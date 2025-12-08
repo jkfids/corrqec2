@@ -7,20 +7,26 @@
 %     \item There is an inherent scaling problem with Monte Carlo sampling QEC experiments, in that the number of samples required to estimate a logical error rate \(p_L\) scales as \(1/p_L\). This is particularly problematic when \(p_L\) is (exponentially) small and/or the noise is very sparse. Some approaches to mitigate this is importance sampling and splitting methods. One lead is using ``normalizing flows''.
 % \end{itemize}
 % }
-
-\section{Temporal storm model}
+\Fidel{TODO:
+\begin{itemize}
+    \item Sections 2-5 aren't very QEC-specific as we have a general framework. Maybe add a subsection (or just include in the section 6.0 introduction) discussing how SPCs can be used to model correlated noise in QEC specifically, and why we model the way we do in sections 6 and 7.
+    \item Justify that although our framework is general enough to capture correlations at the circuit level (we have freedom to choose where correlated errors occur throughout the circuit, since the twirl is applied at the gate level), we focus on phenomenological noise models, where errors occur at the granularity of QEC cycles, because (a) circuit-level Pauli noise can be mapped to correlated phenomenological noise, and (b) we are more interested in behaviour of correlations over multiple QEC cycles.
+    \item We included a decent amount of tensor network formalism in sections 2-5, which we don't end up explicitly using in sections 6 and 7. For our particular application for efficient large-scale circuit-level simulations, they are more intermediate steps to building efficient HMM models derived from the microscopic dynamics. We should address this.
+\end{itemize}
+}
+\section{Temporal storm model}\label{sec:temporalstormmodel}
 
 \subsection{Model}
 We now instantiate the general SPC formalism in a one-dimensional, analytically tractable setting, which we refer to as the \emph{temporal storm model}. Each system qubit $S_i$ is coupled to its own two-level environment $E_i$ with classical basis states $\{\ket{0},\ket{1}\}$, representing \emph{calm} and \emph{storm} conditions, respectively. For clarity, we focus on a single site and suppress the index $i$ in what follows.
 
-The environment undergoes a time-homogeneous classical Markov chain with transition probabilities $\Gamma_{i\to j}$ between calm and storm (Fig.~X). The system–environment interaction is modelled as a quantum channel conditioned on the environment state. When the environment is in state $\ket{j}$, the system evolves according to
+The environment undergoes a time-homogeneous classical Markov chain with transition probabilities $\Gamma_{i\to j}$ between calm and storm (Fig.~X). The system--environment interaction is modelled as a quantum channel conditioned on the environment state. When the environment is in state $\ket{j}$, the system evolves according to
 \begin{equation*}
     \mathcal{E}_j[\rho_S]
     = \sum_x q^{(x)}_j \,\sigma^{(x)} \rho_S \sigma^{(x)},
 \end{equation*}
-where $\sigma^{(x)}$ denotes the Pauli operators indexed by $x$, and $q^{(x)}_j$ are probabilities satisfying \(\sum_x q^{(x)}_j = 1\). The joint system–environment evolution over a single time step is thus described by the CPTP map
+where $\sigma^{(x)}$ denotes the Pauli operators indexed by $x$, and $q^{(x)}_j$ are probabilities satisfying \(\sum_x q^{(x)}_j = 1\). The joint system--environment evolution over a single time step is thus described by the CPTP map
 \begin{equation*}
-    \Phi_{SE}[\rho_{SE}]
+    \Phi[\rho_{SE}]
     = \sum_{i,j,x} K^{(x)}_{ij} \,\rho_{SE}\, K^{(x)\dagger}_{ij},
     \qquad
     K^{(x)}_{ij}
@@ -44,7 +50,7 @@ The spectrum of $T$ is easily obtained with \(\lambda_1 = 1, \lambda_2 = 1 - a -
 \begin{equation*}
     \Delta = a + b, \quad \xi = -\frac{1}{\ln(1-a-b)},
 \end{equation*}
-The left and right eigenvectors associated to $\lambda_1$, corresponding to the left and right stationary states, are
+The left and right eigenvectors associated with $\lambda_1$, corresponding to the left and right stationary states, are
 \begin{equation*}
     \bra{l} =
     \begin{pmatrix}

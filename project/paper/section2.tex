@@ -1,91 +1,106 @@
 \section{Preliminaries}
-\Fidel{This section provides all the necessary background theory. It will be divided into four main subsections:
-\begin{enumerate}
-    \item Quantum channels.
-    \item Pauli channels and twirling.
-    \item Process tensors.
-\end{enumerate}
-TODO:
-\begin{itemize}
-    \item Define \(\Lambda\) (Choi matrix)
-    \item Bridging sentence between Pauli twirling and process tensors
-    \item Acknowledge that we assume we can prepare \(\rho_\mathrm{in}\) perfectly
-    \item Cite process matrix paper in footnote
-    \item Explain what \(\mathcal{A}\) is
-\end{itemize}
-}
-\newcommand{\valignbox}{\adjustbox{valign=c,padding=0 0.1em}}
-\newcommand{\valignboxnopad}{\adjustbox{valign=c,padding=0 0em}}
-% \newcommand{\valignbox}{\adjustbox{valign=c,padding=0 0}}
-\clearpage
+% \Fidel{
+% TODO:
+% \begin{itemize}
+%     % \item Acknowledge that we assume we can prepare \(\rho_\mathrm{in}\) perfectly
+%     \item Cite process matrix paper in footnote (idk which one lol)
+%     \item Explain why we bother with the Pauli expansion of the process tensor?
+%     \item When explaining what an instrument is, mention that it can also even be an entire syndrome extraction round.
+% \end{itemize}
+% }
+In this section, we establish the requisite machinery for our spatiotemporal Pauli process framework. We begin by reviewing quantum channels and their representations, then focus on Pauli channels and twirling, motivating their central role in quantum error correction while discussing their limitations. Finally, we generalise from two-time maps to multi-time dynamics via the process tensor formalism, which provides a rigorous description of non-Markovian memory and sets the stage for our later analysis of spatiotemporal noise correlations.
+
 \subsection{Quantum channels}
-The physical evolution of a quantum state \(\rho \in \mathcal{B}(\mathcal{H})\), where \(\mathcal{B}(\mathcal{H})\) is the space of bounded linear operators on a Hilbert space \(\mathcal{H}\), is entirely described by a \emph{quantum channel}. A quantum channel is a linear map \(\mathcal{E}: \mathcal{B}(\mathcal{H}_{\mathrm{in}}) \to \mathcal{B}(\mathcal{H}_{\mathrm{out}})\) that is completely positive and trace preserving (CPTP). Formally, a quantum channel \(\mathcal{E}\) satisfies:
+The physical evolution of a quantum state \(\rho \in \mathcal{B}(\mathcal{H})\), where \(\mathcal{B}(\mathcal{H})\) is the space of bounded linear operators on a Hilbert space \(\mathcal{H}\), is entirely described by a \emph{quantum channel} \cite{nielsenQuantumComputationQuantum2010}. A quantum channel is a linear map \(\mathcal{E}: \mathcal{B}(\mathcal{H}_{\mathrm{in}}) \to \mathcal{B}(\mathcal{H}_{\mathrm{out}})\) that is completely positive and trace preserving (CPTP). Formally, a quantum channel \(\mathcal{E}\) must satisfy:
 \begin{enumerate}
-\item \textbf{Linearity}: \(\mathcal{E}[a\rho_1+b\rho_2]=a\mathcal{E}[\rho_1]+b\mathcal{E}[\rho_2]\).
+\item \textbf{Linearity}: \(\mathcal{E}[\alpha\rho_1+\beta\rho_2]=\alpha\mathcal{E}[\rho_1]+\beta\mathcal{E}[\rho_2]\).
 \item \textbf{Complete positivity (CP)}: \((\mathcal{I}_A\otimes \mathcal{E}_B)[\rho_{AB}]\geq 0 \quad \forall \rho_{AB}\).
 \item \textbf{Trace preservation (TP)}: \(\Tr(\mathcal{E}[\rho]) = \Tr(\rho)\).
 \end{enumerate}
-Thus, a channel represents a \emph{two-time} quantum map evolving an initial state \(\rho(t_0)\) at time \(t_0\) to a final state \(\rho(t_1)\) at time \(t_1\), i.e., \(\mathcal{E}: \rho(t_0) \mapsto \rho(t_1)\). A quantum channel admits several equivalent representations, each useful in different contexts. The most well-known representation, the Kraus (operator-sum) representation, expresses the channel's action on an input state \(\rho\) as
+Physically, a channel represents a \emph{two-time} quantum map evolving an initial state \(\rho(t_0)\) at time \(t_0\) to a final state \(\rho(t_1)\) at time \(t_1\), i.e., \(\mathcal{E}: \rho(t_0) \mapsto \rho(t_1)\). A quantum channel admits several equivalent representations, each useful in different contexts. The most well-known representation is the Kraus (operator-sum) representation, which expresses the channel's action on an input state \(\rho\) as
 \begin{equation}
     \mathcal{E}[\rho] = \sum_i K_i \rho K_i^\dagger,
 \end{equation}
-where the Kraus operators \(\{K_i\}\) satisfy \(\sum_i K_i^\dagger K_i = \mathbb{I}\) to ensure trace preservation. Another important representation is the Choi-Jamiołkowski isomorphism, which establishes a bijection between CP maps \(\mathcal{E}: \mathcal{B}(\mathcal{H}_{\mathrm{in}}) \to \mathcal{B}(\mathcal{H}_{\mathrm{out}})\) and positive semidefinite operators \(\Lambda \in \mathcal{B}(\mathcal{H}_{\mathrm{in}} \otimes \mathcal{H}_{\mathrm{out}})\). The action of the Choi matrix \(\Lambda\) is given by
+where the Kraus operators \(\{K_i\}\) satisfy \(\sum_i K_i^\dagger K_i = \mathbb{I}\) to ensure trace preservation. Another important representation is provided by the Choi-Jamiołkowski isomorphism (CJI), which establishes a bijection between CP maps \(\mathcal{E}: \mathcal{B}(\mathcal{H}_{\mathrm{in}}) \to \mathcal{B}(\mathcal{H}_{\mathrm{out}})\) and positive semidefinite operators \(\Lambda \in \mathcal{B}(\mathcal{H}_{\mathrm{in}} \otimes \mathcal{H}_{\mathrm{out}})\). The Choi matrix \(\Lambda\) is defined as
+\begin{equation}
+    \Lambda = (\mathcal{I} \otimes \mathcal{E})[\ketbra{\Phi^+}{\Phi^+}],
+\end{equation}
+where \(\ket{\Phi^+} = \sum_i \ket{i}\otimes \ket{i}\) is the (unnormalised) Bell state on \(\mathcal{H}_{\mathrm{in}} \otimes \mathcal{H}_{\mathrm{in}}\). The action of the Choi matrix \(\Lambda\) on an input state \(\rho\) can then be written as
 \begin{equation}\label{eq:choi-rep}
     \mathcal{E}[\rho] = \Tr_{\mathrm{in}}[(\rho^T \otimes \mathbb{I}_{\mathrm{out}})\Lambda].
 \end{equation}
-The Stinespring dilation theorem provides an additional critical, physically motivated perspective. It states that any CPTP map acting on a system space \(\mathcal{B}(\mathcal{H}_S)\) can be represented as a unitary operation \(U\) on a larger, dilated space \(\mathcal{B}(\mathcal{H}_S \otimes \mathcal{H}_E)\), followed by a partial trace over the auxiliary environment space \(\mathcal{H}_E\). This is expressed as
-\begin{equation}
-    \mathcal{E}[\rho_S] = \Tr_E[U(\rho_S \otimes \sigma_E)U^\dagger].
-\end{equation}
-Throughout this work, we also employ other representations, such as the \(\chi\)-matrix\footnote{Also known as a process matrix, a term we avoid using due to a terminological clash with a higher-order quantum object with potentially indefinite causal order.} representation and the (Liouville-)superoperator representation. The \(\chi\)-matrix is related to the Choi matrix via a change of basis to the Pauli basis, while the superoperator representation is convenient for numerical calculations and tensor network construction. We do not explicitly cover these nor the detailed mappings between the various representations. For a comprehensive overview of quantum channel representations and the transformations between them using a graphical calculus, we refer the reader to ref.~\cite{woodtensor2015}.
+The CP condition on \(\mathcal{E}\) translates into the positive semidefiniteness of \(\Lambda\), while the TP condition translates to the partial trace relation \(\Tr_{\mathrm{out}}[\Lambda] = \mathbb{I}_{\mathrm{in}}\). This representation directly encodes the complete dynamical information of a channel into a static bipartite state, which we later generalise to multi-time processes described by process tensors.
 
-\subsection{Pauli channels and twirling}
-An important class of quantum channels, particularly in quantum error correction, are Pauli channels. A Pauli channel \(\mathcal{E}_P\) acting on \(n\) qubits is a CPTP map of the form
+The Stinespring dilation theorem provides an additional, physically motivated perspective on quantum channels. It states that any CPTP map acting on a system space \(\mathcal{B}(\mathcal{H}_S)\) can be realised as a unitary operation \(U\) on a larger, dilated space \(\mathcal{B}(\mathcal{H}_S \otimes \mathcal{H}_E)\), followed by a partial trace over an auxiliary environment \(E\). This is expressed as
+\begin{equation}
+    \mathcal{E}[\rho_S] = \Tr_E[U(\rho_S \otimes \sigma_E)U^\dagger],
+\end{equation}
+where \(\sigma_E\) is an initial state of the environment, which must be initially separable from \(\rho_S\).
+
+Throughout this work, we also employ further representations, including the \(\chi\)-matrix\footnote{Also known as a process matrix, a term we avoid using due to a terminological clash with a higher-order quantum object with potentially indefinite causal order.} representation and the (Liouville-)superoperator representation. The \(\chi\)-matrix is related to the Choi matrix via a change of basis to the Pauli basis, while the superoperator representation is convenient for numerical calculations. We do not explicitly review these representations nor the detailed mappings between them. For a comprehensive overview of quantum channel representations and the transformations between them in a graphical calculus, we refer the reader to ref.~\cite{woodTensorNetworksGraphical2015}. 
+
+\subsection{Pauli channels and Pauli twirling}
+An important class of quantum channels, especially in quantum error correction, is the class of Pauli channels. A Pauli channel \(\mathcal{E}_P\) acting on \(n\) qubits is defined as a convex mixture of Pauli operators,
 \begin{equation}\label{eq:pauli-channel}
     \mathcal{E}_P[\rho] = \sum_{P \in \mathbb{P}^{(n)}} p_P P \rho P,
 \end{equation}
-where \(\mathbb{P}^{(n)} = \{I, X, Y, Z\}^{\otimes n}\) is the \(n\)-qubit Pauli group, and \(p_P \geq 0\) and \(\sum_{P} p_P = 1\).
+where \(\mathbb{P}^{(n)} = \{I, X, Y, Z\}^{\otimes n}\) is the \(n\)-qubit Pauli basis, and coefficients \(p_P \geq 0\) satisfy \(\sum_{P} p_P = 1\). 
 
-A general channel \(\mathcal{E}\) can be projected onto a Pauli channel by a procedure known as \emph{Pauli twirling}. The Pauli twirl of \(\mathcal{E}\) is defined as the group average
+Any general channel \(\mathcal{E}\) can be projected into a Pauli channel via a procedure known as \emph{Pauli twirling}. The Pauli twirl of \(\mathcal{E}\) is defined as the group average
 \begin{equation}\label{eq:pauli-twirl}
     \mathcal{T}_P(\mathcal{E})[\rho] = \frac{1}{|\mathbb{P}^{(n)}|} \sum_{P \in \mathbb{P}^{(n)}} P \mathcal{E}(P \rho P) P,
 \end{equation}
-where \(|\mathbb{P}^{(n)}| = 4^n\). The image of the twirling operation takes the form of \cref{eq:pauli-channel}. Equivalently, given the $\chi$-matrix representation of \(\mathcal{E}\), the twirled channel \(\mathcal{T}_P(\mathcal{E})\) can be computed by zeroing all off-diagonal elements, leaving only the diagonal elements corresponding to probabilities \(p_P\) of the Pauli operators. Given the Choi representation, the twirling operation can be expressed as the CPTP projector,
+where \(|\mathbb{P}^{(n)}| = 4^n\). The image of the twirling operation is strictly a Pauli channel of the form in \cref{eq:pauli-channel}. Equivalently, given the $\chi$-matrix representation of \(\mathcal{E}\), the twirled channel \(\mathcal{T}_P(\mathcal{E})\) can be computed by zeroing all off-diagonal elements, leaving only the diagonal elements corresponding to probabilities \(p_P\) of the Pauli operators. In the Choi representation, the twirling operation acts as a CPTP projector (or \emph{superchannel}) on the Choi matrix \(\Lambda\):
 \begin{equation}
-    \mathcal{T}_P(\Lambda_\mathcal{E}) = \frac{1}{4^n} \sum_{P \in \mathbb{P}^{(n)}} (P \otimes P) \Lambda (P \otimes P).
+    \mathcal{T}_P(\Lambda) = \frac{1}{4^n} \sum_{P \in \mathbb{P}^{(n)}} (P \otimes P) \Lambda (P \otimes P).
 \end{equation}
-(\Fidel{Concise discussion about the utility and efficacy of Pauli channel models for QEC, its limitations, and how it can be implemented in practice via randomised compiling. Couple of sentences in introduction, maybe more details here. Reference to work on Pauli channel characterisation, Robin Harper et al., Pauli channels from syndromes.})
+This operation removes coherences between distinct Pauli sectors while preserving the CPTP condition. We will later generalise this projection in the process tensor framework. Before turning to multi-time processes, however, we first discuss the relevance and limitations of Pauli noise models in quantum error correction. 
+
+\subsection{Pauli noise in quantum error correction}
+Pauli noise models occupy a privileged role in quantum error correction. The discretisation of errors via projective syndrome measurements collapses continuous error processes into discrete syndrome outcomes associated with Pauli errors, allowing for their correction~\cite{knillTheoryQuantumErrorcorrecting1997,gottesmanStabilizerCodesQuantum1997}. Furthermore, via the Gottesman-Knill theorem~\cite{gottesmanHeisenbergRepresentationQuantum1998}, Clifford circuits subject to Pauli noise are amenable to efficient classical simulation, enabling large-scale Monte Carlo studies of QEC performance in regimes relevant for fault-tolerant computation~\cite{aaronsonImprovedSimulationStabilizer2004,gidneyStimFastStabilizer2021}.
+
+Physical noise processes, however, are described by general CPTP maps that need not be Pauli channels. Coherent unitary errors---arising from miscalibrated gates, drift, or unwanted system-system or system-environment couplings---induce structure in noise that is explicitly removed by the Pauli twirling approximation. Consequently, stochastic Pauli models cannot wholly capture the full underlying dynamics and can, in some cases, under- or overestimate logical error rates, as seen in worst-case analyses with highly coherent gate-based noise. These discrepancies are further exacerbated in non-Markovian settings, where coherent environmental memory effects defy description even by sequences of general quantum channels.
+
+Despite these limitations, there are compelling reasons to treat Pauli noise as a central effective noise model for QEC. First and foremost, Pauli noise can be engineered in practice. Randomised compiling (RC) actively tailors general noise into stochastic Pauli noise by interleaving and compiling random Pauli gates into the circuit. Second, many of the most dramatic examples where Pauli models misdiagnose logical failure rates rely on highly structured and fully coherent error patterns that are unlikely to persist in large-scale devices. QEC performance under less pathological non-Pauli models, such as amplitude or phase damping, is well approximated by their Pauli twirled counterparts. Furthermore, previous studies suggest that residual coherent effects on logical qubits are naturally suppressed with increasing code distance for standard stabiliser codes.
+% Third, in several experiments, simulations based on circuit-level Pauli noise show good agreement with observed logical error rates, lending emperical support to the use of Pauli noise models. 
+Finally, the efficiency of Pauli noise representations enables a range of practical noise characterisation protocols. In particular, the reconstruction of effective phenomenological Pauli noise from syndrome measurement data alone is highly valuable for in situ monitoring and calibration of real-world QEC implementations.
+
+Crucially, even with a Pauli description of noise, one can still accommodate the rich spatiotemporal correlations induced by non-Markovian dynamics. Most existing analyses, however, assume uncorrelated, Markovian error models, whereas correlations in stochastic models can have a pronounced impact on the efficacy of QEC protocols \cite{fowlerQuantifyingEffectsLocal2014,fkamDetrimentalNonMarkovianErrors2025}. 
+% Recent work has begun to explore the interplay between randomised compiling, Pauli twirling, and non-Markovian dynamics \cite{figueroa-romeroOperationalMarkovianizationRandomized2024,liuNonMarkovianNoiseSuppression2024,liuRealizingUniversalNonMarkovian2025}. 
+In the next subsection, we introduce the process tensor formalism, which provides a complete characterisation of multi-time quantum processes, including non-Markovian memory effects, and forms the basis for our spatiotemporal Pauli process construction.
 
 \subsection{Process tensors}
-While quantum channels describe two-time dynamics, they are insufficient for capturing multi-time quantum processes, especially in the presence of non-Markovian memory effects. The quantum \emph{process tensor} provides a general spatiotemporal framework that encodes all such correlations. It can be viewed as a \emph{higher-order quantum map}, or quantum comb, that takes as input a sequence of \(k\) instruments (CP maps) \(\mathbf{A}_{0:k-1}=(\mathcal{A}_0,\dots,\mathcal{A}_{k-1})\), and outputs the resulting system state \(\rho_\mathrm{out}\). For the purposes of modelling the multi-time dynamics starting from an initial system state \(\rho_\mathrm{in}\)\footnote{For cases where the system and environment are initially correlated, the process tensor acts purely on a sequence of instruments \(\mathbf{A}_{0:k-1}\), where the initial map \(\mathcal{A}_0\) serves as a preparation map. Correspondingly, a \emph{superchannel} can be described as a 1-slot process tensor.}, we define a \emph{\(k\)-slot} process tensor \(\mathcal{T}_{0:k}\) as a multilinear map
+While quantum channels describe two-time dynamics, they are insufficient for capturing general multi-time quantum processes, especially in the presence of non-Markovian memory effects. The quantum \emph{process tensor} provides a general spatiotemporal framework that encodes all such correlations. It can be viewed as a \emph{higher-order quantum map} (or quantum comb), that takes as input a sequence of \(k\) instruments \(\mathbf{A}_{0:k-1}=(\mathcal{A}_0,\dots,\mathcal{A}_{k-1})\), and outputs the resulting system state \(\rho_\mathrm{out}\). Here each \(\mathcal{A}_j\) denotes a CP acting on the system at time \(t_j\), representing an arbitrary control operation, gate, or projective measurement performed by an experimenter. The sequence \(\mathbf{A}_{0:k-1}\) thus encapsulates all controllable dynamics imposed on the system between the initial preparation and the final time.
+
+For the purposes of modelling the multi-time dynamics starting from an initial system state \(\rho_\mathrm{in}\)\footnote{For cases where the system and environment are initially correlated, the process tensor acts purely on a sequence of instruments \(\mathbf{A}_{0:k-1}\), where the initial map \(\mathcal{A}_0\) serves as a preparation map. Correspondingly, a \emph{superchannel} is exactly a 1-slot process tensor.}, we define a \emph{\(k\)-slot} process tensor \(\mathcal{T}_{0:k}\) as a multilinear map
 \begin{equation}
 \mathcal{T}_{0:k}[\rho_\mathrm{in},\mathbf{A}_{0:k-1}] = \rho_\mathrm{out}.
 \end{equation}
-Like quantum channels, a process tensor admits several equivalent representations, the most prevalent being the Choi representation. Just as the Choi-Jamiołkowski isomorphism establishes a channel-state duality, there exists a process-state duality that maps a quantum process \(\mathcal{T}_{0:k}\) to a positive semidefinite operator \(\Upsilon_{0:k} \in \mathcal{B}(\bigotimes_{j=0}^k \mathcal{H}_{\mathrm{in}_j} \otimes \mathcal{H}_{\mathrm{out}_j})\). Its action on an initial state \(\rho_{\mathrm{in}}\) and sequence \(\mathbf{A}_{0:k-1}\) is given by
+Like quantum channels, a process tensor admits several equivalent representations, the most prevalent being the Choi representation. Just as the CJI establishes a channel-state duality, there exists a process-state duality that maps any quantum process \(\mathcal{T}_{0:k}\) to a positive semidefinite operator \(\Upsilon_{0:k} \in \mathcal{B}(\bigotimes_{j=0}^k \mathcal{H}_{\mathrm{in}_j} \otimes \mathcal{H}_{\mathrm{out}_j})\). Its action on an initial state \(\rho_{\mathrm{in}}\) and sequence \(\mathbf{A}_{0:k-1}\) is given by
 \begin{equation}\label{eq:pt-choi-rep}
     \rho_\mathrm{out}(\rho_\mathrm{in}, \mathbf{A}_{0:k-1}) = \Tr_{\overline{\mathrm{out}}} \left[\left(\rho_{\mathrm{in}}^T\otimes \hat{\mathcal{A}}_0^T\otimes \cdots \otimes\hat{\mathcal{A}}_{k-1}^T \otimes \mathbb{I}_{\mathrm{out}}\right)\Upsilon_{0:k}\right],
 \end{equation}
-where \(\Tr_{\overline{\mathrm{out}}}\) denotes the partial trace over all subspaces except the final output space \(\mathcal{H}_{\mathrm{out}_k}\), and \(\hat{\mathcal{A}}_j \in \mathcal{B}(\mathcal{H}_{\mathrm{out}_j} \otimes \mathcal{H}_{\mathrm{in}_{j+1}})\) is the Choi state of the CP map \(\mathcal{A}_j\). We remark that for \(k=0\), the above expression reduces to the quantum channel case in \cref{eq:choi-rep}. 
+where \(\Tr_{\overline{\mathrm{out}}}\) denotes the partial trace over all subspaces except the final output space \(\mathcal{H}_{\mathrm{out}_k}\), and \(\hat{\mathcal{A}}_j \in \mathcal{B}(\mathcal{H}_{\mathrm{out}_j} \otimes \mathcal{H}_{\mathrm{in}_{j+1}})\) is the Choi operator of the CP map \(\mathcal{A}_j\). For \(k=0\), the above expression reduces to the channel case in \cref{eq:choi-rep}.
 
-Equivalent Kraus, superoperator, and \(\chi\)-matrix representations can be derived from the Choi form analogously as for quantum channels. The Choi representation is convenient because it translates the physical properties of a quantum process into concrete, computable properties of the operator \(\Upsilon_{0:k}\). Crucially, a process tensor \(\mathcal{T}_{0:k}\) represents a valid, physical process if and only if its Choi representation \(\Upsilon_{0:k}\) satisfies the following conditions:
+Equivalent Kraus, superoperator, and \(\chi\)-matrix representations can be derived from the Choi form in direct analogy with quantum channels. The Choi representation is convenient because it translates the physical properties of a quantum process into concrete properties of the operator \(\Upsilon_{0:k}\). Crucially, a process tensor \(\mathcal{T}_{0:k}\) represents a valid, physical process if and only if its Choi representation \(\Upsilon_{0:k}\) satisfies the following conditions:
 \begin{enumerate}
     \item \textbf{Positive semidefiniteness} \\
-    This is the direct generalisation of the CP condition for quantum channels. The Choi matrix must be positive semidefinite:
+    This is the direct generalisation of the CP condition for quantum channels. The Choi matrix must be positive semidefinite,
     \begin{equation}
-        \Upsilon_{0:k} \geq 0.
+        \Upsilon_{0:k} \geq 0,
     \end{equation}
-    This ensures that, for any valid initial state and sequence of physical instruments, the output state is also positive semidefinite.
+    ensuring that, for any valid initial state and sequence of instruments, the output state is positive semidefinite.
     \item \textbf{Causal (or affine) constraints} \\
-    Also known as the containment property, these constraints are a more intricate generalisation of the TP condition to multi-time processes. The Choi state must satisfy the recursive constraints,
+    Also known as the containment property, these constraints are a more intricate generalisation of the TP condition of channels to multi-time processes. The Choi matrix must satisfy the recursive constraints,
     \begin{equation}\label{eq:affine-constraint}
         \begin{split}
             &\Tr_{\mathrm{out}_j}[\Upsilon_{0:j}] = \Upsilon_{0:j-1} \otimes \mathbb{I}_{\mathrm{in}_j}, \quad \forall j=1,\dots,k, \\
             &\Tr_{\mathrm{out}_0}[\Upsilon_{0:0}] = \mathbb{I}_{\mathrm{in}_0}.
         \end{split}
     \end{equation}
-    Operationally, this condition ensures that instruments performed at future times cannot influence outcome statistics at earlier times, thereby enforcing causality. Equivalently, these constraints can be expressed as a linear system of Pauli expectation values. Denoting
+    Operationally, this condition ensures that instruments performed at future times cannot influence outcome statistics at earlier times, thereby enforcing causal ordering. Equivalently, these constraints can be expressed as a linear system of Pauli expectation values. Denoting
     \begin{equation*}
-        \braket{P_{\mathrm{in}_0}P_{\mathrm{out}_0}\cdots P_{\mathrm{in}_k}P_{\mathrm{out}_k}} = \Tr\!\left[(P_{\mathrm{in}_0}\otimes P_{\mathrm{out}_0} \otimes\cdots\otimes P_{\mathrm{in}_k}\otimes P_{\mathrm{out}_k})\,\Upsilon_{0:k}\right],
+        \braket{P_{\mathrm{in}_0}P_{\mathrm{out}_0}\cdots P_{\mathrm{in}_k}P_{\mathrm{out}_k}} = \Tr\!\left[(P_{\mathrm{in}_0}\otimes P_{\mathrm{out}_0} \otimes\cdots\otimes P_{\mathrm{in}_k}\otimes P_{\mathrm{out}_k})\Upsilon_{0:k}\right],
     \end{equation*}
 with Pauli strings \(P_j \in \mathbb{P}^{(n)}\) of cardinality \(|\mathbb{P}^{(n)}| = 4^n\), and non-identity Pauli strings \(Q_j \in \mathbb{P}^{(n)} \setminus \{\mathbb{I}\}\), \cref{eq:affine-constraint} can be rewritten as \((k+1)(4^n-1)\) independent linear equations,
     \begin{equation}
@@ -96,20 +111,20 @@ with Pauli strings \(P_j \in \mathbb{P}^{(n)}\) of cardinality \(|\mathbb{P}^{(n
             &\braket{Q_{\mathrm{in}_0}\mathbb{I}_{\mathrm{out}_0}\cdots \mathbb{I}_{\mathrm{in}_k}\mathbb{I}_{\mathrm{out}_k}} = 0.
         \end{split}
     \end{equation}
-    The normalisation condition \(\braket{\mathbb{I}_{\mathrm{in}_0}\mathbb{I}_{\mathrm{out}_0}\cdots \mathbb{I}_{\mathrm{in}_k}\mathbb{I}_{\mathrm{out}_k}} = \Tr{[\Upsilon_{0:k}]} = 4^{n(k+1)}\) provides an additional linear constraint, however it is often convenient to work with the unnormalised Choi state. \\
-    \Angus{These affine constraints might make sampling more efficient -- you don't need the full process tensor for times \(t > k\) if you only want samples of the first \(k\) timesteps, because all the partial traces over the latter timesteps simply give identities.}
+    The normalisation condition \(\braket{\mathbb{I}_{\mathrm{in}_0}\mathbb{I}_{\mathrm{out}_0}\cdots \mathbb{I}_{\mathrm{in}_k}\mathbb{I}_{\mathrm{out}_k}} = \Tr{[\Upsilon_{0:k}]} = 4^{n(k+1)}\) provides an additional linear constraint, however it is often convenient to work with the unnormalised Choi state. 
+    % \Angus{These affine constraints might make sampling more efficient -- you don't need the full process tensor for times \(t > k\) if you only want samples of the first \(k\) timesteps, because all the partial traces over the latter timesteps simply give identities.}
 \end{enumerate}
-The set of Choi states representing physically valid quantum processes \(\{\Upsilon_{0:k}\}\) thus lies in the intersection of the convex cone of positive semidefinite operators and an affine subspace defined by the causal constraints on the process tensor.
+In summary, the set of Choi states representing physical quantum processes \(\{\Upsilon_{0:k}\}\) lies in the intersection of the convex cone of positive semidefinite operators and an affine subspace defined by the causal constraints on the process tensor.
 
-Beyond the general validity conditions, the structural features of a process tensor reflect the physical nature of the underlying dynamics. Notably, entanglement across temporal partitions of a Choi state \(\Upsilon_{0:k}\)---referred to as \emph{temporal entanglement}---indicates that a process is \emph{genuinely quantum non-Markovian}. Concretely, a process exhibits genuinely quantum temporal correlations if and only if its Choi state cannot be written as a convex mixture of products, 
+Beyond these general validity conditions, structural features of a process tensor reflect the physical nature of the underlying dynamics. Notably, entanglement across temporal partitions of a Choi state \(\Upsilon_{0:k}\)---referred to as \emph{temporal entanglement}---signals that a process is \emph{genuinely quantum non-Markovian}. Concretely, a process exhibits genuinely quantum temporal correlations if and only if its Choi state cannot be written as a convex mixture of products, 
 \begin{equation}
 \Upsilon_{0:k} = \sum_\alpha p_\alpha \Lambda_0^\alpha \otimes \Lambda_1^\alpha \otimes \cdots \otimes \Lambda_k^\alpha,
 \end{equation}
-requiring \(p_\alpha \geq 0\), and where \(\Lambda_j^\alpha\) is the Choi representation of a CPTP channel. Conversely, a process is fully \emph{Markovian}---exhibiting neither quantum nor classical temporal correlations---if and only if its Choi state is a product across all timesteps,
+with \(p_\alpha \geq 0\) and each \(\Lambda_j^\alpha\) is the Choi representation of a CPTP channel. Conversely, a process is fully \emph{Markovian}---exhibiting neither quantum nor classical temporal correlations---if and only if its Choi operator factorises across all time steps,
 \begin{equation}
     \Upsilon_{0:k}^{\textrm{Markov}} = \Lambda_0 \otimes \Lambda_1 \otimes \cdots \otimes \Lambda_k,
 \end{equation}
-where each \(\Lambda_j\) is required to be CPTP. The dynamics of a Markovian process is therefore equivalently generated by a sequence of independent quantum channels.
+where each \(\Lambda_j\) is CPTP. The dynamics of a Markovian process is therefore equivalently generated by a sequence of independent quantum channels.
 
 The physical origin of these structures can be traced back to the system--environment picture. By a natural extension of the Stinespring dilation theorem, any \(k\)-slot process tensor can be realised as the joint multi-time dynamics of a system \(S\) and an environment \(E\), followed by a partial trace over the environment. This is represented by the equation,
 \begin{equation}
@@ -117,4 +132,4 @@ The physical origin of these structures can be traced back to the system--enviro
 \end{equation}
 where \(\mathcal{U}(\cdot) = U(\cdot)U^\dagger\) implements a joint system--environment unitary, \(\mathbf{A}_{0:k-1}\) is a sequence of CP maps acting only on \(S\), and we have assumed an initially separable system and environment state \(\sigma_E \otimes \rho_S\).
 
-We emphasise that the Stinespring dilation is more than a mathematical device; it depicts the fundamental physics governing open quantum dynamics. Non-Markovianity arises when the environment retains information about the system’s past and feeds it back into its future evolution. The process tensor thus compactly encapsulates all uncontrollable system--environment interactions. Operationally, non-Markovianity can be viewed as the ignorance of a larger Hilbert space, where the joint system--environment dynamics are Markovian. The dilation also provides a natural bridge to tensor network representations of process tensors, which we discuss next.
+This dilation is more than a mathematical device; it depicts the fundamental physics governing open quantum dynamics. Non-Markovianity arises when the environment retains information about the system’s past and feeds it back into its future evolution. The process tensor compactly encapsulates all uncontrollable system--environment interactions. Operationally, non-Markovianity can be regarded as the ignorance of a larger Markovian dynamics on the joint system--environment Hilbert space. In the next section, we exploit this structure to construct tensor network representations of process tensors, which serve as the foundation of our spatiotemporal Pauli process framework.

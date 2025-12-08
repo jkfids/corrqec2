@@ -1,1 +1,13 @@
 qubit
+Markovian
+QEC
+non-Markovian
+qubits
+non-Markovianity
+Non-Markovianity
+CJI
+miscalibrated
+superchannels
+superoperator
+Stinespring
+MPO

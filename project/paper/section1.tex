@@ -10,16 +10,18 @@
         \item Relate SPC MPS to hidden Markov models to characterise memory length, correlation gap, and make other useful statements about the underlying noise structure.
         \item \textbf{Primary application: Efficient QEC simulation.} Frame the work as providing new tools for understanding and mitigating correlated noise in quantum devices.
         \item Other applications: Discuss bond truncation, characterisation (tomography), decoding.
+        \item Previous work analysing correlated noise for QEC either have some or a mix of the limitations: Gaussian (short-range) correlations, phenomenological noise or perfect syndrome extraction, focus on threshold estimates rather studying performance under threshold, specific to certain codes (e.g., surface codes due to reliance on statistical mechanical mappings or other techniques to make the problem tractable), no inter-round correlations, `ad hoc' models without clear connection to microscopic physical noise processes.
     \end{enumerate}
     \item \textbf{Caveats:} There are two main critical points that we should address head-on.
     \begin{enumerate}
-        \item \textbf{The Pauli twirling approximation.} Pauli twirling removes all coherent structure. It is a best case Pauli channel approximation of an arbitrary noise channel, so alternatively, we could twirl as a \emph{worst-case} or \emph{average-case} equivalent stochastic model ~\cite{magesanmodeling2013}. On the other hand, Pauli twirling may be justified when using randomised compiling, and there have been previous results showing the accuracy of Pauli error models for quantum error correction experiments (in certain instances) \Fidel{(Cite experimental result)}.
+        \item \textbf{The Pauli twirling approximation.}
+        % Pauli twirling removes all coherent structure. It is a best case Pauli channel approximation of an arbitrary noise channel, so alternatively, we could twirl as a \emph{worst-case} or \emph{average-case} equivalent stochastic model ~\cite{magesanModelingQuantumNoise2013}. On the other hand, Pauli twirling may be justified when using randomised compiling, and there have been previous results showing the accuracy of Pauli error models for quantum error correction experiments (in certain instances) \Fidel{(Cite experimental result)}.
         \item \textbf{Scalability.} While tensor networks are effective at making certain complex calculations tractable, there are limits to their ability to represent high dimensional, highly correlated data. In particular, combining spatial and temporal noise data generates a two-dimensional tensor network, whose contraction is not easy in general.
     \end{enumerate}
     \item \textbf{Related work:}
     \begin{enumerate}
-        \item \textbf{Non-Markovian noise suppression simplified through channel representation} ~\cite{liunonmarkovian2024}: They apply Pauli twirling to the Choi channel representation of a superchannel, similarly finding that the quantum non-markovianity is removed, leaving only classically correlated Pauli noise.
-        \item \textbf{Operational Markovianization in randomized benchmarking} ~\cite{figueroa-romerooperational2024}: They apply multitime randomised compiling (Pauli twirling) for non-Markovian randomised benchmarking.
-        \item \textbf{Realizing Universal Non-Markovian Noise Suppression}
+        \item \textbf{Non-Markovian noise suppression simplified through channel representation} \cite{liuNonMarkovianNoiseSuppression2024}: They apply Pauli twirling to the Choi channel representation of a superchannel, similarly finding that the quantum non-markovianity is removed, leaving only classically correlated Pauli noise.
+        \item \textbf{Operational Markovianization in randomized benchmarking} \cite{figueroa-romeroOperationalMarkovianizationRandomized2024}: They apply multitime randomised compiling (Pauli twirling) for non-Markovian randomised benchmarking.
+        \item \textbf{Realizing Universal Non-Markovian Noise Suppression} \cite{liuRealizingUniversalNonMarkovian2025}
     \end{enumerate}
 \end{itemize}}

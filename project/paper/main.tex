@@ -28,7 +28,17 @@
 % \setlength{\tabcolsep}{0pt}
 
 % Bibliography formatting
-\usepackage[backend=biber,url=false,doi=false,isbn=false,eprint=false]{biblatex}
+\usepackage[
+  backend=biber,
+  style=numeric,   % or style=quantum if you want Quantum’s own style
+  sorting=none,    % <-- order of appearance
+  url=false,
+  doi=false,
+  isbn=false,
+  eprint=false
+]{biblatex}
+% Completely suppress URL and urldate in the bibliography
+\renewbibmacro*{url+urldate}{}  % don't print URL or "visited on" at all
 \addbibresource{references.bib}
 
 % Tikz formatting
@@ -70,7 +80,7 @@
 \newcommand{\dket}[1]{| #1 \rangle \! \rangle}  % Alias for \kket
 \newcommand{\dbra}[1]{\langle \! \langle #1 |}  % Alias for \bbra
 \newcommand{\dbraket}[2]{\langle \! \langle #1 | #2 \rangle \! \rangle}
-\newcommand{\dketbra}[2]{| #1 \rangle \! \rangle \langle \! \langle #2 |}
+\newcommand{\dketbra}[2]{| #1 \rangle \! \rangle \! \langle \! \langle #2 |}
 
 % Mathematical operations and spaces
 % \newcommand{\Linearmap}[2]{\mathscr{L}(#1, #2)}
@@ -118,6 +128,9 @@
 
 \theoremstyle{definition}
 \newtheorem{definition}[theorem]{Definition}
+
+\newcommand{\valignbox}{\adjustbox{valign=c,padding=0 0.1em}}
+\newcommand{\valignboxnopad}{\adjustbox{valign=c,padding=0 0em}}
 
 \begin{document}
 
@@ -189,6 +202,8 @@
 % where appropriate.
 % You then have to upload the .bbl file along with the other source files when submitting to the arXiv.
 % Due to incompatibilities between different BibLaTeX versions we unfortunately cannot recommend this option ~\cite{biblatexsubmittingtothearxiv}.
+
+\tableofcontents
 
 \section{Introduction}\label{sec:introduction}
 \input{section1}

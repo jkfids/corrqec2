@@ -42,8 +42,8 @@ def main():
 
     # Sweep over distances and correlation lengths
     tasks = []
-    xis = [2, 4, 6, 8, 12, 16, 20, 28]
-    distances = [5, 7, 9, 11, 13, 15]
+    xis = [1, 2, 4, 6, 8, 12, 16, 20, 28]
+    distances = [5, 7, 9, 11, 13, 15, 17, 19]
 
     # Fixed noise model parameters
     p_gate = 0.001
@@ -75,7 +75,7 @@ def main():
             )
             tasks.append(task)
 
-    print(f"Starting {Path(__file__).stem}: Distance & correlation length sweep")
+    print(f"Starting {Path(__file__).stem}")
     print(f"Number of workers: {args.num_workers}")
     print(f"Number of tasks: {len(tasks)}")
     print(f"Distances: {distances}")

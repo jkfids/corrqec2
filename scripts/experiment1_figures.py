@@ -11,15 +11,19 @@ def calc_xi(a, b):
 
 
 def xi_to_Delta(xi):
-    return 1 - np.exp(-1 / xi)
-
-
-def xi_to_Delta_scaled(xi):
-    return 10 * xi_to_Delta(xi)
-
-
-def Delta_scaled_to_xi(Delta_scaled):
-    return Delta_to_xi(Delta_scaled / 10)
+    if isinstance(xi, np.ndarray):
+        out = np.empty_like(xi)
+        for i in range(len(xi)):
+            if xi[i] == 0:
+                out[i] = 1
+            else:
+                out[i] = 1 - np.exp(-1 / xi[i])
+    else:
+        if xi == 0:
+            out = 1
+        else:
+            out = 1 - np.exp(-1 / xi)
+    return out
 
 
 def Delta_to_xi(Delta):
@@ -133,11 +137,13 @@ if __name__ == "__main__":
     colors = sns.color_palette("muted")
 
     for i, distance in enumerate(distances):
-        center = [results_dict[distance][xi][0] for xi in xi_sorted]
-        lower = [results_dict[distance][xi][1] for xi in xi_sorted]
-        upper = [results_dict[distance][xi][2] for xi in xi_sorted]
+        # Cut off missing data points
+        xi_sorted_i = [xi for xi in xi_sorted if results_dict[distance][xi] is not None]
+        center = [results_dict[distance][xi][0] for xi in xi_sorted_i]
+        lower = [results_dict[distance][xi][1] for xi in xi_sorted_i]
+        upper = [results_dict[distance][xi][2] for xi in xi_sorted_i]
         ax1.plot(
-            xi_sorted,
+            xi_sorted_i,
             center,
             marker=".",
             label=f"$d={distance}$",
@@ -146,25 +152,32 @@ if __name__ == "__main__":
             color=colors[i],
         )
         ax1.fill_between(
-            xi_sorted, lower, upper, alpha=0.5, linewidth=0, color=colors[i]
+            xi_sorted_i, lower, upper, alpha=0.5, linewidth=0, color=colors[i]
         )
     ax1.set_ylabel("Logical error rate per round, $p_{L}$")
     ax1.set_xlabel("Correlation length, $\\xi$")
     ax1.legend(loc="lower right")
-    ax1.set_xlim(0.5, 30)
+    ax1.set_xticks([1, 5, 10, 15, 20, 25])
+    ax1.set_ylim(2e-9, 1.5e-4)
 
     secax1 = ax1.secondary_xaxis("top", functions=(xi_to_Delta, Delta_to_xi))
     secax1.set_xlabel("Spectral gap, $\\Delta$")
-    delta_ticks = [0.4, 0.2, 0.1, 0.06, 0.04]
+    delta_ticks = [0.6, 0.2, 0.1, 0.06, 0.04]
     secax1.set_xticks(delta_ticks)
     secax1.tick_params(direction="in", width=0.6)
 
     for j, xi in enumerate(xis):
-        center = [results_dict[distance][xi][0] for distance in distance_sorted]
-        lower = [results_dict[distance][xi][1] for distance in distance_sorted]
-        upper = [results_dict[distance][xi][2] for distance in distance_sorted]
+        # Cut off missing data points
+        distance_sorted_i = [
+            distance
+            for distance in distance_sorted
+            if results_dict[distance][xi] is not None
+        ]
+        center = [results_dict[distance][xi][0] for distance in distance_sorted_i]
+        lower = [results_dict[distance][xi][1] for distance in distance_sorted_i]
+        upper = [results_dict[distance][xi][2] for distance in distance_sorted_i]
         ax2.errorbar(
-            distance_sorted,
+            distance_sorted_i,
             center,
             yerr=[
                 np.array(center) - np.array(lower),
@@ -181,7 +194,11 @@ if __name__ == "__main__":
         # sigma_logy = 0.5 * (np.log(upper) - np.log(lower))
         # w = 1.0 / sigma_logy**2
 
-        b, a = np.polyfit(distance_sorted[1:], logy[1:], 1)
+        # Fit excluding the first point when xi>1
+        if xi == 1:
+            b, a = np.polyfit(distance_sorted_i, logy, 1)
+        else:
+            b, a = np.polyfit(distance_sorted_i[1:], logy[1:], 1)
 
         x_fit = np.linspace(7, 20, 100)
         y_fit = np.exp(a + b * x_fit)
@@ -209,7 +226,7 @@ if __name__ == "__main__":
     ax2.legend(loc="lower left")
     ax2.set_xlabel("Code distance, $d$")
     ax2.set_xlim(4, 20)
-    ax2.set_xticks([5, 10, 15, 20])
+    ax2.set_xticks([5, 10, 15, 19])
 
     secax2 = ax2.secondary_xaxis(
         "top", functions=(distance_to_qubits, qubits_to_distance)

@@ -38,7 +38,7 @@ def main():
 
     # Sweep over number of rounds and correlation lengths
     tasks = []
-    xis = [2, 4, 6, 8, 12, 16, 20, 28]
+    xis = [1, 2, 4, 6, 8, 12, 16, 20, 28]
     rounds_list = [5, 10, 15, 20, 25, 30, 35, 40]
 
     # Fixed noise model parameters
@@ -47,7 +47,6 @@ def main():
         "after_identity_depolarization": p_gate,
         "after_clifford_depolarization": p_gate,
         "before_measure_flip_probability": p_gate,
-        # "after_reset_flip_probability": p_gate,
     }
 
     for rounds in rounds_list:

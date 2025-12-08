@@ -1,30 +1,34 @@
-\section{Tensor network representations of multi-time processes}\label{sec:pt-tn}
-\Fidel{Originally merged with the previous section, this section has been split off to provide the formalism and notational tools needed to construct tensor network representations of multi-time processes. TODO:
+\noindent\Fidel{TODO:
 \begin{itemize}
-    \item Citations (Greg, Neil, St. Andrew researchers)
-    \item Figure for Pauli twirling channels?
-    \item Justify our notation system (convenient to translate to code)
-    \item Remark 2D TNs are not trivial to contract unlike 1D TNs
-    \item Brief comment on physcal interpretation of tensor network representation? Cite Understanding and utilizing the inner bonds of process tensors.
+    \item Citations (Greg, Neil, St. Andrews people)
+    % \item Figure for Pauli twirling channels?
+    % \item Justify our notation system (convenient to translate to code)
+    % \item Mention for the temporal MPO representation, that instead of sequence of unitaries, it can also be constructed from a sequence of CPTP maps (which can always be dilated to unitaries).
+    % \item Remark 2D TNs are not trivial to contract unlike 1D TNs
+    % \item Need not restrict ourselves to MPO or PEPS. We can construct a tensor network tailored to the specific structure of the SE dynamics.
     \item Worked example: Heisenberg interaction over two SE unitaries.
 \end{itemize}
 }
-% \clearpage
-Quantum maps are tensors; when correlations between their indices are sufficiently constrained, they often admit compact tensor network representations. A paradigmatic example is the matrix product state (MPS) description of quantum many-body states with area-law entanglement. The same principle extends to quantum processes: process tensors are high-rank objects whose temporal correlations are typically structured, making tensor network representations both natural and efficient. Accordingly, process tensors have been represented as matrix product operators (MPOs), locally purified density operators (LPDOs), and tree tensor networks (TTNs). In what follows, we present a tensor network construction of process tensors directly linked to the Stinespring dilation. Throughout, we utilise abstract index notation supplemented by a graphical tensor network calculus. A detailed dictionary translating between Dirac notation, abstract indices, and graphical calculus is given in \cref{tab:notations}.
-% For vectorisation, we adopt the column-stacking convention \( X \rho Y^\dagger \longleftrightarrow (Y^* \otimes X) \dket{\rho}\).
+\section{Tensor network representations of multi-time processes}\label{sec:pt-tn}
+Quantum maps are tensors; when correlations between their indices are even modestly constrained, they often admit compact tensor network representations. A paradigmatic example is the matrix product state (MPS) description of quantum many-body states with area-law entanglement. The same principle extends to quantum processes: process tensors are high-rank objects whose temporal correlations are typically structured, making tensor network representations both natural and efficient. Accordingly, process tensors have been represented as matrix product operators (MPOs)~\cite{pollockNonMarkovianQuantumProcesses2018,cygorekUnderstandingUtilizingInner2025}, locally purified density operators (LPDOs)~\cite{whiteUnifyingNonMarkovianCharacterization2025}, and tree tensor networks (TTNs)~\cite{dowlingCapturingLongRangeMemory2024}.
 
-From the Stinespring dilation, a \(k\)-slot process tensor is fully specified by a sequence of joint system--environment unitaries \(\{U_j\}_{j=0}^k\) together with an initial environment state \(\sigma_E\). For a unitary \(U\) acting on \(\mathcal{H}_E \otimes \mathcal{H}_S\) of dimensions \(d_E\) and \(d_S\), its Liouville superoperator form is \(\mathcal{U} = \overline{U} \otimes U\), where \(\overline{U} = U^*\) denotes elementwise conjugation. In index notation, this reads
-\begin{equation*}
+In what follows, we construct tensor network representations of process tensors directly from their microscopic dynamics. We begin with a one-dimensional temporal MPO obtained from a Stinespring dilation, before generalising to higher-dimensional spatiotemporal tensor networks for composite systems. We conclude with a simple worked example based on a Heisenberg interaction between a system qubit and a two-level environment. Throughout, we employ abstract index notation supplemented by a graphical tensor network calculus; a table translating between Dirac notation, abstract indices, and graphical diagrams is provided in \cref{tab:notations}.
+
+\subsection{Temporal MPO representation}
+We begin by constructing an MPO representation of a process tensor from its Stinespring dilation. A \(k\)-slot process tensor is fully specified by a sequence of joint system--environment unitaries \(\{U_j\}_{j=0}^k\) together with an initial environment state \(\sigma_E\). In general, one may start from a sequence of joint CPTP maps \(\{\mathcal{E}_j\}_{j=0}^k\), which, by Stinespring's theorem can always be dilated to unitaries.
+
+For a unitary \(U\) acting on \(\mathcal{H}_E \otimes \mathcal{H}_S\) of dimensions \(d_E\) and \(d_S\), its Liouville (superoperator) form is \(\mathcal{U} = \overline{U} \otimes U\), where \(\overline{U} = U^*\) denotes elementwise complex conjugation. In index notation,
+\begin{equation}
     \mathcal{U}^{e'_\out s'_\out e_\out s_\out}{}_{e'_\inp s'_\inp e_\inp s_\inp} = \overline{U}^{e'_\out s'_\out}{}_{e'_\inp s'_\inp} U^{e_\out s_\out}{}_{e_\inp s_\inp},
-\end{equation*}
-where \(e_\inp, s_\inp\) (\(e_\out, s_\out\)) label the environment and system input (output) indices, and primed (\('\)) indices mark dual (bra) spaces, with unprimed indices denoting ket space. To make the connection between the Stinespring dilation and tensor networks transparent, we introduce a specialised tensor representation derived from the Liouville form via a \emph{reorder--fuse--transpose} (RFT) operation:
+\end{equation}
+where \(e_\inp, s_\inp\) (\(e_\out, s_\out\)) label environment and system input (output) indices, and primed (\('\)) indices mark dual (bra) spaces, with unprimed indices denoting ket space. To make the connection between the Stinespring dilation and tensor networks transparent, we introduce a specialised tensor representation derived from the Liouville form via a \emph{reorder--fuse--transpose} (RFT) operation:
 \begin{enumerate}
     \item \textbf{Reorder} indices to group each ket index with its corresponding bra index.
     \item \textbf{Fuse} each bra--ket (primed--unprimed) pair into a single compound index.
     \item \textbf{Transpose} globally so that time flows from left to right, consistent with standard tensor network diagrams.
 \end{enumerate}
 Explicitly, for a superoperator \(\mathcal{S}\),
-\begin{equation*}
+\begin{equation}
     \begin{split}
     &\mathcal{S}^{b'_0 b'_1 \dots b_0 b_1}{}_{a'_0 a'_1 \dots a_0 a_1} \\
     &\qquad\qquad\xmapsto{\;\text{reorder}\;}
@@ -34,29 +38,31 @@ Explicitly, for a superoperator \(\mathcal{S}\),
     \xmapsto{\;\text{transpose}\;}
     \mathbf{S}^{\alpha_0 \alpha_1 \dots}{}_{\beta_0 \beta_1 \dots},
     \end{split}
-\end{equation*}
-where \(\alpha_j = (a'_j a_j)\) and \(\beta_j = (b'_j b_j)\) are fused indices of dimension \(\dim(\alpha_j) = \dim(a_j)^2\). Latin letters denote basic indices and Greek letters fused indices. Applying RFT to a unitary superoperator \(\mathcal{U}_j\) yields a 4-legged tensor \(\mathbf{U}_{(j)}\),
-\begin{equation*}
+\end{equation}
+where \(\alpha_j = (a'_j a_j)\) and \(\beta_j = (b'_j b_j)\) are fused indices of dimension \(\dim(\alpha_j) = \dim(a_j)^2\). Latin letters denote basic indices and Greek letters fused indices. The RFT mapping simply re-expresses a superoperator as a tensor network-friendly object whose left--right orientation matches the temporal ordering of the process. This form is convenient for both graphical calculus and numerical implementations, where each fused index corresponds to the vectorised operator space of a particular physical subsystem.
+
+Applying the RFT operation to a unitary superoperator \(\mathcal{U}_j\) yields a 4-legged tensor \(\mathbf{U}_{(j)}\),
+\begin{equation}
     \mathcal{U}_j^{e'_{j+1} e_{j+1} b'_j b_j}{}_{e'_j e_j a'_j a_j} \xmapsto{\;\mathrm{RFT}\;} \mathbf{U}_{(j)}^{\mu_j \alpha_j}{}_{\mu_{j+1} \beta_j},
-\end{equation*}
+\end{equation}
 with fused indices \(\mu_j = (e'_j e_j)\) for the environment and \(\alpha_j=(a'_j a_j)\), \(\beta_j=(b'_j b_j)\) for the system input and output, respectively. Their dimensions are \(\dim(\mu_j) = d_E^2\) and \(\dim(\alpha_j) = \dim(\beta_j) = d_S^2\). The mapping is graphically depicted as
 \begin{equation*}
-    \valignbox{\input{figures/tensor-unitary.tikz}} 
+    \valignbox{\input{figures/tensor-unitary.tikz}}
     = 
     \left(\valignbox{\input{figures/unitary-to-tensor.tikz}}\right)^T,
 \end{equation*}
-where thick wires denote fused indices. The initial environment state \(\dket{\sigma_E}\) is mapped similarly,
-\begin{equation*}
+where thick wires represent fused indices. The initial environment state \(\dket{\sigma_E}\) is mapped similarly,
+\begin{equation}
     \sigma^{e'_0e_0} \xmapsto {\;RFT\;} \pmb{\sigma}_{\mu_0} 
     \quad\longleftrightarrow\quad
-    \valignbox{\input{figures/tensor-env-init.tikz}} = \left(\valignbox{\input{figures/vectorize-sigma.tikz}}\right)^T.
-\end{equation*}
-To represent the final partial trace over the environment, we include a trace tensor \(\mathbf{t}\), corresponding to the unnormalised Bell state \(\ket{\Phi^+} = \dket{\mathbb{I}}\),
-\begin{equation*}
+    \valignbox{\input{figures/tensor-env-init.tikz}} = \left(\valignbox{\input{figures/vectorize-sigma.tikz}}\right)^T,
+\end{equation}
+where we have adopted the column-stacking convention for vectorisation. To represent the final partial trace over the environment, we include a trace tensor \(\mathbf{t}\), corresponding to the unnormalised Bell state \(\ket{\Phi^+} = \dket{\mathbb{I}}\),
+\begin{equation}
     \mathbf{t}^{\mu_{k+1}} = \delta^{e'_{k+1}e_{k+1}}
     \quad\longleftrightarrow\quad
     \valignbox{\input{figures/tensor-trace-env.tikz}} = \valignbox{\input{figures/trace-env.tikz}}.
-\end{equation*}
+\end{equation}
 The full \(k\)-slot process tensor is then constructed as an MPO by contracting the environment indices \(\mu_j\) across all time. This yields a tensor \(\mathbf{T}\) with open system indices corresponding to the inputs (\(\alpha_j\)) and outputs (\(\beta_j\)) at each time \(j\). Formally, we define:
 \begin{definition}[MPO representation of a process tensor]\label{def:pt-mpo}
 A $k$-slot process tensor $\Upsilon_{0:k}$ admits a matrix product operator (MPO) representation,
@@ -73,7 +79,7 @@ To recover the standard Choi form, we simply reorder and reshape the fused indic
 \begin{equation}\label{eq:pt-tensor-to-choi}
     \mathbf{T}^{\alpha_0,\dots,\alpha_k}{}_{\beta_0,\dots,\beta_k} \mapsto \mathbf{T}_{\mathrm{Choi}}^{a_0b_0\dots a_kb_k}{}_{a'_0b'_0\dots a'_kb'_k} \longleftrightarrow \Upsilon_{0:k}.
 \end{equation}
-In the tensor network picture, the action of \(\mathbf{T}\) on an initial state and sequence of instruments is realised as a network contraction between the `top comb' process tensor and the `bottom comb' instruments. The initial system state \(\dket{\rho_\mathrm{in}}\) and each instrument superoperator \(\mathcal{A}_j\) are mapped into their corresponding tensors \(\pmb{\rho}^\mathrm{in}\) and \(\mathbf{A}_{(j)}\) via the RFT operation. The final output state \(\pmb{\rho}^\mathrm{out}\) is then given by
+In the tensor network picture, the action of \(\mathbf{T}\) on an initial state and sequence of instruments is realised as a network contraction between the `top comb' process tensor and the `bottom comb' sequence of instruments. The initial system state \(\dket{\rho_\mathrm{in}}\) and each instrument superoperator \(\mathcal{A}_j\) are mapped into their corresponding tensors \(\pmb{\rho}^\mathrm{in}\) and \(\mathbf{A}_{(j)}\) via the RFT operation. The final output state \(\pmb{\rho}^\mathrm{out}\) is then given by
 \begin{equation}
     \pmb{\rho}^\mathrm{out}_{\alpha_{k+1}} = \pmb{\sigma}_{\mu_0}\pmb{\rho}^\mathrm{in}_{\alpha_0}\mathbf{U}_{(0)}^{\mu_0\alpha_0}{}_{\mu_1\beta_0}\mathbf{A}_{(0)}^{\beta_0}{}_{\alpha_1}\mathbf{U}_{(1)}^{\mu_1\alpha_1}{}_{\mu_2\beta_1}\mathbf{A}_{(1)}^{\beta_1}{}_{\alpha_2}\cdots\mathbf{U}_{(k)}^{\mu_k\alpha_k}{}_{\mu_{k+1}\beta_k}\mathbf{t}^{\mu_{k+1}}\mathbf{A}_{(k)}^{\beta_k}{}_{\alpha_{k+1}},
 \end{equation}
@@ -81,30 +87,41 @@ where repeated indices imply summation (contraction). Graphically,
 \begin{equation*}
     \valignbox{\input{figures/process-tensor-action.tikz}}.
 \end{equation*}
-This contraction naturally generalises to cases where the instruments are themselves classically or quantumly correlated across time, in which case the product of local instrument tensors is replaced by a more general tensor network.
+This contraction naturally generalises to cases where the instruments are themselves classically or `quantumly' correlated in time, in which case the product of local instrument tensors is replaced by a more general tensor network. Having established a 1D temporal MPO representation of multi-time processes, we now lift this construction to composite systems with additional spatial structure.
 
-So far we have considered only the one-dimensional (temporal) structure of process tensors, where each tensor carries dense system indices of size \(d^2_S\). For composite systems---such as spin chains---these indices can be further factorised along spatial degrees of freedom, promoting the MPO to a two-dimensional tensor network with time along one axis and space along the other. For a unitary tensor \(\mathbf{U}_{(j)}\) acting on an \(n\)-partite system, we can perform a series of singular value decompositions (SVDs) along subsystem indices, yielding
-\begin{equation*}
-    \mathbf{U}_{(j)}^{\mu_j\alpha_j}{}_{\mu_{j+1}\beta_j} 
-    = \sum_{\nu_j^0,\dots,\nu_j^{n-2}}
-    \mathbf{u}_{(0,j)}^{\mu_j^0\alpha_j^0}{}_{\beta_j^0\mu_{j+1}^0\nu_j^0}
-    \mathbf{u}_{(1,j)}^{\nu_j^0\mu_j^1\alpha_j^1}{}_{\beta_j^1\mu_{j+1}^1\nu_j^1}\dots 
-    \mathbf{u}_{(n-1,j)}^{\nu_j^{n-2}\mu_j^{n-1}\alpha_j^{n-1}}{}_{\beta_j^{n-1}\mu_{j+1}^{n-1}},
-\end{equation*}
-where index superscripts \(i=0,\dots,n-1\) label subsystems (spatial coordinates) and index subscripts \(j=0,\dots,k\) label timesteps. Performing this decomposition for all \(j\) and similarly for the initial environment tensor \(\pmb{\sigma}\), we obtain a 2D tensor network representation of the process tensor,
-\begin{equation*}
-    \mathbf{T}^{\{\alpha_j^i\}}{}_{\{\beta_j^i\}} = 
-    \sum_{\{\mu_j^i\}} \sum_{\{\lambda^i\}} \sum_{\{\nu_j^i\}}
-    \Biggl[\prod_{i=0}^{n-1}\pmb{\sigma}_{(i)}^{\lambda^{i-1}}{}_{\mu_0^i\lambda^i}\Biggr]
-    \Biggl[\prod_{j=0}^{k}\prod_{i=0}^{n-1}\mathbf{u}_{(i, j)}^{\nu^{i-1}_j\mu_j^i\alpha_j^i}{}_{\beta_j^i\mu_{j+1}^i\nu_j^i}\Biggr]
-    \Biggl[\prod_{i=0}^{n-1}\mathbf{t}_{(i)}^{\mu_{k+1}^i}\Biggr],
-\end{equation*}
-with spatial boundary conditions such that left indices \(\lambda^{-1}, \nu^{-1}_j\) and right indices \(\lambda^{n-1}, \nu^{n-1}_j\) are absent. The spatial bond dimensions \(\chi_s = \dim(\nu_j^i)\) are set by the SVD truncation, while the temporal bond dimensions remain bounded by the environment size, \(\chi_t = \dim(\mu_j^i) \le d_E^2\). \Cref{fig:tensor-network-2d} displays a graphical representation of this 2D tensor network.
+\subsection{Spatiotemporal tensor network representations}
 \begin{figure}
     \centering
     \input{figures/process-tensor-2d.tikz}
     \caption{Two-dimensional tensor network representation of a process tensor \(\mathbf{T}^{\{\alpha_j^i\}}{}_{\{\beta_j^i\}}\). Horizontal bonds \(\mu_j^i\) encode temporal correlations, bonds \(\nu_j^i\) carry spatial correlations, and open indices \(\alpha_j^i\), \(\beta_j^i\) correspond to system inputs and outputs at each time \(j \in [0,k]\) and subsystem \(i \in [0,n)\).}
     \label{fig:tensor-network-2d}
 \end{figure}
+So far we have considered only the one-dimensional temporal structure of process tensors, where each tensor carries dense system indices of size \(d^2_S\). For composite systems---such as spin chains---these indices can be further factorised along spatial degrees of freedom, promoting the MPO to a two-dimensional tensor network with time along one axis and space along the other. Concretely, we decompose the system legs of each temporal tensor into local legs 
+associated with individual subsystems. For a unitary tensor \(\mathbf{U}_{(j)}\) acting on an \(n\)-partite system, we can perform a series of singular value decompositions (SVDs) along subsystem indices, yielding
+\begin{equation}
+    \mathbf{U}_{(j)}^{\mu_j\alpha_j}{}_{\mu_{j+1}\beta_j} 
+    = \sum_{\nu_j^0,\dots,\nu_j^{n-2}}
+    \mathbf{u}_{(0,j)}^{\mu_j^0\alpha_j^0}{}_{\beta_j^0\mu_{j+1}^0\nu_j^0}
+    \mathbf{u}_{(1,j)}^{\nu_j^0\mu_j^1\alpha_j^1}{}_{\beta_j^1\mu_{j+1}^1\nu_j^1}\dots 
+    \mathbf{u}_{(n-1,j)}^{\nu_j^{n-2}\mu_j^{n-1}\alpha_j^{n-1}}{}_{\beta_j^{n-1}\mu_{j+1}^{n-1}}.
+\end{equation}
+Here the superscript \(i=0,\dots,n-1\) labels subsystems (spatial coordinates), and \(\nu^i_j\) are newly introduced bond indices that link neighbouring subsystems at each time \(t_j\). The environment-induced temporal bonds \(\mu^i_j\) remain on each subsystem line. Performing this decomposition for all \(j\) and similarly for the initial environment tensor \(\pmb{\sigma}\), we obtain a 2D tensor network representation of the process tensor,
+\begin{equation}
+    \mathbf{T}^{\{\alpha_j^i\}}{}_{\{\beta_j^i\}} = 
+    \sum_{\{\mu_j^i\}} \sum_{\{\lambda^i\}} \sum_{\{\nu_j^i\}}
+    \Biggl[\prod_{i=0}^{n-1}\pmb{\sigma}_{(i)}^{\lambda^{i-1}}{}_{\mu_0^i\lambda^i}\Biggr]
+    \Biggl[\prod_{j=0}^{k}\prod_{i=0}^{n-1}\mathbf{u}_{(i, j)}^{\nu^{i-1}_j\mu_j^i\alpha_j^i}{}_{\beta_j^i\mu_{j+1}^i\nu_j^i}\Biggr]
+    \Biggl[\prod_{i=0}^{n-1}\mathbf{t}_{(i)}^{\mu_{k+1}^i}\Biggr],
+\end{equation}
+with spatial boundary conditions such that left indices \(\lambda^{-1}, \nu^{-1}_j\) and right indices \(\lambda^{n-1}, \nu^{n-1}_j\) are absent. In this representation, horizontal bonds \(\mu_j^i\) carry temporal correlations (environmental memory), while vertical bonds \(\nu_j^i\) encode spatial correlations between subsystems at each time step. The spatial bond dimensions \(\chi_s = \dim(\nu_j^i)\) are set by the SVD truncation, while the temporal bond dimensions remain bounded by the environment size, \(\chi_t = \dim(\mu_j^i) \le d_E^2\). \Cref{fig:tensor-network-2d} displays a graphical representation of this 2D tensor network.
+
+Unlike the 1D temporal MPO representation, generic 2D tensor networks are not both exactly 
+and efficiently contractible. In practice one must resort to approximate contraction schemes, 
+whose cost is controlled by the entanglement across the chosen contraction direction. For 
+spatiotemporal processes, however, the causal structure along the time dimension imposes 
+additional constraints on the allowed correlations, which can often be exploited by tailored 
+contraction algorithms~\cite{jorgensenExploitingCausalTensor2019,keelingProcessTensorApproaches2025}.
+
+The above construction also extends straightforwardly to higher spatial dimensions by allowing each time slice to be represented by a higher-dimensional tensor network---for example, a 2D projected entangled pair operator (PEPO) for a planar system. Moreover, while we derived the higher-dimensional network by factorising the temporal MPO into spatial components, one may instead construct a tensor network reflecting the microscopic system--environment dynamics, especially when the interactions are local \cite{kobayashiTensornetworkDecodersProcess2024}. This flexibility allows for efficient constructions tailored to the specific spatiotemporal structure of the underlying process.
 
 \subsection{Worked example}
