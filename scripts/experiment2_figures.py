@@ -42,22 +42,6 @@ def Delta_to_xi(Delta):
     return out
 
 
-def distance_to_qubits(distance):
-    return 2 * distance**2 - 1
-
-
-def qubits_to_distance(qubits):
-    return np.round(np.sqrt((qubits + 1) / 2)).astype(int)
-
-
-def distance_to_data_qubits(distance):
-    return distance * distance
-
-
-def data_qubits_to_distance(qubits):
-    return np.round(np.sqrt(qubits)).astype(int)
-
-
 def calc_per_round(per_shot: float, rounds: int):
     return 0.5 * (1 - (1 - 2 * per_shot) ** (1 / rounds))
 
@@ -92,12 +76,12 @@ if __name__ == "__main__":
 
     # Load data from CSV
     tasks = sinter.stats_from_csv_files(
-        "/home/fidel/Projects/corrqec2/data/experiment1_results.csv"
+        "/home/fidel/Projects/corrqec2/data/experiment2_results.csv"
     )
 
     # Prepare data for plotting
-    distances = sorted(
-        set(task.json_metadata["experiment_args"]["distance"] for task in tasks)
+    rounds_list = sorted(
+        set(task.json_metadata["experiment_args"]["rounds"] for task in tasks)
     )
     xis = sorted(
         set(
@@ -114,39 +98,43 @@ if __name__ == "__main__":
         )
     )
 
-    results_dict = {distance: {xi: None for xi in xis} for distance in distances}
+    # Set cutoff for logical error rate
+    cutoff = 1e-8
+
+    results_dict = {rounds: {xi: None for xi in xis} for rounds in rounds_list}
 
     for task in tasks:
-        distance = task.json_metadata["experiment_args"]["distance"]
         model_params = task.json_metadata["noise_model_args"]["model_params"]
-        rounds_mult = int(task.json_metadata["experiment_args"]["rounds"][0])
-        n_rounds = distance * rounds_mult
+        rounds = task.json_metadata["experiment_args"]["rounds"]
         a, b = model_params["a"], model_params["b"]
         xi = int(np.round(calc_xi(a, b)))
         shots = task.shots
         errors = task.errors
-        per_round_interval = binomial_interval_per_round(errors, shots, n_rounds)
-        results_dict[distance][xi] = per_round_interval
+        per_shot_interval = binomial_interval(errors, shots)
+        # per_round_interval = binomial_interval_per_round(errors, shots, rounds)
+        results_dict[rounds][xi] = per_shot_interval
 
-    xi_sorted = sorted(results_dict[distance].keys())
+    # Remove no. rounds = 40 due to insufficient data
+    del results_dict[40]
+    rounds_list.remove(40)
+
+    xi_sorted = sorted(results_dict[rounds_list[0]].keys())
     distance_sorted = sorted(results_dict.keys())
 
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(6.8, 3.0), sharey=True)
-    # cycle = plt.cycler(color=plt.cm.tab10.colors)
-    # colors = cycle.by_key()["color"]
     colors = sns.color_palette("muted")
 
-    for i, distance in enumerate(distances):
+    for i, rounds in enumerate(rounds_list):
         # Cut off missing data points
-        xi_sorted_i = [xi for xi in xi_sorted if results_dict[distance][xi] is not None]
-        center = [results_dict[distance][xi][0] for xi in xi_sorted_i]
-        lower = [results_dict[distance][xi][1] for xi in xi_sorted_i]
-        upper = [results_dict[distance][xi][2] for xi in xi_sorted_i]
+        xi_sorted_i = [xi for xi in xi_sorted if results_dict[rounds][xi][0] > cutoff]
+        center = [results_dict[rounds][xi][0] for xi in xi_sorted_i]
+        lower = [results_dict[rounds][xi][1] for xi in xi_sorted_i]
+        upper = [results_dict[rounds][xi][2] for xi in xi_sorted_i]
         ax1.plot(
             xi_sorted_i,
             center,
             marker=".",
-            label=f"$d={distance}$",
+            label=f"$N_r={rounds}$",
             linestyle="-",
             linewidth=0.8,
             color=colors[i],
@@ -154,11 +142,11 @@ if __name__ == "__main__":
         ax1.fill_between(
             xi_sorted_i, lower, upper, alpha=0.5, linewidth=0, color=colors[i]
         )
-    ax1.set_ylabel("Logical error rate (per round)")
+    ax1.set_ylabel("Logical error rate (per shot)")
     ax1.set_xlabel("Correlation length, $\\xi$")
     ax1.legend(loc="lower right")
     ax1.set_xticks([1, 5, 10, 15, 20, 25])
-    ax1.set_ylim(2e-9, 1.5e-4)
+    ax1.set_ylim(5e-8, 2.5e-2)
 
     secax1 = ax1.secondary_xaxis("top", functions=(xi_to_Delta, Delta_to_xi))
     secax1.set_xlabel("Spectral gap, $\\Delta$")
@@ -171,7 +159,7 @@ if __name__ == "__main__":
         distance_sorted_i = [
             distance
             for distance in distance_sorted
-            if results_dict[distance][xi] is not None
+            if results_dict[distance][xi][0] > cutoff
         ]
         center = [results_dict[distance][xi][0] for distance in distance_sorted_i]
         lower = [results_dict[distance][xi][1] for distance in distance_sorted_i]
@@ -186,21 +174,18 @@ if __name__ == "__main__":
             fmt=".",
             linewidth=0.8,
             color=colors[j],
-            # label=f"$\\xi={xi}$",
         )
 
         # Exponentional fits
         logy = np.log(center)
-        # sigma_logy = 0.5 * (np.log(upper) - np.log(lower))
-        # w = 1.0 / sigma_logy**2
 
         # Fit excluding the first point when xi>1
         if xi == 1:
-            b, a = np.polyfit(distance_sorted_i, logy, 1)
+            b, a = np.polyfit(distance_sorted_i[:4], logy[:4], 1)
         else:
-            b, a = np.polyfit(distance_sorted_i[1:], logy[1:], 1)
+            b, a = np.polyfit(distance_sorted_i[:], logy[:], 1)
 
-        x_fit = np.linspace(7, 20, 100)
+        x_fit = np.linspace(5, 40, 100)
         y_fit = np.exp(a + b * x_fit)
 
         ax2.plot(
@@ -224,17 +209,8 @@ if __name__ == "__main__":
         )
 
     ax2.legend(loc="lower left")
-    ax2.set_xlabel("Code distance, $d$")
-    ax2.set_xlim(4, 20)
-    ax2.set_xticks([5, 10, 15, 19])
-
-    secax2 = ax2.secondary_xaxis(
-        "top", functions=(distance_to_qubits, qubits_to_distance)
-    )
-    secax2.set_xlabel("Total no. qubits")
-    qubit_ticks = [50, 100, 200, 400, 750]
-    secax2.set_xticks(qubit_ticks)
-    secax2.tick_params(direction="in", width=0.6)
+    ax2.set_xlabel("Number of rounds, $N_r$")
+    ax2.set_xlim(3.5, 36.5)
 
     ax1.text(-0.155, 1.14, "(a)", transform=ax1.transAxes, va="top", ha="left", size=9)
     ax2.text(-0.07, 1.14, "(b)", transform=ax2.transAxes, va="top", ha="left", size=9)
@@ -251,7 +227,7 @@ if __name__ == "__main__":
     fig.tight_layout()
     fig.subplots_adjust(wspace=0.09)
     fig.savefig(
-        "./project/paper/figures/experiment1.pdf",
+        "./project/paper/figures/experiment2.pdf",
         dpi=600,
         bbox_inches="tight",
         pad_inches=0.00,

@@ -10,7 +10,7 @@
 \end{itemize}
 }
 \section{Tensor network representations of multi-time processes}\label{sec:pt-tn}
-Quantum maps are tensors; when correlations between their indices are even modestly constrained, they often admit compact tensor network representations. A paradigmatic example is the matrix product state (MPS) description of quantum many-body states with area-law entanglement. The same principle extends to quantum processes: process tensors are high-rank objects whose temporal correlations are typically structured, making tensor network representations both natural and efficient. Accordingly, process tensors have been represented as matrix product operators (MPOs)~\cite{pollockNonMarkovianQuantumProcesses2018,cygorekUnderstandingUtilizingInner2025}, locally purified density operators (LPDOs)~\cite{whiteUnifyingNonMarkovianCharacterization2025}, and tree tensor networks (TTNs)~\cite{dowlingCapturingLongRangeMemory2024}.
+Quantum maps are tensors; when correlations between their indices are even modestly constrained, they often admit compact tensor network representations. A paradigmatic example is the matrix product state (MPS) description of quantum many-body states with area-law entanglement. The same principle extends to quantum processes: process tensors are high-rank objects whose temporal correlations are often structured, making tensor network representations both natural and efficient. Accordingly, process tensors have been represented as matrix product operators (MPOs)~\cite{pollockNonMarkovianQuantumProcesses2018,cygorekUnderstandingUtilizingInner2025}, locally purified density operators (LPDOs)~\cite{whiteUnifyingNonMarkovianCharacterization2025}, and tree tensor networks (TTNs)~\cite{dowlingCapturingLongRangeMemory2024}.
 
 In what follows, we construct tensor network representations of process tensors directly from their microscopic dynamics. We begin with a one-dimensional temporal MPO obtained from a Stinespring dilation, before generalising to higher-dimensional spatiotemporal tensor networks for composite systems. We conclude with a simple worked example based on a Heisenberg interaction between a system qubit and a two-level environment. Throughout, we employ abstract index notation supplemented by a graphical tensor network calculus; a table translating between Dirac notation, abstract indices, and graphical diagrams is provided in \cref{tab:notations}.
 
@@ -21,11 +21,11 @@ For a unitary \(U\) acting on \(\mathcal{H}_E \otimes \mathcal{H}_S\) of dimensi
 \begin{equation}
     \mathcal{U}^{e'_\out s'_\out e_\out s_\out}{}_{e'_\inp s'_\inp e_\inp s_\inp} = \overline{U}^{e'_\out s'_\out}{}_{e'_\inp s'_\inp} U^{e_\out s_\out}{}_{e_\inp s_\inp},
 \end{equation}
-where \(e_\inp, s_\inp\) (\(e_\out, s_\out\)) label environment and system input (output) indices, and primed (\('\)) indices mark dual (bra) spaces, with unprimed indices denoting ket space. To make the connection between the Stinespring dilation and tensor networks transparent, we introduce a specialised tensor representation derived from the Liouville form via a \emph{reorder--fuse--transpose} (RFT) operation:
+where \(e_\inp, s_\inp\) (\(e_\out, s_\out\)) label environment and system input (output) indices, and primed indices mark dual `bra' spaces, with unprimed indices denoting vector ket spaces. To make the connection between the Stinespring dilation and tensor networks transparent, we introduce a specialised tensor representation derived from the Liouville form via a \emph{reorder--fuse--transpose} (RFT) operation:
 \begin{enumerate}
     \item \textbf{Reorder} indices to group each ket index with its corresponding bra index.
     \item \textbf{Fuse} each bra--ket (primed--unprimed) pair into a single compound index.
-    \item \textbf{Transpose} globally so that time flows from left to right, consistent with standard tensor network diagrams.
+    \item \textbf{Transpose} globally so that time flows from left to right, consistent with standard circuit diagrams.
 \end{enumerate}
 Explicitly, for a superoperator \(\mathcal{S}\),
 \begin{equation}
@@ -63,19 +63,19 @@ where we have adopted the column-stacking convention for vectorisation. To repre
     \quad\longleftrightarrow\quad
     \valignbox{\input{figures/tensor-trace-env.tikz}} = \valignbox{\input{figures/trace-env.tikz}}.
 \end{equation}
-The full \(k\)-slot process tensor is then constructed as an MPO by contracting the environment indices \(\mu_j\) across all time. This yields a tensor \(\mathbf{T}\) with open system indices corresponding to the inputs (\(\alpha_j\)) and outputs (\(\beta_j\)) at each time \(j\). Formally, we define:
+The full \(k\)-slot process tensor is then constructed as an MPO by contracting the environment indices \(\mu_j\) across all time. This yields a tensor \(\mathbf{T}\) with open system indices corresponding to the inputs (\(\alpha_j\)) and outputs (\(\beta_j\)) at each time \(j\). We formalise this in the following definition.
 \begin{definition}[MPO representation of a process tensor]\label{def:pt-mpo}
 A $k$-slot process tensor $\Upsilon_{0:k}$ admits a matrix product operator (MPO) representation,
 \begin{equation}
     \mathbf{T}^{\alpha_0,\dots,\alpha_k}{}_{\beta_0,\dots,\beta_k} = \sum_{\mu_0,\dots,\mu_{k+1}} \pmb{\sigma}_{\mu_0}\mathbf{U}_{(0)}^{\mu_0\alpha_0}{}_{\mu_1\beta_0}\mathbf{U}_{(1)}^{\mu_1\alpha_1}{}_{\mu_2\beta_1}\cdots\mathbf{U}_{(k)}^{\mu_k\alpha_k}{}_{\mu_{k+1}\beta_k}\mathbf{t}^{\mu_{k+1}}.
 \end{equation}
-Here $\pmb{\sigma}$, $\mathbf{U}_{(j)}$, and $\mathbf{t}$ are tensor representations of the initial environment state, the joint $SE$ unitary at time $j$, and the final environment trace, respectively; the environment indices $\mu_j$ are the MPO's virtual bonds of dimension \(\chi_\mathrm{bond} = \dim{(\mu_j)} \le d_E^2\).
+Here $\pmb{\sigma}$, $\mathbf{U}_{(j)}$, and $\mathbf{t}$ are tensor representations of the initial environment state, the joint $SE$ unitary at time $j$, and the final environment trace, respectively. The environment indices $\mu_j$ are the MPO's virtual bonds of dimension \(\chi_\mathrm{bond} = \dim{(\mu_j)} \le d_E^2\), corresponding to the dimension of the environment's Liouville space.
 \end{definition}
 In graphical form,
 \begin{equation*}
     \valignbox{\input{figures/process-tensor.tikz}}.
 \end{equation*}
-To recover the standard Choi form, we simply reorder and reshape the fused indices,
+To recover the standard Choi form, we simply reorder and reshape the fused indices as
 \begin{equation}\label{eq:pt-tensor-to-choi}
     \mathbf{T}^{\alpha_0,\dots,\alpha_k}{}_{\beta_0,\dots,\beta_k} \mapsto \mathbf{T}_{\mathrm{Choi}}^{a_0b_0\dots a_kb_k}{}_{a'_0b'_0\dots a'_kb'_k} \longleftrightarrow \Upsilon_{0:k}.
 \end{equation}
@@ -83,7 +83,7 @@ In the tensor network picture, the action of \(\mathbf{T}\) on an initial state 
 \begin{equation}
     \pmb{\rho}^\mathrm{out}_{\alpha_{k+1}} = \pmb{\sigma}_{\mu_0}\pmb{\rho}^\mathrm{in}_{\alpha_0}\mathbf{U}_{(0)}^{\mu_0\alpha_0}{}_{\mu_1\beta_0}\mathbf{A}_{(0)}^{\beta_0}{}_{\alpha_1}\mathbf{U}_{(1)}^{\mu_1\alpha_1}{}_{\mu_2\beta_1}\mathbf{A}_{(1)}^{\beta_1}{}_{\alpha_2}\cdots\mathbf{U}_{(k)}^{\mu_k\alpha_k}{}_{\mu_{k+1}\beta_k}\mathbf{t}^{\mu_{k+1}}\mathbf{A}_{(k)}^{\beta_k}{}_{\alpha_{k+1}},
 \end{equation}
-where repeated indices imply summation (contraction). Graphically,
+where repeated indices imply summation (contraction). Graphically, the output state \(\rho_\mathrm{out}\) is described by
 \begin{equation*}
     \valignbox{\input{figures/process-tensor-action.tikz}}.
 \end{equation*}
@@ -122,6 +122,6 @@ spatiotemporal processes, however, the causal structure along the time dimension
 additional constraints on the allowed correlations, which can often be exploited by tailored 
 contraction algorithms~\cite{jorgensenExploitingCausalTensor2019,keelingProcessTensorApproaches2025}.
 
-The above construction also extends straightforwardly to higher spatial dimensions by allowing each time slice to be represented by a higher-dimensional tensor network---for example, a 2D projected entangled pair operator (PEPO) for a planar system. Moreover, while we derived the higher-dimensional network by factorising the temporal MPO into spatial components, one may instead construct a tensor network reflecting the microscopic system--environment dynamics, especially when the interactions are local \cite{kobayashiTensornetworkDecodersProcess2024}. This flexibility allows for efficient constructions tailored to the specific spatiotemporal structure of the underlying process.
+The above construction also extends straightforwardly to higher spatial dimensions by allowing each time slice to be represented by a higher-dimensional tensor network---for example, a 2D projected entangled pair operator (PEPO) for a planar system. Moreover, while we derived the higher-dimensional network by factorising the temporal MPO into spatial components, one may instead construct a tensor network reflecting the microscopic system--environment dynamics, especially when the interactions are local \cite{whiteUnifyingNonMarkovianCharacterization2025,kobayashiTensornetworkDecodersProcess2024}. This flexibility allows for efficient constructions tailored to the specific spatiotemporal structure of the underlying process.
 
 \subsection{Worked example}

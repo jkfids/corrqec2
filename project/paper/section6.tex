@@ -1,23 +1,39 @@
-% \section{Applications to quantum error correction}
-% \Fidel{This section will explore potential applications of SPCs to quantum error correction.
+% \Fidel{TODO:
 % \begin{itemize}
-%     \item The main application is using SPC tensor networks to ``efficiently'' simulate correlated noise in large-scale QEC simulations''. Some specific details:
-%     \item Can we map the SPC TN directly to a detector error model? This may enable a robust approach to studying correlated noise in the context of circuit-level noise.
-%     \item Experiments of interest: surface code stability, Floquet codes.
-%     \item There is an inherent scaling problem with Monte Carlo sampling QEC experiments, in that the number of samples required to estimate a logical error rate \(p_L\) scales as \(1/p_L\). This is particularly problematic when \(p_L\) is (exponentially) small and/or the noise is very sparse. Some approaches to mitigate this is importance sampling and splitting methods. One lead is using ``normalizing flows''.
+%     \item Sections 2-5 aren't very QEC-specific as we have a general framework. Maybe add a subsection (or just include in the section 6.0 introduction) discussing how SPPs can be used to model correlated noise in QEC specifically, and why we model the way we do in sections 6 and 7.
+%     \item Justify that although our framework is general enough to capture correlations at the circuit level (we have freedom to choose where correlated errors occur throughout the circuit, since the twirl is applied at the gate level), we focus on phenomenological noise models, where errors occur at the granularity of QEC cycles, because (a) circuit-level Pauli noise can be mapped to correlated phenomenological noise, and (b) we are more interested in behaviour of correlations over multiple QEC cycles.
+%     \item We included a decent amount of tensor network formalism in sections 2-5, which we don't end up explicitly using in sections 6 and 7. For our particular application for efficient large-scale circuit-level simulations, they are more intermediate steps to building efficient HMM models derived from the microscopic dynamics. We should address this.
 % \end{itemize}
 % }
-\Fidel{TODO:
-\begin{itemize}
-    \item Sections 2-5 aren't very QEC-specific as we have a general framework. Maybe add a subsection (or just include in the section 6.0 introduction) discussing how SPCs can be used to model correlated noise in QEC specifically, and why we model the way we do in sections 6 and 7.
-    \item Justify that although our framework is general enough to capture correlations at the circuit level (we have freedom to choose where correlated errors occur throughout the circuit, since the twirl is applied at the gate level), we focus on phenomenological noise models, where errors occur at the granularity of QEC cycles, because (a) circuit-level Pauli noise can be mapped to correlated phenomenological noise, and (b) we are more interested in behaviour of correlations over multiple QEC cycles.
-    \item We included a decent amount of tensor network formalism in sections 2-5, which we don't end up explicitly using in sections 6 and 7. For our particular application for efficient large-scale circuit-level simulations, they are more intermediate steps to building efficient HMM models derived from the microscopic dynamics. We should address this.
-\end{itemize}
-}
-\section{Temporal storm model}\label{sec:temporalstormmodel}
+% \begin{itemize}
+%     \item Overview: Previous sections developed the general SPP framework. For the remainder of the paper, we focus on applications to QEC for modelling general spatiotemporal correlations in Pauli noise models occurring during QEC cycles.
+%     \item Motivation (brief): Realistic noise in quantum devices exhibits non-trivial spatiotemporal correlations, which can significantly impact the performance of QEC codes and decoders. Therefore, it is crucial to have efficient and accurate models for simulating QEC under correlated noise. Maybe briefly mention previous work on the detrimental impact of correlated noise on QEC, and also experimental observations of correlated noise and their impact.
+%     \item Posit SPPs as the general spatiotemporal correlated Pauli noise model for QEC. Can be used for correlated circuit-level noise models, since RC is applied at the gate level, but is also well-suited for phenomenological noise models at the QEC cycle level, which `live closer' to the decoder, and syndrome based characterisation methods. We have a choice on the `granularity' of the SPP model for QEC.
+%     \item Mention we make use of the analytical tools developed throughout the paper.
+%     \item Hint of other QEC related applications for SPPs, e.g., learning and tomography, tailoring decoding algorithms to correlated noise. Refer to discussion section for more details. Also immediate potential for other immediate extensions, such as different noise models, and different QEC codes and circuits (e.g., flouqet and QLDPC) all compatible with our theoretical and numerical framework.
+%     \item Justify the bridge from correlated circuit-level Pauli noise to correlated phenomenological noise at the QEC cycle level beyond simplification. First, circuit-level Pauli noise can be mapped to correlated phenomenological Pauli. Second, we are more interested in the behaviour of correlations over multiple QEC cycles. Third, related to the previous, is that the emergent phenomenological Pauli correlations at the QEC cycle level of syndrome measurements, have major implications for decoding performance and characterisation. For example, ML based decoders like AlphaQubit 2 increase logical performance by exploiting correlations in phenomenological noise.
+%     \item Related to the above, articulate and justify our transition from tensor network formalism to HMMs. Although the tensor network methods are universally applicable, for the purposes of studying large-scale QEC simulations under correlated noise, tensor networks are more of a stepping stone to efficient HMM models derived from the microscopic dynamics. This allows us to efficiently simulate large-scale QEC codes under non-trivial correlated noise models.
+%     \item Summarise and explain our choices of models in sections 6 and 7. This is more a generative modelling paper than predictive modelling. The temporal storm model in this section is a simple, analytically tractable 1D model that captures essential features of temporal correlations in noise. The QCA model in the next section is a more complex 2D model that captures both spatial and temporal correlations, derived from the microscopic SE quantum dynamics, has interesting statistical mechanical properties though is only defined by a few parameters. Note that our example employs a mix of independent circuit-level noise and correlated inter-round errors modelled by the SPP.
+%     \item Really try to sell both the SPP framework and the models. Though this will also be emphasised in the introduction. E.g., go back to the bridge story of microscopic SE dynamics on a device all the way to the effective Pauli noise model relevant for QEC. Cite previous works on complex noise models for QEC, which often have a mix of limitations such as: (a) ad hoc noise models that either don't derive from the microscopic dynamics of have strong assumptions like perfect syndrome extraction (b) limited correlations, e.g., only spatial (bath resets in between cycles) or short-range (Gaussian) correlations (c) limited to small codes in contrast to the hundreds of qubits needed for FTQC (d) limited to specific codes or decoders, for instance, previous studies rely on statistical mechanical mappings that only work for specific codes, noise models, and decoders (e) focus on threshold estimates, which have fallen out of favour compared to logical performance under threshold (teraquop footprint is king).
+%     \item Maybe also try to sell the QCA model further as complex and interesting in its own right, beyond just being a correlated noise model for QEC.
+%     \item I realise that this is basically becoming a second introduction, which is fine. The job of this section is to tie the general SPP framework to a specific QEC application (modelling correlated noise), but where the actual introduction should be more of a high level sales pitch, this should be more detailed and explanatory. Want this to section to be concise and punchy as possible and not include repetitive details.
+% \end{itemize}
+\clearpage
+\section{Applications for quantum error correction}\label{sec:temporalstormmodel}
 
-\subsection{Model}
-We now instantiate the general SPC formalism in a one-dimensional, analytically tractable setting, which we refer to as the \emph{temporal storm model}. Each system qubit $S_i$ is coupled to its own two-level environment $E_i$ with classical basis states $\{\ket{0},\ket{1}\}$, representing \emph{calm} and \emph{storm} conditions, respectively. For clarity, we focus on a single site and suppress the index $i$ in what follows.
+\subsection{Spatiotemporal Pauli processes as QEC noise models}
+Up to this point, we have developed the general framework of spatiotemporal Pauli processes (SPPs). The SPP description of circuit noise can, in principle, be derived from a tomographically reconstructed process tensor~\cite{whiteDemonstrationNonMarkovianProcess2020,whiteUnifyingNonMarkovianCharacterization2025}. In practice, however, it is more practical to characterise the SPP directly at a chosen level of granularity, either at the circuit level or phenomenologically for QEC cycles. Beyond this setting, SPPs may also support tasks such as decoding and noise mitigation under correlated noise, which we discuss further in \cref{sec:discussion}. For the remainder of the paper, we focus on their use as generative models of QEC noise with spatiotemporal correlations.
+
+Realistic noise in quantum devices exhibits nontrivial correlations across both space and time, which can significantly impact the performance of QEC protocols. Previous analyses of these effects typically make one or more simplifying assumptions: (a) `ad hoc' models not derived from microscopic dynamics, (b) constrained correlation structure, such as short-range Gaussian correlations or limited memory due to bath resets, (c) restriction to specific codes or decoders (for example, via reliance on a statistical-mechanical mapping), or (d) assumptions of ideal syndrome extraction or non-circuit-level noise.
+
+SPPs provide a unifying framework for modelling such noise for QEC. They natively encapsulate correlated stochastic Pauli noise up to the circuit level, and, via the multi-time twirl implemented by randomised compiling, can be applied to general (Markovian or non-Markovian) noise scenarios. Formally, the multi-time Pauli twirl maps the process tensor description of a noisy stabiliser circuit to an SPP that assigns specific, correlated Pauli faults to individual gates and idle intervals throughout the computation. 
+
+Although the framework resolves correlations at the level of individual gates, for large-scale QEC simulations we adopt a hybrid description of independent gate-level noise combined with inter-round correlations modelled by an SPP at QEC cycle level. This choice is motivated by several considerations. First, any Pauli noise model on a (Clifford) syndrome extraction circuit can be coarse-grained to a correlated Pauli error model on data and ancilla qubits at the QEC cycle level. Second, the correlations that most strongly impact QEC performance often manifest over multiple rounds, rather than within a single cycle. Third, decoders and certain characterisation protocols operate on coarse-grained objects on the level of syndrome outcomes. As a result, phenomenological SPPs provide a natural interface between microscopic descriptions and practical QEC tools.
+
+In the following sections, we exploit this bridge from microscopic dynamics, through SPPs, to efficiently simulable hidden Markov models in two concrete instances. In \cref{sec:temporalstormmodel}, we introduce a simple, analytically tractable one-dimensional SPP with a tunable spectral gap and fixed marginal error rates, making direct use of the tools developed in \cref{sec:correlation-structure}. We use this model to study surface code performance for both memory and stability experiments. In \cref{sec:qcamodel}, we consider a more complex two-dimensional SPP, derived from a quantum cellular automaton model for the environment dynamics, which exhibits rich statistical-mechanical behaviour and spatiotemporal correlations while being specified by only a few parameters.
+
+\subsection{Temporal storm noise model}
+We now instantiate the general SPP formalism in a one-dimensional, analytically tractable setting, which we refer to as the \emph{temporal storm model}. Each system qubit $S_i$ is coupled to its own two-level environment $E_i$ with classical basis states $\{\ket{0},\ket{1}\}$, representing \emph{calm} and \emph{storm} conditions, respectively. For clarity, we focus on a single site and suppress the index $i$ in what follows.
 
 The environment undergoes a time-homogeneous classical Markov chain with transition probabilities $\Gamma_{i\to j}$ between calm and storm (Fig.~X). The system--environment interaction is modelled as a quantum channel conditioned on the environment state. When the environment is in state $\ket{j}$, the system evolves according to
 \begin{equation*}
@@ -33,9 +49,9 @@ where $\sigma^{(x)}$ denotes the Pauli operators indexed by $x$, and $q^{(x)}_j$
     = \sqrt{\Gamma_{i\to j}\,q^{(x)}_j}\;
       \ketbra{j}{i}_E \otimes \sigma^{(x)}_S.
 \end{equation*}
-Because the environment dynamics are classical and the conditional system channels \(\mathcal{E}_j\) are Pauli, the corresponding process tensor is invariant under the multi-time Pauli twirl in \cref{eq:twirl-upsilon}; in other words, this construction directly specifies an SPC. (\Fidel{Mention that this SPC represents the image of a family of process tensors under the twirling map?})
+Because the environment dynamics are classical and the conditional system channels \(\mathcal{E}_j\) are Pauli, the corresponding process tensor is invariant under the multi-time Pauli twirl in \cref{eq:twirl-upsilon}; in other words, this construction directly specifies an SPP. (\Fidel{Mention that this SPP represents the image of a family of process tensors under the twirling map?})
 
-Labelling the environment transition probabilities as $a = \Gamma_{0\to 1}$ and $b = \Gamma_{1\to 0}$, the corresponding transfer operator $T$ and SPC matrices $A^{(x)}$ are
+Labelling the environment transition probabilities as $a = \Gamma_{0\to 1}$ and $b = \Gamma_{1\to 0}$, the corresponding transfer operator $T$ and SPP matrices $A^{(x)}$ are
 \begin{equation*}
     T
     =
@@ -75,6 +91,12 @@ where \(\pi_0 = b/(a+b)\) and \(\pi_1 = a/(a+b)\) are the stationary calm and st
 \begin{figure}
     \centering
     \includegraphics[width=1\textwidth]{figures/experiment1.pdf}
+    \caption{}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=1\textwidth]{figures/experiment2.pdf}
     \caption{}
 \end{figure}
 
