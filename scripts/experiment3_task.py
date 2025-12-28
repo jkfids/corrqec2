@@ -1,9 +1,13 @@
-def sample_error_matrix_to_file(distance, rounds, shots, theta, a, b, outdir):
-    from corrqec2.noisemodels import StormQCAModel
-    from corrqec2.experiments import SurfaceCodeMemory
-    import numpy as np
-    import os
+import numpy as np
+import os
+import argparse
+from pathlib import Path
 
+from corrqec2.noisemodels import StormQCAModel
+from corrqec2.experiments import SurfaceCodeMemory
+
+
+def sample_error_matrix_to_file(distance, rounds, shots, theta, a, b, outdir):
     experiment = SurfaceCodeMemory(distance=distance, rounds=rounds)
     model_params = {
         "a": a,
@@ -39,11 +43,7 @@ def sample_error_matrix_to_file(distance, rounds, shots, theta, a, b, outdir):
     # os.replace(tmp, filepath)
 
 
-if __name__ == "__main__":
-    import argparse
-    from pathlib import Path
-    import math
-
+def main():
     outdir = (
         Path.home() / "mx95_scratch2" / "jkam" / "corrqec2_results" / "error_matrices"
     )
@@ -65,7 +65,7 @@ if __name__ == "__main__":
         distance=args.distance,
         rounds=args.rounds,
         shots=args.shots,
-        theta=args.theta * math.pi,
+        theta=args.theta * np.pi,
         a=args.a,
         b=args.b,
         outdir=outdir,
@@ -74,3 +74,7 @@ if __name__ == "__main__":
     print(
         f"Saved error matrix for d={args.distance}, r={args.rounds}, shots={args.shots}, theta={args.theta}π, a={args.a}, b={args.b} to {outdir}"
     )
+
+
+if __name__ == "__main__":
+    main()
