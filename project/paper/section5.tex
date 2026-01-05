@@ -1,57 +1,20 @@
-\section{Structure of temporal correlations in 1D SPCs}\label{sec:correlation-structure}
-% \Fidel{Structural properties of SPCs.
-% \begin{enumerate}
-%     \item \textbf{High level:} Quantify explicit bounds on the mutual information, correlation length and strength in terms of physical parameters (e.g., coupling strength, environment size).
-%     \item Introduce mapping from process tensor MPO to SPC MPS. (And PEPO TO PEPS?)
-%     \item Theorem (lemma?): MPS bond dimension \(\leq d^2_E\).
-%     \item Theorem (corollary?): Mutual information bound \(I(A, B)\leq2\log \chi \leq 4\log d_E\)
-%     \item Theorem: Sufficient condition for marginalisation (non-Markovian quantum process maps to temporally uncorrelated classical process). Not certain yet whether this should be before or after the bond dimension theorem.
-%     \item Remarks on scalability; canonicalisation and truncation.
-% \end{enumerate}
-% }
-
-% \begin{definition}
-%     Define how the multitime twirling operation maps a process tensor MPO to an SPC MPS.
-% \end{definition}
-
-% \begin{theorem}
-%     The MPS bond dimension of an SPC is upper bounded by the effective environment dimension \(d_E\) of the underlying system-environment model.
-% \end{theorem}
-
-% \begin{theorem}
-%     The mutual information between Pauli channels in two disjoint spacetime regions is bounded by the environment dimension.
-% \end{theorem}
-
-% \begin{theorem}
-%     Markovianisation condition.
-% \end{theorem}
-
-% \subsection{SPCs and hidden Markov models?}
-% \Fidel{This is an experimental section to explore connections between SPCs and hidden Markov models.
-% \begin{enumerate}
-%     \item An MPS with non-negative elements can be exactly represented as a hidden Markov model (HMM), where you treat the bond index as the hidden state. You can write the HMM transition and emission matrices in terms of the MPS tensors. This may be a way to leverage existing HMM theory to study SPCs.
-%     \item Side note: I've read a bit about entangled hidden Markov models (EHMMs), where it seems like there's a very straightforward correspondence with process tensors. An EHMMs is a quantum generalisation of HMMs, where the hidden system can be entangled with the observed system.
-%     \item Avenues to explore:
-%     \item Transfer matrix spectral gap and correlation length.
-%     \item Effective Markov order.
-%     \item There seems to be a body of literature of HMMs and model learning. Might be very useful for tomography? Decoding even? There's a connection between HMMs and belief propagation.
-% \end{enumerate}
-% }
 \Fidel{TODO
 \begin{itemize}
-    \item Justify why we're calculating the covariance or correlation functions.
-    \item More detail on non-diagonalisable transfer operators.
-    \item Investigate when transfer operator is non-Hermitian, are transfer operators always normal or diagonalisable?
+    % \item Justify why we're calculating the covariance or correlation functions.
+    \item More detail on non-diagonalisable transfer operators. I think for the sake of writing what we're comfortable with, we can leave it as "assume diagonality", citing the fact that generic choices of process tensors (random SE unitaries) are diagonalisable with probability 1.
     \item Include a generalisation of the transfer operator to higher dimensional SPCs. For example, for a SPC PEPS, the transfer operator itself has an MPO representation. Solving the eigenspectrum then becomes a boundary MPS problem.
-    \item Conditional mutual information based definition of approximate Markov order.
+    \item Conditional mutual information based definition of approximate Markov order. Leaning towards not including this in the end.
     \item HMM representation and mapping.
 \end{itemize}
 }
 
-\subsection{Correlation functions}
-To motivate the forthcoming spectral analysis of SPCs, we first define the key statistical quantities used to characterise temporal correlations. Let \(f : \mathbb{P}^{(n)} \to \mathbb{R}\) be a scalar function on the set of \(n\)-qubit Pauli operators \(\mathbb{P}^{(n)}\). Such functions play a role analogous to observables in quantum theory---for example, \(f_X(x) = 1\) if \(x=X\) and 0 otherwise. Given a random Pauli operator \(x_t \in \mathbb{P}^{(n)}\) at time \(t\), the quantity \(f(x_t)\) defines a real-valued random variable.
+\section{Structure of temporal correlations in 1D SPPs}\label{sec:correlation-structure}
+What we'd like to study are correlations between Pauli errors in space and time...
 
-For two such variables \(f(x_t)\) and \(g(x_{t+\tau})\) evaluated at times \(t\) and \(t+\tau\), the two-point correlation function (covariance) is defined as 
+\subsection{Correlation functions}
+We begin by defining correlation functions for SPPs to quantify the statistical dependencies between Pauli operators across space and time. Since SPPs directly encode the joint probability distribution, these correlations can be straightforwardly evaluated via tensor contractions, which later motivates transfer operator formalism.
+
+Let \(f : \mathbb{P}^{(n)} \to \mathbb{R}\) be a scalar function on the set of \(n\)-qubit Pauli operators \(\mathbb{P}^{(n)}\); for example, \(f_X(x) = 1\) if \(x=X\) and 0 otherwise. These functions play a role analogous to observables in quantum theory. Given a random Pauli operator \(x_t \in \mathbb{P}^{(n)}\) at time \(t\), the quantity \(f(x_t)\) defines a real-valued random variable. For two such variables \(f(x_t)\) and \(g(x_{t+\tau})\) evaluated at times \(t\) and \(t+\tau\), the two-point correlation function (covariance) is defined as 
 \begin{equation}
     \begin{split}
         C_{f,g}(\tau) 
@@ -61,18 +24,20 @@ For two such variables \(f(x_t)\) and \(g(x_{t+\tau})\) evaluated at times \(t\)
 \end{equation}
 where the expectation \(\mathbb{E}[\cdot]\) is taken with respect to a full joint probability distribution \(\Pr{(x_0,\dots,x_k)}\). At this stage, no assumptions are made regarding properties of the process such as time-homogeneity or stationarity.
 
-In tensor notation, each function \(f(x_t)\) and \(g(x_{t+\tau})\) corresponds to a vector \(\mathbf{f}^{x_t}\) and \(\mathbf{g}^{x_{t+\tau}}\) indexed by Pauli labels. The expectation values can then be computed via the full tensor contraction of these vectors with the joint probability tensor \(\mathbf{p}_{x_0\dots x_k}\) (or its MPS representation) and summing over all remaining open indices. For instance,
+In tensor network notation, each function \(f(x_t)\) and \(g(x_{t+\tau})\) corresponds to a real vector \(\mathbf{f}^{x_t}\) and \(\mathbf{g}^{x_{t+\tau}}\) indexed by Pauli labels. The expectation values can then be computed via the full tensor contraction of these vectors with the joint probability tensor \(\mathbf{p}_{x_0\dots x_k}\) (or its MPS representation) and summing over all remaining open indices. Concretely, for single and two-point expectations, we have
 \begin{equation}
     \begin{gathered}
         \mathbb{E}[f(x_t)]
         = \sum_{x_0,\dots,x_k} \mathbf{p}_{x_0\dots x_k} 
-        \mathbf{f}^{x_t} \\
+        \mathbf{f}^{x_t}, \\
         \mathbb{E}[f(x_t) g(x_{t+\tau})] 
         = \sum_{x_0,\dots,x_k} \mathbf{p}_{x_0\dots x_k} 
-        \mathbf{f}^{x_t} \mathbf{g}^{x_{t+\tau}}.
+        \mathbf{f}^{x_t} \mathbf{g}^{x_{t+\tau}},
     \end{gathered}
 \end{equation}
-This construction extends directly to multi-point expectations by inserting the appropriate function vectors. To analyse these correlations more systematically, we now introduce an operator formulation.
+respectively.
+
+This construction extends directly to multi-point expectations by inserting the appropriate function vectors. To analyse these correlations more systematically, we now introduce a transfer operator-based framework.
 
 \begin{definition}[Transfer and emission operators]
 Consider the MPS representation of an SPC with local tensors \(\mathbf{A}^{\mu_t}{}_{x_t\mu_{t+1}}\) where \(x_t \in \mathbb{P}^{(n)}\). In standard notation, this is equivalently the set of \(\chi \times \chi\) matrices \(A_{x_t}\) (where \(\chi = \dim{\mu}\) is the bond dimension) indexed by the \(x_t\), with elements given by
@@ -86,7 +51,9 @@ Given a scalar function \(f : \mathbb{P}^{(n)} \to \mathbb{R}\), the transfer op
     E_f = \sum_{x_t\in\mathbb{P}^{(n)}} f(x_t) A_{x_t}.
 \end{equation}
 \end{definition}
-The transfer operator \(T\) governs how correlations propagate along the virtual bonds, while the emission operator \(E_f\) encodes how an observable \(f\) couples to these bonds. A tensor graphical representation of these operators is shown in (\Fidel{figure pending}).
+The transfer operator \(T\) governs how correlations propagate along the virtual (environment) bonds. The observable-inserted transfer operator \(E_f\), which we refer to as the emission operator, encodes how an observable \(f\) couples to these bonds. A tensor graphical representation of these operators is shown in \cref{fig:transfer-emission-covariance}.
+
+We note that the definition of the transfer operator here differs from the conventional quantum MPS transfer operator, which involves both the tensor and its complex conjugate~\cite{schollwockDensitymatrixRenormalizationGroup2005}. The distinction arises because the SPP MPS directly encodes the joint probability distribution over Pauli labels, rather than quantum amplitudes.
 
 We now assume the SPC is \emph{time-homogeneous} (all tensors \(A_{x_t}\) are identical for all \(t\)) and \emph{ergodic}, such that the process reaches a unique stationary distribution on the environment. As a result, the transfer operator \(T\) has a unique leading eigenvalue \(\lambda_1 = 1\) (after normalisation), with corresponding left and right eigenvectors \(\bra{l}\) and \(\ket{r}\) satisfying
 \begin{equation}
@@ -123,7 +90,7 @@ This operator represents the deviation of the observable \(f\) around its statio
 \begin{equation}\label{eq:covariance_operator}
     C_{f,g}(\tau) = \braket{l|\widetilde{E}_f T^{\tau - 1} \widetilde{E}_g|r}.
 \end{equation}
-We have thus expressed the covariance entirely in terms of the transfer and emission operators. It follows that the decay of temporal correlations is governed by the exponent of the transfer operator \(T\), and thus by its eigenvalue spectrum. Finally, this formulation extends naturally to multi-point correlation functions. For an ordered time sequence \(t_1 < t_2 < \dots < t_m\), the \(m\)-point correlator is
+The covariance is thus described entirely in terms of the transfer and emission operators. It follows that the decay of temporal correlations is governed by the exponent of the transfer operator \(T\), and hence by its eigenvalue spectrum. Finally, this formulation extends naturally to multi-point correlation functions. For an ordered time sequence \(t_1 < t_2 < \dots < t_m\), the \(m\)-point correlator is
 \begin{equation}
     C_{f_1,\dots,f_m} = \braket{l|\widetilde{E}_{f_1} T^{\Delta t_1} \widetilde{E}_{f_2} T^{\Delta t_2} \dots T^{\Delta t_{m-1}}\widetilde{E}_{f_m}|r},
 \end{equation}
@@ -158,18 +125,18 @@ where \(\Delta t_j = t_{j+1} - t_j - 1\). We now turn to the spectral properties
         \caption{}
     \end{subfigure}
     \caption{}
-    \label{}
+    \label{fig:transfer-emission-covariance}
 \end{figure}
 
 \subsection{Spectral analysis of SPC transfer operators}
 For clarity, we begin by assuming that the transfer operator \(T\) is diagonalisable. Its spectral decomposition is given by
-\begin{equation*}
+\begin{equation}
     T = \sum_{i=1}^{\chi} \lambda_i \ketbra{r_i}{l_i},
-\end{equation*}
+\end{equation}
 where the eigenvalues are ordered by their magnitudes \(|\lambda_1| \geq |\lambda_2| \geq \dots \geq |\lambda_{\chi}|\), \(\braket{l_i|r_j} = \delta_{ij}\), and normalisation \(\lambda_1 = 1\). Inserting this into the covariance function from \cref{eq:covariance_operator} yields
-\begin{equation*}
+\begin{equation}
     C_{f,g}(\tau) = \sum_{i=2}^{\chi} \lambda_i^{\tau - 1} \! \braket{l|\widetilde{E}_f|r_i} \! \braket{l_i|\widetilde{E}_g|r}.
-\end{equation*}
+\end{equation}
 Only the terms \(i \geq 2\) contribute since the leading eigenvectors correspond to the stationary distribution, for which \(\braket{l_1|\widetilde{E}_f|r_1} = \braket{l_1|\widetilde{E}_g|r_1} = 0\). This expression explicitly shows that the decay of correlations is a sum of exponentially decaying modes.
 
 The asymptotic, long-time behaviour is dominated by the subleading eigenvalue with the largest magnitude, which we denote as \(\lambda_* = |\lambda_2|\). From this, we define two key quantities:
@@ -185,15 +152,55 @@ The asymptotic, long-time behaviour is dominated by the subleading eigenvalue wi
     \end{equation}
     This means the asymptotic decay is governed by this timescale, with \(|C_{f,g}(\tau)| \sim e^{-(\tau - 1)/\xi}\) for sufficiently large \(\tau\).
 \end{enumerate}
-The eigenspectrum provides further qualitative insights into the nature of the process. For instance, eigenvalues are not necessarily real; complex eigenvalues indicate oscillatory behaviour in the correlation functions. The properties of the leading eigenvalues are particularly important. The process is ergodic (converges to a unique stationary distribution) if the leading eigenvalue \(\lambda_1 = 1\) is non-degenerate (simple). Degenerate leading eigenvalues (\(|\lambda_i| = 1\) for multiple \(i\)) imply multiple, disconnected stationary states.
+The eigenspectrum of the transfer operator provides a comprehensive characterisation of how environmental memory is propagated and dissipated. These spectral properties remain a useful descriptor even when relaxing assumptions such as diagonalisability and ergodicity. For instance, complex eigenvalues indicate oscillatory correlation behaviour, while degenerate leading eigenvalues imply non-ergodic dynamics with multiple stationary states.
 
-A more formal bound on the covariance can be established. Let \(S \coloneq \{i \geq 2: \braket{l|\widetilde{E}_f \ketbra{r_i}{l_i} \widetilde{E}_g|r} \neq 0\}\) and \(k \coloneq |S| \leq \chi - 1\). In other words, \(S\) is the set of eigenmodes that contribute non-trivially to the correlation function for the given observables \(f\) and \(g\), and \(k\) is the number of such modes. For a diagonlisable \(T\) working in the canonical gauge \(\braket{l|r} = 1\) and with any submultiplicative norm \(\|\cdot\|\), we obtain the bound,
-\begin{proposition}
-    \begin{equation}
+A more formal bound on the covariance can be established. Let \(S \coloneq \{i \geq 2: \braket{l|\widetilde{E}_f \ketbra{r_i}{l_i} \widetilde{E}_g|r} \neq 0\}\) and \(k \coloneq |S| \leq \chi - 1\). In other words, \(S\) is the set of eigenmodes that contribute non-trivially to the correlation function for the given observables \(f\) and \(g\), and \(k\) is the number of such modes. For a diagonalisable \(T\) working in the canonical gauge \(\braket{l|r} = 1\) and with any submultiplicative norm \(\|\cdot\|\), we obtain the bound,
+
+\begin{equation}
     |C_{f,g}(\tau)| \leq \sum_{i\in S} |\lambda_i|^{\tau - 1} \| \widetilde{E}_f \| \| \widetilde{E}_g \| \leq k\|\widetilde{E}_f \| \| \widetilde{E}_g \| \lambda_*^{\tau - 1},
-    \end{equation}
+\end{equation}
+If only a few modes matter, \(k\) may be much smaller than \(\chi - 1\). Finally, while \(T=\sum_x A_x\) is generally non-Hermitian (and may be non-normal), generic choices of process tensors---such as those generated by Haar-random system-environment unitaries---are almost surely diagonalisable.
+
+% The eigenspectrum provides further qualitative insights into the nature of the process. For instance, eigenvalues are not necessarily real; complex eigenvalues indicate oscillatory behaviour in the correlation functions. The properties of the leading eigenvalues are particularly important. The process is ergodic (converges to a unique stationary distribution) if the leading eigenvalue \(\lambda_1 = 1\) is non-degenerate (simple). Degenerate leading eigenvalues (\(|\lambda_i| = 1\) for multiple \(i\)) imply multiple, disconnected stationary states.
+
+\subsection{Hidden Markov model representations of SPPs}
+
+Since SPPs are classical stochastic processes, they can be represented as hidden Markov models (HMMs)... 
+
+% An edge-emitting HMM is specified by an initial distribution
+
+% \(S_t \in \{1,\dots,\chi\}\) \(X \in \mathcal{X}\)
+
+Let \((S_t)_{t\ge 0}\) be a Markov chain on hidden states and let \((X_t)_{t\ge 0}\) take values in a finite alphabet \(\mathcal X\).
+\begin{equation}
+    \pi_i \coloneq \Pr(S_0=i), 
+    \quad 
+    \pi_i \ge 0,\quad \sum_{i\in\mathcal S}\pi_i = 1,
+\end{equation}
+and transition-emission kernels,
+\begin{equation*}
+    (K_x)_{ij} \coloneq \Pr{(S_{t+1}=j, X_t = x | S_t = i)},
+\end{equation*}
+
+\begin{equation*}
+    (K_x)_{ij} \geq 0 \quad \forall i,j,x,
+    \quad
+    \sum_{j,x} (K_x)_{ij} = 1 \quad \forall i,
+\end{equation*}
+
+\begin{equation*}
+    \Pr(x_{0:k-1}) = \sum_{s_0,\dots,s_k} \Pr(s_0) \prod_{t=0}^{k-1} \Pr{(s_{t+1}, x_t | s_t)} = \sum_{s_0,\dots,s_k} \pi_{s_0} \prod_{t=0}^{k-1} (K_{x_t})_{s_t s_{t+1}}.
+\end{equation*}
+
+
+% \begin{definition}[Edge-emitting Hidden Markov Model]
+    
+% \end{definition}
+
+\begin{proposition}[Sufficient conditions for SPP MPS-HMM equivalence]
+    
 \end{proposition}
-If only a few modes matter, k may be much smaller than \(\chi - 1\). Furthermore, for the general case where \(T\) is not diagonalisable, Jordan blocks lead to at most polynomial corrections to the exponential decay above.
+
 
 % \begin{proposition}
 %     \begin{equation}
