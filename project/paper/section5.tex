@@ -11,7 +11,7 @@
 \section{Structure of temporal correlations in 1D SPPs}\label{sec:correlation-structure}
 What we'd like to study are correlations between Pauli errors in space and time...
 
-\subsection{Correlation functions}
+\subsection{Correlation functions}\label{sec:correlation-functions}
 We begin by defining correlation functions for SPPs to quantify the statistical dependencies between Pauli operators across space and time. Since SPPs directly encode the joint probability distribution, these correlations can be straightforwardly evaluated via tensor contractions, which later motivates transfer operator formalism.
 
 Let \(f : \mathbb{P}^{(n)} \to \mathbb{R}\) be a scalar function on the set of \(n\)-qubit Pauli operators \(\mathbb{P}^{(n)}\); for example, \(f_X(x) = 1\) if \(x=X\) and 0 otherwise. These functions play a role analogous to observables in quantum theory. Given a random Pauli operator \(x_t \in \mathbb{P}^{(n)}\) at time \(t\), the quantity \(f(x_t)\) defines a real-valued random variable. For two such variables \(f(x_t)\) and \(g(x_{t+\tau})\) evaluated at times \(t\) and \(t+\tau\), the two-point correlation function (covariance) is defined as 
@@ -64,8 +64,8 @@ We now assume the SPP is \emph{time-homogeneous} (all tensors \(A_{x_t}\) are id
 with normalisation \(\braket{l|r} = 1\). For such stationary processes, the expectation values can be written compactly as
 \begin{equation}
     \begin{gathered}
-        \mathbb{E}[f(x_t)] = \braket{l|E_f|r} \equiv \braket{f}, \\
-        \mathbb{E}[f(x_t)g(x_{t+\tau})] = \braket{l|E_f T^{\tau - 1} E_g|r} \equiv \braket{fg}.
+        \mathbb{E}[f(x_t)] = \braket{l|E_f|r} \eqcolon \braket{f}, \\
+        \mathbb{E}[f(x_t)g(x_{t+\tau})] = \braket{l|E_f T^{\tau - 1} E_g|r} \eqcolon \braket{fg}.
     \end{gathered}
 \end{equation}
 To recast the covariance in terms of operators, we introduce the centred emission operator.
@@ -128,7 +128,7 @@ where \(\Delta t_j = t_{j+1} - t_j - 1\). We now turn to the spectral properties
     \label{fig:transfer-emission-covariance}
 \end{figure}
 
-\subsection{Spectral analysis of SPP transfer operators}
+\subsection{Spectral analysis of SPP transfer operators}\label{sec:spectral-analysis}
 For clarity, we begin by assuming that the transfer operator \(T\) is diagonalisable. Its spectral decomposition is given by
 \begin{equation}
     T = \sum_{i=1}^{\chi} \lambda_i \ketbra{r_i}{l_i},
@@ -208,3 +208,30 @@ These conditions are sufficient but not necessary; a generic SPP MPS need not ad
 
 A practical advantage of HMM realisations is access to efficient procedures for inference, learning, and sampling. Importantly, HMMs enable simple sequential sampling of Pauli trajectories based on the transition-emission updates, making them well suited to large-scale Monte Carlo studies of QEC under correlated noise. This capability underpins the numerical analyses in subsequent sections.
 
+
+
+\subsection{Transfer operators for higher-dimensional SPPs}
+Before concluding this section, we briefly indicate how the transfer operator framework extends to higher-dimensional SPP tensor networks. In the one-dimensional case, all spatial structure is compressed into a single index, resulting in a matrix transfer operator. For higher dimensional SPPs, the transfer operator itself may be represented by a tensor network.
+
+Concretely, consider the 2D SPP PEPS illustrated in \cref{fig:spp-peps}, whose local tensors are given by
+\begin{equation*}
+    \mathbf{a}_{(i, j)}^{\nu^{i-1}_j\mu_j^i}{}_{x_j^i\mu_{j+1}^i\nu_j^i},
+\end{equation*}
+where \(i\) and \(j\) label spatial and temporal positions, respectively.
+We define the \emph{single-site transfer tensor} \(\mathbf{r}_{(i,j)}\) by summing over the local Pauli index \(x_j^i\). That is, for each site \((i,j)\), we obtain
+\begin{equation}
+    \mathbf{r}_{(i, j)}^{\nu^{i-1}_j\mu_j^i}{}_{\mu_{j+1}^i\nu_j^i} = 
+    \sum_{x_j^i \in \mathbb{P}} \mathbf{a}_{(i, j)}^{\nu^{i-1}_j\mu_j^i}{}_{x_j^i\mu_{j+1}^i\nu_j^i}.
+\end{equation}
+The \emph{row transfer operator} \(\mathbf{R}_{(j)}\) is then the contraction of these tensors along the spatial bonds \(\nu\) across a single row (time slice) \(j\). Writing \(\vec{\mu}_j \coloneq (\mu_j^0, \dots, \mu_j^{n-1})\) for the collection of temporal bonds (and similarly \(\vec{\mu}_{j+1}\)), we have
+\begin{equation}
+    \mathbf{R}_{(j)}^{\vec{\mu}_j}{}_{\vec{\mu}_{j+1}} = 
+    \sum_{\nu^0_j,\dots,\nu^{n-1}_j}
+    \mathbf{r}_{(0, j)}^{\mu_j^0}{}_{\mu_{j+1}^0\nu_j^0}
+    \mathbf{r}_{(1, j)}^{\nu^0_j\mu_j^1}{}_{\mu_{j+1}^1\nu_j^1}
+    \dots
+    \mathbf{r}_{(n-1, j)}^{\nu^{n-2}_j\mu_j^{n-1}}{}_{\mu_{j+1}^{n-1}\nu_j^{n-1}},
+\end{equation}
+which is precisely an MPO along space.
+
+At a high level, the previous analyses of \cref{sec:correlation-functions,sec:spectral-analysis} may be generalised to higher-dimensional SPPs by replacing the matrix transfer operator \(T\) with an appropriate tensor network realisation (such as the MPO \(\mathbf{R}_{(j)}\) for 2D SPP PEPS).
