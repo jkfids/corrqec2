@@ -69,7 +69,7 @@ A $k$-slot process tensor $\Upsilon_{0:k}$ admits a matrix product operator (MPO
 \begin{equation}
     \mathbf{T}^{\alpha_0,\dots,\alpha_k}{}_{\beta_0,\dots,\beta_k} = \sum_{\mu_0,\dots,\mu_{k+1}} \pmb{\sigma}_{\mu_0}\mathbf{U}_{(0)}^{\mu_0\alpha_0}{}_{\mu_1\beta_0}\mathbf{U}_{(1)}^{\mu_1\alpha_1}{}_{\mu_2\beta_1}\cdots\mathbf{U}_{(k)}^{\mu_k\alpha_k}{}_{\mu_{k+1}\beta_k}\mathbf{t}^{\mu_{k+1}}.
 \end{equation}
-Here $\pmb{\sigma}$, $\mathbf{U}_{(j)}$, and $\mathbf{t}$ are tensor representations of the initial environment state, the joint $SE$ unitary at time $j$, and the final environment trace, respectively. The environment indices $\mu_j$ are the MPO's virtual bonds of dimension \(\chi_\mathrm{bond} = \dim{(\mu_j)} \le d_E^2\), corresponding to the dimension of the environment's Liouville space.
+Here $\pmb{\sigma}$, $\mathbf{U}_{(j)}$, and $\mathbf{t}$ are tensor representations of the initial environment state, the joint $SE$ unitary at time $j$, and the final environment trace, respectively. The environment indices $\mu_j$ are the MPO's virtual bonds of dimension \(D = \dim{(\mu_j)} \le d_E^2\), corresponding to the dimension of the environment's Liouville space.
 \end{definition}
 In graphical form,
 \begin{equation*}
@@ -113,7 +113,7 @@ Here the superscript \(i=0,\dots,n-1\) labels subsystems (spatial coordinates), 
     \Biggl[\prod_{j=0}^{k}\prod_{i=0}^{n-1}\mathbf{u}_{(i, j)}^{\nu^{i-1}_j\mu_j^i\alpha_j^i}{}_{\beta_j^i\mu_{j+1}^i\nu_j^i}\Biggr]
     \Biggl[\prod_{i=0}^{n-1}\mathbf{t}_{(i)}^{\mu_{k+1}^i}\Biggr],
 \end{equation}
-with spatial boundary conditions such that left indices \(\lambda^{-1}, \nu^{-1}_j\) and right indices \(\lambda^{n-1}, \nu^{n-1}_j\) are absent. In this representation, horizontal bonds \(\mu_j^i\) carry temporal correlations (environmental memory), while vertical bonds \(\nu_j^i\) encode spatial correlations between subsystems at each time step. The spatial bond dimensions \(\chi_s = \dim(\nu_j^i)\) are set by the SVD truncation, while the temporal bond dimensions remain bounded by the environment size, \(\chi_t = \dim(\mu_j^i) \le d_E^2\). \Cref{fig:tensor-network-2d} displays a graphical representation of this 2D tensor network.
+with spatial boundary conditions such that left indices \(\lambda^{-1}, \nu^{-1}_j\) and right indices \(\lambda^{n-1}, \nu^{n-1}_j\) are absent. In this representation, horizontal bonds \(\mu_j^i\) carry temporal correlations (environmental memory), while vertical bonds \(\nu_j^i\) encode spatial correlations between subsystems at each time step. The spatial bond dimensions \(D_s = \dim(\nu_j^i)\) are set by the SVD truncation, while the temporal bond dimensions remain bounded by the environment size, \(D_t = \dim(\mu_j^i) \le d_E^2\). \Cref{fig:tensor-network-2d} displays a graphical representation of this 2D tensor network.
 
 Unlike the 1D temporal MPO representation, generic 2D tensor networks are not both exactly 
 and efficiently contractible. In practice one must resort to approximate contraction schemes, 

@@ -11,3 +11,4 @@ superchannels
 superoperator
 Stinespring
 MPO
+simulable

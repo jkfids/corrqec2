@@ -1,10 +1,10 @@
 \Fidel{
 TODO (less important):
 \begin{itemize}
-    \item Cite process matrix paper in footnote (idk which one lol)
-    \item Explain why we bother with the Pauli expansion of the process tensor?
-    \item When explaining what an instrument is, mention that it can also even be an entire syndrome extraction round?
-    \item Give examples of what an environment is for a QEC setting (e.g, two-level system, the higher energy levels of a transmon, or even other qubits if you're looking at autocorrelations of a subset of qubits when there are spatiotemporal correlations)? If not here then maybe at the start of section 6.
+    % \item Explain why we bother with the Pauli expansion of the process tensor?
+    % \item When explaining what an instrument is, mention that it can also even be an entire syndrome extraction round?
+    \item Citations (examples of non-Markovian environments in QEC)
+    % \item Give examples of what an environment is for a QEC setting (e.g, two-level system, the higher energy levels of a transmon, or even other qubits if you're looking at autocorrelations of a subset of qubits when there are spatiotemporal correlations)? If not here then maybe at the start of section 6.
 \end{itemize}
 }
 \section{Preliminaries}
@@ -37,7 +37,7 @@ The Stinespring dilation theorem provides an additional, physically motivated pe
 \end{equation}
 where \(\sigma_E\) is an initial state of the environment, which must be initially separable from \(\rho_S\).
 
-Throughout this work, we also employ further representations, including the \(\chi\)-matrix\footnote{Also known as a process matrix, a term we avoid using due to a terminological clash with a higher-order quantum object with potentially indefinite causal order.} representation and the (Liouville-)superoperator representation. The \(\chi\)-matrix is related to the Choi matrix via a change of basis to the Pauli basis, while the superoperator representation is convenient for numerical calculations. We do not explicitly review these representations nor the detailed mappings between them. For a comprehensive overview of quantum channel representations and the transformations between them in a graphical calculus, we refer the reader to ref.~\cite{woodTensorNetworksGraphical2015}. 
+Throughout this work, we also employ further representations, including the \(\chi\)-matrix\footnote{Also known as a process matrix, a term we avoid using due to a terminological clash with a higher-order quantum object with potentially indefinite causal order~\cite{oreshkovQuantumCorrelationsNo2012}.} representation and the (Liouville-)superoperator representation. The \(\chi\)-matrix is related to the Choi matrix via a change of basis to the Pauli basis, while the superoperator representation is convenient for numerical calculations. We do not explicitly review these representations nor the detailed mappings between them. For a comprehensive overview of quantum channel representations and the transformations between them in a graphical calculus, we refer the reader to ref.~\cite{woodTensorNetworksGraphical2015}. 
 
 \subsection{Pauli channels and Pauli twirling}
 An important class of quantum channels, especially in quantum error correction, is the class of Pauli channels. A Pauli channel \(\mathcal{E}_P\) acting on \(n\) qubits is defined as a convex mixture of Pauli operators,
@@ -68,7 +68,7 @@ Finally, the efficiency of Pauli noise representations enables a range of practi
 Crucially, even with a Pauli description of noise, one can still accommodate the rich spatiotemporal correlations induced by non-Markovian dynamics. Most existing analyses, however, assume uncorrelated, Markovian error models, whereas correlations in stochastic models can have a pronounced impact on the efficacy of QEC protocols \cite{fowlerQuantifyingEffectsLocal2014,fkamDetrimentalNonMarkovianErrors2025}. In the next subsection, we introduce the process tensor formalism, which provides a complete description of multi-time quantum processes, including non-Markovian memory effects, and forms the basis for our spatiotemporal Pauli process construction.
 
 \subsection{Process tensors}\label{sec:process_tensors}
-While quantum channels describe two-time dynamics, they are insufficient for capturing general multi-time quantum processes, especially in the presence of non-Markovian memory effects. The quantum \emph{process tensor} provides a general spatiotemporal framework that encodes all such correlations. It can be viewed as a \emph{higher-order quantum map} (or quantum comb), that takes as input a sequence of \(k\) \emph{instruments} \(\mathbf{A}_{0:k-1}=(\mathcal{A}_0,\dots,\mathcal{A}_{k-1})\), and outputs the resulting system state \(\rho_\mathrm{out}\). Here each \(\mathcal{A}_j\) denotes a CP map acting on the system at time \(t_j\), representing an arbitrary control operation, gate, or projective measurement performed by an experimenter. The set of sequences \(\{\mathbf{A}_{0:k-1}\}\) thus encapsulates all possible controllable dynamics imposed on the system between the initial preparation and the final time.
+While quantum channels describe two-time dynamics, they are insufficient for capturing general multi-time quantum processes, especially in the presence of non-Markovian memory effects. The quantum \emph{process tensor} provides a general spatiotemporal framework that encodes all such correlations. It can be viewed as a \emph{higher-order quantum map} (or quantum comb), that takes as input a sequence of \(k\) \emph{instruments} \(\mathbf{A}_{0:k-1}=(\mathcal{A}_0,\dots,\mathcal{A}_{k-1})\), and outputs the resulting system state \(\rho_\mathrm{out}\). Here each \(\mathcal{A}_j\) denotes a CP map acting on the system at time \(t_j\), representing an arbitrary control operation, gate, or projective measurement performed by an experimenter. Additionally, what exactly constitutes an instrument can be defined contextually. For instance, relevant for QEC, a syndrome extraction cycle can be treated as a single instrument~\cite{tanggaraStrategicCodeUnified2024,kobayashiTensornetworkDecodersProcess2024}. The set of sequences \(\{\mathbf{A}_{0:k-1}\}\) thus broadly encapsulates all possible controllable dynamics imposed on the system between the initial preparation and the final time.
 
 For the purposes of modelling the multi-time dynamics starting from an initial system state \(\rho_\mathrm{in}\)\footnote{For cases where the system and environment are initially correlated, the process tensor acts purely on a sequence of instruments \(\mathbf{A}_{0:k-1}\), where the initial map \(\mathcal{A}_0\) serves as a preparation map. Correspondingly, a \emph{superchannel} is exactly a 1-slot process tensor.}, we define a \emph{\(k\)-slot} process tensor \(\mathcal{T}_{0:k}\) as a multilinear map acting on \(\rho_\mathrm{in}\) and \(\mathbf{A}_{0:k-1}\) by
 \begin{equation}
@@ -114,10 +114,10 @@ with Pauli strings \(P_j \in \mathbb{P}^{(n)}\) of cardinality \(|\mathbb{P}^{(n
 In summary, the set of Choi states representing physical quantum processes \(\{\Upsilon_{0:k}\}\) lies in the intersection of the convex cone of positive semidefinite operators and an affine subspace defined by the causal constraints on the process tensor.
 
 Beyond these general validity conditions, structural features of a process tensor reflect the physical nature of the underlying dynamics. Notably, entanglement across temporal partitions of a Choi state \(\Upsilon_{0:k}\)---referred to as \emph{temporal entanglement}---signals that a process is \emph{genuinely quantum non-Markovian}. Concretely, a process exhibits genuinely quantum temporal correlations if and only if its Choi state cannot be written as a convex mixture of products, 
-\begin{equation}
+\begin{equation}\label{eq:process-separable}
 \Upsilon_{0:k} = \sum_\alpha p_\alpha \Lambda_0^\alpha \otimes \Lambda_1^\alpha \otimes \cdots \otimes \Lambda_k^\alpha,
 \end{equation}
-with \(p_\alpha \geq 0\) and each \(\Lambda_j^\alpha\) is the Choi representation of a CPTP channel. Conversely, a process is fully \emph{Markovian}---exhibiting neither quantum nor classical temporal correlations---if and only if its Choi operator factorises across all time steps,
+with \(p_\alpha \geq 0\) and each \(\Lambda_j^\alpha\) is the Choi representation of a CPTP channel. Processes that can be written in this form are labelled \emph{process separable}, whose temporal correlations are classically simulable. Conversely, a process is fully \emph{Markovian}---exhibiting neither quantum nor classical temporal correlations---if and only if its Choi operator factorises across all time steps,
 \begin{equation}
     \Upsilon_{0:k}^{\textrm{Markov}} = \Lambda_0 \otimes \Lambda_1 \otimes \cdots \otimes \Lambda_k,
 \end{equation}
@@ -129,4 +129,10 @@ The physical origin of these structures can be traced back to the system-environ
 \end{equation}
 where \(\mathcal{U}(\cdot) = U(\cdot)U^\dagger\) implements a joint system-environment unitary, \(\mathbf{A}_{0:k-1}\) is a sequence of CP maps acting only on \(S\), and we have assumed an initially separable system and environment state \(\sigma_E \otimes \rho_S\).
 
-This dilation is more than a mathematical device; it depicts the fundamental physics governing open quantum dynamics. Non-Markovianity arises when the environment retains information about the system’s past and feeds it back into its future evolution. The process tensor compactly encapsulates all uncontrollable system-environment interactions. Operationally, non-Markovianity can be regarded as the ignorance of a larger Markovian dynamics on the joint system-environment Hilbert space. In the next section, we exploit this structure to construct tensor network representations of process tensors, which serve as the foundation of our spatiotemporal Pauli process framework.
+This dilation is more than a mathematical device; it depicts the fundamental physics governing open quantum dynamics. Non-Markovianity arises when the environment retains information about the system’s past and feeds it back into its future evolution. What is precisely considered an environment can be broadly interpreted as any inaccessible (or ignored) degrees of freedom that influences the system's evolution. In the QEC context, this could include spurious two-level systems, higher energy levels of transmons, cosmic ray-induced phonons, or even other neighbouring qubits when considering reduced subsystem dynamics.
+
+Chiefly, the process tensor formalism abstracts away the explicit modelling of the environment. Instead, it centralises the environment's \emph{influence} on the system with respect to all possible interventions by an experimenter.
+
+In the next section, we exploit this structure to construct tensor network representations of process tensors, which serve as the foundation of our spatiotemporal Pauli process framework.
+
+% The process tensor compactly encapsulates all uncontrollable system-environment interactions. Operationally, non-Markovianity can be regarded as the ignorance of a larger Markovian dynamics on the joint system-environment Hilbert space. 

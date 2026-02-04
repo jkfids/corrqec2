@@ -24,7 +24,7 @@
 \subsection{Spatiotemporal Pauli processes as QEC noise models}
 Up to this point, we have developed the general framework of spatiotemporal Pauli processes (SPPs). The SPP description of circuit noise can, in principle, be derived from a tomographically reconstructed process tensor~\cite{whiteDemonstrationNonMarkovianProcess2020,whiteUnifyingNonMarkovianCharacterization2025}. In practice, however, it is more practical to characterise the SPP directly at a chosen level of granularity, either at the circuit level or phenomenologically for QEC cycles. Beyond this setting, SPPs may also support tasks such as decoding and noise mitigation under correlated noise, which we discuss further in \cref{sec:discussion}. For the remainder of the paper, we focus on their use as generative models of QEC noise with spatiotemporal correlations.
 
-Realistic noise in quantum devices exhibits nontrivial correlations across both space and time, which can significantly impact the performance of QEC protocols. Previous analyses of these effects typically make one or more simplifying assumptions: (a) `ad hoc' models not derived from microscopic dynamics, (b) constrained correlation structure, such as short-range Gaussian correlations or limited memory due to bath resets, (c) restriction to specific codes or decoders (for example, via reliance on a statistical-mechanical mapping), or (d) assumptions of ideal syndrome extraction or non-circuit-level noise.
+Realistic noise in quantum devices exhibits nontrivial correlations across both space and time, which can significantly impact the performance of QEC protocols. Previous analyses of these effects typically make one or more simplifying assumptions: (a) `ad hoc' models not derived from microscopic dynamics, (b) constrained correlation structure, such as short-range Gaussian correlations or limited memory due to bath resets, (c) restriction to specific codes or decoders---for instance, via reliance on a statistical-mechanical mapping---or (d) assumptions of ideal syndrome extraction or non-circuit-level noise.
 
 SPPs provide a unifying framework for modelling such noise for QEC. They natively encapsulate correlated stochastic Pauli noise up to the circuit level, and, via the multi-time twirl implemented by randomised compiling, can be applied to general (Markovian or non-Markovian) noise scenarios. Formally, the multi-time Pauli twirl maps the process tensor description of a noisy stabiliser circuit to an SPP that assigns specific, correlated Pauli faults to individual gates and idle intervals throughout the computation. 
 
@@ -33,6 +33,22 @@ Although the framework resolves correlations at the level of individual gates, f
 In the following sections, we exploit this bridge from microscopic dynamics, through SPPs, to efficiently simulable hidden Markov models in two concrete instances. In \cref{sec:temporalstormmodel}, we introduce a simple, analytically tractable one-dimensional SPP with a tunable spectral gap and fixed marginal error rates, making direct use of the tools developed in \cref{sec:correlation-structure}. We use this model to study surface code performance for both memory and stability experiments. In \cref{sec:qcamodel}, we consider a more complex two-dimensional SPP, derived from a quantum cellular automaton model for the environment dynamics, which exhibits rich statistical-mechanical behaviour and spatiotemporal correlations while being specified by only a few parameters.
 
 \subsection{Temporal storm noise model}
+\begin{figure}
+    \centering
+    \begin{subfigure}{0.49\textwidth}
+      \centering
+      \valignboxnopad{\input{figures/spp-mps-hmm.tikz}}
+      \caption{}
+    \end{subfigure}
+    \begin{subfigure}{0.49\textwidth}
+      \centering
+    %   \input{figures/spp-mps.tikz}
+      \vspace{8mm}
+      \caption{}
+    \end{subfigure}
+    \caption{}
+\end{figure}
+
 We now instantiate the general SPP formalism in a one-dimensional, analytically tractable setting, which we refer to as the \emph{temporal storm model}. Each system qubit $S_i$ is coupled to its own two-level environment $E_i$ with classical basis states $\{\ket{0},\ket{1}\}$, representing \emph{calm} and \emph{storm} conditions, respectively. For clarity, we focus on a single site and suppress the index $i$ in what follows.
 
 The environment undergoes a time-homogeneous classical Markov chain with transition probabilities $\Gamma_{i\to j}$ between calm and storm (Fig.~X). The system--environment interaction is modelled as a quantum channel conditioned on the environment state. When the environment is in state $\ket{j}$, the system evolves according to
