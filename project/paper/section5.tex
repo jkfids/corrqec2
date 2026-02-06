@@ -1,12 +1,12 @@
-\Fidel{TODO
-\begin{itemize}
-    % \item Justify why we're calculating the covariance or correlation functions.
-    % \item More detail on non-diagonalisable transfer operators. I think for the sake of writing what we're comfortable with, we can leave it as "assume diagonality", citing the fact that generic choices of process tensors (random SE unitaries) are diagonalisable with probability 1.
-    % \item Include a generalisation of the transfer operator to higher dimensional SPPs. For example, for an SPP PEPS, the transfer operator itself has an MPO representation. Solving the eigenspectrum then becomes a boundary MPS problem.
-    \item Conditional mutual information based definition of approximate Markov order. Leaning towards not including this in the end.
-    % \item HMM representation and mapping.
-\end{itemize}
-}
+% \Fidel{TODO
+% \begin{itemize}
+%     \item Justify why we're calculating the covariance or correlation functions.
+%     \item More detail on non-diagonalisable transfer operators. I think for the sake of writing what we're comfortable with, we can leave it as "assume diagonality", citing the fact that generic choices of process tensors (random SE unitaries) are diagonalisable with probability 1.
+%     \item Include a generalisation of the transfer operator to higher dimensional SPPs. For example, for an SPP PEPS, the transfer operator itself has an MPO representation. Solving the eigenspectrum then becomes a boundary MPS problem.
+%     \item Conditional mutual information based definition of approximate Markov order. Leaning towards not including this in the end.
+%     \item HMM representation and mapping.
+% \end{itemize}
+% }
 
 \section{Structure of temporal correlations in 1D SPPs}\label{sec:correlation-structure}
 Modelling SPPs within the tensor network formalism enables the application of established analytical and numerical tools to characterise the structure of spatiotemporal correlations. In this section, we primarily analyse the temporal correlation structure of SPPs to investigate how environmental memory is propagated and dissipated. We begin by defining multi-point correlation functions, evaluated via tensor contractions, which serves as the foundation for a transfer operator-based framework.
@@ -199,7 +199,7 @@ The \emph{row transfer operator} \(\mathbf{R}_{(j)}\) is then the contraction of
 \end{equation}
 which is precisely an MPO along space.
 
-At a high level, the previous analyses of \cref{sec:correlation-functions,sec:spectral-analysis} may be generalised to higher-dimensional SPPs by replacing the matrix transfer operator \(T\) with an appropriate tensor network transfer object, such as the MPO \(\mathbf{R}_{(j)}\) for 2D SPP PEPS. In this setting, expectation values and correlation functions can be expressed as contractions of boundary states---typically represented by an MPS---with products of transfer and emission MPOs, in direct analogy with \cref{eq:expectation-values-operator,eq:covariance_operator}. In the time-homogeneous case \(\mathbf{R}_{(j)} \equiv \mathbf{R}\), the role of stationary vectors \(\bra{l}\) and \(\ket{r}\) is played by boundary MPSs, corresponding to boundary fixed points. Computation of these boundary MPSs as well as the spectral properties of the transfer MPO may require more involved numerical tensor network-based techniques. We do not pursue these generalisations in this work, leaving them for future exploration. For the remainder of the section, we return to the one-dimensional setting and formally link MPS transfer operator description to hidden Markov model realisations. \Fidel{cite TN refs for `more involved numerical tensor network-based techniques'}
+At a high level, the previous analyses of \cref{sec:correlation-functions,sec:spectral-analysis} may be generalised to higher-dimensional SPPs by replacing the matrix transfer operator \(T\) with an appropriate tensor network transfer object, such as the MPO \(\mathbf{R}_{(j)}\) for 2D SPP PEPS. In this setting, expectation values and correlation functions can be expressed as contractions of boundary states---typically represented by an MPS---with products of transfer and emission MPOs, in direct analogy with \cref{eq:expectation-values-operator,eq:covariance_operator}. In the time-homogeneous case \(\mathbf{R}_{(j)} \equiv \mathbf{R}\), the role of stationary vectors \(\bra{l}\) and \(\ket{r}\) is played by boundary MPSs, corresponding to boundary fixed points. Computation of these boundary MPSs as well as the spectral properties of the transfer MPO may require more involved numerical tensor network-based techniques. We do not pursue these generalisations in this work, leaving them for future exploration. For the remainder of the section, we return to the one-dimensional setting and formally link MPS transfer operator description to hidden Markov model realisations. (\Fidel{cite TN refs for `more involved numerical tensor network-based techniques'})
 
 \subsection{Hidden Markov model realisations}
 An SPP MPS, together with its associated transfer operator, naturally admits a hidden state interpretation. In this view, the virtual bond indices serve as latent variables whose dynamics drive the observed Pauli sequence. We make this connection explicit by linking SPP MPS representations to finite-state hidden Markov models (HMMs). Concretely, under appropriate positivity and normalisation constraints, an SPP MPS of bond dimension \(D\) is isomorphic to an \emph{edge-emitting} HMM with \(D\) hidden states. This equivalence provides a bridge to the extensive HMM literature, enabling efficient hidden state-based methods for sampling and modelling SPPs---tools we exploit in \cref{sec:temporalstormmodel,sec:qcamodel}.
@@ -246,5 +246,5 @@ This expression is in direct analogy with the SPP MPS probabilities in \cref{eq:
 
 These conditions are sufficient but not necessary; a generic SPP MPS need not admit a nonnegative, row-stochastic representation of the same bond dimension. However, any non-Markovian process can be rendered Markovian by enlarging the (in general, potentially unbounded) state space \cite{milzQuantumStochasticProcesses2021}. Constructing such an embedding optimally is model dependent and generally nontrivial~\cite{vidyasagarCompleteRealizationProblem2011}. Since we are primarily interested in utilising HMMs as practical generative models for correlated noise, we do not pursue minimal HMM realisations here.
 
-A practical advantage of HMM realisations is access to standard, efficient procedures for inference, learning, and sampling. Importantly, HMMs enable simple sequential sampling of Pauli trajectories via transition-emission update rules, making them well suited to large-scale Monte Carlo studies of QEC under correlated noise. This capability underpins the numerical analyses in subsequent sections, which we move onto next. \Fidel{Cite HMM algorithms}
+A practical advantage of HMM realisations is access to standard, efficient procedures for inference, learning, and sampling. Importantly, HMMs enable simple sequential sampling of Pauli trajectories via transition-emission update rules, making them well suited to large-scale Monte Carlo studies of QEC under correlated noise. This capability underpins the numerical analyses in subsequent sections, which we move onto next. (\Fidel{Cite HMM algorithms})
 

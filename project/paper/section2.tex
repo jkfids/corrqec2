@@ -1,9 +1,9 @@
 \Fidel{
-TODO (less important):
+TODO:
 \begin{itemize}
     % \item Explain why we bother with the Pauli expansion of the process tensor?
     % \item When explaining what an instrument is, mention that it can also even be an entire syndrome extraction round?
-    \item Citations (examples of non-Markovian environments in QEC)
+    \item A few more citations (around RC and Pauli noise for QEC), recommendations welcome.
     % \item Give examples of what an environment is for a QEC setting (e.g, two-level system, the higher energy levels of a transmon, or even other qubits if you're looking at autocorrelations of a subset of qubits when there are spatiotemporal correlations)? If not here then maybe at the start of section 6.
 \end{itemize}
 }
@@ -59,7 +59,7 @@ This operation removes coherences between different Pauli operators (off-diagona
 \subsection{Pauli noise in quantum error correction}
 Pauli noise models occupy a privileged role in quantum error correction. The discretisation of errors via projective syndrome measurements collapses continuous error processes into discrete outcomes associated with Pauli errors---allowing the correction of general noise~\cite{knillTheoryQuantumErrorcorrecting1997,gottesmanStabilizerCodesQuantum1997}. Furthermore, via the Gottesman-Knill theorem~\cite{gottesmanHeisenbergRepresentationQuantum1998}, Clifford circuits subject to Pauli noise are amenable to efficient classical simulation, enabling large-scale Monte Carlo studies of QEC performance in regimes relevant for fault-tolerant computation~\cite{aaronsonImprovedSimulationStabilizer2004,gidneyStimFastStabilizer2021}.
 
-Physical noise processes, however, are described by general CPTP maps that need not be Pauli channels. Coherent unitary errors---arising from miscalibrated gates, drift, or unwanted system-system or system-environment couplings---induce structure in noise that is explicitly removed by the Pauli twirling approximation. Consequently, stochastic Pauli models cannot wholly capture the full underlying dynamics and can, in some cases, mispredict logical error rates, as seen in worst-case analyses with highly coherent gate-based noise. These discrepancies are further exacerbated in non-Markovian settings, where coherent environmental memory effects defy characterisation even by sequences of general quantum channels.
+Physical noise processes, however, are described by general CPTP maps that need not be Pauli channels. Coherent unitary errors---arising from miscalibrated gates, drift, or unwanted system-system or system-environment couplings---induce structure in noise that is explicitly discarded by the Pauli twirling approximation. Consequently, stochastic Pauli models cannot wholly capture the full underlying dynamics and can, in some cases, mispredict logical error rates, as seen in worst-case analyses with highly coherent gate-based noise. These discrepancies are further exacerbated in non-Markovian settings, where coherent environmental memory effects defy characterisation even by sequences of general quantum channels.
 
 Despite these limitations, there are compelling reasons to treat Pauli noise as a central effective noise model for QEC. First and foremost, Pauli twirling can be engineered in practice. Randomised compiling (RC) actively tailors general noise into stochastic Pauli noise on the physical level by interleaving and compiling random Pauli gates into the circuit. Second, many of the most dramatic examples where Pauli models misdiagnose logical failure rates rely on highly structured and fully coherent error patterns that are unlikely to persist in large-scale devices. QEC performance under less pathological non-Pauli models, such as amplitude or phase damping, is well approximated by their Pauli twirled counterparts. Furthermore, previous studies suggest that residual coherent effects on logical qubits are naturally suppressed with increasing code distance for standard stabiliser codes.
 % Third, in several experiments, simulations based on circuit-level Pauli noise show good agreement with observed logical error rates, lending emperical support to the use of Pauli noise models. 
@@ -117,7 +117,7 @@ Beyond these general validity conditions, structural features of a process tenso
 \begin{equation}\label{eq:process-separable}
 \Upsilon_{0:k} = \sum_\alpha p_\alpha \Lambda_0^\alpha \otimes \Lambda_1^\alpha \otimes \cdots \otimes \Lambda_k^\alpha,
 \end{equation}
-with \(p_\alpha \geq 0\) and each \(\Lambda_j^\alpha\) is the Choi representation of a CPTP channel. Processes that can be written in this form are labelled \emph{process separable}, whose temporal correlations are classically simulable. Conversely, a process is fully \emph{Markovian}---exhibiting neither quantum nor classical temporal correlations---if and only if its Choi operator factorises across all time steps,
+with \(p_\alpha \geq 0\) and each \(\Lambda_j^\alpha\) is the Choi representation of a CPTP channel. Processes that can be written in this form are \emph{process-separable}, possessing temporal correlations that are classically simulable. Conversely, a process is fully \emph{Markovian}---exhibiting neither quantum nor classical temporal correlations---if and only if its Choi operator factorises across all time steps,
 \begin{equation}
     \Upsilon_{0:k}^{\textrm{Markov}} = \Lambda_0 \otimes \Lambda_1 \otimes \cdots \otimes \Lambda_k,
 \end{equation}
