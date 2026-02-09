@@ -12,3 +12,6 @@ superoperator
 Stinespring
 MPO
 simulable
+tomographically
+ancilla
+tunable

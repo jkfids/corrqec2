@@ -14,13 +14,13 @@ We now formally introduce \emph{spatiotemporal Pauli processes} (SPPs)---classic
 \subsection{Formal definition}
 We begin by extending the standard Pauli twirling operation for quantum channels to multi-time processes.
 
-Let \(\mathbb{P}^{(n)}\) denote the \(n\)-qubit Pauli group without global phase.
+Let \(\mathbb{P}^{(n)}\) denote the \(n\)-qubit Pauli group modulo global phase. Define 
+\begin{equation*}
+    \mathcal{H}_{\Upsilon_{0:k}} \coloneq \bigotimes_{j=0}^k(\mathcal{H}_{\inp_j} \otimes \mathcal{H}_{\out_j}),
+\end{equation*}
+and let \(\Upsilon_{0:k} \in \mathcal{B}(\mathcal{H}_{\Upsilon_{0:k}})\) be the Choi operator representation of a \(k\)-slot process tensor.
 \begin{definition}[Multi-time Pauli twirl]\label{def:multi-time-twirl}
-    For a \(k\)-slot process tensor with Choi operator \(\Upsilon_{0:k}\) acting on
-    \begin{equation*}
-        \mathcal{H}_{\Upsilon_{0:k}} = \bigotimes_{j=0}^k(\mathcal{H}_{\inp_j} \otimes \mathcal{H}_{\out_j}),
-    \end{equation*}
-    the multi-time Pauli twirl \(\mathcal{T}_P^{(k)}\) is the CPTP projector
+    The multi-time Pauli twirl \(\mathcal{T}_P^{(k)}\) is the CPTP projector
     \begin{equation}\label{eq:twirl-upsilon}
         \mathcal{T}_P^{(k)}(\Upsilon_{0:k}) = 
         \frac{1}{|\mathbb{P}^{(n)}|^{k+1}}
@@ -30,7 +30,7 @@ Let \(\mathbb{P}^{(n)}\) denote the \(n\)-qubit Pauli group without global phase
         \Bigg(\bigotimes_{j=0}^k P_j\otimes P_j\Bigg).
     \end{equation}
 \end{definition}
-Intuitively, \(\mathcal{T}_P^{(k)}\) independently twirls each timestep’s input-output pair on \(\mathcal{H}_{\inp_j} \otimes \mathcal{H}_{\out_j}\), preserving the causal structure of the process tensor. In the language of higher-order quantum maps~\cite{tarantoHigherOrderQuantumOperations2025}, the multi-time Pauli twirl constitutes a time-local \emph{superprocess}. Operationally, it is realised by the standard randomised compiling protocol~\cite{figueroa-romeroOperationalMarkovianizationRandomized2024}; the random compilation of Pauli operators is applied at each circuit layer independently.
+Intuitively, \(\mathcal{T}_P^{(k)}\) independently twirls each time step’s input-output pair on \(\mathcal{H}_{\inp_j} \otimes \mathcal{H}_{\out_j}\), preserving the causal structure of the process tensor. In the language of higher-order quantum maps~\cite{tarantoHigherOrderQuantumOperations2025}, the multi-time Pauli twirl constitutes a time-local \emph{superprocess}. Operationally, it is realised by the standard randomised compiling protocol~\cite{figueroa-romeroOperationalMarkovianizationRandomized2024}; the random compilation of Pauli operators is applied at each circuit layer (time step) independently.
 
 We now summarise the key properties of this mapping.
 \begin{proposition}[Properties]
