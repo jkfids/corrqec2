@@ -15,9 +15,9 @@ We now formally introduce \emph{spatiotemporal Pauli processes} (SPPs)---classic
 We begin by extending the standard Pauli twirling operation for quantum channels to multi-time processes.
 
 Let \(\mathbb{P}^{(n)}\) denote the \(n\)-qubit Pauli group modulo global phase. Define 
-\begin{equation*}
+\begin{equation}
     \mathcal{H}_{\Upsilon_{0:k}} \coloneq \bigotimes_{j=0}^k(\mathcal{H}_{\inp_j} \otimes \mathcal{H}_{\out_j}),
-\end{equation*}
+\end{equation}
 and let \(\Upsilon_{0:k} \in \mathcal{B}(\mathcal{H}_{\Upsilon_{0:k}})\) be the Choi operator representation of a \(k\)-slot process tensor.
 \begin{definition}[Multi-time Pauli twirl]\label{def:multi-time-twirl}
     The multi-time Pauli twirl \(\mathcal{T}_P^{(k)}\) is the CPTP projector
@@ -86,10 +86,14 @@ A \emph{spatiotemporal Pauli process} (SPP), denoted \(\Lambda\), is a process t
         p_\Lambda(\mathcal{P})
         \bigotimes_{j=0}^k\Pi_j.
 \end{equation}
-% where \(\Pi_j = \dketbra{P_j}{P_j}\) are the corresponding Pauli Choi operators at each time \(j\).
 \end{definition}
-% Alternatively, an SPP is a classical random field of Pauli operators over spacetime, whose statistics are derived from an underlying, possibly highly non-Markovian, quantum process. 
 In the context of a QEC circuit, \(\Upsilon_{\Lambda}\) can be interpreted as the effective, generally correlated, circuit-level Pauli noise model obtained by applying the multi-time twirl to the original noisy circuit.
+
+In the special case of a fully Markovian SPP---containing neither classical nor quantum correlations---the trajectory probabilities further factorise as
+\begin{equation}
+  p_\Lambda(P_0,\ldots,P_k) = \prod_{j=0}^k p_j(P_j).
+\end{equation}
+As a result, the Choi operator \(\Upsilon_\Lambda^{\mathrm{Markov}}\) factorises as in \cref{eq:markovian-process}, corresponding to a sequence of temporally independent Pauli channels.
 
 While SPPs can be defined directly via~\cref{def:def-spp} without reference to an underlying quantum process, our formulation using the multi-time twirl provides a direct bridge between the physically grounded system--environment dynamics and the emergent stochastic Pauli process. This connection endows SPPs with the same rich internal structure as process tensors, enabling a straightforward and efficient tensor network construction, which we detail in the following subsection.
 
