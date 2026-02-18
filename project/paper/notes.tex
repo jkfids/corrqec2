@@ -18,6 +18,59 @@
 
 \maketitle
 
+\section{Notes to maximise impact:}
+\begin{enumerate}
+    \item Finish incomplete proofs. 
+
+    \item Really focus on the fact how the multi-time twirling operation on a tensor network rep. of a process tensor (which is btw the most practically relevant rep.) corresponds to a local tensor operation, hence is actually very convenient to do numerically. Highlight the fact that this is also an original contribution.
+
+    \item Maybe some fits where I plot \(p_L\) as a function of \(xi\) to really drive home section 6?
+
+    \item Section 7 as another flagship demonstration/application that I should really lean on. 
+
+    \item Substantial forward-facing discussion in section 8 discussing decoder/mitigation strategies leveraging SPPs? 6. Concrete worked example starting from SE hamiltonian for small model (planned as part of worked example).
+\end{enumerate}
+
+Plan related to point 2:
+\begin{itemize}
+    \item Highlight MPO/PEPO representation (maybe bring it forward) in section 3.
+    \item Really want to highlight the contribution of the multi-time Pauli twirl as general algorithm involving local tensor operations. Very numerically convenient and makes very few assumptions.
+    \item New proposition: Multi-time Pauli twirling a process tensor TN applies a fixed local superoperator (a Pauli twirl tensor) independently to each system leg; bond indices are untouched.
+    \item Proof based on linearity + twirl factorisation?
+    \item Algorithm box for this exact process.
+    \item Highlight application relevance: local tensor replacements are simple to do; complexity scales linearly in time steps; much of the correlation structure is left intact (no additional heavy machinery required).
+    \item Make lemma 4.6 (no bond dim increase) a corollary based on the new proposition. 
+    \item New corollary based on sampling efficiency?
+\end{itemize}
+% A “high-impact” result here usually has one of two flavors: either it gives you a genuinely new lever (a guarantee, bound, or algorithmic reduction that people can immediately reuse), or it turns the framework into an answer to a concrete open pain point in QEC (simulation/decoding/characterisation under correlated noise) rather than just a nicer language.
+
+% What that could look like, concretely, in your setting:
+
+% One class is an efficiency or learnability theorem that directly turns microscopic locality + randomized compiling into scalable simulation or inference guarantees. You already have the key structural fact that the multi-time twirl is a time-local superprocess and, in tensor-network terms, is literally “attach a local Pauli tensor on each physical leg, do not touch the environment bonds.” (That’s exactly Eq. (34) and the discussion right after it, and it’s what makes Lemma 4.6 almost tautological.)  If you elevate that from “nice diagrammatic equivalence” to a theorem with consequences, it becomes important, not cosmetic. For example: “For any process tensor MPO/PEPO of temporal bond dimension (D_t), the twirled SPP MPS/PEPS can be constructed by local maps in time (O(\text{poly}(D_t,4^n))) and has temporal bond dimension (\le D_t)” (you basically have this as Lemma 4.6 + construction).  The impact comes if you add a second step: an explicit, provably controlled truncation or contraction scheme exploiting causality to make *2D spatiotemporal* objects tractable in practice (where generic PEPS contraction is hard). You hint at this bottleneck already in Sec. 3.2.  A theorem that says “causal spatiotemporal PEPS from local SE dynamics admits a contraction/sampling algorithm with cost scaling in the *temporal* entanglement/correlation length, not system size” would be the kind of thing people cite even if they don’t care about SPP branding.
+
+% A second class is a “physics-to-QEC performance” theorem that links a microscopic knob to a QEC-relevant observable. Right now, your temporal story uses the transfer spectrum / gap / correlation length as the knob, and you demonstrate empirically that logical scaling degrades as (\xi) grows even at fixed marginals.  A high-impact upgrade is a bound of the form: “For any cycle-level SPP with transfer gap (\Delta) (or correlation length (\xi)), the logical failure rate under MWPM with a matched/unmatched decoder obeys (p_L(d,N_r) \le f(p_{\mathrm{marg}},\xi)\exp(-c, d_{\mathrm{eff}}(\xi)))” or a lower bound showing an unavoidable effective distance reduction with growing (\xi). Even a clean *scaling law* (with assumptions stated) that matches the numerics would be a big step up from “we plotted it.”
+
+% A third class is a characterisation/decoder-facing theorem: sample complexity or identifiability from syndromes. You already motivate that decoders naturally consume coarse-grained data and that mismatch explains some degradation.  A theorem like “an SPP of (effective) memory length (m) can be learned to total-variation error (\epsilon) from (O(\mathrm{poly}(4^n,D,\epsilon^{-1})\cdot m)) samples” (or from syndrome streams under mild observability assumptions) would be extremely attractive to both the tomography and decoding crowds. Even if you only prove it for the HMM-realizable subclass (your Prop. 5.3 sufficient conditions), that can still be “high impact,” because it turns Sec. 5 into a pipeline, not an analogy. 
+
+% On your question “is the tensor-network representation and twirling being equivalent to local tensor operations important?” Yes—if you frame it as the reason the whole program is computationally sane. Right now it reads as a convenient graphical calculus fact, but it’s actually your main complexity lever: twirling acts only on physical indices, leaves environment bonds invariant, and therefore does not inflate temporal bond dimension (Lemma 4.6) and lets you build the SPP MPS tensors by a purely local contraction with a fixed Pauli tensor (Eq. (36)–(37)).  In spatiotemporal settings, that “local-on-legs” property is even more valuable because it means you can inject twirling into whatever microscopic tensor network you have (local SE gates, QCA layers, PEPO, etc.) without changing the causal/bond skeleton—only the local tensors. If you make that a named proposition and then repeatedly use it (construction, bounds, algorithms, truncation), it stops being “formalism” and becomes the hinge of the paper.
+
+% Now, about your Section 7 notes (the storm-QCA / spatiotemporal model): the model idea is compelling, but the draft will need to make two things crystal clear for readers to buy it as more than a fancy toy.
+
+% First, what is genuinely “quantum” about the bath that survives as a distinctive classical spatiotemporal process after twirling? Your notes’ best hook is exactly this: a coherent QCA update on the bath plus repeated “classicalisation” via system twirling induces a probabilistic cellular automaton with a nonlinear kernel (p=\sin^2(k\theta)) depending on the number of excited neighbors. That is a sharp, memorable mechanism, and the fact that it comes from coherent accumulation is a good story.  (notes_qca_model.ipynb) But to make it convincing, you need a clean derivation statement: “Under assumptions A/B (bath initially diagonal; SE unitary controlled in bath computational basis; disjoint Pauli supports condition, etc.), the reduced twirled process is exactly equivalent to a 2-layer PCA/HMM with update rule (p=\sin^2(k\theta)).” Right now that mapping is asserted in the notes and the “proof of mapping” section is a stub. 
+
+% Second, why does this spatiotemporal structure matter for QEC beyond “it’s correlated”? You can sell it if you show at least one of these:
+
+% * it generates a tunable nonequilibrium transition / long correlation lengths in a very low-parameter way (your notes claim a phase transition controlled by (\theta)); 
+% * it produces qualitatively different decoder failure modes than simple Markov/HMM-in-time models (e.g., spatially propagating “error fronts” / percolation-like bursts that break standard iid assumptions);
+% * it provides a stress test where marginal rates are fixed but space-time correlation topology changes (analogous to what you did temporally in Sec. 6, but now in 2D spacetime).
+
+% If you can deliver “tunable phase transition in the latent bath ⇒ sharply changing logical scaling / effective distance,” that’s genuinely interesting and will make Section 7 feel like a flagship example rather than an appendix.
+
+% So my take: yes, the storm-QCA model is potentially compelling enough, but only if you (i) write the mapping as a theorem/proposition with explicit assumptions and (ii) present one or two quantitative diagnostics that are hard to get from simpler models (transfer-spectrum in time, spatial correlation length, cluster statistics, critical point estimate, etc.) and then tie those directly to QEC performance.
+
+% If you want a very practical target: write one “Section 7 main theorem” and one “Section 7 main figure.” The theorem is the exact QCA→PCA/HMM reduction under twirl (with the (\sin^2(k\theta)) kernel). The main figure shows a sharp change in correlation length / cluster size vs (\theta) and a corresponding sharp change in logical suppression exponent vs distance. That combo will read as “new mechanism + new QEC consequence,” which is the kind of thing reviewers remember.
+
+
 \section{Draft Introduction}
 Quantum error correction (QEC) provides the conceptual foundation for fault-tolerant quantum computation, yet its practical implementation hinges on how accurately physical noise processes are modelled at the circuit level. In most theoretical and numerical studies, noise is represented as stochastic, Markovian Pauli errors acting independently across space and time. These models have proven remarkably successful, enabling efficient classical simulation and yielding sharp threshold estimates for a wide range of codes. However, they obscure an important reality of near-term and intermediate-scale quantum devices: physical noise is neither strictly Markovian nor temporally uncorrelated.
 

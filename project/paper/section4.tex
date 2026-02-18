@@ -1,13 +1,4 @@
-% \Fidel{TODO:
-% \begin{itemize}
-%   \item Mention other papers that have looked at quantum combs and Pauli twirling?
-%   \item Make a comment that the multi-time Pauli twirl is just the regular Pauli twirl at each time step, so experimenters don't have to do anything extra.
-%   \item This section is quite general and not QEC-specific (see section 6 notes). The exact link to QEC will be elaborated in sections 6 and 7, but it might be worth adding a clarifying paragraph how the Pauli twirling we do here connects to RC for a QEC circuit, hence converting a general (correlated) circuit-level noise model to a (correlated) Pauli circuit-level model.
-%   \item Bond dimension bound based on environment dimension (4.2).
-%   \item Mapping between SPP as process tensor tensor network and as probability tensor network.
-%   \item Worked examples: (a) continue Heisenberg interaction example from previous section, (b) simple model that leads to non-Markovian SPP
-% \end{itemize}
-% }
+\Fidel{After some thinking and discussions, I'm planning to overhaul this section to better highlight the multi-time Pauli twirl procedure via efficient local tensor operations as a central contribution in it of itself. Content itself won't change much, just how it's presented and what's highlighted as an original contribution.}
 \section{Spatiotemporal Pauli processes}
 We now formally introduce \emph{spatiotemporal Pauli processes} (SPPs)---classical stochastic processes obtainable by applying the \emph{multi-time Pauli twirl} to a quantum process tensor. This construction maps any quantum, possibly non-Markovian, process onto a probability distribution over trajectories of Pauli operators. It removes all genuinely quantum temporal correlations while retaining classical correlations. We then develop complementary tensor network representations of SPPs: first in the twirled operator picture, and second as classical tensor networks whose amplitudes encode the joint Pauli trajectory probabilities. These constructions allow us to bound the inner bond dimensions of SPP tensor networks by the dimension of the environment's Liouville space. Together, these results justify SPPs as the natural, tensor-network-compatible description of correlated circuit-level noise, providing the technical foundation for the explicit noise models and QEC performance studies developed in later sections.
 
@@ -30,7 +21,7 @@ and let \(\Upsilon_{0:k} \in \mathcal{B}(\mathcal{H}_{\Upsilon_{0:k}})\) be the 
         \Bigg(\bigotimes_{j=0}^k P_j\otimes P_j\Bigg).
     \end{equation}
 \end{definition}
-Intuitively, \(\mathcal{T}_P^{(k)}\) independently twirls each time step’s input-output pair on \(\mathcal{H}_{\inp_j} \otimes \mathcal{H}_{\out_j}\), preserving the causal structure of the process tensor. In the language of higher-order quantum maps~\cite{tarantoHigherOrderQuantumOperations2025}, the multi-time Pauli twirl constitutes a time-local \emph{superprocess}. Operationally, it is realised by the standard randomised compiling protocol~\cite{figueroa-romeroOperationalMarkovianizationRandomized2024}; the random compilation of Pauli operators is applied at each circuit layer (time step) independently.
+Intuitively, \(\mathcal{T}_P^{(k)}\) independently twirls each time step's input-output pair on \(\mathcal{H}_{\inp_j} \otimes \mathcal{H}_{\out_j}\), preserving the causal structure of the process tensor. In the language of higher-order quantum maps~\cite{tarantoHigherOrderQuantumOperations2025}, the multi-time Pauli twirl constitutes a time-local \emph{superprocess}. Operationally, it is realised by the standard randomised compiling protocol~\cite{figueroa-romeroOperationalMarkovianizationRandomized2024}; the random compilation of Pauli operators is applied at each circuit layer (time step) independently.
 
 We now summarise the key properties of this mapping.
 \begin{proposition}[Properties]
