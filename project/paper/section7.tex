@@ -2,7 +2,7 @@
 \begin{itemize}
     \item Headline statement: induced PCA/HMM after twirl. We introduce a spatiotemporal QCA model. Starting with a QCA on a bath lattice (each bath qubit corresponds to a data or syndrome qubit), we show that under certain assumptions about disjoint Pauli emissions and starting from a classical state each cycle induced via twirling, the model maps to an efficiently simulable emergent PCA HMM. The effective update rule as a two-step probability flip \(p = \sin^2(k\theta)\) then emission and refresh flip (and single site classical flip or even coherent rotation?). This goes before 7.1.
     \item Begin 7.1. Start by presenting the microscopic QCA model. Keep it concise, diagrammatic aid.
-    \item Summarise the whole ``twirl \(\to\) classicalisation'' pipeline, reference lengthy derivation in appendix. Only summarise most relevant bits if we even need to (can just defer everything to appendix).
+    \item Summarise the whole ``twirl \(\to\) classicalisation'' pipeline, reference lengthy derivation in appendix. Only summarise most relevant bits if we even need to (can just defer everything to appendix)
     \item 7.2. Now summarise the PCA model as an efficiently simulable classical algorithm. Diagrammatic aid. Details, focusing on reproducibility (if people want to simulate it themselves).
     \item One panel figure, top panel is QCA pipeline, bottom panel is effective PCA.
     \item 7.3 studies statistical mechanical properties without any QEC application.
@@ -10,7 +10,7 @@
 \end{itemize}
 \clearpage
 \section{Quantum cellular automaton model}\label{sec:qcamodel}
-In this section, we introduce a spatiotemporal SPP model. We construct a microscopic two-dimensional coherent quantum cellular automaton (QCA) on a bath, locally coupled to system qubits, plus repeated `classicalisation' via system twirling which induces a probabilistic cellular automaton (PCA) with a nonlinear kernel \(p = \sin^2(k\theta)\) depending on the number of excited neighbours. The result is a physically derived spatiotemporal SPP, that remains efficient to simulate and sample, while exhibiting nontrivial correlation structure and statistical mechanical properties controlled by few parameters.
+In this section, we propose a spatiotemporal SPP model. We construct a microscopic two-dimensional coherent quantum cellular automaton (QCA) on a bath, locally coupled to system qubits, plus repeated `classicalisation' via system twirling which induces a probabilistic cellular automaton (PCA) with a nonlinear kernel \(p = \sin^2(k\theta)\) depending on the number of excited neighbours. The result is a physically derived spatiotemporal SPP, that remains efficient to simulate and sample, while exhibiting nontrivial correlation structure and statistical mechanical properties controlled by few parameters.
 
 \subsection{Notes}
 Notes:
@@ -41,17 +41,17 @@ We now specify the microscopic dynamics defining the quantum cellular automaton 
 
 The geometry and initial conditions are as follows. Let \(\{S_i\}\) be system qubits arranged on a finite 2D square lattice, intended to model a surface code patch, including data and syndrome qubits. To each \(S_i\), we associate a single environment qubit \(E_i\), such that the environment lattice inherits the system's adjacency structure. We bipartition the environment lattice into red and black sublattices \(E = E_\mathrm{red} \cup E_\mathrm{black}\), corresponding to a chequerboard pattern, such that each red environment qubit neighbours only black environment qubits and vice versa. Before any dynamics, we take the environment qubits to initialise as a classical mixture of \(Z\)-basis states, where \(\rho_{E_i}\) diagonal is in \(\{\ket{0}, \ket{1}\}\), and hence initially uncorrelated with the system.
 
-The entire dynamics are governed by three parameters. Two temporal parameters \((a, b)\) specify the local environment storm channel \(\mathcal{E}^E (a, b)\) as in \cref{sec:temporalstormmodel}. A third spatial parameter \(\theta\) controlling the QCA update on the environment, implemented via half-steps \(\mathcal{V}_{R\to B}^E(\theta)\) and \(\mathcal{V}_{B\to R}^E(\theta)\). Writing \(\mathcal{U}^{SE}\) for the system-environment unitary interaction, we define the joint single cycle CPTP map as the composition
+The entire dynamics are governed by three parameters. Two temporal parameters \((a, b)\) specify the local environment storm channel \(\mathcal{S}^E (a, b)\) as in \cref{sec:temporalstormmodel}. A third spatial parameter \(\theta\) controlling the QCA update on the environment, implemented via half-steps \(\mathcal{V}_{R\to B}^E(\theta)\) and \(\mathcal{V}_{B\to R}^E(\theta)\). Writing \(\mathcal{U}^{SE}\) for the system-environment unitary interaction, we define the joint single cycle CPTP map as the composition
 \begin{equation}
-    \Phi_{a, b, \theta} \coloneq \mathcal{U}^{SE} \circ \mathcal{V}_{B\to R}^E(\theta) \circ \mathcal{V}_{R\to B}^E(\theta) \circ \mathcal{E}^E (a, b).
+    \mathcal{N}_{a, b, \theta} \coloneq \mathcal{U}^{SE} \circ \mathcal{V}_{B\to R}^E(\theta) \circ \mathcal{V}_{R\to B}^E(\theta) \circ \mathcal{S}^E (a, b).
 \end{equation}
 We detail each component map below.
 \begin{enumerate}
-    \item \textbf{Environment storm channel}, \(\Phi^E(a, b)\)
+    \item \textbf{Environment storm channel}, \(\mathcal{S}^E(a, b)\)
     
     Each environment qubit undergoes an independent storm channel that flips each qubit from \(\ket{0}\) to \(\ket{1}\) with probability \(a\), and from \(\ket{1}\) to \(\ket{0}\) with probability \(b\). Concretely, this is the CPTP map
     \begin{equation}
-        \Phi^E(a, b)[\rho] = \sum_\alpha K_\alpha \rho K_\alpha^\dagger,
+        \mathcal{S}^{E_i}(a, b)[\rho_{E_i}] = \sum_\alpha K_\alpha \rho_{E_i} K_\alpha^\dagger,
     \end{equation}
     with Kraus operators,
     \begin{equation}
@@ -63,42 +63,67 @@ We detail each component map below.
 
     \item \textbf{QCA half-step (red \(\to\) black)}, \(\mathcal{V}_{R\to B}^E(\theta)\)
     
-    The QCA update on the environment is implemented as a two-layer controlled unitary circuit, with the red and black sublattices as alternating control and target layers. The rotations are along the \(X\) axis with angle \(\theta\). For the first half-step, define the unitary
+    The QCA update on the environment is implemented as a two-layer controlled unitary circuit, with the red and black sublattices as alternating controls and targets. Targets are rotated along the \(X\) axis with angle \(\theta\). For the first half-step, define the unitary
     \begin{equation}
-        V_{R}(\theta) = \prod_{i\in E_\mathrm{red}} \prod_{j\in N(i)}
+        U_{R}(\theta) = \prod_{i\in E_\mathrm{red}} \prod_{j\in N(i)}
         \left(
             \ketbra{0}{0}_{E_i} \otimes I_{E_j} + \ketbra{1}{1}_{E_i} \otimes e^{-i\theta X_{E_j}}
         \right).
     \end{equation}
     This is a product of commuting controlled \(X\) rotations with red qubits as the controls and black neighbours as targets. The corresponding channel is
     \begin{equation}
-        \mathcal{V}_{R\to B}^E(\theta)[\rho] = V_R(\theta) \rho V_R(\theta)^\dagger.
+        \mathcal{V}_{R\to B}^E(\theta)[\rho] = U_R(\theta) \rho U_R(\theta)^\dagger.
     \end{equation}
 
     \item \textbf{QCA half-step (black \(\to\) red)}, \(\mathcal{V}_{B\to R}^E(\theta)\)
     
     Similarly, define the unitary for the second layer with black qubits as controls and red neighbours as targets as
     \begin{equation}
-        V_{B}(\theta) = \prod_{i\in E_\mathrm{black}} \prod_{j\in N(i)}
+        U_{B}(\theta) = \prod_{i\in E_\mathrm{black}} \prod_{j\in N(i)}
         \left(
             \ketbra{0}{0}_{E_i} \otimes I_{E_j} + \ketbra{1}{1}_{E_i} \otimes e^{-i\theta X_{E_j}}
         \right),
     \end{equation}
     and the corresponding channel is
     \begin{equation}
-        \mathcal{V}_{B\to R}^E(\theta)[\rho] = V_B(\theta) \rho V_B(\theta)^\dagger.
+        \mathcal{V}_{B\to R}^E(\theta)[\rho] = U_B(\theta) \rho U_B(\theta)^\dagger.
     \end{equation}
     Together, these two layers implement a full QCA update on the environment update.
 
     \item \textbf{Environment-system unitary}, \(\mathcal{U}^{SE}\)
     
-    At each site \(i\), the environment qubit \(E_i\) couples locally to the system qubit \(S_i\) via a joint unitary \(U_{SE}\), defined as
-    \begin{equation}
-        U_{SE} = \sum_{k=0}^1 \ketbra{k}{k}_{E_i} \otimes Q_k.
+    At each site \(i\), the environment qubit \(E_i\) couples locally to the system qubit \(S_i\) via a controlled unitary interaction. We define
+    \begin{equation}\label{eq:qca-se-unitary}
+        U_{SE}^{(i)} = \sum_{k=0}^1 \ketbra{k}{k}_{E_i} \otimes V_k, \quad \mathcal{U}^{SE}[\rho] = U_{SE} \rho U_{SE}^\dagger,
     \end{equation}
-    Need \(Q_k\) to be a unitary on the system, satisfying \(Q_k Q_k^\dagger = I \forall k\) and \(\Tr(Q_k Q_l) = 0 \forall k \ne l\).
-    % where \(Q_k\) is generally a convex combination of Paulis satisfying \(\alpha_P \ge 0, \sum_P \alpha_P = 1\).
+    where \(U_{SE}\) denotes the product over sites. The key structural assumption is that the conditional unitaries \(\{V_k\}\) are orthogonal under the Hilbert-Schmidt inner product, 
+    \begin{equation}\label{eq:se-unitary-condition}
+        V_k V_k^\dagger = I \forall k, \quad \Tr(V_k V_l) = 0 \ \forall k \ne l,
+    \end{equation}
+    so that Pauli twirling on the system induces an effective dephasing channel on the environment in the \(Z\) basis.
+
+    In this work, we specialise to a minimal family of unitaries
+    \begin{equation}
+        V_0 = I, \quad V_1 = \vec{n} \cdot \vec{\sigma} = n_X X + n_Y Y + n_Z Z, \quad \|\vec{n}\|^2 = 1,
+    \end{equation}
+    with \(\vec{n} \in \mathbb{R}^3\), satisfying \cref{eq:se-unitary-condition}. The coefficients \(n_X^2, n_Y^2, n_Z^2\) sets the relative bias of the Pauli operator emissions induced by the Pauli twirling on the system.
 \end{enumerate}
+The map \(\mathcal{N}_{a, b, \theta}\) defines the local tensor of the process tensor tensor network describing the full spatiotemporal dynamics. To obtain the local tensor of process tensor tensor network under the mutlti-time Pauli twirl, we apply the local system Pauli twirl supermap \(\mathcal{T}_P^S\) on \(\mathcal{N}_{a, b, \theta}\) on the system subspace only. We define the effective twirled joint map as
+\begin{equation}
+    \mathcal{M}_{a, b, \theta} \coloneq \mathcal{T}_P^S[\mathcal{N}_{a, b, \theta}].
+\end{equation}
+Since the storm channel \(\mathcal{S}^E\) and the QCA operators \(\mathcal{V}_{R\to B}^E\), \(\mathcal{V}_{B\to R}^E\) act only on \(E\), they commute with the system-only Pauli conjugation. Consequently, the system twirl may be ``pushed through'' the environment-only maps, so that it suffices to apply twirl the twirl to system-environment interaction \(\mathcal{U}^{SE}\) alone. Defining the twirled interaction as \(\widetilde{\mathcal{U}}^{SE} \coloneq \mathcal{T}_P^S[\mathcal{U}^{SE}]\), we write
+\begin{equation}
+    \mathcal{M}_{a, b, \theta} = \widetilde{\mathcal{U}}^{SE} \circ \mathcal{V}_{B\to R}^E(\theta) \circ \mathcal{V}_{R\to B}^E(\theta) \circ \mathcal{S}^E (a, b).
+\end{equation}
+The central mechanism of this model is that, for a system-environment interaction satisfying \cref{eq:qca-se-unitary,eq:se-unitary-condition}, the twirled interaction induces an effective \(Z\)-basis dephasing of the environment in each cycle. More precisely, at each site \(i\) the reduced environment update satisfies
+\begin{equation}
+    \Tr_{S_i}(\widetilde{\mathcal{U}}^{SE}[\rho_{S_iE_i}]) = \sum_k \ketbra{k}{k}_{E_i} \Tr_{S_i}[\rho_{S_iE_i}] \ketbra{k}{k}_{E_i}.
+\end{equation}
+As a consequence, although the coherent QCA half-steps can create superposition and coherence in the environment, the environment is re-classicalised at the end of each cycle. This effective map, together with the choice of QCA updates as controlled rotations about the \(X\) axis, allows us to make the following three statements about the effective dynamics. First, the coherent QCA update induces a nonlinear kernel \(p = \sin^2(k\theta)\), giving the probability that a target side flips as a function of the number of \(k\) excited neighbours in the opposite sublattice. Second, the twirled system-environment interaction re-classicalises the environment via the effective \(Z\)-dephasing as described above. Third, conditional on the environment configuration, the induced system noise is a Pauli channel whose relative weights are set by the coefficients \(n_X^2, n_Y^2, n_Z^2\).
+
+We defer the detailed proof of each of these statements in \Fidel{Appendix~X}. We now summarise the resulting PCA HMM dynamics.
+
 
 \subsection{Probabilistic cellular automaton}\label{sec:pca-details}
 
