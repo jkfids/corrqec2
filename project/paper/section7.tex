@@ -1,3 +1,27 @@
+% \subsection*{Notes}
+% Notes:
+% \begin{itemize}
+%     \item This section introduces the details of the microscopic system-environment dynamics making up the QCA model
+%     \item The microscopic quantum dynamics maps to a probabilistic cellular automaton (PCA) HMM that it is very tractable to simulate, but only under the condition of the disjoint Pauli supports for \(Q_k\), and the environment initiates as a classical mixture of the Z-basis states.
+%     \item First set up the system. We have a 2D square/grid lattice of system qubits \(S_i\) (i.e., surface code data and ancilla qubits), where each qubit is assigned its own environment qubit \(E_i\). 
+%     \item Before any dynamics start, the environment qubits start as diagonal in the Z basis, i.e., a mixture of \(\ketbra{0}{0}\) and \(\ketbra{1}{1}\).
+%     \item The joint system-environment then undergoes the joint CPTP map \(\mathcal{M}_{\theta,a,b}\) which contains the quantum cellular automaton on the environment
+%     \item QCA only acts on the environment, the only time the system enters the picture is under the joint SE unitary
+%     \item Maybe have a brief sentence giving a high level overview of the whole joint CPTP map? Or would it better to just jump straight into the numbered list?
+%     \item Notation is currently very rough, inconsistent, and a mess. Feel free to modify/improve as much as possible.
+%     \item Plan is to have an overview diagram as well as a visual aid to the dynamics (parallel to the list), so will probably reference it once before or after the list.
+%     \item After the numbered list, talk about how under the condition of having the disjoint Pauli supports, and the environment starting as Z-basis states, it maps onto simulable PCA HMM dynamics. We refer to the proof in the appendix, then move onto pseudo-code or something (haven't thought of the format yet) describing the PCA HMM rules.
+%     \item We introduce the details of the microscopic system-environment dynamics underlying the QCA model.
+% \end{itemize}
+
+% \item \textbf{System Pauli twirl}, \(\mathcal{T}_P^S\)
+    % Apply the Pauli twirl supermap on \(U_{SE}\) on the system subspace only,
+    % \begin{equation}
+    %     \sum_P (I\otimes P)U_{SE}(I\otimes P)(\rho_E \otimes \rho_S)(I\otimes P)U_{SE}^\dagger (I\otimes P).
+    % \end{equation}
+
+% \Fidel{Maybe I want to add a step 0 which says the environment is initially a classical mixture of the Z eigenbasis states? This is only necessary to assume at the very first cycle, since thanks to the system Pauli twirl + other conditions relating to the system-environment unitary, the bath is effectively measured in the Z basis.}
+
 \clearpage
 \begin{itemize}
     \item Headline statement: induced PCA/HMM after twirl. We introduce a spatiotemporal QCA model. Starting with a QCA on a bath lattice (each bath qubit corresponds to a data or syndrome qubit), we show that under certain assumptions about disjoint Pauli emissions and starting from a classical state each cycle induced via twirling, the model maps to an efficiently simulable emergent PCA HMM. The effective update rule as a two-step probability flip \(p = \sin^2(k\theta)\) then emission and refresh flip (and single site classical flip or even coherent rotation?). This goes before 7.1.
@@ -12,38 +36,24 @@
 \section{Quantum cellular automaton model}\label{sec:qcamodel}
 In this section, we propose a spatiotemporal SPP model. We construct a microscopic two-dimensional coherent quantum cellular automaton (QCA) on a bath, locally coupled to system qubits, plus repeated `classicalisation' via system twirling which induces a probabilistic cellular automaton (PCA) with a nonlinear kernel \(p = \sin^2(k\theta)\) depending on the number of excited neighbours. The result is a physically derived spatiotemporal SPP, that remains efficient to simulate and sample, while exhibiting nontrivial correlation structure and statistical mechanical properties controlled by few parameters.
 
-\subsection{Notes}
-Notes:
-\begin{itemize}
-    \item This section introduces the details of the microscopic system-environment dynamics making up the QCA model
-    \item The microscopic quantum dynamics maps to a probabilistic cellular automaton (PCA) HMM that it is very tractable to simulate, but only under the condition of the disjoint Pauli supports for \(Q_k\), and the environment initiates as a classical mixture of the Z-basis states.
-    \item First set up the system. We have a 2D square/grid lattice of system qubits \(S_i\) (i.e., surface code data and ancilla qubits), where each qubit is assigned its own environment qubit \(E_i\). 
-    \item Before any dynamics start, the environment qubits start as diagonal in the Z basis, i.e., a mixture of \(\ketbra{0}{0}\) and \(\ketbra{1}{1}\).
-    \item The joint system-environment then undergoes the joint CPTP map \(\mathcal{M}_{\theta,a,b}\) which contains the quantum cellular automaton on the environment
-    \item QCA only acts on the environment, the only time the system enters the picture is under the joint SE unitary
-    \item Maybe have a brief sentence giving a high level overview of the whole joint CPTP map? Or would it better to just jump straight into the numbered list?
-    \item Notation is currently very rough, inconsistent, and a mess. Feel free to modify/improve as much as possible.
-    \item Plan is to have an overview diagram as well as a visual aid to the dynamics (parallel to the list), so will probably reference it once before or after the list.
-    \item After the numbered list, talk about how under the condition of having the disjoint Pauli supports, and the environment starting as Z-basis states, it maps onto simulable PCA HMM dynamics. We refer to the proof in the appendix, then move onto pseudo-code or something (haven't thought of the format yet) describing the PCA HMM rules.
-    \item We introduce the details of the microscopic system-environment dynamics underlying the QCA model.
-\end{itemize}
-
-% \item \textbf{System Pauli twirl}, \(\mathcal{T}_P^S\)
-    % Apply the Pauli twirl supermap on \(U_{SE}\) on the system subspace only,
-    % \begin{equation}
-    %     \sum_P (I\otimes P)U_{SE}(I\otimes P)(\rho_E \otimes \rho_S)(I\otimes P)U_{SE}^\dagger (I\otimes P).
-    % \end{equation}
-
-% \Fidel{Maybe I want to add a step 0 which says the environment is initially a classical mixture of the Z eigenbasis states? This is only necessary to assume at the very first cycle, since thanks to the system Pauli twirl + other conditions relating to the system-environment unitary, the bath is effectively measured in the Z basis.}
-
 \subsection{Quantum cellular automaton}\label{sec:qca-details}
 We now specify the microscopic dynamics defining the quantum cellular automaton (QCA) noise model. The joint evolution is constructed by composing several maps. First a local ``storm'' channel on the environment, in direct analogy with temporal storm model in \cref{sec:temporalstormmodel}; second, a two-layer coherent QCA update on the environment lattice; and third, a local system-environment interaction. For each cycle, the system-environment dynamics are twirled on the system degrees of freedom, corresponding to multi-time Pauli twirl mapping general dynamics to an SPP. Under the conditions stated later in this section, the system twirl induces an effective dephasing channel on the environment in each cycle. This re-classicalisation is the key mechanism that allows the reduced dynamics to be described exactly as an effective probabilistic cellular automaton (PCA) HMM.
 
-The geometry and initial conditions are as follows. Let \(\{S_i\}\) be system qubits arranged on a finite 2D square lattice, intended to model a surface code patch, including data and syndrome qubits. To each \(S_i\), we associate a single environment qubit \(E_i\), such that the environment lattice inherits the system's adjacency structure. We bipartition the environment lattice into red and black sublattices \(E = E_\mathrm{red} \cup E_\mathrm{black}\), corresponding to a chequerboard pattern, such that each red environment qubit neighbours only black environment qubits and vice versa. Before any dynamics, we take the environment qubits to initialise as a classical mixture of \(Z\)-basis states, where \(\rho_{E_i}\) diagonal is in \(\{\ket{0}, \ket{1}\}\), and hence initially uncorrelated with the system.
-
-The entire dynamics are governed by three parameters. Two temporal parameters \((a, b)\) specify the local environment storm channel \(\mathcal{S}^E (a, b)\) as in \cref{sec:temporalstormmodel}. A third spatial parameter \(\theta\) controlling the QCA update on the environment, implemented via half-steps \(\mathcal{V}_{R\to B}^E(\theta)\) and \(\mathcal{V}_{B\to R}^E(\theta)\). Writing \(\mathcal{U}^{SE}\) for the system-environment unitary interaction, we define the joint single cycle CPTP map as the composition
+The geometry and initial conditions are as follows. Let \(V\) denote the set of sites of a 2D square lattice \(V\), and label sites by \(i\in V\). At each site, we associate a system qubit \(S_i\), corresponding to data and ancilla qubits on a surface code patch, and an environment qubit \(E_i\). We fix a chequerboard bipartition of the lattice,
 \begin{equation}
-    \mathcal{N}_{a, b, \theta} \coloneq \mathcal{U}^{SE} \circ \mathcal{V}_{B\to R}^E(\theta) \circ \mathcal{V}_{R\to B}^E(\theta) \circ \mathcal{S}^E (a, b).
+    V = V_\mathrm{red} \cup V_\mathrm{black}, \quad V_\mathrm{red} \cap V_\mathrm{black} = \emptyset,
+\end{equation}
+so that each site has neighbours in the opposite sublattice as 
+\begin{equation}
+    N(i) \subset V_\mathrm{black} \forall i\in V_\mathrm{red}, \quad N(i) \subset V_\mathrm{red} \forall i\in V_\mathrm{black},
+\end{equation}
+writing \(N(i) \in V\) for the set of nearest neighbours of \(i\).
+
+Before any dynamics, we take the environment qubits to initialise as a classical mixture of \(Z\)-basis states, where \(\rho^{E_i}\) diagonal is in \(\{\ket{0}, \ket{1}\}\), and hence initially uncorrelated with the system.
+
+The entire dynamics are governed by three parameters. Two temporal parameters \((a, b)\) specify the local environment storm channel \(\mathcal{S}^E (a, b)\) as in \cref{sec:temporalstormmodel}. A third spatial parameter \(\theta\) controlling the QCA update on the environment, implemented via half-steps \(\mathcal{Q}_{R\to B}^E(\theta)\) and \(\mathcal{Q}_{B\to R}^E(\theta)\). Writing \(\mathcal{U}^{SE}\) for the system-environment unitary interaction, we define the joint single cycle CPTP map as the composition
+\begin{equation}
+    \mathcal{M}_{a, b, \theta} \coloneq \mathcal{U}^{SE} \circ \mathcal{Q}_{B\to R}^E(\theta) \circ \mathcal{Q}_{R\to B}^E(\theta) \circ \mathcal{S}^E (a, b).
 \end{equation}
 We detail each component map below.
 \begin{enumerate}
@@ -51,52 +61,53 @@ We detail each component map below.
     
     Each environment qubit undergoes an independent storm channel that flips each qubit from \(\ket{0}\) to \(\ket{1}\) with probability \(a\), and from \(\ket{1}\) to \(\ket{0}\) with probability \(b\). Concretely, this is the CPTP map
     \begin{equation}
-        \mathcal{S}^{E_i}(a, b)[\rho_{E_i}] = \sum_\alpha K_\alpha \rho_{E_i} K_\alpha^\dagger,
+        \mathcal{S}^{(i)}(a, b)[\rho] = \sum_k L_k \rho L_k^\dagger,
     \end{equation}
     with Kraus operators,
     \begin{equation}
-            K_0 = \sqrt{a}\ketbra{1}{0}, 
-            \quad K_1 = \sqrt{1-a}\ketbra{0}{0}, 
-            \quad K_2 = \sqrt{b}\ketbra{0}{1}, 
-            \quad K_3 = \sqrt{1-b}\ketbra{1}{1}.
+            L_0 = \sqrt{a}\ketbra{1}{0}, 
+            \quad L_1 = \sqrt{1-a}\ketbra{0}{0}, 
+            \quad L_2 = \sqrt{b}\ketbra{0}{1}, 
+            \quad L_3 = \sqrt{1-b}\ketbra{1}{1}.
     \end{equation}
+    The global channel is the product over sites, \(\mathcal{S}^E(a, b) = \bigotimes_{i\in V} \mathcal{S}^{(i)}(a, b)\).
 
-    \item \textbf{QCA half-step (red \(\to\) black)}, \(\mathcal{V}_{R\to B}^E(\theta)\)
+    \item \textbf{QCA half-step (red \(\to\) black)}, \(\mathcal{Q}_{R\to B}^E(\theta)\)
     
-    The QCA update on the environment is implemented as a two-layer controlled unitary circuit, with the red and black sublattices as alternating controls and targets. Targets are rotated along the \(X\) axis with angle \(\theta\). For the first half-step, define the unitary
+    The QCA update on the environment is implemented as a two-layer controlled unitary circuit, with the red and black sublattices as alternating controls and targets. Targets are rotated along the \(X\)-axis with angle \(\theta\). For the first half-step, for each red site \(i \in V_\mathrm{red}\) and its and black neighbours \(j \in N(i)\subset V_\mathrm{black}\), we define the unitary
     \begin{equation}
-        U_{R}(\theta) = \prod_{i\in E_\mathrm{red}} \prod_{j\in N(i)}
+        U_{R\to B}(\theta) = \prod_{i\in V_\mathrm{red}} \prod_{j\in N(i)}
         \left(
-            \ketbra{0}{0}_{E_i} \otimes I_{E_j} + \ketbra{1}{1}_{E_i} \otimes e^{-i\theta X_{E_j}}
+            \ketbra{0}{0}^{E_i} \otimes I^{E_j} + \ketbra{1}{1}^{E_i} \otimes e^{-i\theta X^{E_j}}
         \right).
     \end{equation}
     This is a product of commuting controlled \(X\) rotations with red qubits as the controls and black neighbours as targets. The corresponding channel is
     \begin{equation}
-        \mathcal{V}_{R\to B}^E(\theta)[\rho] = U_R(\theta) \rho U_R(\theta)^\dagger.
+        \mathcal{Q}_{R\to B}^E(\theta)[\rho] = U_{R\to B}(\theta) \rho U_{R\to B}(\theta)^\dagger.
     \end{equation}
 
-    \item \textbf{QCA half-step (black \(\to\) red)}, \(\mathcal{V}_{B\to R}^E(\theta)\)
+    \item \textbf{QCA half-step (black \(\to\) red)}, \(\mathcal{Q}_{B\to R}^E(\theta)\)
     
     Similarly, define the unitary for the second layer with black qubits as controls and red neighbours as targets as
     \begin{equation}
-        U_{B}(\theta) = \prod_{i\in E_\mathrm{black}} \prod_{j\in N(i)}
+        U_{B\to R}(\theta) = \prod_{i\in V_\mathrm{black}} \prod_{j\in N(i)}
         \left(
-            \ketbra{0}{0}_{E_i} \otimes I_{E_j} + \ketbra{1}{1}_{E_i} \otimes e^{-i\theta X_{E_j}}
+            \ketbra{0}{0}^{E_i} \otimes I^{E_j} + \ketbra{1}{1}^{E_i} \otimes e^{-i\theta X^{E_j}}
         \right),
     \end{equation}
     and the corresponding channel is
     \begin{equation}
-        \mathcal{V}_{B\to R}^E(\theta)[\rho] = U_B(\theta) \rho U_B(\theta)^\dagger.
+        \mathcal{Q}_{B\to R}^E(\theta)[\rho] = U_{B\to R}(\theta) \rho U_{B\to R}(\theta)^\dagger.
     \end{equation}
-    Together, these two layers implement a full QCA update on the environment update.
+    Together, these two layers implement a full QCA update on the environment.
 
     \item \textbf{Environment-system unitary}, \(\mathcal{U}^{SE}\)
     
     At each site \(i\), the environment qubit \(E_i\) couples locally to the system qubit \(S_i\) via a controlled unitary interaction. We define
     \begin{equation}\label{eq:qca-se-unitary}
-        U_{SE}^{(i)} = \sum_{k=0}^1 \ketbra{k}{k}_{E_i} \otimes V_k, \quad \mathcal{U}^{SE}[\rho] = U_{SE} \rho U_{SE}^\dagger,
+        U_{SE}^{(i)} = \sum_{k=0}^1 \ketbra{k}{k}^{E_i} \otimes V_k^{S_i}, \quad \mathcal{U}^{SE}[\rho] = U_{SE} \rho U_{SE}^\dagger,
     \end{equation}
-    where \(U_{SE}\) denotes the product over sites. The key structural assumption is that the conditional unitaries \(\{V_k\}\) are orthogonal under the Hilbert-Schmidt inner product, 
+    where \(U_{SE} = \bigotimes_{i \in V} U_{SE}^{(i)}\). The key structural assumption is that the conditional unitaries \(\{V_k\}\) are orthogonal under the Hilbert-Schmidt inner product, 
     \begin{equation}\label{eq:se-unitary-condition}
         V_k V_k^\dagger = I \forall k, \quad \Tr(V_k V_l) = 0 \ \forall k \ne l,
     \end{equation}
@@ -106,26 +117,93 @@ We detail each component map below.
     \begin{equation}
         V_0 = I, \quad V_1 = \vec{n} \cdot \vec{\sigma} = n_X X + n_Y Y + n_Z Z, \quad \|\vec{n}\|^2 = 1,
     \end{equation}
-    with \(\vec{n} \in \mathbb{R}^3\), satisfying \cref{eq:se-unitary-condition}. The coefficients \(n_X^2, n_Y^2, n_Z^2\) sets the relative bias of the Pauli operator emissions induced by the Pauli twirling on the system.
+    with \(\vec{n} \in \mathbb{R}^3\), satisfying \cref{eq:se-unitary-condition}. The coefficients \(n_X^2, n_Y^2, n_Z^2\) sets the relative probabilities of Pauli emissions induced by the Pauli twirling on the system.
 \end{enumerate}
-The map \(\mathcal{N}_{a, b, \theta}\) defines the local tensor of the process tensor tensor network describing the full spatiotemporal dynamics. To obtain the local tensor of process tensor tensor network under the mutlti-time Pauli twirl, we apply the local system Pauli twirl supermap \(\mathcal{T}_P^S\) on \(\mathcal{N}_{a, b, \theta}\) on the system subspace only. We define the effective twirled joint map as
+The map \(\mathcal{M}_{a, b, \theta}\) defines the local tensor of the process tensor tensor network describing the full spatiotemporal dynamics. To obtain the local tensor of process tensor tensor network under the mutlti-time Pauli twirl, we apply the local system Pauli twirl supermap \(\mathcal{T}_P^S\) on \(\mathcal{M}_{a, b, \theta}\) on the system subspace only. We define the effective twirled joint map as
 \begin{equation}
-    \mathcal{M}_{a, b, \theta} \coloneq \mathcal{T}_P^S[\mathcal{N}_{a, b, \theta}].
+    \widetilde{\mathcal{M}}_{a, b, \theta} \coloneq \mathcal{T}_P^S[\mathcal{M}_{a, b, \theta}].
 \end{equation}
-Since the storm channel \(\mathcal{S}^E\) and the QCA operators \(\mathcal{V}_{R\to B}^E\), \(\mathcal{V}_{B\to R}^E\) act only on \(E\), they commute with the system-only Pauli conjugation. Consequently, the system twirl may be ``pushed through'' the environment-only maps, so that it suffices to apply twirl the twirl to system-environment interaction \(\mathcal{U}^{SE}\) alone. Defining the twirled interaction as \(\widetilde{\mathcal{U}}^{SE} \coloneq \mathcal{T}_P^S[\mathcal{U}^{SE}]\), we write
+Since the storm channel \(\mathcal{S}^E\) and the QCA operators \(\mathcal{Q}_{R\to B}^E\), \(\mathcal{Q}_{B\to R}^E\) act only on \(E\), they commute with the system-only Pauli conjugation. Consequently, the system twirl may be ``pushed through'' the environment-only maps, so that it suffices to apply twirl the twirl to system-environment interaction \(\mathcal{U}^{SE}\) alone. Defining the twirled interaction as \(\widetilde{\mathcal{U}}^{SE} \coloneq \mathcal{T}_P^S[\mathcal{U}^{SE}]\), we write
 \begin{equation}
-    \mathcal{M}_{a, b, \theta} = \widetilde{\mathcal{U}}^{SE} \circ \mathcal{V}_{B\to R}^E(\theta) \circ \mathcal{V}_{R\to B}^E(\theta) \circ \mathcal{S}^E (a, b).
+    \widetilde{\mathcal{M}}_{a, b, \theta} = \widetilde{\mathcal{U}}^{SE} \circ \mathcal{Q}_{B\to R}^E(\theta) \circ \mathcal{Q}_{R\to B}^E(\theta) \circ \mathcal{S}^E (a, b).
 \end{equation}
 The central mechanism of this model is that, for a system-environment interaction satisfying \cref{eq:qca-se-unitary,eq:se-unitary-condition}, the twirled interaction induces an effective \(Z\)-basis dephasing of the environment in each cycle. More precisely, at each site \(i\) the reduced environment update satisfies
 \begin{equation}
-    \Tr_{S_i}(\widetilde{\mathcal{U}}^{SE}[\rho_{S_iE_i}]) = \sum_k \ketbra{k}{k}_{E_i} \Tr_{S_i}[\rho_{S_iE_i}] \ketbra{k}{k}_{E_i}.
+    \Tr_{S_i}(\widetilde{\mathcal{U}}^{SE}[\rho_{S_iE_i}]) = \sum_k \ketbra{k}{k}^{E_i} \Tr_{S_i}[\rho_{S_iE_i}] \ketbra{k}{k}^{E_i}.
 \end{equation}
-As a consequence, although the coherent QCA half-steps can create superposition and coherence in the environment, the environment is re-classicalised at the end of each cycle. This effective map, together with the choice of QCA updates as controlled rotations about the \(X\) axis, allows us to make the following three statements about the effective dynamics. First, the coherent QCA update induces a nonlinear kernel \(p = \sin^2(k\theta)\), giving the probability that a target side flips as a function of the number of \(k\) excited neighbours in the opposite sublattice. Second, the twirled system-environment interaction re-classicalises the environment via the effective \(Z\)-dephasing as described above. Third, conditional on the environment configuration, the induced system noise is a Pauli channel whose relative weights are set by the coefficients \(n_X^2, n_Y^2, n_Z^2\).
+As a consequence, although the coherent QCA half-steps can create superposition and coherence in the environment, the environment is re-classicalised at the end of each cycle. This effective map, together with the choice of QCA updates as controlled rotations about the \(X\)-axis, allows us to make the following three statements about the effective dynamics. First, the coherent QCA update induces a nonlinear kernel \(p = \sin^2(k\theta)\), giving the probability that a target side flips as a function of the number of \(k\) excited neighbours in the opposite sublattice. Second, the twirled system-environment interaction re-classicalises the environment via the effective \(Z\)-dephasing as described above. Third, conditional on the environment configuration, the induced system noise is a Pauli channel whose relative weights are set by the coefficients \(n_X^2, n_Y^2, n_Z^2\).
 
 We defer the detailed proof of each of these statements in \Fidel{Appendix~X}. We now summarise the resulting PCA HMM dynamics.
 
-
 \subsection{Probabilistic cellular automaton}\label{sec:pca-details}
+We now summarise the PCA HMM dynamics. Let \(s_{t}(i)\) denote the state of environment site \(i\) at time \(t\). The system Pauli emission pattern during cycle \(t\) is denoted by \(x_t(i)\), and emissions are conditioned on the updated environment configuration \(s_{t+1}(i)\) at the end of the cycle. The PCA HMM dynamics are as follows.
+
+\begin{enumerate}
+    \item[0.] \textbf{Initialisation}: Choose an initial distribution $\pi_0$ over configurations $s_0\in\{0,1\}^{|V|}$ and sample $s_{0}\sim\pi_0$.
+
+    \item \textbf{Storm update}: Given \(s_{t}\), generate the intermediate configuration \(s_{t'}\) by updating each site \(i\in V\) independently as
+    \begin{itemize}
+        \item if \(s_{t}(i) = 0\), set \(s_{t'}(i) \gets 1\) with probability \(a\);
+        \item if \(s_{t}(i) = 1\), set \(s_{t'}(i) \gets 0\) with probability \(b\);
+        \item else set \(s_{t'}(i) \gets s_{t}(i)\).
+    \end{itemize}
+    \item \textbf{PCA half-step (black)}: Generate the next intermediate state \(s_{t''}\) by updating each black site \(i\in V_\mathrm{black}\), conditioned on the red configuration as
+    \begin{itemize}
+        \item for each \(i \in V_\mathrm{black}\), compute the number of excited red neighbours \(k(i) = \sum_{j \in N(i)} s_{t'}(j)\);
+        \item set \(s_{t''}(i) \gets s_{t'}(i) \oplus 1\) with probability \(\sin^2(k(i)\theta)\), else set \(s_{t''}(i) \gets s_{t'}(i)\);
+        \item for each \(i \in V_\mathrm{red}\), set \(s_{t''}(i) \gets s_{t'}(i)\).
+    \end{itemize}
+    \item \textbf{PCA half-step (red)}: Complete the PCA step to generate \(s_{t+1}\) as
+    \begin{itemize}
+        \item for each \(i \in V_\mathrm{red}\), compute the number of excited black neighbours \(k(i) = \sum_{j \in N(i)} s_{t''}(j)\);
+        \item set \(s_{t+1}(i) \gets s_{t''}(i) \oplus 1\) with probability \(\sin^2(k(i)\theta)\), else set \(s_{t+1}(i) \gets s_{t''}(i)\);
+        \item for each \(i \in V_\mathrm{black}\), set \(s_{t+1}(i) \gets s_{t''}(i)\).
+    \end{itemize}
+    \item \textbf{Pauli emission}: For each site \(i\in V\), sample the system Pauli emissions \(x_t\) as
+    \begin{itemize}
+        \item if \(s_{t+1}(i) = 0\), sample \(x_t(i)=I\);
+        \item if \(s_{t+1}(i) = 1\), sample \(x_t(i) \in \{X, Y, Z\}\) with probabilities \(n_X^2, n_Y^2, n_Z^2\), respectively.
+    \end{itemize}
+    The resulting Pauli string \(x_t = \{x_t(i)\}_{i\in V}\) is the noise induced on the system during cycle \(t\).
+    \item \textbf{Loop}: Increment \(t\), and repeat steps 1-4 for as many cycles required.
+\end{enumerate}
+
+% \begin{enumerate}
+%     \item[0.] Before any dynamics, choose an initial distribution \(\pi_0\) over configurations \(s_0 \in \{0, 1\}^{|V|}\), and sample an initial configuration \(s_{0,0}\) from \(\pi_0\).
+%     \item For each site \(i\), update each \(s_{t,0}(i)\) to \(s_{t,1}(i)\) by flipping \(0\to1\) with probability \(a\) and \(1\to0\) with probability \(b\),
+%     \begin{equation}
+%         \Pr(s_{t,1}(i) = 1 | s_{t,0}(i) = 0) = a, \quad \Pr(s_{t,1}(i) = 0 | s_{t,0}(i) = 1) = b.
+%     \end{equation}
+%     \item For each black site \(i\in V_\mathrm{black}\), count the number of excited red neighbours \(k(i) = \sum_{j \in N(i)} s_{t,1}(j)\), then update \(s_{t,1}(i)\) to \(s_{t,2}(i)\) with probabilities
+%     \begin{equation}
+%         \begin{split}
+%             \Pr(s_{t,2}(i) = s_{t,1}(i) \oplus 1 | s_{t,1}) = \sin^2(k(i)\theta), \\
+%             \Pr(s_{t,2}(i) = s_{t,1}(i) | s_{t,1}) = 1 - \sin^2(k(i)\theta).
+%         \end{split}
+%     \end{equation}
+%     \item Then, for each red site \(i\in V_\mathrm{red}\), count the number of excited black neighbours \(k(i) = \sum_{j \in N(i)} s_{t,2}(j)\), then update \(s_{t,2}(i)\) to \(s_{t,3}(i)\) with probabilities
+%     \begin{equation}
+%         \begin{split}
+%             \Pr(s_{t,3}(i) = s_{t,2}(i) \oplus 1 | s_{t,2}) = \sin^2(k(i)\theta), \\
+%             \Pr(s_{t,3}(i) = s_{t,2}(i) | s_{t,2}) = 1 - \sin^2(k(i)\theta).
+%         \end{split}
+%     \end{equation}
+
+%     \item Independently for each site \(i\), sample \(x_t(i)\) conditioned on the current environment configuration 
+% \end{enumerate}
+
+% \begin{itemize}
+%     \item For each site \(i\), independently update each $s_{t,0}(i)$ to $s_{t,1}(i)$ by flipping $0\to1$ with probability $a$ and $1\to0$ with probability $b$. 
+%     \item Let \(k_m(n)\) denote the number of excited neighbours \(m\in N(n)\) of the red sublattice for black site \(n\). Flip each black site \(n\) in parallel with probability \(p = \sin^2(k_m(n)\theta)\).
+%     \item Let \(k_n(m)\) denote the number of excited neighbours \(n\in N(m)\) of the black sublattice for red site \(m\). Flip each red site \(m\) in parallel with probability \(p = \sin^2(k_n(m)\theta)\).
+%     \item For each site \(i\), sample a Pauli \(x_t(i)\) conditioned on \(s_t(i)\). If \(s_t(i) = 0\), sample \(x_t(i)=I\), else sample \(x_t(i) \in \{X, Y, Z\}\) with probabilities \(n_X^2, n_Y^2, n_Z^2\) respectively. 
+%     \item Repeat steps 1-4 for as many cycles required.
+% \end{itemize}
+
+% \begin{itemize}
+%     \item For each site \(i\), flip \(s(i)\) with probabilities \(p(s_i\to s_i\oplus 1|s_i=0) = a\) and \(p(s_i\to s_i\oplus 1|s_i=1) = b\).
+%     \item 
+% \end{itemize}
 
 \subsection{Statistical mechanical properties}
 
