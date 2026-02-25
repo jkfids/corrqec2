@@ -46,11 +46,11 @@ Applying the RFT operation to a unitary superoperator \(\mathcal{U}_j\) yields a
     \mathcal{U}_j^{e'_{j+1} e_{j+1} b'_j b_j}{}_{e'_j e_j a'_j a_j} \xmapsto{\;\mathrm{RFT}\;} \mathbf{U}_{(j)}^{\mu_j \alpha_j}{}_{\mu_{j+1} \beta_j},
 \end{equation}
 with fused indices \(\mu_j = (e'_j e_j)\) for the environment and \(\alpha_j=(a'_j a_j)\), \(\beta_j=(b'_j b_j)\) for the system input and output, respectively. Their dimensions are \(\dim(\mu_j) = d_E^2\) and \(\dim(\alpha_j) = \dim(\beta_j) = d_S^2\). The mapping is graphically depicted as
-\begin{equation*}
+\begin{equation}
     \valignbox{\input{figures/tensor-unitary.tikz}}
     = 
     \left(\valignbox{\input{figures/unitary-to-tensor.tikz}}\right)^T,
-\end{equation*}
+\end{equation}
 where thick wires represent fused indices. The initial environment state \(\dket{\sigma_E}\) is mapped similarly,
 \begin{equation}
     \sigma^{e'_0e_0} \xmapsto {\;RFT\;} \pmb{\sigma}_{\mu_0} 
@@ -66,15 +66,15 @@ where we have adopted the column-stacking convention for vectorisation. To repre
 The full \(k\)-slot process tensor is then constructed as an MPO by contracting the environment indices \(\mu_j\) across all time. This yields a tensor \(\mathbf{T}\) with open system indices corresponding to the inputs (\(\alpha_j\)) and outputs (\(\beta_j\)) at each time \(j\). We formalise this in the following definition.
 \begin{definition}[MPO representation of a process tensor]\label{def:pt-mpo}
 A $k$-slot process tensor $\Upsilon_{0:k}$ admits a matrix product operator (MPO) representation,
-\begin{equation}
+\begin{equation}\label{eq:pt-mpo}
     \mathbf{T}^{\alpha_0,\dots,\alpha_k}{}_{\beta_0,\dots,\beta_k} = \sum_{\mu_0,\dots,\mu_{k+1}} \pmb{\sigma}_{\mu_0}\mathbf{U}_{(0)}^{\mu_0\alpha_0}{}_{\mu_1\beta_0}\mathbf{U}_{(1)}^{\mu_1\alpha_1}{}_{\mu_2\beta_1}\cdots\mathbf{U}_{(k)}^{\mu_k\alpha_k}{}_{\mu_{k+1}\beta_k}\mathbf{t}^{\mu_{k+1}}.
 \end{equation}
 Here $\pmb{\sigma}$, $\mathbf{U}_{(j)}$, and $\mathbf{t}$ are tensor representations of the initial environment state, the joint $SE$ unitary at time $j$, and the final environment trace, respectively. The environment indices $\mu_j$ are the MPO's virtual bonds of dimension \(D = \dim{(\mu_j)} \le d_E^2\), corresponding to the dimension of the environment's Liouville space.
 \end{definition}
 In graphical form,
-\begin{equation*}
+\begin{equation}
     \valignbox{\input{figures/process-tensor.tikz}}.
-\end{equation*}
+\end{equation}
 To recover the standard Choi form, we simply reorder and reshape the fused indices as
 \begin{equation}\label{eq:pt-tensor-to-choi}
     \mathbf{T}^{\alpha_0,\dots,\alpha_k}{}_{\beta_0,\dots,\beta_k} \mapsto \mathbf{T}_{\mathrm{Choi}}^{a_0b_0\dots a_kb_k}{}_{a'_0b'_0\dots a'_kb'_k} \longleftrightarrow \Upsilon_{0:k}.
@@ -84,9 +84,9 @@ In the tensor network picture, the action of \(\mathbf{T}\) on an initial state 
     \pmb{\rho}^\mathrm{out}_{\alpha_{k+1}} = \pmb{\sigma}_{\mu_0}\pmb{\rho}^\mathrm{in}_{\alpha_0}\mathbf{U}_{(0)}^{\mu_0\alpha_0}{}_{\mu_1\beta_0}\mathbf{A}_{(0)}^{\beta_0}{}_{\alpha_1}\mathbf{U}_{(1)}^{\mu_1\alpha_1}{}_{\mu_2\beta_1}\mathbf{A}_{(1)}^{\beta_1}{}_{\alpha_2}\cdots\mathbf{U}_{(k)}^{\mu_k\alpha_k}{}_{\mu_{k+1}\beta_k}\mathbf{t}^{\mu_{k+1}}\mathbf{A}_{(k)}^{\beta_k}{}_{\alpha_{k+1}},
 \end{equation}
 where repeated indices imply summation (contraction). Graphically, the output state \(\rho_\mathrm{out}\) is described by
-\begin{equation*}
+\begin{equation}
     \valignbox{\input{figures/process-tensor-action.tikz}}.
-\end{equation*}
+\end{equation}
 This contraction naturally generalises to cases where the instruments are themselves classically or `quantumly' correlated in time, in which case the product of local instrument tensors is replaced by a more general tensor network. Having established a 1D temporal MPO representation of multi-time processes, we now lift this construction to composite systems with additional spatial structure.
 
 \subsection{Spatiotemporal tensor network representations}

@@ -223,24 +223,59 @@ As shown in \cref{fig:spp-peps}, spatial correlations are encoded along the bond
     \label{fig:spp-peps}
 \end{figure}
 
+We next illustrate the SPP framework by introducing three simple system-environment Hamiltonians and explicitly computing the corresponding two-step SPPs.
+
 \subsection{Worked examples}
-
+Consider a single system qubit \(S\) coupled to a single environment qubit \(E\), with joint Hilbert space \(\mathcal{H}_S \otimes \mathcal{H}_E\). We study three families of system-environment Hamiltonians \(H(\theta)\in\mathcal{B}(\mathcal{H}_S\otimes\mathcal{H}_E)\), generating unitary dynamics of the form
+\begin{equation}
+  U(\theta) = e^{-iH(\theta)},
+\end{equation}
+where \(\theta\) is a tunable parameter. Concretely, we consider:
 \begin{enumerate}
-  \item 
-  \begin{equation}
-    H = 
-  \end{equation}
+  \item \textbf{Heisenberg interaction}: \(H_J(\theta_J) = -\frac{1}{2} \theta_J (X^S \otimes X^E + Y^S \otimes Y^E + Z^S \otimes Z^E)\)
+  
+  Generates exchange interactions; in particular, \(U_J(\pi/2)\) is equivalent to a SWAP operator up to a global phase. This is a paradigmatic model for non-Markovian dynamics and is known to generate strong temporal correlations.
 
-  \item 
-  \begin{equation}
-    H = 
-  \end{equation}
+  \item \textbf{Controlled-$X$ rotation}: \(H_{RX}(\theta_{RX}) = -\frac{1}{2} \theta_{RX}  (X^S \otimes I^E - X^S \otimes Z^E)\)
+  
+  Generates a controlled rotation on the system along the \(X\)-axis, with the environment acting as the control. At \(\theta_{RX} = \pi/2\), the resulting unitary is equivalent to a CNOT gate up to a global phase.
 
-  \item
-  \begin{equation}
-    H = 
-  \end{equation}
+  \item \textbf{Heisenberg with local field}: \(H_J(\theta_F) = H_J(\frac{\pi}{2}) - \theta_F(X^S + Y^S + Z^S) \otimes I^E\)
+  
+  A maximal exchange Heisenberg interaction modulated by a local field on the system, breaking the symmetry of the pure Heisenberg model.
+
 \end{enumerate}
+Given \(U(\theta)\) and choosing an initial environment state \(\rho_E = \ketbra{+}{+}\), we construct the corresponding two-step process tensor \(\Upsilon_{0:1}(\theta)\) in the standard Choi representation using \cref{eq:pt-mpo,eq:pt-tensor-to-choi}. We then apply the multi-time Pauli twirl in \cref{eq:twirl-upsilon} to obtain the corresponding SPP \(\Upsilon_{0:1}^{\mathcal{T}_P}(\theta)\).
+
+To study the properties of these processes under twirling, we compute measures of non-Markovianity alongside Pauli trajectory probabilities. One key measure of temporal correlations is the \emph{generalised quantum mutual information} (GQMI), which computes the quantum relative entropy between the original process tensor \(\Upsilon_{0:k}\) and the product of its marginals (the closest Markovian process)
+% \begin{equation}
+%   \Upsilon_{0:k}^{\mathrm{Markov}} = \bigotimes_{j=0}^k \Tr_{\overline{j}}[\Upsilon_{0:k}],
+% \end{equation}
+\begin{equation}
+  \Upsilon_{0:k}^{\mathrm{Markov}} = \Tr_{\overline{0}}[\Upsilon_{0:k}] \otimes \Tr_{\overline{1}}[\Upsilon_{0:k}] \otimes \cdots \otimes \Tr_{\overline{k}}[\Upsilon_{0:k}],
+\end{equation}
+where \(\Tr_{\overline{j}}[\cdot]\) denotes the partial trace over all input-output spaces except those at time step \(t_j\). The GQMI \(\mathcal{I}\) is then defined as
+\begin{equation}
+  \mathcal{I}(\Upsilon_{0:k}) = S(\Upsilon_{0:k} \| \Upsilon_{0:k}^{\mathrm{Markov}}) = \Tr[\Upsilon_{0:k} (\log \Upsilon_{0:k} - \log \Upsilon_{0:k}^{\mathrm{Markov}})].
+\end{equation}
+Furthermore, we introduce a new quantity \(\mathcal{C}(\Upsilon_{0:k})\) based on the relative entropy between a process and its twirled counterpart, quantifying the Pauli-coherences discarded by the multi-time twirl. Concretely, we define
+\begin{equation}
+  \mathcal{C}(\Upsilon_{0:k}) = S(\Upsilon_{0:k} \| \Upsilon_{0:k}^{\mathcal{T}_P}).
+\end{equation}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=1\textwidth]{figures/worked_examples1.pdf}
+    \caption{}
+    \label{fig:worked-examples-entropies}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=1\textwidth]{figures/worked_examples2.pdf}
+    \caption{}
+    \label{fig:worked-examples-probabilities}
+\end{figure}
 
 % Explicitly, for a dilation \(\{\mathbf{U}_{(j)}, \pmb{\sigma}\}\), the SPC tensors are given by
 % \begin{equation}
