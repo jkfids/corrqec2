@@ -139,7 +139,7 @@ We defer the detailed proof of each of these statements in \Fidel{Appendix~X}. W
 We now summarise the PCA HMM dynamics. Let \(s_{t}(i)\) denote the state of environment site \(i\) at time \(t\). The system Pauli emission pattern during cycle \(t\) is denoted by \(x_t(i)\), and emissions are conditioned on the updated environment configuration \(s_{t+1}(i)\) at the end of the cycle. The PCA HMM dynamics are as follows.
 
 \begin{enumerate}
-    \item[0.] \textbf{Initialisation}: Choose an initial distribution $\pi_0$ over configurations $s_0\in\{0,1\}^{|V|}$ and sample $s_{0}\sim\pi_0$.
+    \item[0.] \textbf{Environment initialisation}: Choose an initial distribution $\pi_0$ over configurations $s_0\in\{0,1\}^{|V|}$ and sample $s_{0}\sim\pi_0$.
 
     \item \textbf{Storm update}: Given \(s_{t}\), generate the intermediate configuration \(s_{t'}\) by updating each site \(i\in V\) independently as
     \begin{itemize}
@@ -165,7 +165,7 @@ We now summarise the PCA HMM dynamics. Let \(s_{t}(i)\) denote the state of envi
         \item if \(s_{t+1}(i) = 1\), sample \(x_t(i) \in \{X, Y, Z\}\) with probabilities \(n_X^2, n_Y^2, n_Z^2\), respectively.
     \end{itemize}
     The resulting Pauli string \(x_t = \{x_t(i)\}_{i\in V}\) is the noise induced on the system during cycle \(t\).
-    \item \textbf{Loop}: Increment \(t\), and repeat steps 1-4 for as many cycles required.
+    \item \textbf{Repeat}: Increment \(t\), and repeat steps 1-4 for as many cycles required.
 \end{enumerate}
 
 % \begin{enumerate}

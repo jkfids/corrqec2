@@ -21,15 +21,15 @@ Physically, a channel represents a \emph{two-time} quantum map evolving an initi
 \begin{equation}
     \mathcal{E}[\rho] = \sum_i K_i \rho K_i^\dagger,
 \end{equation}
-where the Kraus operators \(\{K_i\}\) satisfy \(\sum_i K_i^\dagger K_i = \mathbb{I}\) to ensure trace preservation. Another important representation is provided by the Choi-Jamiołkowski isomorphism (CJI), which establishes a bijection between CP maps \(\mathcal{E}: \mathcal{B}(\mathcal{H}_{\mathrm{in}}) \to \mathcal{B}(\mathcal{H}_{\mathrm{out}})\) and positive semidefinite operators \(\Lambda \in \mathcal{B}(\mathcal{H}_{\mathrm{in}} \otimes \mathcal{H}_{\mathrm{out}})\). The Choi matrix \(\Lambda\) is defined as
+where the Kraus operators \(\{K_i\}\) satisfy \(\sum_i K_i^\dagger K_i = \mathbb{I}\) to ensure trace preservation. Another important representation is provided by the Choi-Jamiołkowski isomorphism (CJI), which establishes a bijection between CP maps \(\mathcal{E}: \mathcal{B}(\mathcal{H}_{\mathrm{in}}) \to \mathcal{B}(\mathcal{H}_{\mathrm{out}})\) and positive semidefinite operators \(\Upsilon \in \mathcal{B}(\mathcal{H}_{\mathrm{in}} \otimes \mathcal{H}_{\mathrm{out}})\). The Choi matrix \(\Upsilon\) is defined as
 \begin{equation}
-    \Lambda = (\mathcal{I} \otimes \mathcal{E})[\ketbra{\Phi^+}{\Phi^+}],
+    \Upsilon = (\mathcal{I} \otimes \mathcal{E})[\ketbra{\Phi^+}{\Phi^+}],
 \end{equation}
-where \(\ket{\Phi^+} = \sum_i \ket{i}\otimes \ket{i}\) is the (unnormalised) Bell state on \(\mathcal{H}_{\mathrm{in}} \otimes \mathcal{H}_{\mathrm{in}}\). The action of the Choi matrix \(\Lambda\) on an input state \(\rho\) can then be written as
+where \(\ket{\Phi^+} = \sum_i \ket{i}\otimes \ket{i}\) is the (unnormalised) Bell state on \(\mathcal{H}_{\mathrm{in}} \otimes \mathcal{H}_{\mathrm{in}}\). The action of the Choi matrix \(\Upsilon\) on an input state \(\rho\) can then be written as
 \begin{equation}\label{eq:choi-rep}
-    \mathcal{E}[\rho] = \Tr_{\mathrm{in}}[(\rho^T \otimes \mathbb{I}_{\mathrm{out}})\Lambda].
+    \mathcal{E}[\rho] = \Tr_{\mathrm{in}}[(\rho^T \otimes \mathbb{I}_{\mathrm{out}})\Upsilon].
 \end{equation}
-The CP condition on \(\mathcal{E}\) translates into the positive semidefiniteness of \(\Lambda\), while the TP condition translates to the partial trace relation \(\Tr_{\mathrm{out}}[\Lambda] = \mathbb{I}_{\mathrm{in}}\). This representation directly encodes the complete dynamical information of a channel into a static bipartite state. This duality is generalised to later multi-time processes described by process tensors in \cref{sec:process_tensors}.
+The CP condition on \(\mathcal{E}\) translates into the positive semidefiniteness of \(\Upsilon\), while the TP condition translates to the partial trace relation \(\Tr_{\mathrm{out}}[\Upsilon] = \mathbb{I}_{\mathrm{in}}\). This representation directly encodes the complete dynamical information of a channel into a static bipartite state. This duality is generalised to later multi-time processes described by process tensors in \cref{sec:process_tensors}.
 
 The Stinespring dilation theorem provides an additional, physically motivated perspective on quantum channels. It states that any CPTP map acting on a system space \(\mathcal{B}(\mathcal{H}_S)\) can be realised as a unitary operation \(U\) on a larger, dilated space \(\mathcal{B}(\mathcal{H}_S \otimes \mathcal{H}_E)\), followed by a partial trace over an auxiliary environment \(E\). This is expressed as
 \begin{equation}
@@ -50,9 +50,9 @@ Any general channel \(\mathcal{E}\) can be projected into a Pauli channel via a 
 \begin{equation}\label{eq:pauli-twirl}
     \mathcal{T}_P(\mathcal{E})[\rho] = \frac{1}{|\mathbb{P}^{(n)}|} \sum_{P \in \mathbb{P}^{(n)}} P \mathcal{E}(P \rho P) P,
 \end{equation}
-where \(|\mathbb{P}^{(n)}| = 4^n\). The image of the twirling operation is strictly a Pauli channel of the form in \cref{eq:pauli-channel}. Equivalently, given the $\chi$-matrix representation of \(\mathcal{E}\), the twirled channel \(\mathcal{T}_P(\mathcal{E})\) can be computed by zeroing all off-diagonal elements, leaving only the diagonal elements corresponding to probabilities \(p_P\) of the Pauli operators. In the Choi representation, the twirling operation acts as a CPTP projector (or \emph{superchannel}) on the Choi matrix \(\Lambda\):
+where \(|\mathbb{P}^{(n)}| = 4^n\). The image of the twirling operation is strictly a Pauli channel of the form in \cref{eq:pauli-channel}. Equivalently, given the $\chi$-matrix representation of \(\mathcal{E}\), the twirled channel \(\mathcal{T}_P(\mathcal{E})\) can be computed by zeroing all off-diagonal elements, leaving only the diagonal elements corresponding to probabilities \(p_P\) of the Pauli operators. In the Choi representation, the twirling operation acts as a CPTP projector (or \emph{superchannel}) on the Choi matrix \(\Upsilon\):
 \begin{equation}
-    \mathcal{T}_P(\Lambda) = \frac{1}{4^n} \sum_{P \in \mathbb{P}^{(n)}} (P \otimes P) \Lambda (P \otimes P).
+    \mathcal{T}_P(\Upsilon) = \frac{1}{4^n} \sum_{P \in \mathbb{P}^{(n)}} (P \otimes P) \Upsilon (P \otimes P).
 \end{equation}
 This operation removes coherences between different Pauli operators (off-diagonal elements in the \(\chi\)-matrix) while preserving the CPTP condition. We will later generalise this projection in the process tensor framework. Before turning to multi-time processes, however, we first discuss the relevance and limitations of Pauli noise models in quantum error correction. 
 
@@ -115,13 +115,13 @@ In summary, the set of Choi states representing physical quantum processes \(\{\
 
 Beyond these general validity conditions, structural features of a process tensor reflect the physical nature of the underlying dynamics. Notably, entanglement across temporal partitions of a Choi state \(\Upsilon_{0:k}\)---referred to as \emph{temporal entanglement}---signals that a process is \emph{genuinely quantum non-Markovian}. Concretely, a process exhibits genuinely quantum temporal correlations if and only if its Choi state cannot be written as a convex mixture of products, 
 \begin{equation}\label{eq:process-separable}
-\Upsilon_{0:k} = \sum_\alpha p_\alpha \Lambda_0^\alpha \otimes \Lambda_1^\alpha \otimes \cdots \otimes \Lambda_k^\alpha,
+\Upsilon_{0:k} = \sum_{\vec{\alpha} = (\alpha_0, \alpha_1, \dots, \alpha_k)} p_{\vec{\alpha}} \Upsilon_0^{\alpha_0} \otimes \Upsilon_1^{\alpha_1} \otimes \cdots \otimes \Upsilon_k^{\alpha_k},
 \end{equation}
-with \(p_\alpha \geq 0\) and each \(\Lambda_j^\alpha\) is the Choi representation of a CPTP channel. Processes that can be written in this form are \emph{process-separable}, possessing temporal correlations that are classically simulable. Conversely, a process is fully \emph{Markovian}---exhibiting neither quantum nor classical temporal correlations---if and only if its Choi operator factorises across all time steps,
+with \(p_\alpha \geq 0\) and each \(\Upsilon_j^\alpha\) is the Choi representation of a CPTP channel. Processes that can be written in this form are \emph{process-separable}, possessing temporal correlations that are classically simulable. Conversely, a process is fully \emph{Markovian}---exhibiting neither quantum nor classical temporal correlations---if and only if its Choi operator factorises across all time steps,
 \begin{equation}\label{eq:markovian-process}
-    \Upsilon_{0:k}^{\textrm{Markov}} = \Lambda_0 \otimes \Lambda_1 \otimes \cdots \otimes \Lambda_k,
+    \Upsilon_{0:k}^{\textrm{Markov}} = \Upsilon_0 \otimes \Upsilon_1 \otimes \cdots \otimes \Upsilon_k,
 \end{equation}
-where each \(\Lambda_j\) is CPTP. The dynamics of a Markovian process is therefore equivalently generated by a sequence of independent quantum channels.
+where each \(\Upsilon_j\) is CPTP. The dynamics of a Markovian process is therefore equivalently generated by a sequence of independent quantum channels.
 
 The physical origin of these structures can be traced back to the system-environment picture. By a natural extension of the Stinespring dilation theorem, any \(k\)-slot process tensor can be realised as the joint multi-time dynamics of a system \(S\) and an environment \(E\), followed by a partial trace over the environment. This is represented by the equation,
 \begin{equation}

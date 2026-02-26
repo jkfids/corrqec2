@@ -330,6 +330,19 @@ def main():
     probs3, _ = run_pauli_prob_calcs(H_magnetic, np.pi)
     plot_pauli_probs(probs1, probs2, probs3)
 
+    # thetas = np.linspace(0, 2 * np.pi, 201)
+    # for theta in thetas:
+    #     pt = gen_process_tensor(H_magnetic, theta)
+    #     choi = pt.choi_matrix
+    #     twirled = multitime_twirl(choi)
+    #     gqmi = calc_gqmi(twirled)
+
+    #     print(f"Theta: {theta/np.pi:.2f}, GQMI: {gqmi:.4f}")
+
+    # pt = gen_process_tensor(H_crx, np.pi / 2)
+    # choi = pt.choi_matrix
+    # print("GQMI:", calc_gqmi(choi))
+
 
 if __name__ == "__main__":
     main()
