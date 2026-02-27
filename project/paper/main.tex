@@ -236,6 +236,8 @@
 
 \onecolumn\newpage
 \appendix
+\numberwithin{equation}{section}
+\renewcommand{\theequation}{\Alph{section}\arabic{equation}}
 
 % \section{First section of the appendix}
 % Quantum allows the usage of appendices.
@@ -255,7 +257,9 @@
 
 \input{appendix2.tex}
 
-\input{appendix3.tex}
+% \input{appendix3.tex}
+
+\input{appendix4.tex}
 
 % \section{Worked examples}
 % \input{appendix3.tex}
