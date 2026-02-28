@@ -3,7 +3,7 @@
 #SBATCH --ntasks=1
 # SBATCH --array=0-299%50
 #SBATCH --cpus-per-task=1
-#SBATCH --mem=16G
+#SBATCH --mem=10G
 #SBATCH --time=0-04:00:00
 #SBATCH --output=/home/jkam/mx95_scratch2/jkam/corrqec2_results/logs/experiment3_%A_%a.out
 #SBATCH --error=/home/jkam/mx95_scratch2/jkam/corrqec2_results/logs/experiment3_%A_%a.err
