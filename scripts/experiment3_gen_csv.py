@@ -10,7 +10,8 @@ from itertools import product
 DIR = Path(__file__).resolve().parent
 OUT = DIR / "experiment3_params.csv"
 
-DISTANCES = [5, 9, 13]
+# DISTANCES = [7, 11]
+DISTANCES = [15]
 ROUNDS = 1_000_000
 SHOTS = 20
 
@@ -19,7 +20,7 @@ THETAS_MAJOR_MAX = 1.0
 THETAS_MAJOR_N = 11
 THETAS_MINOR_MIN = 0.40
 THETAS_MINOR_MAX = 0.60
-THETAS_MINOR_N = 21
+THETAS_MINOR_N = 11
 
 A_LIST = [0.001]
 B_LIST = [0.5]

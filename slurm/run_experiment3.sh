@@ -4,6 +4,7 @@
 GEN_SCRIPT="scripts/experiment3_gen_csv.py"
 PARAMS_CSV="scripts/experiment3_params.csv"
 SBATCH_SCRIPT="slurm/run_experiment3_array.sh"
+PROCESSING_SCRIPT="scripts/experiment3_processing.py"
 
 # Create logs directory if it doesn't exist
 mkdir -p /home/jkam/mx95_scratch2/jkam/corrqec2_results/logs
@@ -35,4 +36,3 @@ echo "Submitting job array with $N tasks: 0-$MAX (max concurrent: $CONCURRENCY)"
 sbatch --array=0-"$MAX"%$CONCURRENCY \
   --export=ALL,PARAMS_CSV="$PARAMS_CSV" \
   "$SBATCH_SCRIPT"
-
