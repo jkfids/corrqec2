@@ -10,28 +10,28 @@ from itertools import product
 DIR = Path(__file__).resolve().parent
 OUT = DIR / "experiment3_params.csv"
 
-DISTANCES = [5, 9, 13]
-# DISTANCES = [13]
+# DISTANCES = [7, 11, 15]
+DISTANCES = [15]
 ROUNDS = 1_000_000
-SHOTS = 20
+SHOTS = 2
 
 THETAS_MAJOR_MIN = 0.0
 THETAS_MAJOR_MAX = 1.0
-THETAS_MAJOR_N = 11
-THETAS_MINOR_MIN = 0.40
-THETAS_MINOR_MAX = 0.60
-THETAS_MINOR_N = 11
+THETAS_MAJOR_N = 21
+THETAS_MINOR_MIN = 0.3
+THETAS_MINOR_MAX = 0.5
+THETAS_MINOR_N = 21
 
 A_LIST = [0.001]
 B_LIST = [0.5]
 
 
 def gen_thetas(
-    thetas_major_max: int,
-    thetas_major_min: int,
+    thetas_major_max: float,
+    thetas_major_min: float,
     thetas_major_n: int,
-    thetas_minor_max: int,
-    thetas_minor_min: int,
+    thetas_minor_max: float,
+    thetas_minor_min: float,
     thetas_minor_n: int,
 ) -> list:
     thetas_major = np.linspace(
