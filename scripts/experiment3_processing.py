@@ -1,4 +1,5 @@
 from pathlib import Path
+import argparse
 import pickle
 
 import numpy as np
@@ -83,8 +84,15 @@ def main():
     )
     savedir = Path.home() / "mx95_scratch2" / "jkam" / "corrqec2_results"
 
-    burnin = 100
-    max_lag = 20
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--burnin", type=float, default=200_000, help="Burn-in period")
+    parser.add_argument(
+        "--max_lag", type=float, default=2_000, help="Autocorrelation max lag"
+    )
+
+    args = parser.parse_args()
+    burnin = args.burnin
+    max_lag = args.max_lag
 
     data = []
     for filepath in sorted(resultsdir.glob("*.npz")):
