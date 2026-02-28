@@ -11,7 +11,7 @@ DIR = Path(__file__).resolve().parent
 OUT = DIR / "experiment3_params.csv"
 
 # DISTANCES = [7, 11]
-DISTANCES = [15]
+DISTANCES = [13]
 ROUNDS = 1_000_000
 SHOTS = 20
 
