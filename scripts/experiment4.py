@@ -50,7 +50,7 @@ def main():
     print(f"Number of workers: {args.num_workers}")
     print(f"Number of tasks: {len(tasks)}")
     print(f"Distances: {distances}")
-    print(f"Thetas (θ): {list(np.round(thetas / np.pi, 4))}π")
+    print(f"Thetas (θ): {list(np.round([t / np.pi for t in thetas], 4))}π")
     print(f"Gate error rate (p_gate): {p_gate}")
     print(f"Total shots per task: {args.max_shots}")
     print(f"Minimum batch size: {args.batch_size}")
