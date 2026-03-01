@@ -138,7 +138,7 @@ if __name__ == "__main__":
         # Exponential fits
         logy = np.log(center)
         b, a = np.polyfit(distance_sorted_j, logy, 1)
-        x_fit = np.linspace(7, 20, 100)
+        x_fit = np.linspace(5, 20, 100)
         y_fit = np.exp(a + b * x_fit)
         ax2.plot(
             x_fit,
@@ -162,11 +162,11 @@ if __name__ == "__main__":
 
     ax2.legend(loc="lower left")
     ax2.set_xlabel("Code distance, $d$")
-    ax2.set_xlim(6.2, 19.8)
-    ax2.set_xticks([7, 9, 11, 13, 15, 17, 19])
+    ax2.set_xlim(4.2, 17.8)
+    ax2.set_xticks([5, 7, 9, 11, 13, 15, 17])
 
-    ax1.text(-0.155, 1.14, "(a)", transform=ax1.transAxes, va="top", ha="left", size=9)
-    ax2.text(-0.07, 1.14, "(b)", transform=ax2.transAxes, va="top", ha="left", size=9)
+    ax1.text(-0.155, 1.08, "(a)", transform=ax1.transAxes, va="top", ha="left", size=10)
+    ax2.text(-0.07, 1.08, "(b)", transform=ax2.transAxes, va="top", ha="left", size=10)
 
     for ax in (ax1, ax2):
         ax.semilogy()
