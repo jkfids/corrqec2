@@ -1,5 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib
+from matplotlib.ticker import FormatStrFormatter, MultipleLocator
 import pickle
 import seaborn as sns
 
@@ -61,19 +63,18 @@ def process_results(results_dict, distances, thetas):
 
             rho_acorr = results_dict[d][t]["corr"]
             corr_means = rho_acorr.mean(axis=0)
-            tau = fit_autocorrs(corr_means, hi=0.8, lo=0.01)
+            tau = fit_autocorrs(corr_means, hi=0.5, lo=0.01)
             Y3_dict[d].append(tau)
 
     return Y1_dict, Y2_dict, Y3_dict
 
 
-def fit_autocorrs(autocorrs, hi=0.5, lo=0.01):
-
+def fit_autocorrs(autocorrs, hi, lo):
     autocorrs = np.asarray(autocorrs, dtype=np.float64)
     ts = np.arange(autocorrs.size)
 
     mask = (autocorrs >= lo) & (autocorrs <= hi) & (ts >= 1)
-    if mask.sum() < 3:
+    if mask.sum() < 2:
         raise ValueError("Not enough points for fitting.")
 
     print(autocorrs[mask])
@@ -98,10 +99,20 @@ def plot_autocorr(results_dict, distance, thetas):
         ax.plot(np.arange(len(Ys[i])), Ys[i], label=f"θ={t:.2f}π")
     ax.semilogy()
     ax.legend()
-    fig.savefig("test2.png", dpi=300)
+    fig.savefig("test_autocorr.png", dpi=300)
 
 
 def plot_figures(Y1_dict, Y2_dict, Y3_dict, distances, thetas):
+    plt.rcParams.update(
+        {
+            "font.size": 10,
+            "axes.labelsize": 9,
+            "xtick.labelsize": 8.5,
+            "ytick.labelsize": 8.5,
+            "legend.fontsize": 9,
+        }
+    )
+
     fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(10.2, 3.2))
     axs = [ax1, ax2, ax3]
     colors = sns.color_palette("muted")
@@ -117,9 +128,33 @@ def plot_figures(Y1_dict, Y2_dict, Y3_dict, distances, thetas):
         # )
         ax3.plot(thetas, Y3_dict[d], label=f"d={d}", color=colors[i])
 
+    for i in range(3):
+        axs[i].xaxis.set_major_formatter(FormatStrFormatter("%g$\\pi$"))
+        axs[i].xaxis.set_major_locator(MultipleLocator(base=0.25))
+        axs[i].set_xlabel(f"QCA rotation angle, $\\theta$")
+
+    ax1.set_ylabel("Mean density, $\\langle \\eta \\rangle$")
+    ax2.set_ylabel("Scaled variance, $N \cdot \\mathrm{Var}(\\eta)$")
+    ax3.set_ylabel("Fitted correlation time, $\\xi_\\eta$")
+    ax1.text(-0.18, 1.11, "(a)", transform=ax1.transAxes, va="top", ha="left", size=12)
+    ax2.text(-0.18, 1.11, "(b)", transform=ax2.transAxes, va="top", ha="left", size=12)
+    ax3.text(-0.18, 1.11, "(c)", transform=ax3.transAxes, va="top", ha="left", size=12)
     ax3.legend()
 
-    fig.savefig("test1.png", dpi=300)
+    fig.tight_layout()
+    fig.subplots_adjust(wspace=0.24)
+    fig.savefig(
+        "./project/paper/figures/experiment3.pdf",
+        dpi=600,
+        bbox_inches="tight",
+        pad_inches=0.0,
+    )
+    fig.savefig(
+        "./project/paper/figures/experiment3.png",
+        dpi=600,
+        bbox_inches="tight",
+        pad_inches=0.0,
+    )
 
 
 def main():
@@ -127,9 +162,8 @@ def main():
     results_dict, distances, thetas = load_results(filepath)
     Y1_dict, Y2_dict, Y3_dict = process_results(results_dict, distances, thetas)
     plot_figures(Y1_dict, Y2_dict, Y3_dict, distances, thetas)
-    plot_autocorr(
-        results_dict, distance=15, thetas=[0.0, 0.38, 0.5, 0.6, 0.7, 0.8, 0.9]
-    )
+    print(thetas)
+    plot_autocorr(results_dict, distance=9, thetas=[0.0, 0.2, 0.38, 0.5, 1.0])
 
 
 if __name__ == "__main__":

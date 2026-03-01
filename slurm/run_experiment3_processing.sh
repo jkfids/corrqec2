@@ -17,4 +17,4 @@ mkdir -p /home/jkam/mx95_scratch2/jkam/corrqec2_results/logs
 module load miniforge3
 conda activate corrqec2-env
 
-python scripts/experiment3_processing.py --burnin 200_000 --max_lag 2_000
+python scripts/experiment3_processing.py --burnin 200_000 --max_lag 200
