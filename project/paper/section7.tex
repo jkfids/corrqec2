@@ -130,11 +130,27 @@ Crucially, because the lattice is bipartite, each PCA half-step updates only one
 This PCA describes a driven classical spin system with a nonlinear update rule. The storm process continuously injects and removes excitations locally, while the QCA-derived PCA spread excitations across the lattice in a neighbour-dependent manner parametrised by \(\theta\). The competition between these stochastic perturbations and nonlinear spatial propagations gives rise to non-trivial steady states and spatial correlation structures, which we evaluate next.
 
 \subsection{Statistical mechanical analysis}
-Before studying the noise properties of this model for QEC, we first characterise the PCA dynamics from \cref{sec:pca-details} as a statistical mechanical system. Throughout, we fix the storm parameters to \(a=10^-4, b=0.5\), and sweep the spatial parameter \(\theta \in [0, \pi]\), which controls the strength of the nonlinear PCA update via the kernel \(\sin^2(k\theta)\). We consider lattices corresponding to rotated surface code layouts for distances \(d=9,11,13,15\), with number of sites (qubits) \(N = |V| = 2d^2 - 1\).
+Before studying the noise properties of this model for QEC, we first analyse the PCA dynamics from \cref{sec:pca-details} as a statistical mechanical system. In particular, we would like to isolate the effect of the spatial parameter \(\theta\) controlling the strength of the nonlinear PCA update via the kernel \(\sin^2(k\theta)\) on the emergent correlation structure and steady state properties of the system. 
 
+Throughout, we fix the storm parameters to \(a=10^-4, b=0.5\), and sweep the spatial parameter \(\theta \in [0, \pi]\), which controls the strength of the nonlinear PCA update via the kernel \(\sin^2(k\theta)\). We consider lattices corresponding to rotated surface code layouts for distances \(d=9,11,13,15\), with number of sites (qubits) \(N = |V| = 2d^2 - 1\).
+
+To quantify Pauli emission statistics, or equivalently excitation statistics in the environment, we define the time step-wise density
 \begin{equation}
-    \eta_t \coloneq \frac{1}{N}\sum_{i\in V} s_t(i)
+    \eta_t \coloneq \frac{1}{N}\sum_{i\in V} s_t(i),
 \end{equation}
+and compute statistics of the time series \(\{\eta_t\}\) for different values of \(\theta\). We simulate bath dynamics up to \(t=10^6\), recording statistics only after a burn-in period of \(2\times 10^5\) cycles. We repeat this procedure for 10 independent trajectories. \Cref{fig:qca-statistical} summarises three complementary diagnostics as a function of \(\theta\). The mean density \(\braket{\eta}\), a susceptibility parameter or scaled variance \(N\mathrm{Var}(\eta)\), and a fitted correlation time extracted from the autocorrelation of \(\eta_t\). 
+
+\Cref{fig:qca-statistical}(a) shows the mean density \(\braket{\eta}\) for \(\theta \in [0, \pi]\). For small \(\theta\), the PCA update is weak and the dynamics are dominated by the storm process, which for our choice of parameters \(a=10^{-4}, b=0.5\) has a low mean density of \(\braket{\eta} \approx 2\times 10^{-4}\). As \(\theta\) increases, \(\braket{\eta}\) increases modestly, before undergoing a sharp climb beginning around \(\theta \approx 0.32\pi\). The mean density peaks to around \(\theta \approx 0.5\pi\), before saturating at this value. This behaviour is consistent with an inactive-to-active crossover (or transition) controlled by the spatial parameter \(\theta\), where below a threshold, excitations cannot proliferate, while above it, the neighbour-dependent update sustains a finite density despite the strong relaxation of \(b = 0.5\). The quantitative behaviour is also largely consistent across different lattice sizes, with a slight decrease in the threshold parameter with increasing size.
+
+To probe fluctuations in the density, we compute the variance of \(\eta_t\) as \(\mathrm{Var}(\eta) = (\braket{\eta_t^2} - \braket{\eta_t}^2)\), and report the scaled variance \(N\mathrm{Var}(\eta)\) in \cref{fig:qca-statistical}(b). This quantity is analogous to a susceptibility parameter in equilibrium statistical mechanics. If correlations grow, the density fluctuates more strongly than would be expected from \(N\) nearly-independent sites. We observe a pronounced peak in \(N\mathrm{Var}(\eta)\) at \(theta \approx 0.38\pi\), aligned with the sharp rise of \(\braket{\eta}\), indicating a strong enhancement of fluctuations in a narrow window of \(\theta\). Such a peak is consistent of a critical or near-critical regimes, reflecting highly correlated global dynamics. Over the system sizes shown, the peak is only weakly dependent on size. Nevertheless, the concurrence of the peak with the sharp rise in density suggests that the critical regime is associated with the onset of sustained excitation proliferation, where correlations are maximised.
+
+To quantify memory in the bath dynamics, we compute the normalised autocorrelation function of the global density time series,
+\begin{equation}
+    C(\tau) = \frac{\braket{(\eta_t - \braket{\eta})(\eta_{t + \tau} - \braket{\eta})}_t}{\mathrm{Var}(\eta)},
+\end{equation}
+and fit to a decay exponential \(C(\tau) \propto e^{-\tau/{\xi_\eta}}\) over an intermediate lag window to estimate an effective correlation time \(\xi_\eta\). The resulting \(\xi_\eta(\theta)\) is shown in \cref{fig:qca-statistical}(c). Similar to the variance, we find a strong peak at \(\theta \approx 0.38\pi\) up to \(\xi_\eta \approx 120\), consistent with a critical slowing down and a strong enhancement of memory in the bath dynamics. Both below and above this critical regime, the correlation time is dramatically smaller with \(\xi_\eta < 5\).
+
+
 
 \begin{figure}[t]
     \centering
