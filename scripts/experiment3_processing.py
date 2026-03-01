@@ -85,9 +85,9 @@ def main():
     savedir = Path.home() / "mx95_scratch2" / "jkam" / "corrqec2_results"
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("--burnin", type=float, default=200_000, help="Burn-in period")
+    parser.add_argument("--burnin", type=int, default=200_000, help="Burn-in period")
     parser.add_argument(
-        "--max_lag", type=float, default=2_000, help="Autocorrelation max lag"
+        "--max_lag", type=int, default=2_000, help="Autocorrelation max lag"
     )
 
     args = parser.parse_args()
