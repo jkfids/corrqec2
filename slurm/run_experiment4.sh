@@ -5,7 +5,7 @@
 #SBATCH --cpus-per-task=64
 # SBATCH --mem-per-cpu=4000
 #SBATCH --mem=256G
-#SBATCH --time=0-04:00:00
+#SBATCH --time=0-08:00:00
 #SBATCH --output=/home/jkam/mx95_scratch2/jkam/corrqec2_results/logs/experiment4_%j.out
 #SBATCH --error=/home/jkam/mx95_scratch2/jkam/corrqec2_results/logs/experiment4_%j.err
 
