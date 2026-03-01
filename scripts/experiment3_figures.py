@@ -77,7 +77,6 @@ def fit_autocorrs(autocorrs, hi, lo):
     if mask.sum() < 2:
         raise ValueError("Not enough points for fitting.")
 
-    print(autocorrs[mask])
     y = np.log(autocorrs[mask])
     t = ts[mask]
 
@@ -87,62 +86,56 @@ def fit_autocorrs(autocorrs, hi, lo):
     return tau
 
 
-def plot_autocorr(results_dict, distance, thetas):
-    Ys = []
-    for t in thetas:
-        corrs = results_dict[distance][t]["corr"]  # shape (shots, max_lag+1)
-        corr_means = corrs.mean(axis=0)  # shape (max_lag+1,)
-        Ys.append(corr_means[:20])
-
-    fig, ax = plt.subplots()
-    for i, t in enumerate(thetas):
-        ax.plot(np.arange(len(Ys[i])), Ys[i], label=f"θ={t:.2f}π")
-    ax.semilogy()
-    ax.legend()
-    fig.savefig("test_autocorr.png", dpi=300)
-
-
 def plot_figures(Y1_dict, Y2_dict, Y3_dict, distances, thetas):
     plt.rcParams.update(
         {
             "font.size": 10,
-            "axes.labelsize": 9,
-            "xtick.labelsize": 8.5,
-            "ytick.labelsize": 8.5,
-            "legend.fontsize": 9,
+            "axes.labelsize": 10,
+            "xtick.labelsize": 9,
+            "ytick.labelsize": 9,
+            "legend.fontsize": 10,
         }
     )
 
-    fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(10.2, 3.2))
+    fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(8.6, 3.0))
     axs = [ax1, ax2, ax3]
     colors = sns.color_palette("muted")
 
     for i, d in enumerate(distances):
-        ax1.plot(thetas, Y1_dict[d], label=f"d={d}", color=colors[i])
-        ax2.plot(thetas, Y2_dict[d], label=f"d={d}", color=colors[i])
+        ax1.plot(thetas, Y1_dict[d], label=f"$d={d}$`", color=colors[i], linewidth=1)
+        ax2.plot(thetas, Y2_dict[d], label=f"$d={d}$", color=colors[i], linewidth=1)
         # ax1.errorbar(
         #     thetas, Y1_dict[d][0], yerr=Y1_dict[d][1], label=f"d={d}", color=colors[i]
         # )
         # ax2.errorbar(
         #     thetas, Y2_dict[d][0], yerr=Y2_dict[d][1], label=f"d={d}", color=colors[i]
         # )
-        ax3.plot(thetas, Y3_dict[d], label=f"d={d}", color=colors[i])
+        ax3.plot(thetas, Y3_dict[d], label=f"$d={d}$", color=colors[i], linewidth=1)
 
     for i in range(3):
         axs[i].xaxis.set_major_formatter(FormatStrFormatter("%g$\\pi$"))
         axs[i].xaxis.set_major_locator(MultipleLocator(base=0.25))
-        axs[i].set_xlabel(f"QCA rotation angle, $\\theta$")
+        axs[i].set_xlabel(f"Controlled-rotation angle, $\\theta$")
+
+        axs[i].spines["top"].set_visible(False)
+        axs[i].spines["right"].set_visible(False)
+        axs[i].tick_params(direction="in", which="both", width=0.6)
+        for spine in axs[i].spines.values():
+            spine.set_linewidth(0.5)
 
     ax1.set_ylabel("Mean density, $\\langle \\eta \\rangle$")
-    ax2.set_ylabel("Scaled variance, $N \cdot \\mathrm{Var}(\\eta)$")
+    ax2.set_ylabel("Scaled variance, $N \\cdot \\mathrm{Var}(\\eta)$")
     ax3.set_ylabel("Fitted correlation time, $\\xi_\\eta$")
-    ax1.text(-0.18, 1.11, "(a)", transform=ax1.transAxes, va="top", ha="left", size=12)
-    ax2.text(-0.18, 1.11, "(b)", transform=ax2.transAxes, va="top", ha="left", size=12)
-    ax3.text(-0.18, 1.11, "(c)", transform=ax3.transAxes, va="top", ha="left", size=12)
+    ax1.set_title("Mean density")
+    ax2.set_title("Scaled variance")
+    ax3.set_title("Correlation time")
+    ax1.text(-0.22, 1.12, "(a)", transform=ax1.transAxes, va="top", ha="left", size=12)
+    ax2.text(-0.22, 1.12, "(b)", transform=ax2.transAxes, va="top", ha="left", size=12)
+    ax3.text(-0.22, 1.12, "(c)", transform=ax3.transAxes, va="top", ha="left", size=12)
     ax3.legend()
 
     fig.tight_layout()
-    fig.subplots_adjust(wspace=0.24)
+    fig.subplots_adjust(wspace=0.25)
     fig.savefig(
         "./project/paper/figures/experiment3.pdf",
         dpi=600,
@@ -157,13 +150,28 @@ def plot_figures(Y1_dict, Y2_dict, Y3_dict, distances, thetas):
     )
 
 
+def plot_autocorr(results_dict, distance, thetas):
+    """Test function to plot autocorrelation functions for a given distance and set of thetas."""
+    Ys = []
+    for t in thetas:
+        corrs = results_dict[distance][t]["corr"]  # shape (shots, max_lag+1)
+        corr_means = corrs.mean(axis=0)  # shape (max_lag+1,)
+        Ys.append(corr_means[:20])
+
+    fig, ax = plt.subplots()
+    for i, t in enumerate(thetas):
+        ax.plot(np.arange(len(Ys[i])), Ys[i], label=f"θ={t:.2f}π")
+    ax.semilogy()
+    ax.legend()
+    fig.savefig("/home/fidel/Projects/corrqec2/data/test_autocorr.png", dpi=600)
+
+
 def main():
     filepath = "/home/fidel/Projects/corrqec2/data/experiment3_results.pkl"
     results_dict, distances, thetas = load_results(filepath)
     Y1_dict, Y2_dict, Y3_dict = process_results(results_dict, distances, thetas)
     plot_figures(Y1_dict, Y2_dict, Y3_dict, distances, thetas)
-    print(thetas)
-    plot_autocorr(results_dict, distance=9, thetas=[0.0, 0.2, 0.38, 0.5, 1.0])
+    # plot_autocorr(results_dict, distance=9, thetas=[0.0, 0.2, 0.38, 0.5, 1.0])
 
 
 if __name__ == "__main__":

@@ -2,7 +2,7 @@ import time
 import sinter
 from .sampler import Sampler
 from ..experiments import SurfaceCodeMemory, SurfaceCodeStability
-from ..noisemodels import StandardCircuitLevel, StormModel
+from ..noisemodels import StandardCircuitLevel, StormModel, StormQCAModel
 from ..decoding import Pymatching
 
 EXPERIMENTS = {
@@ -13,6 +13,7 @@ EXPERIMENTS = {
 NOISE_MODELS = {
     "StandardCircuitLevel": StandardCircuitLevel,
     "StormModel": StormModel,
+    "QCAModel": StormQCAModel,
 }
 
 DECODERS = {

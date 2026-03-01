@@ -165,7 +165,7 @@ def run_entropy_calcs(Hamiltonian, thetas):
 
 
 def plot_entropies(S_lists1, S_lists2, S_lists3, thetas):
-    fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(10.2, 3.2), sharey=True)
+    fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(10.2, 3.3), sharey=True)
     axs = [ax1, ax2, ax3]
     colors = sns.color_palette("muted")
 
@@ -229,10 +229,10 @@ def plot_entropies(S_lists1, S_lists2, S_lists3, thetas):
     ax2.set_xlabel("Interaction strength, $\\theta_{RX}$")
     ax3.set_xlabel("Interaction strength, $\\theta_{F}$")
 
-    ax1.text(-0.15, 1.11, "(a)", transform=ax1.transAxes, va="top", ha="left", size=12)
-    ax2.text(-0.09, 1.11, "(b)", transform=ax2.transAxes, va="top", ha="left", size=12)
-    ax3.text(-0.09, 1.11, "(c)", transform=ax3.transAxes, va="top", ha="left", size=12)
-    ax1.set_ylabel("Quantum relative entropy, $S(\\rho \\| \\sigma)$")
+    ax1.text(-0.17, 1.12, "(a)", transform=ax1.transAxes, va="top", ha="left", size=13)
+    ax2.text(-0.1, 1.12, "(b)", transform=ax2.transAxes, va="top", ha="left", size=13)
+    ax3.text(-0.1, 1.12, "(c)", transform=ax3.transAxes, va="top", ha="left", size=13)
+    ax1.set_ylabel("Relative entropy, $S(\\rho \\| \\sigma)$")
     ax1.set_title("Heisenberg interaction")
     ax2.set_title("Controlled-$X$ rotation")
     ax3.set_title("Heisenberg + local field")
@@ -270,7 +270,7 @@ def run_pauli_prob_calcs(Hamiltonian, theta):
 
 def plot_pauli_probs(probs1, probs2, probs3):
 
-    fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(10.2, 3.0), sharey=True)
+    fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(10.2, 3.2), sharey=True)
     axs = [ax1, ax2, ax3]
     colors = sns.color_palette("muted")
 
@@ -289,9 +289,9 @@ def plot_pauli_probs(probs1, probs2, probs3):
         for spine in axs[i].spines.values():
             spine.set_linewidth(0.5)
 
-    ax1.text(-0.15, 1.11, "(a)", transform=ax1.transAxes, va="top", ha="left", size=12)
-    ax2.text(-0.09, 1.11, "(b)", transform=ax2.transAxes, va="top", ha="left", size=12)
-    ax3.text(-0.09, 1.11, "(c)", transform=ax3.transAxes, va="top", ha="left", size=12)
+    ax1.text(-0.17, 1.12, "(a)", transform=ax1.transAxes, va="top", ha="left", size=13)
+    ax2.text(-0.1, 1.12, "(b)", transform=ax2.transAxes, va="top", ha="left", size=13)
+    ax3.text(-0.1, 1.12, "(c)", transform=ax3.transAxes, va="top", ha="left", size=13)
     ax1.set_ylabel("Probability, $\\Pr(\\mathcal{P})$")
     ax1.set_title("Heisenberg interaction ($\\theta_J = \\frac{\\pi}{2}$)")
     ax2.set_title("Controlled-$X$ rotation ($\\theta_{RX} = \\frac{\\pi}{2}$)")
@@ -311,10 +311,10 @@ def plot_pauli_probs(probs1, probs2, probs3):
 def main():
     plt.rcParams.update(
         {
-            "font.size": 10,
-            "axes.labelsize": 9,
-            "xtick.labelsize": 8.5,
-            "ytick.labelsize": 8.5,
+            "font.size": 11,
+            "axes.labelsize": 11,
+            "xtick.labelsize": 10,
+            "ytick.labelsize": 10,
             "legend.fontsize": 9,
         }
     )

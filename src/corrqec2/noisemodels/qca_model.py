@@ -220,6 +220,78 @@ def _get_update_probs(theta: float, max_deg: int) -> np.ndarray:
     return update_probs
 
 
+def _estimate_qca_marginal_error_rate(
+    a: float,
+    b: float,
+    theta: float,
+    emissions: np.ndarray | list[list[float]] | None = None,
+    degree: int = 4,
+    n_iterations: int = 3,
+) -> float:
+    """Estimate marginal per-site error probability for the Storm-QCA model.
+
+    This is a first-order mean-field heuristic:
+    1) storm update on mean excited density,
+    2) checkerboard QCA update approximated from an average flip probability,
+    3) mapping excited-state occupancy to emitted non-identity probability.
+
+    Args:
+        a (float): Storm excitation probability 0->1.
+        b (float): Storm relaxation probability 1->0.
+        theta (float): QCA angle in radians.
+        emissions (np.ndarray | list[list[float]] | None): Emission table of shape
+            (2, 4), where column 0 is probability of I. If None, defaults to
+            model convention [[1,0,0,0],[0,1/3,1/3,1/3]].
+        degree (int): Effective nearest-neighbour degree in the lattice.
+        n_iterations (int): Number of fixed-point iterations for density estimate.
+
+    Returns:
+        float: Estimated marginal non-identity error probability in [0, 1].
+    """
+    if not (0.0 <= a <= 1.0 and 0.0 <= b <= 1.0):
+        raise ValueError("a and b must lie in [0, 1].")
+    if a + b <= 0:
+        raise ValueError("a + b must be > 0.")
+    if degree < 0:
+        raise ValueError("degree must be non-negative.")
+    if n_iterations < 1:
+        raise ValueError("n_iterations must be >= 1.")
+
+    if emissions is None:
+        emissions_arr = np.array([[1.0, 0.0, 0.0, 0.0], [0.0, 1 / 3, 1 / 3, 1 / 3]])
+    else:
+        emissions_arr = np.asarray(emissions, dtype=np.float64)
+    if emissions_arr.shape != (2, 4):
+        raise ValueError("emissions must have shape (2, 4).")
+
+    # Initial storm-only fixed point.
+    rho = a / (a + b)
+
+    for _ in range(n_iterations):
+        # Storm mean-field update.
+        rho_storm = a + (1.0 - a - b) * rho
+
+        # Mean QCA flip probability:
+        # E[sin^2(K*theta/2)], K ~ Binomial(degree, rho_storm)
+        z = degree
+        c = (1.0 - rho_storm) + rho_storm * np.exp(1j * theta)
+        mean_cos = np.real(c**z)
+        flip_prob = 0.5 * (1.0 - mean_cos)
+        flip_prob = float(np.clip(flip_prob, 0.0, 1.0))
+
+        # Two half-steps approximation on occupancy.
+        rho = (1.0 - 2.0 * flip_prob) ** 2 * rho_storm + 2.0 * flip_prob * (
+            1.0 - flip_prob
+        )
+        rho = float(np.clip(rho, 0.0, 1.0))
+
+    p_emit_if_calm = 1.0 - float(emissions_arr[0, 0])
+    p_emit_if_excited = 1.0 - float(emissions_arr[1, 0])
+    p_marg = (1.0 - rho) * p_emit_if_calm + rho * p_emit_if_excited
+
+    return float(np.clip(p_marg, 0.0, 1.0))
+
+
 class StormQCAModel(NoiseModel):
     """
     Spatiotemporal noise model based on a quantum cellular automaton (QCA) combined with a storm HMM.
@@ -283,7 +355,44 @@ class StormQCAModel(NoiseModel):
         return samples
 
     def gen_marginalized_circuit(self, experiment) -> stim.Circuit:
-        pass
+        # Get base circuit
+        if self.gate_noise is not None:
+            split_circuits = self.gen_noisy_circuit(experiment, split_circuit=True)
+        else:
+            split_circuits = experiment.split_circuits
+
+        p_D = _estimate_qca_marginal_error_rate(
+            a=self._a,
+            b=self._b,
+            theta=self._theta,
+            emissions=self._emissions,
+            degree=self._adjacencies.shape[1] if self._adjacencies is not None else 4,
+            n_iterations=10,
+        )
+
+        # Get qubit targets for marginal channel injection
+        targets = experiment.get_qubits_by_type(self.noisy_qubit_types)
+
+        subcircuits_new = []
+        for subcircuit in split_circuits[1:-1]:
+            if isinstance(subcircuit, stim.Circuit):
+                subcircuit_new = stim.Circuit()
+                subcircuit_new.append("DEPOLARIZE1", targets, p_D)
+                subcircuit_new += subcircuit
+            elif isinstance(subcircuit, tuple):
+                repeat_count, repeat_block = subcircuit
+                repeat_block_new = stim.Circuit()
+                repeat_block_new.append("DEPOLARIZE1", targets, p_D)
+                repeat_block_new += repeat_block
+                subcircuit_new = (repeat_count, repeat_block_new)
+            subcircuits_new.append(subcircuit_new)
+
+        # Combine all parts back into a single circuit
+        new_circuit = combine_split_circuits(
+            [split_circuits[0]] + subcircuits_new + [split_circuits[-1]]
+        )
+
+        return new_circuit
 
     def gen_detector_error_model(
         self, experiment: Experiment
