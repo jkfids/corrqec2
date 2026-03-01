@@ -4,7 +4,7 @@
 GEN_SCRIPT="scripts/experiment3_gen_csv.py"
 PARAMS_CSV="scripts/experiment3_params.csv"
 SBATCH_SCRIPT="slurm/run_experiment3_array.sh"
-PROCESSING_SCRIPT="scripts/experiment3_processing.py"
+PROCESSING_SBATCH_SCRIPT="slurm/run_experiment3_processing.sh"
 
 # Create logs directory if it doesn't exist
 mkdir -p /home/jkam/mx95_scratch2/jkam/corrqec2_results/logs
@@ -33,6 +33,13 @@ MAX=$((N - 1))
 CONCURRENCY=50
 
 echo "Submitting job array with $N tasks: 0-$MAX (max concurrent: $CONCURRENCY)"
-sbatch --array=0-"$MAX"%$CONCURRENCY \
+ARRAY_JOB_ID=$(sbatch --parsable --array=0-"$MAX"%$CONCURRENCY \
   --export=ALL,PARAMS_CSV="$PARAMS_CSV" \
-  "$SBATCH_SCRIPT"
+    "$SBATCH_SCRIPT")
+
+echo "Submitted array job: ${ARRAY_JOB_ID}"
+
+echo "Submitting processing job after array completes successfully..."
+PROCESSING_JOB_ID=$(sbatch --parsable --dependency=afterok:"${ARRAY_JOB_ID}" "$PROCESSING_SBATCH_SCRIPT")
+
+echo "Submitted processing job: ${PROCESSING_JOB_ID} (dependency: afterok:${ARRAY_JOB_ID})"
