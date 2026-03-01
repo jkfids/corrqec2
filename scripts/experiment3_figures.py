@@ -142,12 +142,6 @@ def plot_figures(Y1_dict, Y2_dict, Y3_dict, distances, thetas):
         bbox_inches="tight",
         pad_inches=0.0,
     )
-    fig.savefig(
-        "./project/paper/figures/experiment3.png",
-        dpi=600,
-        bbox_inches="tight",
-        pad_inches=0.0,
-    )
 
 
 def plot_autocorr(results_dict, distance, thetas):

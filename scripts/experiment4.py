@@ -13,9 +13,9 @@ def main():
 
     # Sweep over distances and controlled-rotation angles
     tasks = []
-    thetas = [0.2, 0.3, 0.4]
+    thetas = [0.0, 0.1, 0.2, 0.3, 0.34, 0.36, 0.38, 0.4, 0.42, 0.5]
     thetas = [t * np.pi for t in thetas]
-    distances = [7, 9, 11, 13]
+    distances = [5, 7, 9, 11, 13, 15]
 
     # Fixed noise model parameters
     p_gate = 0.001
