@@ -32,28 +32,28 @@ We detail the constituent maps below.
     
     The QCA update is implemented as a layer of two commuting controlled-\(X\) rotations with the red and black sublattices as alternating controls and targets. For the first half-step with red controls and black targets, we define the unitary
     \begin{equation}
-        U_{R\to B}(\theta) = \prod_{i\in V_\mathrm{red}} \prod_{j\in N(i)}
+        Q_{R\to B}(\theta) = \prod_{i\in V_\mathrm{red}} \prod_{j\in N(i)}
         \left(
             \ketbra{0}{0}^{E_i} \otimes I^{E_j} + \ketbra{1}{1}^{E_i} \otimes e^{-i\theta X^{E_j}}
         \right).
     \end{equation}
     The corresponding channel is denoted
     \begin{equation}
-        \mathcal{Q}_{R\to B}^E(\theta)[\rho] = U_{R\to B}(\theta) \rho U_{R\to B}^\dagger(\theta).
+        \mathcal{Q}_{R\to B}^E(\theta)[\rho] = Q_{R\to B}(\theta) \rho Q_{R\to B}^\dagger(\theta).
     \end{equation}
 
     \item \textbf{QCA half-step (black \(\to\) red)}, \(\mathcal{Q}_{B\to R}^E(\theta)\)
     
     For the second half-step with black controls and red targets, we define the unitary
     \begin{equation}
-        U_{B\to R}(\theta) = \prod_{i\in V_\mathrm{black}} \prod_{j\in N(i)}
+        Q_{B\to R}(\theta) = \prod_{i\in V_\mathrm{black}} \prod_{j\in N(i)}
         \left(
             \ketbra{0}{0}^{E_i} \otimes I^{E_j} + \ketbra{1}{1}^{E_i} \otimes e^{-i\theta X^{E_j}}
         \right),
     \end{equation}
     with corresponding channel
     \begin{equation}
-        \mathcal{Q}_{B\to R}^E(\theta)[\rho] = U_{B\to R}(\theta) \rho U_{B\to R}^\dagger(\theta).
+        \mathcal{Q}_{B\to R}^E(\theta)[\rho] = Q_{B\to R}(\theta) \rho Q_{B\to R}^\dagger(\theta).
     \end{equation}
     Together, these two maps implement a full QCA update on the environment.
 
@@ -70,7 +70,7 @@ We detail the constituent maps below.
         V_k V_k^\dagger = I \forall k, \quad \Tr(V_k V_l) = 0 \ \forall k \ne l.
     \end{equation}
     Furthermore, in this work, we specialise to the minimal family of unitaries
-    \begin{equation}
+    \begin{equation}\label{eq:qca-system-unitary}
         V_0 = I, \quad V_1 = \vec{n} \cdot \vec{\sigma} = n_X X + n_Y Y + n_Z Z, \quad \|\vec{n}\|^2 = 1,
     \end{equation}
     with \(\vec{n} \in \mathbb{R}^3\).
@@ -82,7 +82,7 @@ To obtain the effective SPP, we apply the multi-time Pauli twirl \(\mathcal{T}_P
     \widetilde{\mathcal{M}}_{a, b, \theta} \coloneq \mathcal{T}_P^S[\mathcal{M}_{a, b, \theta}] = \widetilde{\mathcal{U}}^{SE} \circ \mathcal{Q}_{B\to R}^E(\theta) \circ \mathcal{Q}_{R\to B}^E(\theta) \circ \mathcal{S}^E (a, b).
 \end{equation}
 The central mechanism of this model is that, for a system-environment interaction of the controlled-unitary form in \cref{eq:qca-se-unitary}, satisfying the orthogonality condition in \cref{eq:se-unitary-condition}, the system twirl induces an effective \(Z\)-basis dephasing on the environment in each cycle. Explicitly, for each site \(i\) the reduced environment update obeys
-\begin{equation}
+\begin{equation}\label{eq:reduced-environment-update}
     \Tr_{S_i}(\widetilde{\mathcal{U}}^{SE}[\rho_{S_iE_i}]) = \sum_{k\in\{0,1\}} \ketbra{k}{k}_{E_i} \Tr_{S_i}[\rho_{S_iE_i}] \ketbra{k}{k}_{E_i},
 \end{equation}
 which removes the off-diagonal components of the environment state in the computational basis. Crucially, we do not impose a dephasing channel on the bath by hand. Rather, this re-classicalisation of the environment emerges as a direct consequence of interacting with the operationally twirled system.
