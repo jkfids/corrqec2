@@ -16,3 +16,5 @@ tomographically
 ancilla
 tunable
 bipartition
+unitaries
+dephasing

@@ -1,6 +1,8 @@
 \clearpage
 \section{Quantum cellular automaton model}\label{sec:qcamodel}
-In this section, we propose a spatiotemporal SPP model. We construct a microscopic two-dimensional coherent quantum cellular automaton (QCA) on a bath, locally coupled to system qubits, plus repeated `classicalisation' via system twirling which induces a probabilistic cellular automaton (PCA) with a nonlinear kernel \(p = \sin^2(k\theta)\) depending on the number of excited neighbours. The result is a physically derived spatiotemporal SPP, that remains efficient to simulate and sample, while exhibiting nontrivial correlation structure and statistical mechanical properties controlled by few parameters.
+While \cref{sec:temporalstormmodel} demonstrated the impact of purely temporal correlation, noise in contemporary quantum hardware frequently exhibits genuinely spatiotemporal structure. Here we introduce a spatiotemporal SPP model derived from a two-dimensional quantum cellular automaton (QCA) environment (bath) coupled locally to the system. Operational Pauli twirling on the system maps the underlying coherent bath dynamics to an effective SPP that admits an exact description as a probabilistic cellular automaton (PCA) with a nonlinear transition kernel. We show that tuning a single parameter controlling the strength of coherent bath interactions drives the bath into a pseudo-critical regime with macroscopic error avalanches and critical slowing down, producing correlated fault patterns reminiscent of correlated error events reported in solid-state platforms. The model thus provides a microscopically motivated, yet tractably simulable, link between non-equilibrium statistical mechanics and QEC performance under spatiotemporal correlations.
+
+We structure analysis as follows. In \cref{sec:qca-details}, we present the microscopic QCA model, and its mapping, under operational system twirling, to an effective SPP with an exact PCA description. In \cref{sec:qca-stat-mech}, we characterise the resulting PCA as a statistical mechanical system, isolating how the spatial parameter controlling coherent bath interactions drives a critical-like transition in the bath dynamics. Finally, in \cref{sec:qca-qec-results}, we benchmark rotated surface code memory under this noise model and show a sharp breakdown of distance scaling in the pseudo-critical regime.
 
 \subsection{Quantum cellular automaton}\label{sec:qca-details}
 We define the microscopic dynamics of the QCA noise model on a 2D square lattice \(V\). At each site \(i\in V\), a system qubit \(S_i\) is locally coupled to an environment (bath) qubit \(E_i\). We impose a chequerboard bipartition of the lattice \(V = V_\mathrm{red} \cup V_\mathrm{black}\), such that nearest neighbours \(N(i)\) of a red site are strictly black, and vice versa. The environment is initialised as a classical mixture of \(Z\)-basis states, completely uncorrelated with the system.
@@ -65,7 +67,7 @@ We detail the constituent maps below.
     \end{equation}
     The key structural assumption is that the conditional unitaries \(\{V_k\}\) are orthogonal under the Hilbert-Schmidt inner product, 
     \begin{equation}\label{eq:se-unitary-condition}
-        V_k V_k^\dagger = I \forall k, \quad \Tr(V_k V_l) = 0 \ \forall k \ne l,
+        V_k V_k^\dagger = I \forall k, \quad \Tr(V_k V_l) = 0 \ \forall k \ne l.
     \end{equation}
     Furthermore, in this work, we specialise to the minimal family of unitaries
     \begin{equation}
@@ -73,26 +75,29 @@ We detail the constituent maps below.
     \end{equation}
     with \(\vec{n} \in \mathbb{R}^3\).
 \end{enumerate}
-The entire dynamics are thus governed by three parameters; two temporal parameters \((a, b)\) specifying the environment storm channel \(\mathcal{S}^E (a, b)\), and a third spatial parameter \(\theta\) controlling the coherent QCA on the environment.
+The entire dynamics are thus governed by three parameters: two temporal parameters \((a, b)\) specifying the environment storm channel \(\mathcal{S}^E (a, b)\), and a third spatial parameter \(\theta\) controlling the coherent QCA on the environment.
 
 To obtain the effective SPP, we apply the multi-time Pauli twirl \(\mathcal{T}_P^S\) on \(\mathcal{M}_{a, b, \theta}\) exclusively on the system subspace. Because the maps \(\mathcal{S}^E (a, b)\) and \(\mathcal{Q}_{B\to R}^E(\theta),\) \(\mathcal{Q}_{R\to B}^E(\theta)\) act trivially on the system, the twirl can be `pushed through' to act solely on the interaction \(\mathcal{U}^{SE}\). Defining the twirled interaction as \(\widetilde{\mathcal{U}}^{SE} \coloneq \mathcal{T}_P^S[\mathcal{U}^{SE}]\), we write the effective twirled joint map
 \begin{equation}
     \widetilde{\mathcal{M}}_{a, b, \theta} \coloneq \mathcal{T}_P^S[\mathcal{M}_{a, b, \theta}] = \widetilde{\mathcal{U}}^{SE} \circ \mathcal{Q}_{B\to R}^E(\theta) \circ \mathcal{Q}_{R\to B}^E(\theta) \circ \mathcal{S}^E (a, b).
 \end{equation}
-The central mechanism of this model is that, for a system-environment interaction of the controlled-unitary form in \cref{eq:qca-se-unitary}, satisfying the orthogonality condition in \cref{eq:se-unitary-condition}, the system twirl induces an effective \(Z\)-basis dephasing on the environment in each cycle. Explicitly, the reduced environment dynamics can be expressed as
+The central mechanism of this model is that, for a system-environment interaction of the controlled-unitary form in \cref{eq:qca-se-unitary}, satisfying the orthogonality condition in \cref{eq:se-unitary-condition}, the system twirl induces an effective \(Z\)-basis dephasing on the environment in each cycle. Explicitly, for each site \(i\) the reduced environment update obeys
 \begin{equation}
-    \Tr_{S_i}(\widetilde{\mathcal{U}}^{SE}[\rho_{S_iE_i}]) = \sum_{k\in\{0,1\}} \ketbra{k}{k}_{E_i} \Tr_{S_i}[\rho_{S_iE_i}] \ketbra{k}{k}_{E_i}.
+    \Tr_{S_i}(\widetilde{\mathcal{U}}^{SE}[\rho_{S_iE_i}]) = \sum_{k\in\{0,1\}} \ketbra{k}{k}_{E_i} \Tr_{S_i}[\rho_{S_iE_i}] \ketbra{k}{k}_{E_i},
 \end{equation}
-This pipeline guarantees three properties for the effective dynamics:
+which removes the off-diagonal components of the environment state in the computational basis. Crucially, we do not impose a dephasing channel on the bath by hand. Rather, this re-classicalisation of the environment emerges as a direct consequence of interacting with the operationally twirled system.
+
+This construction yields three key features of the effective dynamics:
 \begin{enumerate}
     \item \textbf{Nonlinear transition kernel}: The QCA step reduces to a PCA with a nonlinear transition kernel, with the probability of a target site flipping given by \(p = \sin^2(k\theta)\) as a function of the number of \(k\) excited neighbours.
     \item \textbf{Environment re-classicalisation}: The twirled interaction applies an effective \(Z\)-basis dephasing to the environment every cycle, re-classicalising the bath and collapsing any coherent superpositions.
     \item \textbf{System Pauli noise}: Conditioned on the environment state, the induced system noise is a Pauli channel with relative weights set by the coefficients \(n_X^2, n_Y^2, n_Z^2\) of the conditional unitary \(V_1\).
 \end{enumerate}
-This maps the original QCA dynamics to an effective SPP that admits an exact description as a probabilistic cellular automaton (PCA) HMM. Full derivations of the three properties above, and of the overall mapping, are provided in \cref{app:qca-pca-mapping}. We now summarise the resulting PCA HMM dynamics.
+Altogether, coherent local bath dynamics combined with operational system twirling produce a microscopically derived spatiotemporal noise model that is local and causal by construction, and that admits an exact description as a PCA hidden Markov model (HMM).
+Full derivations of the mapping and the properties above are given in \cref{app:qca-pca-mapping}. We now summarise the resulting PCA HMM dynamics.
 
 \subsection{Probabilistic cellular automaton}\label{sec:pca-details}
-The effective spatiotemporal SPP admits an exact description as a classical HMM with a nonlinear transition kernel, where the nonlinearity is inherited from coherent interactions in the underlying QCA. The latent state is the environment bath configuration, and the emission are the system Pauli faults.
+The effective spatiotemporal SPP admits an exact description as a classical HMM with a nonlinear transition kernel, where the nonlinearity is inherited from coherent interactions in the underlying QCA. The latent state is the environment bath configuration, and the emissions are the system Pauli faults.
 
 Let \(s_{t}(i) \in \{0,1\}\) denote the state of environment site \(i \in V\) at the begining of cycle \(t\). The Pauli emission pattern during cycle \(t\) is denoted by the string \(x_t \in \{x_t(i)\}_{i \in V}\), where each \(x_t(i) \in \{I, X, Y, Z\}\) is sampled conditional on the updated bath configuration \(s_{t+1}(i)\) at the end of the cycle.
 
@@ -127,43 +132,60 @@ Crucially, because the lattice is bipartite, each PCA half-step updates only one
     The resulting Pauli string \(x_t = \{x_t(i)\}_{i\in V}\) is the noise induced on the system during cycle \(t\).
     \item \textbf{Repeat}: Increment \(t\), and repeat steps 1-4 for as many cycles required.
 \end{enumerate}
-This PCA describes a driven classical spin system with a nonlinear update rule. The storm process continuously injects and removes excitations locally, while the QCA-derived PCA spread excitations across the lattice in a neighbour-dependent manner parametrised by \(\theta\). The competition between these stochastic perturbations and nonlinear spatial propagations gives rise to non-trivial steady states and spatial correlation structures, which we evaluate next.
+The PCA describes a driven classical spin system with a nonlinear update rule. The storm process continuously injects and removes excitations locally, while the QCA-derived PCA spread excitations across the lattice in a neighbour-dependent manner parametrised by \(\theta\). Importantly, the nonlinear transition kernel $p = \sin^2(k\theta)$ is a uniquely quantum footprint of the coherent bath effects. The competition between these stochastic perturbations and nonlinear spatial propagations gives rise to non-trivial steady states and spatiotemporal correlation structures, which we evaluate next.
 
-\subsection{Statistical mechanical analysis}
-Before studying the noise properties of this model for QEC, we first analyse the PCA dynamics from \cref{sec:pca-details} as a statistical mechanical system. In particular, we would like to isolate the effect of the spatial parameter \(\theta\) controlling the strength of the nonlinear PCA update via the kernel \(\sin^2(k\theta)\) on the emergent correlation structure and steady state properties of the system. 
+\subsection{Statistical mechanical analysis}\label{sec:qca-stat-mech}
+Before studying the noise properties of this model for QEC, we first study analyse the PCA dynamics from \cref{sec:pca-details} as a statistical mechanical system. In particular, we isolate the effect of the spatial parameter \(\theta\), which controls the strength of the nonlinear PCA update via kernel \(p = \sin^2(k\theta)\), on the emergent correlation structure and steady-state properties of the system.
 
-Throughout, we fix the storm parameters to \(a=10^-4, b=0.5\), and sweep the spatial parameter \(\theta \in [0, \pi]\), which controls the strength of the nonlinear PCA update via the kernel \(\sin^2(k\theta)\). We consider lattices corresponding to rotated surface code layouts for distances \(d=9,11,13,15\), with number of sites (qubits) \(N = |V| = 2d^2 - 1\).
-
-To quantify Pauli emission statistics, or equivalently excitation statistics in the environment, we define the time step-wise density
+Throughout, we fix the storm parameters to a low spontaneous injection rate $a=10^{-4}$ and a fast local relaxation rate \(b=0.5\), and sweep the controlled-rotation angle \(\theta \in [0, \pi]\). We consider lattices corresponding to rotated surface code layouts for distances \(d=9, 11, 13, 15\), with the number of sites (qubits) \(N_d = |V| = 2d^2 - 1\). To quantify the excitation statistics in the environment, we define the global density at time step \(t\) as
 \begin{equation}
-    \eta_t \coloneq \frac{1}{N}\sum_{i\in V} s_t(i),
+    \eta_t \coloneq \frac{1}{N_d}\sum_{i\in V} s_t(i),
 \end{equation}
-and compute statistics of the time series \(\{\eta_t\}\) for different values of \(\theta\). We simulate bath dynamics up to \(t=10^6\), recording statistics only after a burn-in period of \(2\times 10^5\) cycles. We repeat this procedure for 10 independent trajectories. \Cref{fig:qca-statistical} summarises three complementary diagnostics as a function of \(\theta\). The mean density \(\braket{\eta}\), a susceptibility parameter or scaled variance \(N\mathrm{Var}(\eta)\), and a fitted correlation time extracted from the autocorrelation of \(\eta_t\). 
-
-\Cref{fig:qca-statistical}(a) shows the mean density \(\braket{\eta}\) for \(\theta \in [0, \pi]\). For small \(\theta\), the PCA update is weak and the dynamics are dominated by the storm process, which for our choice of parameters \(a=10^{-4}, b=0.5\) has a low mean density of \(\braket{\eta} \approx 2\times 10^{-4}\). As \(\theta\) increases, \(\braket{\eta}\) increases modestly, before undergoing a sharp climb beginning around \(\theta \approx 0.32\pi\). The mean density peaks to around \(\theta \approx 0.5\pi\), before saturating at this value. This behaviour is consistent with an inactive-to-active crossover (or transition) controlled by the spatial parameter \(\theta\), where below a threshold, excitations cannot proliferate, while above it, the neighbour-dependent update sustains a finite density despite the strong relaxation of \(b = 0.5\). The quantitative behaviour is also largely consistent across different lattice sizes, with a slight decrease in the threshold parameter with increasing size.
-
-To probe fluctuations in the density, we compute the variance of \(\eta_t\) as \(\mathrm{Var}(\eta) = (\braket{\eta_t^2} - \braket{\eta_t}^2)\), and report the scaled variance \(N\mathrm{Var}(\eta)\) in \cref{fig:qca-statistical}(b). This quantity is analogous to a susceptibility parameter in equilibrium statistical mechanics. If correlations grow, the density fluctuates more strongly than would be expected from \(N\) nearly-independent sites. We observe a pronounced peak in \(N\mathrm{Var}(\eta)\) at \(theta \approx 0.38\pi\), aligned with the sharp rise of \(\braket{\eta}\), indicating a strong enhancement of fluctuations in a narrow window of \(\theta\). Such a peak is consistent of a critical or near-critical regimes, reflecting highly correlated global dynamics. Over the system sizes shown, the peak is only weakly dependent on size. Nevertheless, the concurrence of the peak with the sharp rise in density suggests that the critical regime is associated with the onset of sustained excitation proliferation, where correlations are maximised.
-
-To quantify memory in the bath dynamics, we compute the normalised autocorrelation function of the global density time series,
-\begin{equation}
-    C(\tau) = \frac{\braket{(\eta_t - \braket{\eta})(\eta_{t + \tau} - \braket{\eta})}_t}{\mathrm{Var}(\eta)},
-\end{equation}
-and fit to a decay exponential \(C(\tau) \propto e^{-\tau/{\xi_\eta}}\) over an intermediate lag window to estimate an effective correlation time \(\xi_\eta\). The resulting \(\xi_\eta(\theta)\) is shown in \cref{fig:qca-statistical}(c). Similar to the variance, we find a strong peak at \(\theta \approx 0.38\pi\) up to \(\xi_\eta \approx 120\), consistent with a critical slowing down and a strong enhancement of memory in the bath dynamics. Both below and above this critical regime, the correlation time is dramatically smaller with \(\xi_\eta < 5\).
-
-
+and compute the statistics of the time series $\{\eta_t\}$. We simulate the bath dynamics up to $t=10^6$ cycles, recording statistics only after a burn-in period of $2 \times 10^5$ cycles. This procedure is repeated for 10 independent trajectories.
 
 \begin{figure}[t]
     \centering
     \includegraphics[width=1\textwidth]{figures/experiment3.pdf}
-    \caption{}
+    \caption{Statistical mechanical quantities of the QCA-induced PCA as a function of the spatial controlled-rotation angle \(\theta\). The environment storm parameters are fixed to \(a=10^{-4}\) and \(b=0.5\). Data is shown for lattice corresponding to rotated surface code patches of distances \(d=9, 11, 13, 15\) and number of sites \(N_d = 2 * d^2 - 1\). (a) Mean density \(\langle\eta_t\rangle_t\) where \(\eta_t \coloneq N_d^{-1}\sum_{i\in V}s_t(i)\). (b) Scaled variance \(N_d \mathrm{Var}(\eta_t)\). (c) Fitted correlation time \(\xi_\eta\) obtained by fitting the normalised autocorrelation function \(C(\tau) \propto e^{-\tau/\xi_\eta}\).
+    }
     \label{fig:qca-statistical}
 \end{figure}
 
-\subsection{QEC results}
+\Cref{fig:qca-statistical} summarises three complementary diagnostics as a function of \(\theta\): the mean density \(\langle\eta\rangle\), the scaled variance \(N_d \mathrm{Var}(\eta)\), and a fitted correlation time \(\xi_\eta\) extracted from the autocorrelations of \(\eta_t\).
+
+\Cref{fig:qca-statistical}(a) shows the mean density \(\langle\eta\rangle = \langle\eta_t\rangle_t\). For small \(\theta\), the PCA step is weak, and the dynamics are dominated by the storm process. Due to the strong relaxation $b=0.5$, the bath remains in an effectively inactive or calm phase with a low background density \(\langle\eta\rangle \approx 2 \times 10^{-4}\). As \(\theta\) increases, the density undergoes a sharp, continuous crossover beginning around \(\theta \approx 0.35\pi\). The neighbour-dependent spreading outpaces the local decay, driving the bath into an active steady state that saturates near $\langle\eta\rangle \approx 0.5$.
+
+To probe the density fluctuations, we compute the scaled variance \(N_d \mathrm{Var}(\eta)\), with \(\mathrm{Var}(\eta) = \langle\eta_t^2\rangle - \langle\eta_t\rangle^2\), reported in \cref{fig:qca-statistical}(b). This quantity is analogous to susceptibility in equilibrium statistical mechanics. We observe a pronounced, narrow peak at $\theta \approx 0.4\pi$, aligned with the sharp rise in mean density. This indicates a massive enhancement of macroscopic fluctuations, where in this near-critical regime, small local clusters of errors can spontaneously grow into system-wide avalanches before dying out. Over the evaluated system sizes, the peak exhibits a slight sharpening and shifting characteristic of finite-size scaling near a critical point.
+
+Finally, to quantify memory in the bath dynamics, we compute the normalised autocorrelation function of the density time series,
+\begin{equation}
+    C(\tau) = \frac{\braket{(\eta_t - \braket{\eta})(\eta_{t + \tau} - \braket{\eta})}_t}{\mathrm{Var}(\eta)},
+\end{equation}
+and fit it to an exponential decay \(C(\tau) \propto e^{-\tau/\xi_\eta}\) to extract the effective correlation time. As shown in \cref{fig:qca-statistical}(c), \(\xi_\eta\) spikes dramatically near the transition threshold, reaching \(\xi_\eta \approx 140\) cycles for \(d=9\), consistent with a critical slowing down. Deep in either the calm or fully active phases, the bath relaxes rapidly ($\xi_\eta \lessapprox 3$), corresponding to nearly Markovian dynamics. However, in the crossover regime, the competition between coherent spreading and stochastic decay leads to the emergence of macroscopic temporal memory.
+
+In summary, tuning a single spatial parameter \(\theta\) drives the environment through a critical-like transition from a calm, weakly correlated background into a dense, active phase. The intermediate critical window maximises both density fluctuations and temporal memory. We demonstrate below that this regime is highly detrimental for QEC, where enhanced susceptibility drives spatially correlated error avalanches, while critical slowing down causes these cascades to persist across multiple QEC cycles. We next evaluate surface code performance under these dynamics reusing the same model parameters.
+
+\subsection{QEC results}\label{sec:qca-qec-results}
+We now evaluate surface code memory performance under the QCA noise model. As in 
+\cref{sec:qca-stat-mech}, we fix the storm parameters to \(a=10^{-4}\) and \(b=0.5\), and sweep the controlled-rotation angle \(\theta\).
+
+The simulation protocol mirrors the surface code memory benchmark of \cref{sec:temporalstormmodel}. We simulate rotated surface code circuits of distance \(d\) for \(N_r = 3d\) rounds of syndrome extraction, applying the same global circuit-level baseline noise model at a characteristic rate \(0.1\%\). Logical failure rates are estimated via Monte Carlo sampling using Stim and decoding with minimum-weight perfect matching (MWPM) via PyMatching. 
+
+Inter-round correlated faults are incorporated by composing, at the start of each round, an additional Pauli fault sampled from the QCA-derived SPP, driven by the bath dynamics parameters \((a,b,\theta)\). A key distinction from the temporal storm sweep is that the spatially interacting PCA bath does not admit a simple closed-form expression for marginal Pauli error rates. Accordingly, we numerically estimate the required marginal error rate for each \(\theta\) to construct a marginalised detector error model for the MWPM decoder. Additionally, the bath is initialised in the all-zeros configuration for each shot.
 
 \begin{figure}[t]
     \centering
     \includegraphics[width=1\textwidth]{figures/experiment4.pdf}
-    \caption{}
+    \caption{Rotated surface code memory under the QCA-derived noise model. We fix the storm parameters to \(a=10^{-4}\) and \(b=0.5\), with a baseline circuit-level noise rate of \(0.1\%\) and code distances \(d\) simulated for \(N_r = 3d\) rounds. (a) Effective per-round logical error rate as a function of the controlled-rotation angle \(\theta\) for various code distances. (b) The same logical error rates plotted against code distance \(d\) for fixed values of \(\theta\). Dashed lines are exponential fits. Error bars, where visible, indicate binomial standard errors.
+    }
     \label{fig:qca-qec-results}
 \end{figure}
+
+\Cref{fig:qca-qec-results} details the logical error rate per round. In the calm regime (\(\theta \le 0.34\pi\)), logical performance improves rapidly with increasing code distance. This behaviour is consistent with dilute bath excitations and weak spatiotemporal structure, where the surface code remains effective at error suppression as previously explored~\cite{fowlerQuantifyingEffectsLocal2014}. As \(\theta\) enters the pseudo-critical window (\(\theta \approx 0.36\pi\)–\(0.40\pi\)), logical performance degrades sharply, and increasing code distance no longer yields reliable exponential suppression. Above a threshold \(\theta_{\mathrm{th}} \approx 0.39\pi\), the distance scaling trend entirely reverses where larger codes preform worse than smaller ones. The scaling plot in \cref{fig:qca-qec-results}(b) make this breakdown explicit.
+
+These trends align directly with the statistical mechanical diagnostics from \cref{sec:qca-stat-mech}. The same \(\theta\) window that strongly degrades QEC performance coincides with the regime that maximises density fluctuations and exhibits critical slowing down. In this regime, enhanced susceptibility corresponds to rare but large spatiotemporal `avalanches'---spacetime-cone-like error clusters that can grow into system-side cascades before dying out. Qualitatively similar error burst mechanisms have been reported in recent experiments on superconducting qubits(\Fidel{citations}), for example due to cosmic ray or leakage events.
+
+Taken together, these results establish a concrete mechanism by which coherence in local microscopic bath dynamics can manifest, after operational twirling, as tunable non-equilibrium criticality that substantially impacts QEC performance.
+
+Finally, we emphasise that MWPM with a marginalised detector model does not exploit correlations. Correlation-aware decoders, or approaches utilising reweighting and model learning, may partially recover performance, but typically incur significant complexity overheads. In this sense, the QCA model offers an efficiently simulable stress test. It is derived from microscopic dynamics, exhibits nontrivial spatiotemporal correlations, and induces a breakdown of standard QEC protocols.
+

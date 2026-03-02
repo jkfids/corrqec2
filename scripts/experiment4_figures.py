@@ -107,6 +107,8 @@ if __name__ == "__main__":
         ax1.fill_between(
             theta_sorted_i, lower, upper, alpha=0.5, linewidth=0, color=colors[i]
         )
+    ax1.set_ylim(2e-9, 1.2e-2)
+    ax1.set_xlim(0.185, 0.5)
     ax1.legend(loc="lower right")
     ax1.set_ylabel("Logical error rate (per round)")
     ax1.set_xlabel("Controlled-rotation angle, $\\theta$")
@@ -138,7 +140,7 @@ if __name__ == "__main__":
         # Exponential fits
         logy = np.log(center)
         b, a = np.polyfit(distance_sorted_j, logy, 1)
-        x_fit = np.linspace(5, 20, 100)
+        x_fit = np.linspace(4, 18, 100)
         y_fit = np.exp(a + b * x_fit)
         ax2.plot(
             x_fit,
@@ -162,7 +164,7 @@ if __name__ == "__main__":
 
     ax2.legend(loc="lower left")
     ax2.set_xlabel("Code distance, $d$")
-    ax2.set_xlim(4.2, 17.8)
+    ax2.set_xlim(4.5, 17.5)
     ax2.set_xticks([5, 7, 9, 11, 13, 15, 17])
 
     ax1.text(-0.155, 1.08, "(a)", transform=ax1.transAxes, va="top", ha="left", size=10)
@@ -180,12 +182,6 @@ if __name__ == "__main__":
     fig.subplots_adjust(wspace=0.09)
     fig.savefig(
         "./project/paper/figures/experiment4.pdf",
-        dpi=600,
-        bbox_inches="tight",
-        pad_inches=0.00,
-    )
-    fig.savefig(
-        "./project/paper/figures/experiment4.png",
         dpi=600,
         bbox_inches="tight",
         pad_inches=0.00,

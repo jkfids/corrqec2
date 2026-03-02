@@ -124,11 +124,11 @@ def plot_figures(Y1_dict, Y2_dict, Y3_dict, distances, thetas):
             spine.set_linewidth(0.5)
 
     ax1.set_ylabel("Mean density, $\\langle \\eta \\rangle$")
-    ax2.set_ylabel("Scaled variance, $N \\cdot \\mathrm{Var}(\\eta)$")
-    ax3.set_ylabel("Fitted correlation time, $\\xi_\\eta$")
+    ax2.set_ylabel("Scaled variance, $N_d \\mathrm{Var}(\\eta)$")
+    ax3.set_ylabel("Correlation time, $\\xi_\\eta$")
     ax1.set_title("Mean density")
     ax2.set_title("Scaled variance")
-    ax3.set_title("Correlation time")
+    ax3.set_title("Fitted correlation time")
     ax1.text(-0.22, 1.12, "(a)", transform=ax1.transAxes, va="top", ha="left", size=12)
     ax2.text(-0.22, 1.12, "(b)", transform=ax2.transAxes, va="top", ha="left", size=12)
     ax3.text(-0.22, 1.12, "(c)", transform=ax3.transAxes, va="top", ha="left", size=12)
@@ -165,7 +165,7 @@ def main():
     results_dict, distances, thetas = load_results(filepath)
     Y1_dict, Y2_dict, Y3_dict = process_results(results_dict, distances, thetas)
     plot_figures(Y1_dict, Y2_dict, Y3_dict, distances, thetas)
-    # plot_autocorr(results_dict, distance=9, thetas=[0.0, 0.2, 0.38, 0.5, 1.0])
+    plot_autocorr(results_dict, distance=11, thetas=[0.39, 0.4, 0.41])
 
 
 if __name__ == "__main__":
