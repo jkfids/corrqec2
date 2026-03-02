@@ -3,11 +3,26 @@
 \subsection{Setting and assumptions}
 We consider the following setting and assumptions:
 \begin{itemize}
-    \item \textbf{(A1) Classical environment initialisation.} Before any dynamics, the environment is initialised as a mixture of computational basis states \(\{\ket{s}\}\), \(s \in \{0,1\}^{|V|}\).
-    \item \textbf{(A2) Cycle dynamics.} The entire microscopic system-environment dynamics are described by a sequence of maps (i) an environment-only storm channel \(\mathcal{S}^E\), (ii) two QCA half-steps \(\mathcal{Q}_{R\to B}^E\) and \(\mathcal{Q}_{B\to R}^E\) on the environment, and (iii) a system-environment unitary interaction \(\mathcal{U}^{SE}\), which are detailed in \cref{sec:qcamodel}.
-    \item \textbf{(A3) Controlled system-environment interaction.}
-    \item \textbf{(A4) System Pauli twirl.}
-    \item \textbf{(A5) Orthogonality of conditional unitaries.}
+    \item \textbf{(A1) Classical environment initialisation}. Before any dynamics, the environment is initialised as a mixture of computational basis states \(\{\ket{s}\}\), \(s \in \{0,1\}^{|V|}\).
+    \item \textbf{(A2) Cycle dynamics}. The entire microscopic system-environment dynamics are described by a sequence of maps (i) an environment-only storm channel \(\mathcal{S}^E\), (ii) two QCA half-steps \(\mathcal{Q}_{R\to B}^E\) and \(\mathcal{Q}_{B\to R}^E\) on the environment, and (iii) a system-environment unitary interaction \(\mathcal{U}^{SE}\), which are detailed in \cref{sec:qcamodel}.
+    \item \textbf{(A3) Controlled system-environment interaction}.
+    The local system-environment interaction is a controlled unitary of the form given in \cref{eq:qca-se-unitary}, which we rewrite here as
+    \begin{equation*}
+        U_{SE} = \sum_{s\in\{0,1\}} \Pi_s^{E} \otimes V_s^{S},
+    \end{equation*}
+    where \(\Pi_s^{E_i} = \ketbra{s}{s}^{E_i}\), and we have omitted the site index \(i\) for brevity.
+    \item \textbf{(A4) System Pauli twirl}.
+    Each cycle include a Pauli-frame randomisation on the system, resulting in the effective local map
+    \begin{equation}
+        \widetilde{\mathcal{U}}^{SE}[\rho] = \frac{1}{4}\sum_{P\in\{I,X,Y,Z\}} (I \otimes P) U_{SE} (I \otimes P) \rho (I \otimes P) U_{SE}^\dagger (I \otimes P).
+    \end{equation}
+    \item \textbf{(A5) Orthogonality of conditional unitaries}.
+    The conditional unitaries \(\{V_s\}\) satisfies
+    \begin{equation}
+        \Tr(V_sV_s^\dagger) = d_S \delta_{s,s'},
+    \end{equation}
+    where \(d_S\) is the system dimension.
+    \item \textbf{(A6) }
 \end{itemize}
 
 \subsection{Effective environment dephasing}
