@@ -1,13 +1,240 @@
-% \Fidel{If I don't just incorporate worked examples throughout the main body, this appendix will contain worked examples of theorems and results presented throughout the paper. Examples:
-% \begin{enumerate}
-%     \item Heisenberg interaction. An example where a highly non-Markovian process twirls down to a temporally independent process.
-%     \begin{equation}
-%         H(\theta) = \theta( X\otimes X + Y\otimes Y + Z\otimes Z)
-%     \end{equation}
-%     \item Environment-controlled unitary (e.g., CZ). An example where the resultant SPC has non-trivial mutual information.
-%     \item An example with both quantum non-Markovianity and classical non-Markovianity.
-% \end{enumerate}
-% }
-\section{Theorem 2}\label{app:proof-bound-saturation}
-\Cref{thm:env-bond-dim-bound}
-% This bound is saturated for generic system-environment interactions (for example, Haar-random unitaries), where the Schmidt rank across any temporal cut attains the maximal value \(d_E^2\).
+\section{Derivation of QCA to PCA HMM mapping}\label{app:qca-pca-mapping}
+In this appendix, we derive the effective PCA HMM from the microscopic QCA noise model under the system Pauli twirl. We first summarise the setting and assumptions in \cref{app:assumptions}, then derive the effective environment dephasing in \cref{app:env-dephasing}, the PCA kernel in \cref{app:pca-kernel}, and the system Pauli emission channel in \cref{app:system-pauli-emission}. Finally, we summarise the full mapping in \cref{app:summary-mapping}.
+
+\subsection{Setting and assumptions}\label{app:assumptions}
+We fix the microscopic QCA noise model from \cref{sec:qca-details} and collect here the
+standing assumptions and notation used to derive the effective PCA HMM.
+The environment consists of qubits on a bipartite graph \(V = R \cup B\) (red/black sublattices). Throughout, \(\{\ket{s}\}\) denotes the computational basis of the environment Hilbert space, with
+\(s\in\{0,1\}^{|V|}\), and we write \(\Pi_s := \ketbra{s}{s}\).
+For the bipartition we use
+\begin{equation}
+s=(r,b)\in \{0,1\}^{|R|}\times\{0,1\}^{|B|},\qquad \ket{s}=\ket{r}_R\otimes\ket{b}_B,
+\end{equation}
+with corresponding projectors \(\Pi_r^R:=\ketbra{r}{r}_R\) and \(\Pi_b^B:=\ketbra{b}{b}_B\).
+For a site \(j\in B\) we denote its red neighbours by \(N_R(j)\subseteq R\), and similarly
+for \(i\in R\) we denote its black neighbours by \(N_B(i)\subseteq B\). We now summarise the setting and assumptions for the mapping.
+
+\begin{enumerate}
+    \item[(A1)] \textbf{Classical environment initialisation}. Before any dynamics, the environment is initialised as a mixture of computational basis states
+    \begin{equation}\label{eq:initial_rho_env}
+        \rho_E = \sum_s \Pr(s) \Pi_s.
+    \end{equation}
+
+    \item[(A2)] \textbf{Single cycle structure}. One cycle of the microscopic dynamics is the composition of (i) an environment-only storm channel \(\mathcal{S}^E\), (ii) two QCA half-steps \(\mathcal{Q}^E = \mathcal{Q}_{B\to R}^E \circ \mathcal{Q}_{R\to B}^E\) on the environment, and (iii) a local system-environment unitary interaction \(\mathcal{U}^{SE}\), as detailed in \cref{sec:qcamodel}.
+    
+    \item[(A3)] \textbf{QCA unitaries}. Denote the QCA half-step unitaries as \(Q_{R\to B}^E(\theta)\) and \(Q_{B\to R}^E(\theta)\) for \(\mathcal{Q}_{R\to B}^E\) and \(\mathcal{Q}_{B\to R}^E\) respectively. Fix \(\theta \in \mathbb{R}\), and for each directed edge \(i \to j\) with \(i \in R\), \(j \in B\), define the controlled \(X\)-rotation on the target \(E_j\),
+    \begin{equation}
+        U_{i\to j}(\theta):=\ketbra{0}{0}_{E_i}\otimes I_{E_j}+\ketbra{1}{1}_{E_i}\otimes e^{i\theta X_{E_j}}.
+    \end{equation}
+    The unitary \(Q^{E}_{R \to B}(\theta)\) is the product of these (commuting) gates over all such edges,
+    \begin{equation}
+        Q^{E}_{R\to B}(\theta):=\prod_{j\in B}\ \prod_{i\in N_R(j)} U_{i\to j}(\theta).
+    \end{equation}
+    Similarly, \(Q^{E}_{B\to R}(\theta)\) is defined by swapping the roles of \(R\) and \(B\).
+
+    \item[(A4)] \textbf{System-environment interaction}.
+    At each site, the system interacts locally with the corresponding environment qubit via a controlled unitary
+    \begin{equation}\label{eq:se-unitary}
+        U_{SE}=\sum_{z\in\{0,1\}}\Pi_z^E\otimes V_z^S,
+    \end{equation}
+    where \(\Pi^{E}_{z}:=\ketbra{z}{z}_E\). In general, the conditional unitaries \(\{V_z\}\) must be orthogonal under the Hilbert-Schmidt inner product,
+    \begin{equation}\label{eq:hs-orthogonal}
+        \Tr(V_zV_{z'}^\dagger) = d_S \delta_{z,z'},
+    \end{equation}
+    where \(d_S\) is the local system dimension. In this work, we specialise to
+    \begin{equation}\label{eq:unitary-decomp}
+        V_0 = I, \quad V_1 = \vec{n} \cdot \vec{\sigma} = n_X X + n_Y Y + n_Z Z, \quad \|\vec{n}\|^2 = 1,
+    \end{equation}
+    for some \(\vec{n} \in \mathbb{R}^3\).
+
+    \item[(A5)]\label{A5} \textbf{System Pauli twirl}.
+    Each cycle includes Pauli-frame randomisation on the system, yielding the effective (local) system-environment interaction
+    \begin{equation}
+        \widetilde{\mathcal{U}}^{SE}[\rho] = \frac{1}{4}\sum_{P\in\{I,X,Y,Z\}} (I \otimes P) U_{SE} (I \otimes P) \rho (I \otimes P) U_{SE}^\dagger (I \otimes P).
+    \end{equation}
+    For later use, it is convenient to record the general Kraus representation for \(\widetilde{\mathcal{U}}^{SE}\). Inserting \cref{eq:se-unitary} into the above,
+    \begin{equation}\label{eq:twirled-kraus-ops}
+    \widetilde{\mathcal{U}}^{SE}[\rho] = \sum_P \sum_{z,z'} K_{P, z} \rho K_{P, z'}^\dagger, \quad K_{P, z} = \frac{1}{2} \Pi_z \otimes (P V_z P).
+\end{equation}
+\end{enumerate}
+We now proceed to derive the effective PCA kernel and system Pauli emission channel under these assumptions.
+
+\subsection{Effective environment dephasing}\label{app:env-dephasing}
+We first show that, under the system Pauli twirl, the reduced action of the system-environment interaction on the environment is exactly a \(Z\)-basis dephasing channel. This is the mechanism by which the environment is re-classicalised at each cycle.
+
+For a single site (suppressing the site index), let \(\rho_S\) be an arbitrary (fixed) system state, and define the reduced environment channel induced by the twirled interaction \(\widetilde{\mathcal{U}}^{SE}\) in~(A5) as
+\begin{equation}\label{eq:system-partial-trace}
+    \mathcal{E}[\rho_E] = \Tr_S(\widetilde{\mathcal{U}}^{SE}[\rho_E \otimes \rho_S]),
+\end{equation}
+Using the Kraus representation in \cref{eq:twirled-kraus-ops}, we may write
+\begin{equation}
+    \begin{split}
+        \mathcal{E}[\rho_E] 
+        &= \sum_P \sum_{z,z'} \Tr_S(K_{P, z} (\rho_E \otimes \rho_S) K_{P, z'}^\dagger) \\
+        &= \sum_P \sum_{z,z'} \frac{1}{4} \Tr_S((\Pi_z \otimes PV_zP) (\rho_E \otimes \rho_S) (\Pi_{z'} \otimes PV_{z'}P)^\dagger) \\
+        &= \sum_{z,z'} \Pi_z \rho_E \Pi_{z'} \cdot \frac{1}{4} \sum_P \Tr(P V_z P \rho_S P V_{z'}^\dagger P).
+    \end{split}
+\end{equation}
+By the cyclicity of the trace and \(P^2 = I\), we express
+\begin{equation}\label{eq:post-cyclic}
+    \mathcal{E}[\rho_E] = \sum_{z,z'} \Pi_z \rho_E \Pi_{z'} \cdot \Tr(V_z \frac{1}{4}\sum_P(P \rho_S P) V_{z'}^\dagger).
+\end{equation}
+The Pauli average inside the trace is the completely depolarising channel on \(\rho_S\),
+\begin{equation}
+    \frac{1}{4}\sum_{P \in \{I,X,Y,Z\}} P \rho_S P = \frac{\mathbb{I}}{2}.
+\end{equation}
+So \cref{eq:post-cyclic} becomes,
+\begin{equation}
+    \mathcal{E}[\rho_E] = \sum_{z,z'} \Pi_z \rho_E \Pi_{z'} \cdot \frac{1}{2} \Tr(V_z V_{z'}^\dagger),
+\end{equation}
+Invoking the Hilbert-Schmidt orthogonality in \cref{eq:hs-orthogonal}, we obtain
+\begin{equation}
+    \mathcal{E}[\rho_E] = \sum_z \Pi_z \rho_E \Pi_z.
+\end{equation}
+That is, the reduced environment update is exactly dephasing in the computational basis, and independent of the choice of \(\rho_S\). For the full environment lattice, the interaction \(U_{SE} = \bigotimes_{i\in V} U_{SE}^{(i)}\) factorises across sites and the twirl is applied locally, so the reduced environment update also factorises as
+\begin{equation}
+    \Delta_E[\rho] 
+    \coloneq \bigotimes_{i\in V} \sum_{z\in\{0,1\}} \Pi_z^{E_i} \rho \Pi_z^{E_i}
+    = \sum_{s \in \{0,1\}^{|V|}} \Pi_s \rho \Pi_s,
+\end{equation}
+For use in the next section, we also define the sublattice dephasing channels
+\begin{equation}
+    \Delta_B[\rho] \coloneq \sum_b(\Pi_b^B \otimes I_R) \rho (\Pi_b^B \otimes I_R), \quad
+    \Delta_R[\rho] \coloneq \sum_r(I_B \otimes \Pi_r^R) \rho (I_B \otimes \Pi_r^R),
+\end{equation}
+so that \(\Delta_E = \Delta_B \circ \Delta_R = \Delta_R \circ \Delta_B\).
+
+\subsection{PCA kernel}\label{app:pca-kernel}
+We now derive the effective classical update rule generated by the coherent QCA step under the per-cycle environment dephasing derived in \cref{app:env-dephasing}. Concretely, we evaluate the map \(\rho_E \mapsto (\Delta_E \circ \mathcal{Q}^E)[\rho_E]\) for an initial classical state \(\rho_E\) as in~(A1). We that show this is equivalent to a two-step PCA update with flip probabilities \(\sin^2(k\theta)\), where \(k\) is the number of excited neighbours in the opposite sublattice. Note that although the storm channel \(\mathcal{S}^E\) precedes \(\mathcal{Q}^E\), it does not affect the form of the PCA kernel, since it is a classical channel that preserves the diagonal structure of \(\rho_E\).
+
+First, we fix an environment basis configuration \(s = (r,b)\) and consider the action of \(Q_{R\to B}^E(\theta)\) from~(A3). For a single directed edge (gate) \(i \to j\) with \(i \in R\), \(j \in B\),
+\begin{equation}\label{eq:single-i-single-j}
+    U_{i\to j}(\theta)[\ket{r_i} \otimes \ket{\psi}_j] = \ket{r_i} \otimes (e^{-i\theta X_{E_j}})^{r_i} \ket{\psi}_j.
+\end{equation}
+The control bit \(r_i \in \{0,1\}\) controls whether to apply an \(X\)-rotation to the target \(j\) or to do nothing. For a fixed target \(j \in B\), the product over its red neighbours yields
+\begin{equation}\label{eq:single-j}
+    \prod_{i \in N_R(j)} U_{i\to j}(\theta)[\ket{r} \otimes \ket{\psi}_j] = \ket{r} \otimes (e^{-ik_j(r)\theta X_{E_j}}) \ket{\psi}_j,
+\end{equation}
+where \(k_j(r) \coloneq \sum_{i \in N_R(j)} r_i\) is the number of excited red neighbours. Because gates on distinct targets \(j\) commute, the full first half-step acts as
+\begin{equation}\label{eq:first-half-step-factor}
+    Q_{R\to B}(\theta)[\ket{r} \otimes \ket{b}] = \ket{r} \otimes \bigotimes_{j \in B} (e^{-ik_j(r)\theta X_{E_j}}) \ket{b_j}.
+\end{equation}
+By the exact same reasoning, \(Q_{B\to R}(\theta)\) can be written as
+\begin{equation}\label{eq:second-half-step-factor}
+    Q_{B\to R}(\theta)[\ket{r} \otimes \ket{b}] = \bigotimes_{i \in R} (e^{-ik_i(b)\theta X_{E_i}}) \ket{r_i} \otimes \ket{b},
+\end{equation}
+The key observation is that \(Q_{B\to R}(\theta)\) (the \emph{second} half-step) in \cref{eq:second-half-step-factor} uses \(B\) only as a computational-basis control. As a result, it can be written as the block-diagonal operator
+\begin{equation}
+    Q_{B\to R}(\theta) = \sum_b \Pi_b^B \otimes W^R_b,
+\end{equation}
+for some unitaries \(W_b^R\) on \(R\). In this form, we can express the action of \(\Delta_B\) on the second half-step as
+\begin{equation}
+    \Delta_B[Q_{B \to R} \rho Q_{B \to R}^\dagger] = Q_{B \to R} \Delta_B[\rho] Q_{B \to R}^\dagger,
+\end{equation}
+i.e, the commutation relation \(\Delta_B \circ \mathcal{Q}_{B \to R} = \mathcal{Q}_{B \to R} \circ \Delta_B\). 
+
+Now using \(\Delta_E = \Delta_R \circ \Delta_B\), we may write
+\begin{equation}\label{eq:maps-commutation}
+    \Delta_E \circ \mathcal{Q} = \Delta_R \circ \Delta_B \circ \mathcal{Q}_{B \to R} \circ \mathcal{Q}_{R \to B} = \Delta_R \circ \mathcal{Q}_{B \to R} \circ \Delta_B \circ \mathcal{Q}_{R \to B}.
+\end{equation}
+This expression allows us to insert \(\Delta_B\) immediately after the first half-step \(\mathcal{Q}_{R \to B}\). Crucially, this allows us to show that the intermediate coherences in \(B\) generated by the first half-step do not affect the final distribution, and that the two QCA half-steps can be treated as separate PCA updates.
+
+We now evaluate the action of \(\Delta_B \circ \mathcal{Q}_{R \to B}\) on a basis state \(\ket{r}\!\ket{b}\). For a single site \(j \in B\) and any \(\varphi \in \mathbb{R}\), recall
+\begin{equation}
+    e^{-i\varphi X} \ket{0} = \cos(\varphi) \ket{0} - i \sin(\varphi) \ket{1}, \quad
+    e^{-i\varphi X} \ket{1} = \cos(\varphi) \ket{1} - i \sin(\varphi) \ket{0}.
+\end{equation}
+Hence, for \(z \in \{0,1\}\),
+\begin{equation}
+    \Delta_z[e^{-i\varphi X} \ketbra{z}{z} e^{i\varphi X}] = \cos^2(\varphi) \ketbra{z}{z} + \sin^2(\varphi) \ketbra{1\oplus z}{1\oplus z},
+\end{equation}
+since off-diagonal terms are removed by the dephasing.
+
+We now take \(\varphi = k_j(r) \theta\). Using the factorised form of \(\mathcal{Q}_{R \to B}\) in \cref{eq:first-half-step-factor}, we can therefore interpret \(\Delta_B \circ \mathcal{Q}_{R \to B}\) as a classical flip rule on each black site \(j\in B\), conditional on \(r\). Explicitly, the bit \(b_j \mapsto b'_j\) is flipped with probability
+\begin{equation}
+    \Pr(b'_j = b_j \oplus 1 | r) = \sin^2(k_j(r) \theta), \quad
+    \Pr(b'_j = b_j | r) = \cos^2(k_j(r) \theta).
+\end{equation}
+Furthermore, because \(\mathcal{Q}_{R \to B}\) factorises across \(j\) in \cref{eq:first-half-step-factor}, the per-site updates can be applied independently across \(j\).
+
+By the exact same logic, the map \(\Delta_R \circ \mathcal{Q}_{B \to R}\) implements a classical flip rule on each red site \(i \in R\), conditional on the updated black configuration \(b'\). Here, the bit \(r_i \mapsto r'_i\) is flipped with probability
+\begin{equation}
+    \Pr(r'_i = r_i \oplus 1 | b') = \sin^2(k_i(b') \theta), \quad
+    \Pr(r'_i = r_i | b') = \cos^2(k_i(b') \theta),
+\end{equation}
+
+Combining the two half-steps, the QCA update \(\Delta_E \circ \mathcal{Q}\) under the system Pauli twirl induces the following step-step PCA kernel on configurations \(s = (r,b) \mapsto s'= (r',b')\):
+\begin{enumerate}
+    \item update \(b \mapsto b'\) by flipping each \(j \in B\) independently with probability \(\sin^2(k_j(r) \theta)\);
+    \item update \(r \mapsto r'\) by flipping each \(i \in R\) independently with probability \(\sin^2(k_i(b') \theta)\).
+\end{enumerate}
+This is precisely the two-step PCA kernel defined in \cref{sec:pca-details}.
+
+\subsection{System Pauli emission}\label{app:system-pauli-emission}
+We now derive the induced system Pauli channel conditioned on the (updated) environment configuration.
+
+Consider a single site and suppress the site index. Let \(\widetilde{\mathcal{U}}^{SE}\) be the twirled interaction from (A5), and define the reduced system channel
+\begin{equation}
+    \mathcal{F}[\rho_S] \coloneq \Tr_E(\widetilde{\mathcal{U}}^{SE}[\rho_E \otimes \rho_S]).
+\end{equation}
+From \cref{app:env-dephasing,app:pca-kernel}, the environment state \(\rho_E\) entering the effective interaction is always a mixture of computational basis states. Inserting the Kraus representation from \cref{eq:twirled-kraus-ops},
+\begin{equation}
+    \begin{split}
+        \mathcal{F}[\rho_S]
+        &= \sum_P \sum_{z,z'} \Tr_S(K_{P,z} (\rho_E \otimes \rho_S) K_{P,z'}^\dagger) \\
+        &= \sum_P \sum_{z,z'} \frac{1}{4} \Tr_S((\Pi_z \otimes PV_zP) (\rho_E \otimes \rho_S) (\Pi_{z'} \otimes PV_{z'}P)^\dagger) \\
+        &= \sum_{z,z'} \Tr(\Pi_z \rho_E \Pi_{z'}) \cdot \frac{1}{4} \sum_P P V_z P \rho_S P V_{z'}^\dagger P.
+    \end{split}
+\end{equation}
+By the cyclicity of the trace and \(\Pi_z\Pi_{z'} = \delta_{z,z'} \Pi_z\),
+\begin{equation}
+    \mathcal{F}[\rho_S] = \sum_z \Tr(\Pi_z \rho_E) \cdot \frac{1}{4} \sum_P P V_z P \rho_S P V_z^\dagger P,
+\end{equation}
+with \(\sum_z \Tr(\Pi_z \rho_E) = 1\). As a result, \(\mathcal{F}\) is a convex combination of \emph{conditional} system channels,
+\begin{equation}
+    \mathcal{F}[\rho_S] = \sum_z p_z \mathcal{F}_z[\rho_S], \quad p_z \coloneq \Tr(\Pi_z \rho_E), \quad \mathcal{F}_z[\rho_S] \coloneq \frac{1}{4} \sum_P P V_z P \rho_S P V_z^\dagger P.
+\end{equation}
+For \(z=0, V_0 = I\), we immediately have
+\begin{equation}
+    \mathcal{F}_0[\rho_S] = \rho_S.
+\end{equation}
+For \(z=1, V_1 = \vec{n} \cdot \vec{\sigma}\), we observe that \(\mathcal{F}_1\) is exactly the Pauli twirl of a unitary channel with single Kraus operator \(V_1\). The Pauli twirl of a channel with Kraus operators \(\{K_i\}\) can be written as
+\begin{equation}
+    \mathcal{T}_P(\mathcal{E})[\rho] = \frac{1}{d^2} \sum_P \sum_i |\Tr(P K_i)|^2 P \rho P,
+\end{equation}
+where \(d\) is the system dimension. Substituting \(K_1 = V_1\) and \(d=2\) yields
+\begin{equation}
+    \mathcal{F}_1[\rho_S] 
+    = \sum_P \frac{1}{4}|\Tr(PV_1)|^2 P \rho_S P 
+    = \sum_P \frac{1}{4}|\Tr(P (n_X X + n_Y Y + n_Z Z))|^2 P \rho_S P.
+\end{equation}
+Using orthogonality of Pauli operators under the Hilbert-Schmidt inner product, we obtain the system Pauli channel
+\begin{equation}
+    \mathcal{F}_1[\rho_S] = n_X^2 X \rho_S X + n_Y^2 Y \rho_S Y + n_Z^2 Z \rho_S Z,
+\end{equation}
+with \(n_X^2 + n_Y^2 + n_Z^2 = 1\) by \cref{eq:unitary-decomp}.
+
+For the full lattice, \(U_{SE} = \bigotimes_{i\in V} U_{SE}^{(i)}\) and the twirl is applied locally, so conditional on the updated environment configuration \(s_{t+1} \in \{0,1\}^{|V|}\), the emitted Pauli string \(x_t \in \{I, X, Y, Z\}^{|V|}\) factorises across sites with the above single-site channel.
+
+\subsection{Summary of mapping}\label{app:summary-mapping}
+We now summarise the full mapping from the microscopic QCA noise model to the effective PCA HMM induced by the system Pauli twirl. We iterate through the PCA HMM steps as defined in \cref{sec:pca-details}, and justify each step in reference to the assumptions and derivations in \cref{app:assumptions,app:env-dephasing,app:pca-kernel,app:system-pauli-emission}.
+
+\begin{enumerate}
+    \item[0.] \textbf{Environment initialisation}. Assumed in~(A1), the initialisation is identical in both models.
+
+    \item \textbf{Storm update.}
+    Assumed in~(A2). The storm channel \(\mathcal{S}^E\) is environment-only and preserves diagonal \(\rho_E\), so it is simulated exactly as a classical update on \(s_t\) and does not affect the subsequent reduction.
+
+    \item \textbf{PCA half-step (black)}.
+    By~(A2)–(A3), the microscopic model applies \(\mathcal{Q}_{R\to B}^E\). Under the twirl, \cref{app:env-dephasing} dephases the environment in the computational basis, and \cref{app:pca-kernel} shows \(\Delta_B\circ \mathcal{Q}_{R\to B}^E\) is exactly the conditional independent flip update on \(B\) with probability \(\sin^2(k\theta)\).
+
+    \item \textbf{PCA half-step (red)}.
+    Likewise, \cref{app:pca-kernel} shows \(\Delta_R\circ \mathcal{Q}_{B\to R}^E\) is exactly the conditional independent flip update on \(R\) with probability \(\sin^2(k\theta)\), conditioned on the updated black configuration.
+    
+    \item \textbf{Pauli emission}.
+    By~(A4)–(A5) and \cref{app:system-pauli-emission}, conditional on \(s_{t+1}(i)\) the emitted Pauli is \(I\) if \(s_{t+1}(i)=0\), and \(P\in\{X,Y,Z\}\) with probabilities \(n_P^2\) if \(s_{t+1}(i)=1\), independently across sites.
+    
+    \item \textbf{Repeat}. 
+    By~(A2) and \cref{app:env-dephasing}, tracing out the system after the twirled interaction applies \(\Delta_E\), so the environment entering the next cycle is again diagonal; hence the above steps iterate cycle-by-cycle.
+\end{enumerate}
+This completes the mapping from the microscopic QCA model in \cref{sec:qca-details} to the effective PCA HMM in \cref{sec:pca-details}.

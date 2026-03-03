@@ -137,7 +137,7 @@ The PCA describes a driven classical spin system with a nonlinear update rule. T
 \subsection{Statistical mechanical analysis}\label{sec:qca-stat-mech}
 Before studying the noise properties of this model for QEC, we first study analyse the PCA dynamics from \cref{sec:pca-details} as a statistical mechanical system. In particular, we isolate the effect of the spatial parameter \(\theta\), which controls the strength of the nonlinear PCA update via kernel \(p = \sin^2(k\theta)\), on the emergent correlation structure and steady-state properties of the system.
 
-Throughout, we fix the storm parameters to a low spontaneous injection rate $a=10^{-4}$ and a fast local relaxation rate \(b=0.5\), and sweep the controlled-rotation angle \(\theta \in [0, \pi]\). We consider lattices corresponding to rotated surface code layouts for distances \(d=9, 11, 13, 15\), with the number of sites (qubits) \(N_d = |V| = 2d^2 - 1\). To quantify the excitation statistics in the environment, we define the global density at time step \(t\) as
+Throughout, we fix the storm parameters to a low spontaneous injection rate $a=10^{-4}$ and a fast local relaxation rate \(b=0.5\), and sweep the controlled-rotation angle \(\theta \in [0, \pi]\). Pauli emission weights are taken to be uniform (unbiased) with \(n_X = n_Y = n_Z = 1/\sqrt{3}\). We consider lattices corresponding to rotated surface code layouts for distances \(d=9, 11, 13, 15\), with the number of sites (qubits) \(N_d = |V| = 2d^2 - 1\). To quantify the excitation statistics in the environment, we define the global density at time step \(t\) as
 \begin{equation}
     \eta_t \coloneq \frac{1}{N_d}\sum_{i\in V} s_t(i),
 \end{equation}
