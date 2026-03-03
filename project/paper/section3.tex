@@ -9,12 +9,12 @@
     % \item Worked example: Heisenberg interaction over two SE unitaries.
 \end{itemize}
 }
-\section{Tensor network representations of process tensors}\label{sec:pt-tn}
+\section{Process tensors as tensor networks}\label{sec:pt-tn}
 Quantum maps are tensors; when correlations between their indices are even modestly constrained, they often admit compact tensor network representations. A paradigmatic example is the matrix product state (MPS) description of quantum many-body states with area-law entanglement. The same principle extends to quantum processes: process tensors are high-rank objects whose temporal correlations are often structured, making tensor network representations both natural and efficient. Accordingly, process tensors have been represented as matrix product operators (MPOs)~\cite{pollockNonMarkovianQuantumProcesses2018,cygorekUnderstandingUtilizingInner2025}, locally purified density operators (LPDOs)~\cite{whiteUnifyingNonMarkovianCharacterization2025}, and tree tensor networks (TTNs)~\cite{dowlingCapturingLongRangeMemory2024}.
 
-In what follows, we construct tensor network representations of process tensors directly from their microscopic dynamics. We begin with a one-dimensional temporal MPO obtained from a Stinespring dilation, before generalising to higher-dimensional spatiotemporal tensor networks for composite systems. Throughout, we employ abstract index notation supplemented by a graphical tensor network calculus; a table translating between Dirac notation, abstract indices, and graphical diagrams is provided in \cref{tab:notations}.
+In what follows, we construct tensor network representations of process tensors directly from their microscopic dynamics. We begin with a one-dimensional temporal MPO obtained from a Stinespring dilation, before generalising to higher-dimensional spatiotemporal tensor networks for composite systems. Throughout, we employ abstract index notation supplemented by a graphical tensor network calculus. A table translating primitives of quantum information in Dirac notation, abstract indices, and graphical diagrams is provided in \cref{app:notations}.
 
-\subsection{Temporal MPO representation}
+\subsection{Stinespring-to-MPO construction}
 We begin by constructing an MPO representation of a process tensor from its Stinespring dilation. A \(k\)-slot process tensor is fully specified by a sequence of joint system--environment unitaries \(\{U_j\}_{j=0}^k\) together with an initial environment state \(\sigma_E\). In general, one may start from a sequence of joint CPTP maps \(\{\mathcal{E}_j\}_{j=0}^k\), which, by Stinespring's theorem can always be dilated to unitaries.
 
 For a unitary \(U\) acting on \(\mathcal{H}_E \otimes \mathcal{H}_S\) of dimensions \(d_E\) and \(d_S\), its Liouville (superoperator) form is \(\mathcal{U} = \overline{U} \otimes U\), where \(\overline{U} = U^*\) denotes elementwise complex conjugation. In index notation,
@@ -28,7 +28,7 @@ where \(e_\inp, s_\inp\) (\(e_\out, s_\out\)) label environment and system input
     \item \textbf{Transpose} globally so that time flows from left to right, consistent with standard circuit diagrams.
 \end{enumerate}
 Explicitly, for a superoperator \(\mathcal{S}\),
-\begin{equation}
+\begin{equation}\label{eq:rft}
     \begin{split}
     &\mathcal{S}^{b'_0 b'_1 \dots b_0 b_1}{}_{a'_0 a'_1 \dots a_0 a_1} \\
     &\qquad\qquad\xmapsto{\;\text{reorder}\;}
@@ -89,7 +89,7 @@ where repeated indices imply summation (contraction). Graphically, the output st
 \end{equation}
 This contraction naturally generalises to cases where the instruments are themselves classically or `quantumly' correlated in time, in which case the product of local instrument tensors is replaced by a more general tensor network. Having established a 1D temporal MPO representation of multi-time processes, we now lift this construction to composite systems with additional spatial structure.
 
-\subsection{Spatiotemporal tensor network representations}
+\subsection{Higher-dimensional spatiotemporal tensor networks}
 \begin{figure}
     \centering
     \input{figures/process-tensor-2d.tikz}
@@ -115,7 +115,7 @@ Here the superscript \(i=0,\dots,n-1\) labels subsystems (spatial coordinates), 
 \end{equation}
 with spatial boundary conditions such that left indices \(\lambda^{-1}, \nu^{-1}_j\) and right indices \(\lambda^{n-1}, \nu^{n-1}_j\) are absent. In this representation, horizontal bonds \(\mu_j^i\) carry temporal correlations (environmental memory), while vertical bonds \(\nu_j^i\) encode spatial correlations between subsystems at each time step. The spatial bond dimensions \(D_s = \dim(\nu_j^i)\) are set by the SVD truncation, while the temporal bond dimensions remain bounded by the environment size, \(D_t = \dim(\mu_j^i) \le d_E^2\). \Cref{fig:tensor-network-2d} displays a graphical representation of this 2D tensor network.
 
-Unlike the 1D temporal MPO representation, generic 2D tensor networks are not both exactly 
+Unlike the 1D temporal MPO representation, 2D tensor networks are generally not both exactly 
 and efficiently contractible. In practice one must resort to approximate contraction schemes, 
 whose cost is controlled by the entanglement across the chosen contraction direction. For 
 spatiotemporal processes, however, the causal structure along the time dimension imposes 

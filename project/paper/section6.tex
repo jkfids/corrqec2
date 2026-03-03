@@ -1,9 +1,9 @@
 \clearpage
-\noindent\Fidel{TODO: Surface code memory and stability experiment figure. Moral: Even twirling down to an SPP can leave nontrivial correlation structure that substantially modifies logical performance.}
-\section{Applications for quantum error correction}\label{sec:temporalstormmodel}
+\noindent\Fidel{TODO: Surface code memory and stability experiment figure.}
+\section{Surface code performance under temporal correlations}\label{sec:temporalstormmodel}
 In this section we present the first concrete application of the SPP framework, focusing on a simple, tunable model of temporally correlated Pauli noise and its consequences for surface code performance. We first positions SPPs as practical QEC noise models and clarify how they may interface with standard circuit-level analyses. We then introduce the temporal storm model---a two-state SPP/HMM whose correlation length \(\xi\) (equivalently spectral gap \(\Delta\)) can be swept while keeping single round marginal error rates fixed. Finally, we describe the simulation methodology and report memory and stability benchmarks, illustrating that temporal correlation structure can substantially modify logical scaling even when the average noise strength is controlled.
 
-\subsection{Spatiotemporal Pauli processes as QEC noise models}
+\subsection{SPPs as effective circuit-level noise models}
 Up to this point, we have developed a general framework for spatiotemporal Pauli processes (SPPs). In principle, an SPP description of circuit noise can be obtained from a tomographically reconstructed process tensor~\cite{whiteDemonstrationNonMarkovianProcess2020,whiteUnifyingNonMarkovianCharacterization2025}. In practice, it is more useful to characterise an SPP directly at a chosen level of granularity---either at the circuit level, or phenomenologically at the level of QEC cycles. For the remainder of the paper, we focus on SPPs as generative noise models for QEC; broader uses, including decoding and noise mitigation, are discussed in \cref{sec:discussion}.
 
 Correlations in realistic device noise can substantially alter QEC performance relative to memoryless baselines. 
@@ -85,7 +85,7 @@ where \(\pi_0 = b/(a+b)\) and \(\pi_1 = a/(a+b)\) are the stationary calm and st
 \end{equation}
 By solving \cref{eq:storm-spectral-gap,eq:storm-marginals} for the transition rates \(a\) and \(b\), we construct a family of temporally correlated noise models with tunable spectral gap \(\Delta\) (or correlation length \(\xi\)) while maintaining fixed marginal error rates \(\bar{p}^{(x)}\). This decoupling of environmental memory from average noise strength underpins the parameter sweeps in the surface code simulations that follow.
 
-\subsection{Methodology}
+\subsection{Simulation methodology}
 We benchmark surface code performance under the temporal storm noise model using two standard protocols: a memory experiment, which tests preservation of a logical observable through time, and a stability experiment, which tests the reliability of moving a logical observable through space~\cite{gidneyStabilityExperimentsOverlooked2022}. Memory and stability experiments may be viewed as complementary space-time duals, and together they benchmark distinct but equally vital primitives of surface code logical computation. This symmetry is particularly relevant for correlated noise. In memory experiments, correlated data qubit faults can form spacelike chains implementing a logical operator, whereas in stability experiments, temporally correlated stabiliser measurement (or ancilla-induced) faults can form timelike chains spanning many rounds, likewise inducing a logical operator.
 
 For the memory experiment, we simulate rotated surface code circuits of distance \(d\) for \(N_r = 3d\) rounds of syndrome extraction, and measure logical failure probability \(p_\mathrm{shot}\) after decoding using minimum-weight perfect matching. We estimate an effective per round error rate from the per shot failure probability as \(p_\mathrm{round} = (1 - (1 - 2p_\mathrm{shot})^{1/N_r})/2\). For the stability experiment, we simulate a diameter-4 surface code patch with a variable number of rounds \(N_r\) (setting the timelike distance), and report the logical failure probability per shot. In the parameter sweeps we use \(d = 5, 7, \dots, 19\) for memory, and \(N_r = 5, 10, \dots, 35\) for stability.
@@ -96,21 +96,20 @@ Inter-round temporal correlations are incorporated by composing, at the start of
 
 Simulations are performed using Stim~\cite{gidneyStimFastStabilizer2021} for stabiliser circuit sampling, with temporally correlated errors generated externally from the temporal storm HMM. Decoding is performed using minimum-weight perfect matching via PyMatching~\cite{higgottPyMatchingPythonPackage2022} on a detector error model constructed from the independent circuit-level noise with marginal error rates matched to the correlated process. For each parameter point we estimate failure probabilities from Monte Carlo sampling over \(10^7\) shots; error bars, where visible, denote binomial standard errors. All code and scripts used to generate the data and figures are available in (\Fidel{repository link}).
 
-\subsection{Results}
-\Cref{fig:temporal-storm-memory,fig:temporal-storm-stability} summarise surface code performance under the temporal storm model as correlation length \(\xi\) is increased at fixed marginal error rates \(\bar{p}^{(x)}\). Across both benchmarks, increasing \(\xi\) systematically degrades logical performance, highlighting that correlation structure in physical noise alone can substantially alter logical behaviour.
-
-\begin{figure}
+\subsection{Surface code memory and stability benchmarks}
+\begin{figure}[t]
     \centering
     \includegraphics[width=1\textwidth]{figures/experiment1.pdf}
     \caption{Rotated surface code memory under the temporal storm model at fixed marginal error rate \(p = 0.1\%\), variable code distance \(d\), and \(N_r = 3d\) number of rounds. (a) Effective per round logical error rate versus correlation length \(\xi\) (bottom axis), with corresponding spectral gap shown on the top axis. The per round error rate \(p_\mathrm{round}\) is inferred from the per shot failure rate \(p_\mathrm{shot}\) via \(p_\mathrm{round} = (1 - (1 - 2p_\mathrm{shot})^{1/N_r})/2\). (b) The same data plotted versus code distance \(d\) at fixed \(\xi\) (legend), illustrating the degradation of distance scaling as temporal correlations increase. Dashed lines are exponential fits (excluding \(d=5\)). Error bars, where visible, indicate binomial standard errors.}
     \label{fig:temporal-storm-memory}
 \end{figure}
+\Cref{fig:temporal-storm-memory,fig:temporal-storm-stability} summarise surface code performance under the temporal storm model as correlation length \(\xi\) is increased at fixed marginal error rates \(\bar{p}^{(x)}\). Across both benchmarks, increasing \(\xi\) systematically degrades logical performance, highlighting that correlation structure in physical noise alone can substantially alter logical behaviour.
 
 We first consider the memory experiment. \Cref{fig:temporal-storm-memory}(a) displays the per round logical error rate \(p_\mathrm{round}\) as a function of \(\xi\) for several code distances. For each \(d\), \(p_\mathrm{round}\) increases monotonically with \(\xi\), with the most pronounced shift occurring as the model crosses from nearly memoryless dynamics (\(\xi = 1\)) into moderate-to-long memory (\(1 < \xi \le 5\)). For larger \(\xi\), the curves tend to level off, consistent with a ``bursty'' noise picture in which memory concentrates faults into rarer but more damaging multi-round clusters. The \(d = 5\) data trends systematically above the higher distance curves and are therefore omitted from the fit in panel~(b). At the baseline error rate of \(p=0.1\%\), the distance five code provides comparatively weak error suppression even in the low memory regime, so increasing \(\xi\) degrades performance without exhibiting the same clean scaling observed at larger distances.
 
 \Cref{fig:temporal-storm-memory}(b) presents the same data as a performance-versus-distance scaling plot at fixed \(\xi\). The logical error rate remains approximately exponentially suppressed with increasing \(d\), but the decay exponent decreases in magnitude markedly as \(\xi\) grows. In this sense, temporal correlations blunt, though do not eliminate, the benefit of distance scaling, consistent with an effective spacetime distance reduction. From a resource perspective, the qubit overhead required to achieve a given logical error rate is highly sensitive to even modest growth in correlation length, for example, from \(\xi=1\) to \(\xi=2\).
 
-\begin{figure}
+\begin{figure}[t]
     \centering
     \includegraphics[width=1\textwidth]{figures/experiment2.pdf}
     \caption{Surface code stability under the temporal storm model at fixed marginal error rate \(p=0.1\%\) for a diameter-4 surface code patch and variable number of rounds \(N_r\). (a) Logical failure rate per shot versus correlation length \(\xi\) (bottom axis), with the corresponding spectral gap shown on the top axis. (b) The same data plotted versus number of rounds (timelike distance) \(N_r\) at fixed \(\xi\). Dashed lines represent exponential fits, and error bars indicate binomial standard error.}

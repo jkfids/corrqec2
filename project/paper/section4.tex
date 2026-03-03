@@ -1,8 +1,7 @@
-\Fidel{After some thinking and discussions, I'm planning to overhaul this section to better highlight the multi-time Pauli twirl procedure via efficient local tensor operations as a central contribution in it of itself. Content itself won't change much, just how it's presented and what's highlighted as an original contribution.}
 \section{Spatiotemporal Pauli processes}
-We now formally introduce \emph{spatiotemporal Pauli processes} (SPPs)---classical stochastic processes obtainable by applying the \emph{multi-time Pauli twirl} to a quantum process tensor. This construction maps any quantum, possibly non-Markovian, process onto a probability distribution over trajectories of Pauli operators. It removes all genuinely quantum temporal correlations while retaining classical correlations. We then develop complementary tensor network representations of SPPs: first in the twirled operator picture, and second as classical tensor networks whose amplitudes encode the joint Pauli trajectory probabilities. These constructions allow us to bound the inner bond dimensions of SPP tensor networks by the dimension of the environment's Liouville space. Together, these results justify SPPs as the natural, tensor-network-compatible description of correlated circuit-level noise, providing the technical foundation for the explicit noise models and QEC performance studies developed in later sections.
+We now introduce \emph{spatiotemporal Pauli processes} (SPPs), the effective stochastic processes induced by applying the \emph{multi-time Pauli twirl} to a quantum process tensor. The twirl maps an arbitrary (possibly non-Markovian) process to a joint distribution over spatiotemporal Pauli trajectories, eliminating genuinely quantum temporal correlations while retaining arbitrary classical correlations. Crucially, in a tensor-network representation this map is implemented by fixed local contractions on the physical legs at each time step, leaving the virtual (environment) bonds unchanged. This yields an explicit classical tensor network---an MPS in 1D and a PEPS in 2D---encoding the trajectory weights (and hence probabilities). As a direct consequence, the temporal bond dimensions of the resulting SPP tensor networks are bounded by the corresponding process tensor bonds, and in particular by the environment Liouville dimension \(d_E^2\) for finite environments. These results justify SPPs as a natural tensor-network-compatible description of correlated circuit-level Pauli noise, and provide the technical foundation for the explicit noise models and QEC studies developed in later sections.
 
-\subsection{Formal definition}
+\subsection{Multi-time Pauli twirling and SPPs}
 We begin by extending the standard Pauli twirling operation for quantum channels to multi-time processes.
 
 Let \(\mathbb{P}^{(n)}\) denote the \(n\)-qubit Pauli group modulo global phase. Define 
@@ -21,20 +20,20 @@ and let \(\Upsilon_{0:k} \in \mathcal{B}(\mathcal{H}_{\Upsilon_{0:k}})\) be the 
         \Bigg(\bigotimes_{j=0}^k P_j\otimes P_j\Bigg).
     \end{equation}
 \end{definition}
-Intuitively, \(\mathcal{T}_P^{(k)}\) independently twirls each time step's input-output pair on \(\mathcal{H}_{\inp_j} \otimes \mathcal{H}_{\out_j}\), preserving the causal structure of the process tensor. In the language of higher-order quantum maps~\cite{tarantoHigherOrderQuantumOperations2025}, the multi-time Pauli twirl constitutes a time-local \emph{superprocess}. Operationally, it is realised by the standard randomised compiling protocol~\cite{figueroa-romeroOperationalMarkovianizationRandomized2024}; the random compilation of Pauli operators is applied at each circuit layer (time step) independently.
+Intuitively, \(\mathcal{T}_P^{(k)}\) independently twirls each time step's input-output pair on \(\mathcal{H}_{\inp_j} \otimes \mathcal{H}_{\out_j}\), preserving the causal structure of the process tensor. In the language of higher-order quantum maps~\cite{tarantoHigherOrderQuantumOperations2025}, the multi-time Pauli twirl constitutes a time-local \emph{superprocess}. Operationally, it corresponds to Pauli-frame randomisation protocols~\cite{figueroa-romeroOperationalMarkovianizationRandomized2024}; standard randomised compiling provides one such implementation.
 
 We now summarise the key properties of this mapping.
 \begin{proposition}[Properties]
     The map \(\mathcal{T}_P^{(k)}\) satisfies the following properties:
     \begin{enumerate}
-        \item \textbf{Validity}: For any valid process tensor \(\Upsilon_{0:k}\), its twirl \(\mathcal{T}_P^{(k)}(\Upsilon_{0:k})\) is also a valid process tensor.
-        \item \textbf{Projector}: \(\mathcal{T}_P^{(k)}\) is an idempotent projector (\(\mathcal{T}_P^{(k)} \circ \mathcal{T}_P^{(k)} = \mathcal{T}_P^{(k)}\)) and self-adjoint.
+        \item \textbf{Validity}: For any CPTP process tensor \(\Upsilon_{0:k}\), its twirl \(\mathcal{T}_P^{(k)}(\Upsilon_{0:k})\) is also a CPTP process tensor.
+        \item \textbf{Projector}: \(\mathcal{T}_P^{(k)}\) is idempotent, \(\mathcal{T}_P^{(k)} \circ \mathcal{T}_P^{(k)} = \mathcal{T}_P^{(k)}\).
         \item \textbf{Causality}: The affine (causal) constraints are preserved under twirling.
     \end{enumerate}
 \end{proposition}
-The first two properties generalise those of standard Pauli twirling for quantum channels, while the third follows from the unitality of Pauli operators (\(\mathcal{E}_P[\mathbb{I}] = \mathbb{I}\)). We now demonstrate that this projection removes all quantum temporal correlations, yielding a process-separable object corresponding to a probability distribution over Pauli trajectories.
+The first two properties generalise those of standard Pauli twirling for quantum channels, while the third follows from the unitality of Pauli operators (\(\mathcal{T}_P^{(k)}[\mathbb{I}] = \mathbb{I}\) on each local pair). We now demonstrate that this projection removes all quantum temporal correlations, yielding a process-separable object corresponding to a probability distribution over Pauli trajectories.
 
-Let \(\mathcal{P} = (P_0, P_1, \ldots, P_k)\) denote a \emph{spatiotemporal Pauli trajectory}, where each \(P_j \in \mathbb{P}^{(n)}\) is an \(n\)-qubit Pauli operator at time step \(t_j\), and \(\Pi_j = \dketbra{P_j}{P_j}\) its corresponding Pauli Choi operator. Let \(\mathbb{P}^{(n,k)}\) denote the set of all such spatiotemporal Pauli trajectories over \(k+1\) time steps, and let \(\Pr{(\mathcal{P})}\) denote the probability of observing trajectory \(\mathcal{P}\).
+Let \(\mathcal{P} = (P_0, P_1, \ldots, P_k)\) denote a \emph{spatiotemporal Pauli trajectory}, where each \(P_j \in \mathbb{P}^{(n)}\) is an \(n\)-qubit Pauli operator at time step \(t_j\), and \(\Pi_{P_j} = \dketbra{P_j}{P_j}\) its corresponding Pauli Choi operator. Let \(\mathbb{P}^{(n,k)}\) denote the set of all such spatiotemporal Pauli trajectories over \(k+1\) time steps, and let \(\Pr{(\mathcal{P})}\) denote the trajectory weights induced by the twirl, defined explicitly in \cref{eq:spp-probabilities}.
 \begin{theorem}[Twirling yields a process-separable Pauli process]\label{thm:pt-to-spp}
   For any process tensor \(\Upsilon_{0:k}\), its twirl
   \begin{equation*}
@@ -42,59 +41,44 @@ Let \(\mathcal{P} = (P_0, P_1, \ldots, P_k)\) denote a \emph{spatiotemporal Paul
   \end{equation*}
   admits a process-separable decomposition
   \begin{equation}
-    \Upsilon_{0:k}^{\mathcal{T}_P} = \sum_{\mathcal{P}\in\mathbb{P}^{(n,k)}}\Pr{(\mathcal{P})}\Upsilon_\mathcal{P}, \quad \Upsilon_\mathcal{P} = \bigotimes_{j=0}^k\Pi_j,
+    \Upsilon_{0:k}^{\mathcal{T}_P} = \sum_{\mathcal{P}\in\mathbb{P}^{(n,k)}}\Pr{(\mathcal{P})}\Upsilon_\mathcal{P}, \quad \Upsilon_\mathcal{P} = \bigotimes_{j=0}^k\Pi_{P_j}.
   \end{equation}
-  satisfying \cref{eq:process-separable}.
   Probabilities \(\Pr{(\mathcal{P})}\) form a valid probability distribution given by
   \begin{equation}\label{eq:spp-probabilities}
-    \Pr{(\mathcal{P})} = \frac{w(\mathcal{P})}{\mathcal{N}}, \quad w(\mathcal{P}) \coloneq \Tr\Bigg[\Bigg(\bigotimes_{j=0}^k\Pi_j\Bigg)\Upsilon_{0:k}\Bigg] \geq 0, \quad \mathcal{N} \coloneq \sum_{\mathcal{P}\in\mathbb{P}^{(n,k)}} w(\mathcal{P}).
+    \Pr{(\mathcal{P})} = \frac{w(\mathcal{P})}{\mathcal{N}}, \quad w(\mathcal{P}) \coloneq \Tr\bigg[\bigg(\bigotimes_{j=0}^k\Pi_{P_j}\bigg)\Upsilon_{0:k}\bigg] \geq 0, \quad \mathcal{N} \coloneq \sum_{\mathcal{P}\in\mathbb{P}^{(n,k)}} w(\mathcal{P}).
   \end{equation}
 \end{theorem}
-The resulting twirled process tensor \(\Upsilon_{0:k}^{\mathcal{T}_P}\) is separable across all temporal bipartitions and corresponds to a joint probability distribution over Pauli trajectories. The twirl removes all genuinely quantum temporal correlations, while preserving classical correlations. A detailed proof is provided in \cref{app:proof-pt-to-spp}.
-
-The reduction of non-Markovian dynamics to classical temporal correlations under Pauli twirling has been recently identified in different formalisms. Liu et al.~\cite{liuNonMarkovianNoiseSuppression2024} derived an analogous result for single-slot superchannels by applying standard channel twirling to the associated ``Choi channel'' representation. A closely related statement was also obtained and demonstrated experimentally in the context of a noise mitigation protocol~\cite{liuRealizingUniversalNonMarkovian2025}. In contrast, our derivation establishes this reduction directly within the process tensor framework and rigorously generalises it to arbitrary multi-time processes.
-
-The multi-time Pauli twirl should be interpreted operationally. It does not assert the microscopic system-environment dynamics are physically transformed into a process-separable Pauli process. Rather, under the assumed randomisation protocol (e.g., randomised compiling or Pauli-frame randomisation), it yields an effective description that reproduces the Pauli-basis statistics of the original dynamics. This is particularly potent for applications such as in QEC.
+The resulting twirled process tensor \(\Upsilon_{0:k}^{\mathcal{T}_P}\) is \emph{process-separable} in the sense of \cref{eq:process-separable}, i.e., it is a convex mixture of temporally factorised Pauli Choi operators. Equivalently, the twirl removes all genuinely quantum temporal correlations while allowing arbitrary classical temporal correlations through the joint distribution \(\Pr{(\mathcal{P})}\). A detailed proof is provided in \cref{app:proof-pt-to-spp}.
 
 We now formalise this class of process-separable objects under the name \emph{spatiotemporal Pauli process}.
-% \begin{definition}[Spatiotemporal Pauli process]\label{def:def-spp}
-% A \emph{spatiotemporal Pauli process} (SPP), denoted \(\Lambda\), is a process tensor that is fully characterised by a probability distribution 
-% \(p_\Lambda(\mathcal{P}) \equiv \Pr{(\mathcal{P})}\) over spatiotemporal Pauli trajectories 
-% \(\mathcal{P} = (P_0, P_1, \dots, P_k) \in \mathbb{P}^{(n,k)}\).
-% Its Choi representation is
-% \begin{equation}
-%     \Upsilon_{\Lambda} = 
-%     \sum_{\mathcal{P}\in\mathbb{P}^{(n,k)}}
-%         p_\Lambda(\mathcal{P})
-%         \bigotimes_{j=0}^k\Pi_j,
-% \end{equation}
-% where \(\Pi_j = \dketbra{P_j}{P_j}\) are the corresponding Pauli Choi operators at each time \(j\). All temporal correlations are encoded entirely within the classical distribution \(p_\Lambda\).
-% \end{definition}
 \begin{definition}[Spatiotemporal Pauli process]\label{def:def-spp}
-A \emph{spatiotemporal Pauli process} (SPP), denoted \(\Lambda\), is a process tensor with Choi representation
+A \emph{spatiotemporal Pauli process} (SPP) is a process tensor with Choi representation
 \begin{equation}
     \Upsilon_\mathrm{SPP} = 
     \sum_{\mathcal{P}\in\mathbb{P}^{(n,k)}}
         \Pr_\mathrm{SPP}(\mathcal{P})
         \Upsilon_\mathcal{P},
         \quad
-        \Upsilon_\mathcal{P} = \bigotimes_{j=0}^k\Pi_j,
+        \Upsilon_\mathcal{P} = \bigotimes_{j=0}^k\Pi_{P_j},
 \end{equation}
+where \(\Pr_\mathrm{SPP}(\mathcal{P})\) is a probability distribution with \(\Pr_\mathrm{SPP}(\mathcal{P}) \geq 0\) and \(\sum_{\mathcal{P}} \Pr_\mathrm{SPP}(\mathcal{P}) = 1\).
 \end{definition}
-In the context of a QEC circuit, \(\Upsilon_{\Lambda}\) can be interpreted as the effective, generally correlated, circuit-level Pauli noise model obtained by applying the multi-time twirl to the original noisy circuit.
-
-In the special case of a fully Markovian SPP---containing neither classical nor quantum correlations---the trajectory probabilities further factorise as
+In the special case of a fully temporally independent SPP---containing neither classical nor quantum temporal correlations---the trajectory probabilities factorise as
 \begin{equation}
   \Pr_\mathrm{SPP}(P_0,\dots,P_k) = \prod_{j=0}^k \Pr_j(P_j).
 \end{equation}
-As a result, the Choi operator \(\Upsilon_\Lambda^{\mathrm{Markov}}\) factorises as in \cref{eq:markovian-process}, corresponding to a sequence of temporally independent Pauli channels.
+As a result, the Choi operator \(\Upsilon_\mathrm{SPP}^{\mathrm{Markov}}\) factorises as in \cref{eq:markovian-process}, corresponding to a sequence of temporally independent Pauli channels.
 
-While SPPs can be defined directly via~\cref{def:def-spp} without reference to an underlying quantum process, our formulation using the multi-time twirl provides a direct bridge between the physically grounded system--environment dynamics and the emergent stochastic Pauli process. This connection endows SPPs with the same rich internal structure as process tensors, enabling a straightforward and efficient tensor network construction, which we detail in the following subsection.
+The multi-time Pauli twirl should be interpreted operationally. It does not assert the microscopic system-environment dynamics are physically transformed into a process-separable Pauli process. Rather, under the assumed randomisation protocol (e.g., randomised compiling or Pauli-frame randomisation), it yields an effective description that reproduces the Pauli-basis statistics of the original dynamics. This is particularly potent for applications such as in QEC. For example, in the context of a QEC circuit, \(\Upsilon_{\mathrm{SPP}}\) can be interpreted as the effective, generally correlated, circuit-level Pauli noise model obtained by applying the multi-time twirl to the original noisy circuit.
 
-\subsection{Tensor network representations}
-A spatiotemporal Pauli process admits two complementary tensor network representations: first, as a twirled MPO acting on the system's input-output spaces, preserving the operator structure of the underlying process tensor; and second, as a classical MPS encoding the joint probability distribution over Pauli trajectories. We now construct both representations and demonstrate the mapping between them.
+The reduction of non-Markovian dynamics to classical temporal correlations under Pauli twirling has also been recently identified in different formalisms. Liu et al.~\cite{liuNonMarkovianNoiseSuppression2024} derived an analogous result for single-slot superchannels by applying standard channel twirling to the associated ``Choi channel'' representation. A closely related statement was also obtained and demonstrated experimentally in the context of a noise mitigation protocol~\cite{liuRealizingUniversalNonMarkovian2025}. In contrast, our derivation establishes this reduction directly within the process tensor framework and rigorously generalises it to arbitrary multi-time processes.
 
-We begin with the twirled MPO construction in the operator picture. Starting from the Pauli superoperator \(P^* \otimes P\), we define the Pauli tensor \(\mathbf{P}\) via the reorder--fuse--transpose (RFT) operation introduced in \cref{sec:pt-tn} as
+While SPPs can be defined directly via~\cref{def:def-spp} without reference to an underlying quantum process, our formulation using the multi-time twirl provides a direct bridge between the physically grounded system--environment dynamics and the emergent stochastic Pauli process. This connection endows SPPs with the same rich internal structure as process tensors, enabling a straightforward and efficient tensor network construction. In particular, we show that \(\mathcal{T}_P^{(k)}\) is implemented by fixed local contractions on the physical legs of the process tensor.
+
+\subsection{Local tensor network implementations}
+We now show that the multi-time Pauli twirl admits an exact local implementation on a process tensor tensor network. Concretely, \(\mathcal{T}_P^{(k)}\) is realised by inserting a fixed Pauli tensor on each system input-output leg at every time step. This produces (i) a twirled process tensor MPO in the operator picture, and (ii) a classical tensor encoding the joint weights (and hence probabilities) of Pauli trajectories. Centrally, this transformation acts only on the open physical indices and leaves inner (environment) bonds unchanged.
+
+Starting from the Pauli superoperator \(P^* \otimes P\), we define the Pauli tensor \(\mathbf{P}\) via the reorder--fuse--transpose (RFT) operation introduced in \cref{sec:pt-tn} as
 \begin{equation}
   \overline{P}_{(x)}^{b'}{}_{a'} P_{(x)}^b{}_a \xmapsto{\;\mathrm{RFT}\;}
   \mathbf{P}^\alpha{}_{\beta x}
@@ -103,33 +87,43 @@ We begin with the twirled MPO construction in the operator picture. Starting fro
   \equiv
   \valignbox{\input{figures/tensor-pauli-vec.tikz}},
 \end{equation}
-where the index \(x\) of \(\dim{x} = 4^n\) enumerates the \(n\)-qubit Pauli operators. The multi-time twirl of a process tensor \(\widetilde{\mathbf{T}} = \mathcal{T}_P(\mathbf{T})\), is computed by contracting the Pauli tensor with the open physical indices of \(\mathbf{T}\) as
-\begin{equation}\label{eq:pt-twirl-tensor}
-  \widetilde{\mathbf{T}}^{\alpha_0\dots \alpha_k}{}_{\beta_0 \dots \beta_k} = 
-  \mathbf{T}^{\alpha'_0 \dots \alpha'_k}{}_{\beta'_0 \dots \beta'_k}
-  \Bigg(
-  \prod_{j=0}^k
-    \mathbf{P}^{\alpha'_j\alpha_j}{}_{x_j}
-    \mathbf{P}^{x_j}{}_{\beta'_j\beta_j}
-  \Bigg),
-\end{equation}
-where primed indices are summed over. This contraction, graphically depicted below, exactly applies a local Pauli twirl at each time step while leaving the environment bonds \(\mu_j\) untouched.
-\begin{equation}
-  \valignbox{\input{figures/process-tensor-twirl.tikz}}.
-\end{equation}
-The resulting tensor \(\widetilde{\mathbf{T}}\) is related to the standard Choi representation of the twirled process tensor via \cref{eq:pt-tensor-to-choi}.
+where the index \(x\) of \(\dim{x} = 4^n\) enumerates the \(n\)-qubit Pauli operators.
 
-A specific spatiotemporal Pauli trajectory indexed by \(\mathbf{x}_{0:k} = (x_0, x_1, \ldots, x_k)\) can be sampled directly from the untwirled tensor as
-\begin{equation}
-  \Pr(\mathbf{x}_{0:k}) = \frac{\mathbf{w}_{x_0\dots x_k}}{\mathcal{N}}, 
-  \quad
-  \mathbf{w}_{x_0\dots x_k} \coloneq \mathbf{T}^{\alpha_0 \dots \alpha_k}{}_{\beta_0 \dots \beta_k} \prod_{j=0}^k \mathbf{P}^{\alpha_j}{}_{\beta_jx_j},
-  \quad
-  \mathcal{N} \coloneq \sum_{x_0\dots x_k} \mathbf{w}_{x_0\dots x_k},
+\begin{proposition}[Local tensor network implementation of the multi-time Pauli twirl]\label{prop:local-pt-twirl}
+  Let \(\mathbf{T}\) be a tensor network (MPO) representation of a \(k\)-slot process tensor as in \cref{eq:pt-mpo}. Then the multi-time Pauli twirl \(\widetilde{\mathbf{T}} \coloneq \mathcal{T}_P^{(k)}(\mathbf{T})\) is obtained by contracting a pair of the Pauli tensor \(\mathbf{P}\) with each open system index pair (\(\alpha_j, \beta_j\)) at every time step as
+  \begin{equation}\label{eq:pt-twirl-tensor}
+    \widetilde{\mathbf{T}}^{\alpha_0\dots \alpha_k}{}_{\beta_0 \dots \beta_k} = 
+    \mathbf{T}^{\alpha'_0 \dots \alpha'_k}{}_{\beta'_0 \dots \beta'_k}
+    \Bigg(
+    \prod_{j=0}^k
+      \mathbf{P}^{\alpha'_j\alpha_j}{}_{x_j}
+      \mathbf{P}^{x_j}{}_{\beta'_j\beta_j}
+    \Bigg),
+  \end{equation}
+  where primed indices are summed over. Graphically,
+  \begin{equation}
+    \valignbox{\input{figures/process-tensor-twirl.tikz}}.
+  \end{equation}
+  In particular, this operation implements the twirl locally on the physical legs and leaves the environment bonds \(\mu_j\) unchanged. This is a direct rewriting of \cref{def:multi-time-twirl} in the Pauli Liouville basis using \(\mathbf{P}\) and the RFT re-indexing in \cref{eq:rft}. The resulting tensor \(\widetilde{\mathbf{T}}\) is related to the standard Choi representation of the twirled process tensor via \cref{eq:pt-tensor-to-choi}.
+\end{proposition}
+
+The local contraction in \cref{prop:local-pt-twirl} also gives direct access to the (unnormalised) trajectory weights by contracting only one Pauli tensor per time step into the open legs of the untwirled tensor network. Let \(\mathbf{x}_{0:k} = (x_0, x_1, \ldots, x_k)\) index a spatiotemporal Pauli trajectory, where each \(x_j\) labels an \(n\)-qubit Pauli operator. The trajectory weights are defined as
+\begin{equation}\label{eq:spp-weights}
+  \mathbf{w}_{x_0\dots x_k} 
+  \coloneq
+  \mathbf{T}^{\alpha_0 \dots \alpha_k}{}_{\beta_0 \dots \beta_k} \prod_{j=0}^k \mathbf{P}^{\alpha_j}{}_{\beta_jx_j},
 \end{equation}
-reproducing \cref{eq:spp-probabilities}. Alternatively, this probability distribution can be encoded directly into a classical MPS, which we term the SPP MPS. We formalise this approach below.
-\begin{definition}[Process tensor MPO to SPP MPS]
-  Given a process tensor $\mathbf T$ with Stinespring dilation $\{\mathbf U_{(j)}, \pmb\sigma\}$, the spatiotemporal Pauli process obtained by multi-time twirling admits an MPS representation with tensors
+and the corresponding normalised probabilities
+\begin{equation}\label{eq:spp-prob-tensor}
+  \Pr(\mathbf{x}_{0:k}) = \mathbf{p}_{x_0\dots x_k} \coloneq \frac{\mathbf{w}_{x_0\dots x_k}}{\mathcal{N}}, 
+  \quad
+  \mathcal{N} \coloneq \sum_{x_0\dots x_k} \mathbf{w}_{x_0\dots x_k}.
+\end{equation}
+This reproduces \cref{eq:spp-probabilities} under the identification \(x_j \leftrightarrow P_j\).
+
+Although \(\mathbf{w}_{x_0\dots x_k}\) is an exponentially large tensor, it inherits an efficient MPS form from the process tensor MPO for which we can directly construct its local tensors.
+\begin{definition}[Process tensor MPO to SPP MPS]\label{def:pt-mpo-to-spp-mps}
+  Given a process tensor \(\mathbf T\) with Stinespring dilation \(\{\mathbf U_{(j)}, \pmb\sigma\}\), the spatiotemporal Pauli process obtained by multi-time twirling admits an MPS representation with tensors
   \begin{equation}\label{eq:spp-tensors}
   \begin{aligned}
     \mathbf{A}_{x_0\mu_{1}} 
@@ -168,13 +162,13 @@ reproducing \cref{eq:spp-probabilities}. Alternatively, this probability distrib
       \vspace{8mm}
       \caption{}
     \end{subfigure}
-    \caption{Tensor network representation of a spatiotemporal Pauli process (SPP) in one dimension. (a)~Local tensor obtained by contracting the system--environment unitary tensor \(\mathbf{U}_{(j)}\) with the Pauli tensor \(\mathbf{P}\), corresponding to a local Pauli twirl on the system. (b)~Resulting matrix product state (MPS) representation of the SPP probability distribution, where environment bonds \(\mu_j\) mediate temporal correlations and physical indices \(x_j\) label Pauli outcomes at each time step. Sampling this MPS yields Pauli trajectories \(\mathbf{x}_{0:k}\) with probability \(\Pr(\mathbf{x}_{0:k})\).
-}
+    \caption{Tensor network representation of a spatiotemporal Pauli process (SPP) in one dimension. (a)~Local tensor obtained by contracting the system--environment unitary tensor \(\mathbf{U}_{(j)}\) with the Pauli tensor \(\mathbf{P}\), corresponding to a local Pauli twirl on the system. (b)~Resulting matrix product state (MPS) representation of the SPP trajectory weights, where environment bonds \(\mu_j\) mediate temporal correlations and physical indices \(x_j\) label Pauli outcomes at each time step. Sampling this MPS yields Pauli trajectories \(\mathbf{x}_{0:k}\) with probability \(\Pr(\mathbf{x}_{0:k})\).}
     \label{fig:spp-mps}
 \end{figure}
-Importantly, the transformation from the quantum process tensor to the SPP MPS involves local operations strictly on the physical indices, leading to the following bound on the temporal bond dimensions.
+
+Importantly, \cref{prop:local-pt-twirl} and \cref{def:pt-mpo-to-spp-mps} show that the map from a process tensor MPO to the SPP MPS acts only on the physical indices and leaves the environment bonds \(\mu_j\) unchanged. This immediately implies that the temporal bond dimension required to represent the induced SPP cannot increase.
 \begin{lemma}[Bond dimension bound for SPP MPS]\label{thm:spp-bond}
-  Let \(\mathbf{T}\) be a process tensor admitting an MPO form with inner bond dimensions are given by \(\dim \mu_j\) for each time step \(t_j\). The resulting SPP MPS encoding the joint probability distribution \(\Pr(\mathbf{x}_{0:k})\), defined in \cref{def:def-spp}, admits an MPS representation with inner bond dimensions \(D_j\) satisfying 
+  Let \(\mathbf{T}\) be a process tensor admitting an MPO form whose inner bond dimensions are \(\dim \mu_j\) for each time step \(t_j\). The resulting SPP MPS encoding the joint probability distribution \(\Pr(\mathbf{x}_{0:k})\), defined in \cref{def:def-spp}, admits an MPS representation with inner bond dimensions \(D_j\) satisfying 
   \begin{equation*}
     D_j \leq \dim \mu_j \quad \forall j.
   \end{equation*}
@@ -182,14 +176,13 @@ Importantly, the transformation from the quantum process tensor to the SPP MPS i
 \begin{proof}
     The tensors of the SPP MPS are obtained by applying a local, linear map to the physical indices of the process tensor MPO tensors. This operation acts strictly on the system Hilbert space and leaves the environment bonds \(\mu_j\) invariant. Since the minimum required bond dimension \(D_j\) is determined by the Schmidt rank across the temporal partition, and no operations are performed on the virtual bonds, the rank cannot increase. Therefore, the bond dimension is strictly bounded by the dimension of the original virtual space, \(D_j \le \dim \mu_j\).
 \end{proof}
-\begin{theorem}[Environment dimension bound]\label{thm:env-bond-dim-bound}
+\begin{corollary}[Environment dimension bound]\label{thm:env-bond-dim-bound}
     For a process derived from a system interacting with a finite environment of dimension \(d_E\), the inner bond dimensions of the resulting SPP MPS is bounded by the Liouville space dimension of the environment,
     \begin{equation*}
         D_j \le d_E^2.
     \end{equation*}
-    This bound is saturated for processes generated by generic Haar-random system-environment unitaries.
-\end{theorem}
-% A proof is provided in \cref{app:proof-bound-saturation}.
+\end{corollary}
+For generic Haar-random system-environment unitaries, the bound in \cref{thm:spp-bond} is typically saturated (up to finite-size effects), since the induced temporal memory explores the full environment Liouville space.
 
 This construction, illustrated in \cref{fig:spp-mps}, provides a direct method for sampling Pauli trajectories from the joint distribution using standard MPS sampling algorithms. Conversely, if the operator description is required, the twirled process tensor MPO \(\widetilde{\mathbf{T}}\) can be perfectly recovered from the SPP MPS by re-expanding the Pauli basis indices \(x_j\) as
 \begin{equation}\label{eq:spp-mps-to-pt}
@@ -199,9 +192,9 @@ This construction, illustrated in \cref{fig:spp-mps}, provides a direct method f
     \prod_{j=0}^k \mathbf{P}^{x_j\alpha_j}{}_{\beta_j}
   \Bigg).
 \end{equation}
-\Cref{eq:spp-mps,eq:spp-mps-to-pt} hence establish two equivalent tensor network representations of SPPs: as a Pauli-diagonal MPO \(\widetilde{\mathbf{T}}\) in the operator picture, and as a classical MPS \(\mathbf{p}\) encoding the probabilities of Pauli trajectories.
+\Cref{eq:spp-weights,eq:spp-prob-tensor,eq:spp-mps-to-pt} hence provide two equivalent descriptions of the induced SPP: as a Pauli-diagonal MPO \(\widetilde{\mathbf{T}}\) in the operator picture, and as a classical MPS \(\mathbf{p}\) encoding \(\Pr(x_{0:k})\).
 
-Finally, this approach extends to systems with additional spatial structure, where the process tensor is represented by a higher-dimensional tensor network. In the 2D case, for instance, the multi-time Pauli twirl maps the process tensor PEPO to a projected entangled pair state (PEPS) representation of the SPP. The constituent tensors of this PEPS network are given by
+Finally, nothing in the above construction relies on a one-dimensional (MPS/MPO) geometry. The multi-time Pauli twirl is implemented by inserting the same fixed Pauli tensor \(\mathcal{P}\) on the open indices. Consequently, for any process tensor represented by a tensor network---for instance, a tree tensor network or a higher-dimensional PEPO---the twirl produces a tensor network encoding the classical joint trajectory weights. To illustrate the 2D case, the multi-time Pauli twirl maps the process tensor PEPO to a projected entangled pair state (PEPS) representation of the SPP. The constituent tensors of this PEPS network are given by
 \begin{equation}\label{eq:spp-peps}
   \mathbf{a}_{(i, j)}^{\nu^{i-1}_j\mu_j^i}{}_{x_j^i\mu_{j+1}^i\nu_j^i} = 
   \mathbf{u}_{(i, j)}^{\nu^{i-1}_j\mu_j^i\alpha_j^i}{}_{\beta_j^i\mu_{j+1}^i\nu_j^i}
@@ -224,13 +217,12 @@ As shown in \cref{fig:spp-peps}, spatial correlations are encoded along the bond
       \input{figures/spp-peps.tikz}
       \caption{}
     \end{subfigure}
-    \caption{Tensor network representation of a spatiotemporal Pauli process (SPP) in two dimensions. See \cref{fig:spp-mps} for additional details and the 1D case. (a)~Local tensor transformation for 2D tensor network representation. (b)~Projected entangled-pair state (PEPS) representation of the SPP joint probability distribution. Spatial correlations are encoded along one axis by bonds \(\nu^i_j\), while temporal correlations are encoded along the other axis by bonds \(\mu^i_j\).}
+    \caption{Tensor network representation of a spatiotemporal Pauli process (SPP) in two dimensions. See \cref{fig:spp-mps} for additional details and the 1D case. (a)~Local tensor transformation for 2D tensor network representation. (b)~Projected entangled-pair state (PEPS) representation of the SPP trajectory weights. Spatial correlations are encoded along one axis by bonds \(\nu^i_j\), while temporal correlations are encoded along the other axis by bonds \(\mu^i_j\).}
     \label{fig:spp-peps}
 \end{figure}
-
 We next illustrate the SPP framework by introducing three simple system-environment Hamiltonians and explicitly computing the corresponding single-slot (two time slices) SPPs.
 
-\subsection{Worked examples}
+\subsection{Worked examples: single-qubit non-Markovian dynamics}
 Consider a single system qubit \(S\) coupled to a single environment qubit \(E\), with joint Hilbert space \(\mathcal{H}_S \otimes \mathcal{H}_E\). We study three families of system-environment Hamiltonians \(H(\theta)\in\mathcal{B}(\mathcal{H}_S\otimes\mathcal{H}_E)\), generating unitary dynamics of the form
 \begin{equation}
   U(\theta) = e^{-iH(\theta)},
@@ -241,7 +233,7 @@ where \(\theta\) is a tunable parameter. Concretely, we consider:
   
   Generates exchange interactions; in particular, \(U_J(\pi/2)\) is equivalent to a SWAP operator up to a global phase. This is a paradigmatic model for non-Markovian dynamics and is known to generate strong temporal correlations.
 
-  \item \textbf{Controlled-$X$ rotation}: \(H_{RX}(\theta_{RX}) = -\frac{1}{2} \theta_{RX}  (X^S \otimes I^E - X^S \otimes Z^E)\)
+  \item \textbf{Controlled-\(X\) rotation}: \(H_{RX}(\theta_{RX}) = -\frac{1}{2} \theta_{RX}  (X^S \otimes I^E - X^S \otimes Z^E)\)
   
   Generates a controlled rotation on the system along the \(X\)-axis, with the environment acting as the control. At \(\theta_{RX} = \pi/2\), the resulting unitary is equivalent to a CNOT gate up to a global phase.
 
@@ -280,7 +272,7 @@ To visualise the Pauli sequence probabilities directly, \cref{fig:worked-example
 
 For the \(H_{RX}\) model in \cref{fig:worked-examples-entropies}(b), the GQMI is non-zero for both the original and twirled processes, indicating the presence of temporal correlations in the induced SPP. In particular, at \(\theta_{RX} = \pi/2\), we find \(\mathcal{I}[\Upsilon_{0:1}] = \mathcal{I}[\Upsilon_{0:1}^{\mathcal{T}_P}] = \ln 2\) and \(\mathcal{J}[\Upsilon_{0:1}] = 0\), showing that the original process is Pauli-twirl invariant and hence already an SPP. This is reflected in the trajectory distribution in \cref{fig:worked-examples-probabilities}(b), where only the \(I_{t_0}I_{t_1}\) and \(X_{t_0}X_{t_1}\) sequences occur with non-zero probability, corresponding to a perfectly two-time correlated bit-flip channel. Away from these special points at \(\theta_{RX} \neq n\pi/2\), we observe that the twirling generally reduces the GQMI while \(\mathcal{J}[\Upsilon_{0:1}]\) increases, consistent with the removal of non-Pauli structure and non-Pauli-based temporal correlations.
 
-Finally, for the local field model in \cref{fig:worked-examples-entropies}(c), we observe a non-trivial interplay between the exchange interaction and the symmetry-breaking local field. The GQMI \(\mathcal{I}[\Upsilon_{0:1}]\) is maximal at \(\theta_F = 0\) (pure Heisenberg dynamics) and then decays non-monotonically as the field strength increases. In contrast to the Heisenberg-only case, the twirled GQMI \(\mathcal{I}[\Upsilon_{0:1}^{\mathcal{T}_P}]\) is generically non-zero and displays oscillatory peaks and troughs as a function of \(\theta_F\). The twirl relative entropy \(\mathcal{J}[\Upsilon_{0:1}]\) exhibits two distinct types of troughs which alternate with peaks in \(\mathcal{I}[\Upsilon_{0:1}^{\mathcal{T}_P}]\). The trajectory probabilities in \cref{fig:worked-examples-probabilities}(c) are dominated by the \(I_{t_0}I_{t_1}\) sequence, with small but correlated contributions from the Pauli sequences without identity. Overall, this model highlights that SPPs can exhibit rich and structured temporal correlations, even when genuinely quantum temporal correlations are discarded.
+Finally, for the local field model in \cref{fig:worked-examples-entropies}(c), we observe a non-trivial interplay between the exchange interaction and the symmetry-breaking local field. The GQMI \(\mathcal{I}[\Upsilon_{0:1}]\) is maximal at \(\theta_F = 0\) (pure Heisenberg dynamics) and then decays non-monotonically as the field strength increases. In contrast to the Heisenberg-only case, the twirled GQMI \(\mathcal{I}[\Upsilon_{0:1}^{\mathcal{T}_P}]\) is generically non-zero and displays oscillatory peaks and troughs as a function of \(\theta_F\). The twirl relative entropy \(\mathcal{J}[\Upsilon_{0:1}]\) exhibits two distinct types of troughs which alternate with peaks in \(\mathcal{I}[\Upsilon_{0:1}^{\mathcal{T}_P}]\). The trajectory probabilities in \cref{fig:worked-examples-probabilities}(c) are dominated by the \(I_{t_0}I_{t_1}\) sequence, with small but correlated contributions from the Pauli sequences excluding an identity. Overall, this model highlights that SPPs can exhibit rich and structured temporal correlations, even when genuinely quantum temporal correlations are discarded.
 
 \begin{figure}
     \centering
