@@ -1,47 +1,26 @@
-\Fidel{\begin{itemize}
-    \item \textbf{Central narrative:} We have built a bridge from the fundamental physics of system--environment Hamiltonians to the effective stochastic error models relevant for quantum error correction.
-    \item \textbf{Our contributions:}
-    \begin{enumerate}
-        \item We formally define Spatiotemporal Pauli Channels (SPCs) via multitime Pauli twirling of process tensors.
-        \item Theorem: The twirling process maps a quantum process tensor to a classical stochastic process.
-        \item SPCs admit an efficient tensor network representation (MPS) that can be built from the system--environment Hamiltonian.
-        \item \textbf{Narrative: We build an essential bridge between theory and practice.}
-        \item Theorem: Bounds for mutual information (based on environment size) and Markovianisation conditions.
-        \item Relate SPC MPS to hidden Markov models to characterise memory length, correlation gap, and make other useful statements about the underlying noise structure.
-        \item \textbf{Primary application: Efficient QEC simulation.} Frame the work as providing new tools for understanding and mitigating correlated noise in quantum devices.
-        \item Other applications: Discuss bond truncation, characterisation (tomography), decoding.
-        \item Previous work analysing correlated noise for QEC either have some or a mix of the limitations: Gaussian (short-range) correlations, phenomenological noise or perfect syndrome extraction, focus on threshold estimates rather studying performance under threshold, specific to certain codes (e.g., surface codes due to reliance on statistical mechanical mappings or other techniques to make the problem tractable), no inter-round correlations, `ad hoc' models without clear connection to microscopic physical noise processes.
-        \item The SPP framework natively encapsulates all spatiotemporally correlated stochastic noise models; it captures \emph{all} spatiotemporally correlated general noise models (including ones with genuinely quantum correlations described via quantum combs) under RC. It makes no assumptions on circuit-level vs phenomenological vs perfect syndrome extraction, its code agnostic and circuit agnostic, it makes no assumptions about the nature of correlations (e.g., Gaussian, power law, spatial, Markovian, etc), and under Pauli twirling achieved via RC, it can be applied to general noise (arbitrary CPTP maps and SE Hamiltonians).
-    \end{enumerate}
-    \item \textbf{Related work:}
-    \begin{enumerate}
-        \item \textbf{Non-Markovian noise suppression simplified through channel representation} \cite{liuNonMarkovianNoiseSuppression2024}: They apply Pauli twirling to the Choi channel representation of a superchannel, similarly finding that the quantum non-markovianity is removed, leaving only classically correlated Pauli noise.
-        \item \textbf{Operational Markovianization in randomized benchmarking} \cite{figueroa-romeroOperationalMarkovianizationRandomized2024}: They apply multitime randomised compiling (Pauli twirling) for non-Markovian randomised benchmarking.
-        \item \textbf{Realizing Universal Non-Markovian Noise Suppression} \cite{liuRealizingUniversalNonMarkovian2025}
-    \end{enumerate}
-\end{itemize}}
-
-\Fidel{TODO:
-\begin{itemize}
-    \item Overview flow diagram of the framework/paper's contributions.
-\end{itemize}
-}
-
 \section{Introduction}\label{sec:introduction}
-\begin{itemize}
-    \item Quantum error correction (QEC) is the primary technique for achieving fault-tolerant quantum computation, yet its practical efficacy hinges on the accuracy of the underlying noise models used to design and evaluate QEC protocols.
-    \item Most theoretical and numerical studies of the past model noise as stochastic Pauli errors that are independent and identically distributed across space and time. These models have proven remarkably successful, enabling efficient classical simulation and yielding sharp threshold and resource estimates for a wide range of codes.
-    \item However, in reality, noise in devices arises from complex physical processes between the system hardware and its environment, leading to potentially structured, correlated, and non-Markovian noise.
-    \item While there is a growing body of work analysing correlated noise for QEC, existing approaches are often limited in scope, relying on assumptions such as limited correlations, ideal syndrome extraction or non-circuit-level noise, being highly specific to certain codes and hardware-specific noise processes, or lack a clear connection to the underlying system-environment dynamics.
-    \item At the same time, a parallel literature in open quantum systems has developed a rigorous framework for describing general non-Markovian dynamics via process tensors. Process tensors are quantum combs that provide a complete operational description of multi-time quantum processes, encoding all temporal correlations generated by repeated interactions between a system and its environment. Despite their generality, process tensors have seen limited practical applications in QEC context. This is partly because they are intrinsically complex quantum objects---high rank operators whose size grows exponentially with both time and system dimension---and partly because QEC theory and practice reduce continuous quantum errors to discrete syndrome measurement outcomes corresponding to stochastic Pauli errors.
-    \item In this work, we show that these two perspectives---microscopic non-Markovian dynamics and effective stochastic noise models---can be unified within a single framework. In this work, we formally introduce \emph{spatiotemporal Pauli processes} (SPPs): a class of Pauli-diagonal quantum combs or higher order quantum maps that serve as the multi-time generalisation of Pauli channels.
-    \item Crucially, this is not an ad hoc invention. We show that standard noise-tailoring techniques---precisely randomised compiling and related Pauli twirling---projects any process tensor description of the dynamics onto a stochastic process over Pauli operators allowing for strong spatiotemporal correlations.
-    \item SPPs inherit the spatiotemporal generality of process tensors while interfacing directly with QEC's effective description in terms of Pauli faults and syndrome statistics.
-\end{itemize}
+Correlations are increasingly recognised as decisive failure modes in quantum error correction (QEC)~\cite{harperLearningCorrelatedNoise2023,fkamDetrimentalNonMarkovianErrors2025}. Even when \emph{average} error rates lie below conventional thresholds, the physics of real devices permits temporal memory and spatial structure that can concentrate faults into bursts, induce heavy tails in syndrome statistics, and ultimately undermine the effective independence assumptions behind standard threshold theorems. At the same time, the modelling tools on either side of the physics--QEC interface remain misaligned. On one hand, independent stochastic Pauli models are the workhorse of QEC design and analysis, enabling scalable simulation, decoding, and the threshold statements that have driven much recent progress. On the other hand, open quantum systems models can capture coherent dynamics and non-Markovian memory, but are rarely presented in a form directly compatible with circuit-level simulation and benchmarking. What is missing is a common language that (i) is operationally tied to the noise seen by stabiliser circuits, (ii) retains genuinely multi-time and multi-qubit correlations, and (iii) admits efficient representations suitable for simulation, inference, and comparison across devices.
 
-\begin{figure}
+A natural starting point for describing general multi-time noise is the quantum \emph{process tensor}~\cite{pollockNonMarkovianQuantumProcesses2018}. Conceptually, it is the multi-time generalisation of a quantum channel. It provides an operationally complete description of non-Markovian dynamics by encoding the joint statistics of the system's response to arbitrary interventions. It thereby captures the temporal correlation structure induced by an environment with memory. However, this generality comes with two drawbacks for QEC. First, process tensors are high-rank quantum objects whose complexity scales exponentially with both time and system dimension. Second, they do not naturally translate into the discrete Pauli fault language used for circuit-level simulation and decoding.
+
+To bridge this gap, we introduce \emph{spatiotemporal Pauli processes} (SPPs): stochastic processes over Pauli trajectories obtained by applying a \emph{multi-time Pauli twirl} to a general process tensor. Operationally, this construction formalises what is induced by standard Pauli-frame randomisation and related randomised compiling techniques. Viewing the multi-time Pauli twirl as a \emph{superprocess}, our central conceptual result is that it maps any (possibly non-Markovian) quantum process to a \emph{process-separable} Pauli comb---equivalently, a well-defined joint probability distribution over Pauli operator trajectories across space and time. In this sense, SPPs are the natural multi-time analogue of Pauli channels. This provides an operationally grounded noise framework compatible with both microscopic open systems modelling and the stabiliser workflow of QEC design and analysis.
+
+\Cref{fig:paper-overview} provides a schematic overview of the framework including the key technical results and applications developed in this work.
+
+\begin{figure}[t]
     \centering
     \begin{adjustbox}{width=\textwidth, keepaspectratio}
-        \input{figures/overview-a.tikz}
+        \input{figures/paper-overview.tikz}
     \end{adjustbox}
+    \caption{\textbf{Framework overview: Process tensors to spatiotemporal Pauli processes.}}
+    \label{fig:paper-overview}
 \end{figure}
+
+Beyond the operational definition, we show that SPPs admit efficient tensor network representations that can be constructed directly from an underlying system-environment interaction. Because the multi-time Pauli twirl acts strictly via local contractions on the system legs, the induced SPP inherits a classical tensor network form---whose entries encode joint spatiotemporal Pauli trajectory probabilities. Moreover, the inner bond dimension of this network is bounded by the Liouville-space dimension of the underlying environment, tying the effective memory of the Pauli process to the size of the physical bath. To make these correlations interpretable, we develop a transfer operator formalism for SPPs that links spectral properties to temporal correlation lengths, and demonstrate for suitable classes of SPPs, these tensor networks can be recast exactly to classical hidden Markov models. Together, these structures support efficient Monte Carlo sampling and inference and provide a direct interface between microscopic non-Markovian dynamics and circuit-level QEC simulation.
+
+We deploy this framework to systematically benchmark primitives of surface code computation under correlations. First, using a one-dimensional temporal `storm' model, we demonstrate that tuning the correlation length---while fixing single-round marginal error rates---progressively degrades logical memory and stability, blunting the effective exponential suppression of errors expected from distance scaling. Second, we introduce a genuinely spatiotemporal SPP derived from a two-dimensional coherent quantum cellular automaton (QCA) bath. Under operational Pauli twirling, the QCA dynamics maps to an effective SPP described exactly by a probabilistic cellular automaton (PCA) with a nonlinear transition kernel. Strikingly, tuning a single parameter controlling coherent bath interactions drives the Pauli process into a pseudo-critical regime. In this window, macroscopic error avalanches and critical slowing down cause a complete reversal and breakdown of standard surface code distance scaling. These results establish a concrete, computationally tractable link between non-equilibrium statistical mechanics and QEC performance under spatiotemporally correlated noise.
+
+(\Fidel{ITEMIZED CONTRIBUTIONS + POSITIONING RELATIVE TO OTHER WORK.})
+
+The remainder of this paper is structured as follows. \Cref{sec:background} reviews the necessary background on quantum channels, Pauli twirling, and process tensors. In \cref{sec:pt-tn} we detail the construction of tensor network representations for multi-time processes directly from microscopic dynamics. \Cref{sec:spp} formally introduces SPPs via the multi-time Pauli twirl and derives their tensor network structure. We also illustrate the construction with worked examples. \Cref{sec:correlation-structure} develops the transfer operator formalism and establishes the connection to hidden Markov models. \Cref{sec:temporalstormmodel} we apply this framework to benchmark surface code memory and stability under the temporally correlated storm model. \Cref{sec:qcamodel} extends this to fully spatiotemporal noise, deriving an effective PCA from a coherent quantum bath and demonstrating the resulting breakdown of distance scaling near pseudo-criticality. Finally, \cref{sec:discussion} concludes with a discussion of future applications, including correlation-aware decoding and noise characterisation.
+

@@ -1,14 +1,3 @@
-\noindent\Fidel{TODO:
-\begin{itemize}
-    \item A few more process tensor related citations. Recommendations welcome.
-    % \item Figure for Pauli twirling channels?
-    % \item Justify our notation system (convenient to translate to code)
-    % \item Mention for the temporal MPO representation, that instead of sequence of unitaries, it can also be constructed from a sequence of CPTP maps (which can always be dilated to unitaries).
-    % \item Remark 2D TNs are not trivial to contract unlike 1D TNs
-    % \item Need not restrict ourselves to MPO or PEPS. We can construct a tensor network tailored to the specific structure of the SE dynamics.
-    % \item Worked example: Heisenberg interaction over two SE unitaries.
-\end{itemize}
-}
 \section{Process tensors as tensor networks}\label{sec:pt-tn}
 Quantum maps are tensors; when correlations between their indices are even modestly constrained, they often admit compact tensor network representations. A paradigmatic example is the matrix product state (MPS) description of quantum many-body states with area-law entanglement. The same principle extends to quantum processes: process tensors are high-rank objects whose temporal correlations are often structured, making tensor network representations both natural and efficient. Accordingly, process tensors have been represented as matrix product operators (MPOs)~\cite{pollockNonMarkovianQuantumProcesses2018,cygorekUnderstandingUtilizingInner2025}, locally purified density operators (LPDOs)~\cite{whiteUnifyingNonMarkovianCharacterization2025}, and tree tensor networks (TTNs)~\cite{dowlingCapturingLongRangeMemory2024}.
 
@@ -93,7 +82,7 @@ This contraction naturally generalises to cases where the instruments are themse
 \begin{figure}
     \centering
     \input{figures/process-tensor-2d.tikz}
-    \caption{Two-dimensional tensor network representation of a process tensor \(\mathbf{T}^{\{\alpha_j^i\}}{}_{\{\beta_j^i\}}\). Horizontal bonds \(\mu_j^i\) encode temporal correlations, bonds \(\nu_j^i\) carry spatial correlations, and open indices \(\alpha_j^i\), \(\beta_j^i\) correspond to system inputs and outputs at each time \(j \in [0,k]\) and subsystem \(i \in [0,n)\).}
+    \caption{\textbf{Spatiotemporal tensor network form of a process tensor.} Horizontal bonds \(\mu_j^i\) encode temporal correlations, bonds \(\nu_j^i\) carry spatial correlations, and open indices \(\alpha_j^i\), \(\beta_j^i\) correspond to system inputs and outputs at each time \(j \in [0,k]\) and subsystem \(i \in [0,n)\).}
     \label{fig:tensor-network-2d}
 \end{figure}
 So far we have considered only the one-dimensional temporal structure of process tensors, where each tensor carries dense system indices of size \(d^2_S\). For composite systems---such as spin chains---these indices can be further factorised along spatial degrees of freedom, promoting the MPO to a two-dimensional tensor network with time along one axis and space along the other. Concretely, we decompose the system legs of each temporal tensor into local legs 

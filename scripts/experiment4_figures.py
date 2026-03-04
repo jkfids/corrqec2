@@ -83,8 +83,10 @@ if __name__ == "__main__":
     theta_sorted = sorted(results_dict[distance].keys())
     distance_sorted = sorted(results_dict.keys())
 
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(6.8, 3), sharey=True)
+    fig1, (ax1, ax2) = plt.subplots(1, 2, figsize=(6.8, 3), sharey=True)
     axs = [ax1, ax2]
+    # Plot a simplified version of the threshold plot for the introduction figure
+    fig2, ax3 = plt.subplots(figsize=(1.35, 1.0), sharey=True)
     colors = sns.color_palette("muted")
 
     for i, distance in enumerate(distance_sorted):
@@ -107,6 +109,26 @@ if __name__ == "__main__":
         ax1.fill_between(
             theta_sorted_i, lower, upper, alpha=0.5, linewidth=0, color=colors[i]
         )
+        if distance not in [17]:
+            ax3.plot(
+                theta_sorted_i[1:-1],
+                center[1:-1],
+                marker=".",
+                markersize=2,
+                linestyle="-",
+                linewidth=0.5,
+                color=colors[i],
+            )
+            ax3.fill_between(
+                theta_sorted_i[1:-1],
+                lower[1:-1],
+                upper[1:-1],
+                alpha=0.5,
+                linewidth=0,
+                color=colors[i],
+            )
+    ax1.axvline(0.39, color="gray", linestyle="--", linewidth=0.8)
+    ax3.axvline(0.39, color="gray", linestyle="--", linewidth=0.8)
     ax1.set_ylim(2e-9, 1.2e-2)
     ax1.set_xlim(0.185, 0.5)
     ax1.legend(loc="lower right")
@@ -170,7 +192,7 @@ if __name__ == "__main__":
     ax1.text(-0.155, 1.08, "(a)", transform=ax1.transAxes, va="top", ha="left", size=10)
     ax2.text(-0.07, 1.08, "(b)", transform=ax2.transAxes, va="top", ha="left", size=10)
 
-    for ax in (ax1, ax2):
+    for ax in (ax1, ax2, ax3):
         ax.semilogy()
         ax.spines["top"].set_visible(False)
         ax.spines["right"].set_visible(False)
@@ -178,10 +200,22 @@ if __name__ == "__main__":
         for spine in ax.spines.values():
             spine.set_linewidth(0.5)
 
-    fig.tight_layout()
-    fig.subplots_adjust(wspace=0.09)
-    fig.savefig(
+    fig1.tight_layout()
+    fig1.subplots_adjust(wspace=0.1)
+    fig1.savefig(
         "./project/paper/figures/experiment4.pdf",
+        dpi=600,
+        bbox_inches="tight",
+        pad_inches=0.00,
+    )
+
+    ax3.set_xticks([])
+    ax3.set_yticks([])
+    ax3.set_xlabel("$\\theta$", labelpad=2)
+    ax3.set_ylabel("$p_L$", labelpad=1)
+    fig2.tight_layout()
+    fig2.savefig(
+        "./project/paper/figures/experiment4_mini.pdf",
         dpi=600,
         bbox_inches="tight",
         pad_inches=0.00,

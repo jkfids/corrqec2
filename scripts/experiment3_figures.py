@@ -113,6 +113,7 @@ def plot_figures(Y1_dict, Y2_dict, Y3_dict, distances, thetas):
         ax3.plot(thetas, Y3_dict[d], label=f"$d={d}$", color=colors[i], linewidth=1)
 
     for i in range(3):
+        axs[i].axvline(0.39, color="gray", linestyle="--", linewidth=0.8)
         axs[i].xaxis.set_major_formatter(FormatStrFormatter("%g$\\pi$"))
         axs[i].xaxis.set_major_locator(MultipleLocator(base=0.25))
         axs[i].set_xlabel(f"Controlled-rotation angle, $\\theta$")
