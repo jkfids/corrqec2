@@ -4,6 +4,7 @@
 % \tikzstyle{NAME}=[PROPERTY LIST]
 
 % Node styles
+\tikzstyle{footnotesize}=[font=\footnotesize]
 \tikzstyle{lefttriangle}=[isosceles triangle, isosceles triangle apex angle=90, shape border rotate=180, draw=black, fill={red!20}, inner sep=0ex, minimum height=5.5mm]
 \tikzstyle{lefttrianglegreen}=[isosceles triangle, isosceles triangle apex angle=90, shape border rotate=180, draw=black, fill={olive!20}, inner sep=0ex, minimum height=5.5mm]
 \tikzstyle{righttriangle}=[isosceles triangle, isosceles triangle apex angle=90, draw=black, fill={blue!20}, inner sep=0ex, minimum height=5.5mm]
@@ -41,9 +42,18 @@
 \tikzstyle{smallcirclewhite}=[fill=white, draw=black, shape=circle, minimum size=3mm, inner sep=0pt]
 \tikzstyle{smallercircleblue}=[fill={blue!25}, draw=black, shape=circle, inner sep=0pt, minimum size=5mm]
 \tikzstyle{smallercirclered}=[fill={red!25}, draw=black, shape=circle, inner sep=0pt, minimum size=5mm]
+\tikzstyle{circgate}=[fill=white, draw=black, shape=rectangle, inner sep=0ex, minimum height=3.9mm, minimum width=3.4mm, font=\footnotesize]
+\tikzstyle{circgatetall}=[fill=white, draw=black, shape=rectangle, inner sep=0ex, minimum height=8.8mm, minimum width=3.4mm, font=\footnotesize]
+\tikzstyle{circpauli0}=[fill={orange!40}, draw={orange}, shape=rectangle, inner sep=0ex, minimum height=2.8mm, minimum width=2.8mm, font=\tiny]
+\tikzstyle{circpauli1}=[fill={green!40}, draw={green}, shape=rectangle, inner sep=0ex, minimum height=2.8mm, minimum width=2.8mm, font=\tiny]
+\tikzstyle{circpauli2}=[fill={teal!40}, draw={teal}, shape=rectangle, inner sep=0ex, minimum height=2.8mm, minimum width=2.8mm, font=\tiny]
+\tikzstyle{circpauli3}=[fill={violet!35}, draw={violet}, shape=rectangle, inner sep=0ex, minimum height=2.8mm, minimum width=2.8mm, font=\tiny]
+\tikzstyle{circpauli4}=[fill={orange!35}, draw={orange}, shape=rectangle, inner sep=0ex, minimum height=3.6mm, minimum width=3.4mm, font=\tiny]
+\tikzstyle{pttensor}=[fill={blue!20}, draw=black, shape=circle, inner sep=0ex, minimum width=4.5mm]
 
 % Edge styles
-\tikzstyle{fillblue}=[draw=black, fill={cyan}, -]
+\tikzstyle{thickwire}=[draw=black, fill=none, thick, -]
+\tikzstyle{thickdotted}=[draw=black, fill=none, thick, -, dotted]
 \tikzstyle{fusedwire}=[draw=black, fill=none, very thick, -]
 \tikzstyle{fuseddashedwire}=[-, very thick, fill=none, draw=black, dashed]
 \tikzstyle{fuseddotted}=[-, very thick, fill=none, draw=black, dotted]
@@ -51,3 +61,10 @@
 \tikzstyle{arrow}=[draw=black, fill=none, ->]
 \tikzstyle{arrowthick}=[draw=black, fill=none, ->, thick]
 \tikzstyle{doublearrow}=[draw=black, fill=none, <->]
+\tikzstyle{fillblue}=[draw=black, fill={blue!20}, -]
+\tikzstyle{fillorange}=[draw=black, fill={orange!30}, -]
+\tikzstyle{fillorange}=[draw=black, fill={orange!30}, -]
+\tikzstyle{drawfillblue}=[draw={blue!50}, fill={blue!20}, thick, -]
+\tikzstyle{thickorange}=[-, draw={orange}, fill={orange!8}, thick, dashed]
+\tikzstyle{orangewire}=[draw={orange}, fill=none, thick, -]
+\tikzstyle{orangedotted}=[draw={orange}, fill=none, thick, dotted, -]

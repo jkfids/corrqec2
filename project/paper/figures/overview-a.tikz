@@ -1,0 +1,273 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=none] (12) at (4.625, 1.775) {};
+		\node [style=none] (13) at (4.625, 1.275) {};
+		\node [style=none] (14) at (4.625, 0.775) {};
+		\node [style=circgate] (15) at (5.775, 1.775) {};
+		\node [style=circgate] (20) at (7.375, 0.775) {};
+		\node [style=circgate] (21) at (8.975, 1.775) {};
+		\node [style=circgate] (22) at (8.975, 1.275) {};
+		\node [style=none] (24) at (10.125, 1.775) {};
+		\node [style=none] (25) at (10.125, 1.275) {};
+		\node [style=none] (26) at (10.125, 0.775) {};
+		\node [style=none] (44) at (4.625, 0.275) {};
+		\node [style=circgate] (45) at (5.775, 0.275) {};
+		\node [style=circgate] (46) at (7.375, 0.275) {};
+		\node [style=none] (48) at (10.125, 0.275) {};
+		\node [style=circpauli2] (49) at (5.4, 1.775) {};
+		\node [style=circpauli0] (50) at (5.4, 1.275) {};
+		\node [style=circpauli1] (51) at (6.15, 1.775) {};
+		\node [style=circpauli0] (52) at (6.15, 1.275) {};
+		\node [style=circpauli3] (53) at (6.15, 0.775) {};
+		\node [style=circpauli3] (54) at (5.4, 0.775) {};
+		\node [style=circpauli1] (55) at (5.4, 0.275) {};
+		\node [style=circpauli0] (56) at (6.15, 0.275) {};
+		\node [style=circpauli1] (57) at (7, 1.775) {};
+		\node [style=circpauli0] (58) at (7, 1.275) {};
+		\node [style=circpauli2] (59) at (7.75, 1.775) {};
+		\node [style=circpauli3] (60) at (7.75, 1.275) {};
+		\node [style=circpauli1] (61) at (7.75, 0.775) {};
+		\node [style=circpauli3] (62) at (7, 0.775) {};
+		\node [style=circpauli0] (63) at (7, 0.275) {};
+		\node [style=circpauli2] (64) at (7.75, 0.275) {};
+		\node [style=circpauli2] (65) at (8.6, 1.775) {};
+		\node [style=circpauli3] (66) at (8.6, 1.275) {};
+		\node [style=circpauli3] (67) at (9.35, 1.775) {};
+		\node [style=circpauli1] (68) at (9.35, 1.275) {};
+		\node [style=circpauli0] (69) at (9.35, 0.775) {};
+		\node [style=circpauli1] (70) at (8.6, 0.775) {};
+		\node [style=circpauli2] (71) at (8.6, 0.275) {};
+		\node [style=circpauli0] (72) at (9.35, 0.275) {};
+		\node [style=none] (27) at (6.8, 0) {};
+		\node [style=none] (28) at (6.35, 0) {};
+		\node [style=none] (29) at (5.2, 0) {};
+		\node [style=none] (30) at (4.75, 0) {};
+		\node [style=none] (31) at (4.75, 2.55) {};
+		\node [style=none] (33) at (6.35, 2.05) {};
+		\node [style=none] (34) at (5.2, 2.05) {};
+		\node [style=none] (35) at (7.95, 0) {};
+		\node [style=none] (36) at (8.4, 0) {};
+		\node [style=none] (37) at (9.55, 0) {};
+		\node [style=none] (38) at (10, 0) {};
+		\node [style=none] (39) at (10, 2.55) {};
+		\node [style=none] (40) at (9.55, 2.05) {};
+		\node [style=none] (41) at (8.4, 2.05) {};
+		\node [style=none] (42) at (7.95, 2.05) {};
+		\node [style=none] (43) at (6.8, 2.05) {};
+		\node [style=circgatetall] (73) at (5.775, 1.025) {};
+		\node [style=circgatetall] (74) at (7.375, 1.525) {};
+		\node [style=circgatetall] (75) at (8.975, 0.525) {};
+		\node [style=none] (76) at (7.375, 2.3) {\(\Upsilon_{0:k}\)};
+		\node [style=none] (77) at (-0.125, 1.775) {};
+		\node [style=none] (78) at (-0.125, 1.275) {};
+		\node [style=none] (79) at (-0.125, 0.775) {};
+		\node [style=circgate] (80) at (0.725, 1.775) {};
+		\node [style=circgate] (81) at (1.725, 0.775) {};
+		\node [style=circgate] (82) at (2.725, 1.775) {};
+		\node [style=circgate] (83) at (2.725, 1.275) {};
+		\node [style=none] (84) at (3.575, 1.775) {};
+		\node [style=none] (85) at (3.575, 1.275) {};
+		\node [style=none] (86) at (3.575, 0.775) {};
+		\node [style=none] (87) at (-0.125, 0.275) {};
+		\node [style=circgate] (88) at (0.725, 0.275) {};
+		\node [style=circgate] (89) at (1.725, 0.275) {};
+		\node [style=none] (90) at (3.575, 0.275) {};
+		\node [style=none] (115) at (1.45, 0) {};
+		\node [style=none] (116) at (1, 0) {};
+		\node [style=none] (117) at (0.45, 0) {};
+		\node [style=none] (118) at (0, 0) {};
+		\node [style=none] (119) at (0, 2.55) {};
+		\node [style=none] (120) at (1, 2.05) {};
+		\node [style=none] (121) at (0.45, 2.05) {};
+		\node [style=none] (122) at (2, 0) {};
+		\node [style=none] (123) at (2.45, 0) {};
+		\node [style=none] (124) at (3, 0) {};
+		\node [style=none] (125) at (3.45, 0) {};
+		\node [style=none] (126) at (3.45, 2.55) {};
+		\node [style=none] (127) at (3, 2.05) {};
+		\node [style=none] (128) at (2.45, 2.05) {};
+		\node [style=none] (129) at (2, 2.05) {};
+		\node [style=none] (130) at (1.45, 2.05) {};
+		\node [style=circgatetall] (131) at (0.725, 1.025) {};
+		\node [style=circgatetall] (132) at (1.725, 1.525) {};
+		\node [style=circgatetall] (133) at (2.725, 0.525) {};
+		\node [style=none] (134) at (1.725, 2.3) {\(\Upsilon_{0:k}\)};
+		\node [style=none] (135) at (11.125, 1.775) {};
+		\node [style=none] (136) at (11.125, 1.275) {};
+		\node [style=none] (137) at (11.125, 0.775) {};
+		\node [style=circgate] (138) at (11.975, 1.775) {};
+		\node [style=circgate] (139) at (12.975, 0.775) {};
+		\node [style=circgate] (140) at (13.975, 1.775) {};
+		\node [style=circgate] (141) at (13.975, 1.275) {};
+		\node [style=none] (142) at (14.825, 1.775) {};
+		\node [style=none] (143) at (14.825, 1.275) {};
+		\node [style=none] (144) at (14.825, 0.775) {};
+		\node [style=none] (145) at (11.125, 0.275) {};
+		\node [style=circgate] (146) at (11.975, 0.275) {};
+		\node [style=circgate] (147) at (12.975, 0.275) {};
+		\node [style=none] (148) at (14.825, 0.275) {};
+		\node [style=circgatetall] (165) at (11.975, 1.025) {};
+		\node [style=circgatetall] (166) at (12.975, 1.525) {};
+		\node [style=circgatetall] (167) at (13.975, 0.525) {};
+		\node [style=circpauli4] (169) at (12.475, 0.775) {};
+		\node [style=circpauli4] (170) at (12.475, 0.275) {};
+		\node [style=circpauli4] (171) at (12.475, 1.775) {};
+		\node [style=circpauli4] (172) at (12.475, 1.275) {};
+		\node [style=circpauli4] (173) at (11.475, 0.775) {};
+		\node [style=circpauli4] (174) at (11.475, 0.275) {};
+		\node [style=circpauli4] (175) at (11.475, 1.775) {};
+		\node [style=circpauli4] (176) at (11.475, 1.275) {};
+		\node [style=circpauli4] (177) at (14.475, 0.775) {};
+		\node [style=circpauli4] (178) at (14.475, 0.275) {};
+		\node [style=circpauli4] (179) at (14.475, 1.775) {};
+		\node [style=circpauli4] (180) at (14.475, 1.275) {};
+		\node [style=circpauli4] (181) at (13.475, 0.775) {};
+		\node [style=circpauli4] (182) at (13.475, 0.275) {};
+		\node [style=circpauli4] (183) at (13.475, 1.775) {};
+		\node [style=circpauli4] (184) at (13.475, 1.275) {};
+		\node [style=none] (191) at (12.7, 0) {};
+		\node [style=none] (192) at (12.25, 0) {};
+		\node [style=none] (193) at (11.7, 0) {};
+		\node [style=none] (194) at (11.25, 0) {};
+		\node [style=none] (195) at (11.25, 2.55) {};
+		\node [style=none] (196) at (12.25, 2.05) {};
+		\node [style=none] (197) at (11.7, 2.05) {};
+		\node [style=none] (198) at (13.25, 0) {};
+		\node [style=none] (199) at (13.7, 0) {};
+		\node [style=none] (200) at (14.25, 0) {};
+		\node [style=none] (201) at (14.7, 0) {};
+		\node [style=none] (202) at (14.7, 2.55) {};
+		\node [style=none] (203) at (14.25, 2.05) {};
+		\node [style=none] (204) at (13.7, 2.05) {};
+		\node [style=none] (205) at (13.25, 2.05) {};
+		\node [style=none] (206) at (12.7, 2.05) {};
+		\node [style=footnotesize] (207) at (12.975, 2.3) {\(\mathcal{T}_P^{(n)}[\Upsilon_{0:k}]\)};
+		\node [style=none] (208) at (11.475, 2.3) {};
+		\node [style=none] (209) at (12.475, 2.3) {};
+		\node [style=none] (210) at (13.725, 2.3) {};
+		\node [style=none] (211) at (14.475, 2.3) {};
+		\node [style=none] (212) at (12.475, 2.025) {};
+		\node [style=none] (213) at (13.475, 2.025) {};
+		\node [style=none] (215) at (14.1, 2.3) {};
+		\node [style=none] (216) at (11.85, 2.3) {};
+		\node [style=none] (217) at (12.225, 2.3) {};
+		\node [style=none] (218) at (3.75, 1.25) {};
+		\node [style=none] (219) at (4.475, 1.25) {};
+		\node [style=none] (220) at (10.3, 1.25) {};
+		\node [style=none] (221) at (11, 1.25) {};
+		\node [style=pttensor] (222) at (0.225, -1) {};
+		\node [style=none] (223) at (-0.025, -1.45) {};
+		\node [style=none] (224) at (0.475, -1.45) {};
+		\node [style=footnotesize] (234) at (-0.025, -1.575) {\({}_{\alpha_0}\)};
+		\node [style=footnotesize] (235) at (0.475, -1.575) {\({}_{\beta_0}\)};
+		\node [style=pttensor] (236) at (1.225, -1) {};
+		\node [style=none] (237) at (0.975, -1.45) {};
+		\node [style=none] (238) at (1.475, -1.45) {};
+		\node [style=footnotesize] (239) at (0.975, -1.575) {\({}_{\alpha_1}\)};
+		\node [style=footnotesize] (240) at (1.475, -1.575) {\({}_{\beta_1}\)};
+		\node [style=pttensor] (241) at (2.225, -1) {};
+		\node [style=none] (242) at (1.975, -1.45) {};
+		\node [style=none] (243) at (2.475, -1.45) {};
+		\node [style=footnotesize] (244) at (1.975, -1.575) {\({}_{\alpha_2}\)};
+		\node [style=footnotesize] (245) at (2.475, -1.575) {\({}_{\beta_2}\)};
+		\node [style=pttensor] (246) at (3.225, -1) {};
+		\node [style=none] (247) at (2.975, -1.45) {};
+		\node [style=none] (248) at (3.475, -1.45) {};
+		\node [style=footnotesize] (249) at (2.975, -1.575) {\({}_{\alpha_k}\)};
+		\node [style=footnotesize] (250) at (3.475, -1.575) {\({}_{\beta_k}\)};
+		\node [style=none] (251) at (2.925, -1) {};
+		\node [style=none] (252) at (2.525, -1) {};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw (12.center) to (24.center);
+		\draw (25.center) to (13.center);
+		\draw (14.center) to (26.center);
+		\draw (44.center) to (48.center);
+		\draw [style=drawfillblue] (29.center)
+			 to (30.center)
+			 to (31.center)
+			 to (39.center)
+			 to (38.center)
+			 to (37.center)
+			 to (40.center)
+			 to (41.center)
+			 to (36.center)
+			 to (35.center)
+			 to (42.center)
+			 to (43.center)
+			 to (27.center)
+			 to (28.center)
+			 to (33.center)
+			 to (34.center)
+			 to cycle;
+		\draw (77.center) to (84.center);
+		\draw (85.center) to (78.center);
+		\draw (79.center) to (86.center);
+		\draw (87.center) to (90.center);
+		\draw [style=drawfillblue] (117.center)
+			 to (118.center)
+			 to (119.center)
+			 to (126.center)
+			 to (125.center)
+			 to (124.center)
+			 to (127.center)
+			 to (128.center)
+			 to (123.center)
+			 to (122.center)
+			 to (129.center)
+			 to (130.center)
+			 to (115.center)
+			 to (116.center)
+			 to (120.center)
+			 to (121.center)
+			 to cycle;
+		\draw (135.center) to (142.center);
+		\draw (143.center) to (136.center);
+		\draw (137.center) to (144.center);
+		\draw (145.center) to (148.center);
+		\draw [style=thickorange] (192.center)
+			 to (196.center)
+			 to (197.center)
+			 to (193.center)
+			 to (194.center)
+			 to (195.center)
+			 to (202.center)
+			 to (201.center)
+			 to (200.center)
+			 to (203.center)
+			 to (204.center)
+			 to (199.center)
+			 to (198.center)
+			 to (205.center)
+			 to (206.center)
+			 to (191.center)
+			 to cycle;
+		\draw [style=orangewire] (178)
+			 to (211.center)
+			 to (215.center);
+		\draw [style=orangewire] (174)
+			 to (208.center)
+			 to (216.center);
+		\draw [style=orangedotted] (183) to (213.center);
+		\draw [style=orangedotted] (171) to (212.center);
+		\draw [style=orangedotted] (215.center) to (210.center);
+		\draw [style=orangedotted] (216.center) to (217.center);
+		\draw [style=orangewire] (182) to (213.center);
+		\draw [style=orangewire] (170) to (212.center);
+		\draw [style=arrow] (218.center) to (219.center);
+		\draw [style=arrow] (220.center) to (221.center);
+		\draw [in=90, out=-45] (222) to (224.center);
+		\draw [in=90, out=-135] (222) to (223.center);
+		\draw [in=90, out=-45] (236) to (238.center);
+		\draw [in=90, out=-135] (236) to (237.center);
+		\draw [in=90, out=-45] (241) to (243.center);
+		\draw [in=90, out=-135] (241) to (242.center);
+		\draw [in=90, out=-45] (246) to (248.center);
+		\draw [in=90, out=-135] (246) to (247.center);
+		\draw [style=thickwire] (222) to (236);
+		\draw [style=thickwire] (236) to (241);
+		\draw [style=thickwire] (252.center) to (241);
+		\draw [style=thickwire] (251.center) to (246);
+		\draw [style=thickdotted] (252.center) to (251.center);
+	\end{pgfonlayer}
+\end{tikzpicture}

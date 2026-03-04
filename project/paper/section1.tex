@@ -13,12 +13,6 @@
         \item Previous work analysing correlated noise for QEC either have some or a mix of the limitations: Gaussian (short-range) correlations, phenomenological noise or perfect syndrome extraction, focus on threshold estimates rather studying performance under threshold, specific to certain codes (e.g., surface codes due to reliance on statistical mechanical mappings or other techniques to make the problem tractable), no inter-round correlations, `ad hoc' models without clear connection to microscopic physical noise processes.
         \item The SPP framework natively encapsulates all spatiotemporally correlated stochastic noise models; it captures \emph{all} spatiotemporally correlated general noise models (including ones with genuinely quantum correlations described via quantum combs) under RC. It makes no assumptions on circuit-level vs phenomenological vs perfect syndrome extraction, its code agnostic and circuit agnostic, it makes no assumptions about the nature of correlations (e.g., Gaussian, power law, spatial, Markovian, etc), and under Pauli twirling achieved via RC, it can be applied to general noise (arbitrary CPTP maps and SE Hamiltonians).
     \end{enumerate}
-    % \item \textbf{Caveats:} There are two main critical points that we should address head-on.
-    % \begin{enumerate}
-    %     \item \textbf{The Pauli twirling approximation.}
-    %     Pauli twirling removes all coherent structure. It is a best case Pauli channel approximation of an arbitrary noise channel, so alternatively, we could twirl as a \emph{worst-case} or \emph{average-case} equivalent stochastic model ~\cite{magesanModelingQuantumNoise2013}. On the other hand, Pauli twirling may be justified when using randomised compiling, and there have been previous results showing the accuracy of Pauli error models for quantum error correction experiments (in certain instances) \Fidel{(Cite experimental result)}.
-    %     \item \textbf{Scalability.} While tensor networks are effective at making certain complex calculations tractable, there are limits to their ability to represent high dimensional, highly correlated data. In particular, combining spatial and temporal noise data generates a two-dimensional tensor network, whose contraction is not easy in general.
-    % \end{enumerate}
     \item \textbf{Related work:}
     \begin{enumerate}
         \item \textbf{Non-Markovian noise suppression simplified through channel representation} \cite{liuNonMarkovianNoiseSuppression2024}: They apply Pauli twirling to the Choi channel representation of a superchannel, similarly finding that the quantum non-markovianity is removed, leaving only classically correlated Pauli noise.
@@ -44,3 +38,10 @@
     \item Crucially, this is not an ad hoc invention. We show that standard noise-tailoring techniques---precisely randomised compiling and related Pauli twirling---projects any process tensor description of the dynamics onto a stochastic process over Pauli operators allowing for strong spatiotemporal correlations.
     \item SPPs inherit the spatiotemporal generality of process tensors while interfacing directly with QEC's effective description in terms of Pauli faults and syndrome statistics.
 \end{itemize}
+
+\begin{figure}
+    \centering
+    \begin{adjustbox}{width=\textwidth, keepaspectratio}
+        \input{figures/overview-a.tikz}
+    \end{adjustbox}
+\end{figure}
