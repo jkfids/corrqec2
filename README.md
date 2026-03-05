@@ -1,2 +1,10 @@
 # corr-qec2
-A repository for the Spatiotemporal Pauli process paper.
+Repository containing code and data for *Spatiotemporal Pauli process: Quantum combs for modelling correlated noise in quantum error correction*.
+
+
+## Links and abstract
+
+> Correlated noise is a critical failure mode in quantum error correction (QEC), as temporal memory and spatial structure concentrate faults into error bursts that undermine standard threshold assumptions. Yet, a fundamental gap persists between the stochastic Pauli models ubiquitous in QEC and the microscopic, non-Markovian descriptions of physical device dynamics. We close this gap by introducing \emph{Spatiotemporal Pauli Processes} (SPPs). By applying a multi-time Pauli twirl–operationally realised by Pauli-frame randomisation–to a general process tensor, we map arbitrary multi-time, non-Markovian dynamics to a multi-time Pauli process. This process is represented by a process-separable comb, or equivalently, a well-defined joint probability distribution over Pauli trajectories in spacetime. We show that SPPs inherit efficient tensor network representations whose bond dimensions are bounded by the environment's Liouville-space dimension. To interpret these structures, we develop transfer operator diagnostics linking spectra to correlation decay, and exact hidden Markov representations for suitable classes of SPPs. We demonstrate the framework via surface code memory and stability simulations of up to distance \(19\) for (i) a temporally correlated ``storm'' model that tunes correlation length at fixed marginal error rates, and (ii) a genuinely spatiotemporal 2D quantum cellular automaton bath that maps exactly to a nonlinear probabilistic cellular automaton under twirling. Tuning coherent bath interactions drives the system into a pseudo-critical regime, exhibiting critical slowing down and macroscopic error avalanches that cause a complete breakdown of surface code distance scaling. Together, these results justify SPPs as an operationally grounded, scalable toolkit for modelling, diagnosing, and benchmarking correlated noise in QEC.
+
+## Contact
+Email: john.kam@monash.edu
