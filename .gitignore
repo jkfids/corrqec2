@@ -261,9 +261,6 @@ paper/*.pdf
 # Deprecated folder
 deprecated/
 
-# Data folder (for now)
-data/
-
 # Tests outputs
 tests/*.npz
 tests/*.npy
