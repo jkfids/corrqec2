@@ -1,5 +1,5 @@
 \section{Characterising temporal correlations in 1D SPPs}\label{sec:correlation-structure}
-Modelling SPPs within the tensor network formalism enables the application of established analytical and numerical tools to characterise the structure of spatiotemporal correlations. In this section, we primarily analyse the temporal correlation structure of SPPs to investigate how environmental memory is propagated and dissipated. We begin by defining multi-point correlation functions, evaluated via tensor contractions, which serves as the foundation for a transfer operator-based framework.
+Modelling SPPs within the tensor network formalism enables the application of established analytical and numerical tools to characterise the structure of spatiotemporal correlations. In this section, we primarily analyse the temporal correlation structure of SPPs to investigate how environmental memory is propagated and dissipated. We begin by defining multi-point correlation functions, evaluated via tensor contractions, which serve as the foundation for a transfer operator-based framework.
 
 By examining the spectral properties of these operators---specifically the spectral gap and correlation length---we provide a compact characterisation of the asymptotic decay of temporal correlations. Finally, we establish an isomorphism between SPP MPS representations and hidden Markov models (HMMs) under specific constraints. This connection provides a latent-state interpretation of the Pauli dynamics and facilitates the use of existing HMM-based methods for sampling and inference in large-scale QEC studies under correlated noise.
 
@@ -32,9 +32,9 @@ respectively.
 This construction extends directly to multi-point expectations by inserting the appropriate function vectors. To analyse these correlations more systematically, we now introduce a transfer operator-based framework.
 
 Consider the MPS representation of an SPP with local tensors \(\mathbf{A}^{\mu_t}{}_{x_t\mu_{t+1}}\) where \(x_t \in \mathbb{P}^{(n)}\). In standard notation, this is equivalently the set of \(D \times D\) matrices \(A_{x_t}\) (where \(D = \dim{\mu}\) is the bond dimension) indexed by the \(x_t\), with elements given by
-\begin{equation*}
+\begin{equation}
     (A_{x_t})_{\mu_t \mu_{t+1}} = \mathbf{A}^{\mu_t}{}_{x_t \mu_{t+1}}.
-\end{equation*}
+\end{equation}
 Given a scalar function \(f : \mathbb{P}^{(n)} \to \mathbb{R}\), we define the following operators.
 \begin{definition}[Transfer and emission operators]
     The transfer operator \(T\) and the emission operator \(E_f\) are defined as 
@@ -48,17 +48,17 @@ The transfer operator \(T\) governs how correlations propagate along the virtual
 
 We note that the definition of the transfer operator here differs from the conventional quantum MPS transfer operator, which involves both the tensor and its complex conjugate~\cite{schollwockDensitymatrixRenormalizationGroup2005}. The distinction arises because the SPP MPS directly encodes the joint probability distribution over Pauli labels, rather than quantum amplitudes.
 
-We now assume the SPP is \emph{time-homogeneous} (all tensors \(A_{x_t}\) are identical for all \(t\)) and \emph{ergodic}, such that the process reaches a unique stationary state on the environment space. As a result, the transfer operator \(T\) has a unique leading eigenvalue \(\lambda_1 = 1\) (after normalisation), with corresponding left and right eigenvectors \(\bra{l}\) and \(\ket{r}\) satisfying
+We now assume the SPP is \emph{time-homogeneous} (all tensors \(A_{x_t}\) are identical for all \(t\)) and \emph{ergodic}, such that the process reaches a unique stationary state on the environment space. As a result, the transfer operator \(T\) has a unique leading eigenvalue \(\lambda_1 = 1\) (after normalisation), with corresponding left and right eigenvectors \(\bra{l_1}\) and \(\ket{r_1}\) satisfying
 \begin{equation}
-    \bra{l} T = \bra{l},
+    \bra{l_1} T = \bra{l_1},
     \qquad
-    T \ket{r} = \ket{r},
+    T \ket{r_1} = \ket{r_1},
 \end{equation}
-with normalisation \(\braket{l|r} = 1\). Eigenvectors \(\bra{l}\) and \(\ket{r}\) thus correspond to the left and right fixed points of the transfer operator. For such stationary processes, the expectation values can be written compactly as
+with normalisation \(\braket{l_1|r_1} = 1\). Eigenvectors \(\bra{l_1}\) and \(\ket{r_1}\) thus correspond to the left and right fixed points of the transfer operator. For such stationary processes, the expectation values can be written compactly as
 \begin{equation}\label{eq:expectation-values-operator}
     \begin{gathered}
-        \mathbb{E}[f(x_t)] = \braket{l|E_f|r} \eqcolon \braket{f}, \\
-        \mathbb{E}[f(x_t)g(x_{t+\tau})] = \braket{l|E_f T^{\tau - 1} E_g|r} \eqcolon \braket{fg}.
+        \mathbb{E}[f(x_t)] = \braket{l_1|E_f|r_1} \eqcolon \braket{f}, \\
+        \mathbb{E}[f(x_t)g(x_{t+\tau})] = \braket{l_1|E_f T^{\tau - 1} E_g|r_1} \eqcolon \braket{fg}.
     \end{gathered}
 \end{equation}
 To recast the covariance in terms of operators, we introduce the centred emission operator.
@@ -67,7 +67,7 @@ To recast the covariance in terms of operators, we introduce the centred emissio
     \begin{equation}
         \widetilde{E}_f = E_f - \braket{f}\!T,
     \end{equation}
-    satisfying \(\braket{l|\widetilde{E}_f|r} = 0\).
+    satisfying \(\braket{l_1|\widetilde{E}_f|r_1} = 0\).
 \end{definition}
 This operator represents the deviation of the observable \(f\) around its stationary mean. Using this, the two-point covariance takes a canonical form,
 % \begin{equation}
@@ -81,11 +81,11 @@ This operator represents the deviation of the observable \(f\) around its statio
 %     \end{split}
 % \end{equation}
 \begin{equation}\label{eq:covariance_operator}
-    C_{f,g}(\tau) = \braket{l|\widetilde{E}_f T^{\tau - 1} \widetilde{E}_g|r}.
+    C_{f,g}(\tau) = \braket{l_1|\widetilde{E}_f T^{\tau - 1} \widetilde{E}_g|r_1}.
 \end{equation}
 The covariance is thus described entirely in terms of the transfer and emission operators. It follows that the decay of temporal correlations is governed by the exponent of the transfer operator \(T\), and hence by its eigenvalue spectrum. Finally, this formulation extends naturally to multi-point correlation functions. For an ordered time sequence \(t_1 < t_2 < \dots < t_m\), the \(m\)-point correlator is
 \begin{equation}
-    C_{f_1,\dots,f_m} = \braket{l|\widetilde{E}_{f_1} T^{\Delta t_1} \widetilde{E}_{f_2} T^{\Delta t_2} \dots T^{\Delta t_{m-1}}\widetilde{E}_{f_m}|r},
+    C_{f_1,\dots,f_m} = \braket{l_1|\widetilde{E}_{f_1} T^{\Delta t_1} \widetilde{E}_{f_2} T^{\Delta t_2} \dots T^{\Delta t_{m-1}}\widetilde{E}_{f_m}|r_1},
 \end{equation}
 where \(\Delta t_j = t_{j+1} - t_j - 1\) is the number of intermediate time steps between \(t_j\) and \(t_{j+1}\). We now turn to the spectral properties of the transfer operator to characterise the decay of these correlations over time.
 
@@ -117,7 +117,7 @@ where \(\Delta t_j = t_{j+1} - t_j - 1\) is the number of intermediate time step
         \]
         \caption{}
     \end{subfigure}
-    \caption{\textbf{Transfer operator construction for 1D SPPs.} Assumes a time-homogeneous SPP MPS. (a) The transfer operator \(T = \sum_{x\in\mathcal{P}^{(n)}} A_x\), obtained by summing the local MPS tensors over the Pauli label \(x\). (b) The emission (observable-inserted) operator \(E_f = \sum_x f(x) A_x\), corresponding to insertion of a scalar function \(f:\mathcal{P}^{(n)} \to \mathbb{R}\). (c) Two-point covariance as a function of separation \(\tau\), expressed as \(C_{f,g}(\tau) = \bra{l}\widetilde{E}_f T^{\tau - 1} \widetilde{E}_g\ket{r}\), where \(\ket{r}\) and \(\bra{l}\) are the right and left fixed points of \(T\) and \(\widetilde{E}_f = E_f - \braket{l|E_f|r}T\) is the centred emission operator.}
+    \caption{\textbf{Transfer operator construction for 1D SPPs.} Assumes a time-homogeneous SPP MPS. (a) The transfer operator \(T = \sum_{x\in\mathcal{P}^{(n)}} A_x\), obtained by summing the local MPS tensors over the Pauli label \(x\). (b) The emission (observable-inserted) operator \(E_f = \sum_x f(x) A_x\), corresponding to insertion of a scalar function \(f:\mathcal{P}^{(n)} \to \mathbb{R}\). (c) Two-point covariance as a function of separation \(\tau\), expressed as \(C_{f,g}(\tau) = \bra{l_1}\widetilde{E}_f T^{\tau - 1} \widetilde{E}_g\ket{r_1}\), where \(\ket{r_1}\) and \(\bra{l_1}\) are the right and left fixed points of \(T\) and \(\widetilde{E}_f = E_f - \braket{l_1|E_f|r_1}T\) is the centred emission operator.}
     \label{fig:transfer-emission-covariance}
 \end{figure}
 
@@ -169,9 +169,9 @@ Finally, while \(T=\sum_x A_x\) is generally non-Hermitian (and may be non-norma
 We briefly indicate how the transfer operator framework extends to higher-dimensional SPP tensor networks. In the one-dimensional case, all spatial structure is compressed into a single index, resulting in a matrix transfer operator. For higher dimensional SPPs, the transfer operator itself may be represented by a tensor network.
 
 Concretely, consider the 2D SPP PEPS illustrated in \cref{fig:spp-peps}, whose local tensors are given by
-\begin{equation*}
+\begin{equation}
     \mathbf{a}_{(i, j)}^{\nu^{i-1}_j\mu_j^i}{}_{x_j^i\mu_{j+1}^i\nu_j^i},
-\end{equation*}
+\end{equation}
 where \(i\) and \(j\) label spatial and temporal positions, respectively.
 We define the \emph{single-site transfer tensor} \(\mathbf{r}_{(i,j)}\) by summing over the local Pauli index \(x_j^i\). That is, for each site \((i,j)\), we obtain
 \begin{equation}
@@ -189,10 +189,10 @@ The \emph{row transfer operator} \(\mathbf{R}_{(j)}\) is then the contraction of
 \end{equation}
 which is precisely an MPO along space.
 
-At a high level, the previous analyses of \cref{sec:correlation-functions,sec:spectral-analysis} may be generalised to higher-dimensional SPPs by replacing the matrix transfer operator \(T\) with an appropriate tensor network transfer object, such as the MPO \(\mathbf{R}_{(j)}\) for 2D SPP PEPS. In this setting, expectation values and correlation functions can be expressed as contractions of boundary states---typically represented by an MPS---with products of transfer and emission MPOs, in direct analogy with \cref{eq:expectation-values-operator,eq:covariance_operator}. In the time-homogeneous case \(\mathbf{R}_{(j)} \equiv \mathbf{R}\), the role of stationary vectors \(\bra{l}\) and \(\ket{r}\) is played by boundary MPSs, corresponding to boundary fixed points. Computation of these boundary MPSs as well as the spectral properties of the transfer MPO may require more involved numerical tensor network-based techniques. We do not pursue these generalisations in this work, leaving them for future exploration. For the remainder of the section, we return to the one-dimensional setting and formally link MPS transfer operator description to hidden Markov model realisations. (\Fidel{cite TN refs for `more involved numerical tensor network-based techniques'})
+At a high level, the previous analyses of \cref{sec:correlation-functions,sec:spectral-analysis} may be generalised to higher-dimensional SPPs by replacing the matrix transfer operator \(T\) with an appropriate tensor network transfer object, such as the MPO \(\mathbf{R}_{(j)}\) for 2D SPP PEPS. In this setting, expectation values and correlation functions can be expressed as contractions of boundary states---typically represented by an MPS---with products of transfer and emission MPOs, in direct analogy with \cref{eq:expectation-values-operator,eq:covariance_operator}. In the time-homogeneous case \(\mathbf{R}_{(j)} \equiv \mathbf{R}\), the role of stationary vectors \(\bra{l_1}\) and \(\ket{r_1}\) is played by boundary MPSs, corresponding to boundary fixed points. Computation of these boundary MPSs as well as the spectral properties of the transfer MPO may require more involved numerical tensor network-based techniques~\cite{orusPracticalIntroductionTensor2014,bravyiEfficientAlgorithmsMaximum2014,strathearnEfficientNonMarkovianQuantum2018,keelingProcessTensorApproaches2025}. We do not pursue these generalisations in this work, leaving them for future exploration. For the remainder of the section, we return to the one-dimensional setting and formally link MPS transfer operator description to hidden Markov model realisations.
 
-\subsection{Equivalence to hidden Markov models (HMMs)}
-An SPP MPS, together with its associated transfer operator, naturally admits a hidden state interpretation. In this view, the virtual bond indices serve as latent variables whose dynamics drive the observed Pauli sequence. We make this connection explicit by linking SPP MPS representations to finite-state classical hidden Markov models (HMMs). Concretely, under appropriate positivity and normalisation constraints, an SPP MPS of bond dimension \(D\) is isomorphic to an \emph{edge-emitting} HMM with \(D\) hidden states. This equivalence provides a bridge to the extensive HMM literature, enabling efficient hidden state-based methods for sampling and modelling SPPs---tools we exploit in \cref{sec:temporalstormmodel,sec:qcamodel}.
+\subsection{Equivalence to hidden Markov models}
+An SPP MPS, together with its associated transfer operator, naturally admits a hidden state interpretation. In this view, the virtual bond indices serve as latent variables whose dynamics drive the observed Pauli sequence. We make this connection explicit by linking SPP MPS representations to finite-state classical \emph{hidden Markov models} (HMMs). Concretely, under appropriate positivity and normalisation constraints, an SPP MPS of bond dimension \(D\) is isomorphic to an \emph{edge-emitting} HMM with \(D\) hidden states. This equivalence provides a bridge to the extensive HMM literature, enabling efficient hidden state-based methods for sampling and modelling SPPs---tools we exploit in \cref{sec:temporalstormmodel,sec:qcamodel}.
 
 Let \((S_t)_{t\geq 0}\) be a Markov chain on a finite state space \(\mathcal{S}=\{1,\dots,D\}\), and let \((X_t)_{t\geq 0}\) be a sequence of observations from the Pauli alphabet \(\mathbb{P}^{(n)}\). An edge-emitting HMM is fully specified by an initial distribution \(\pi_i\) over the hidden states and a set of transition-emission kernels \((K_x)_{ij}\). The initial distribution satisfies
 \begin{equation}
@@ -214,7 +214,7 @@ Summing over emitted symbols yields the hidden state \emph{transition matrix},
 \begin{equation}
     (T_{\mathrm{HMM}})_{ij} = \sum_{x} (K_x)_{ij}.
 \end{equation}
-By \cref{eq:hmm-kernel-conditions}, \(T_{\mathrm{HMM}}\) is \emph{row-stochastic}, satisfying \(\sum_j (T_{\mathrm{HMM}})_{ij} = 1\) for all \(i\), and hence \(T_{\mathrm{HMM}}\ket{\mathbf{1}} = \ket{\mathbf{1}}\). If the chain is ergodic, it admits a unique stationary distribution \(\pi\) satisfying \(\pi^T T_{\mathrm{HMM}} = \pi^T\) and \(\pi^T\mathbf{1} = 1\). Accordingly, for a row-stochastic \(T_{\mathrm{HMM}}\), we may take \(\bra{l} = \pi^T\) and \(\ket{r} = \ket{\mathbf{1}}\).
+By \cref{eq:hmm-kernel-conditions}, \(T_{\mathrm{HMM}}\) is \emph{row-stochastic}, satisfying \(\sum_j (T_{\mathrm{HMM}})_{ij} = 1\) for all \(i\), and hence \(T_{\mathrm{HMM}}\ket{\mathbf{1}} = \ket{\mathbf{1}}\). If the chain is ergodic, it admits a unique stationary distribution \(\pi\) satisfying \(\pi^T T_{\mathrm{HMM}} = \pi^T\) and \(\pi^T\mathbf{1} = 1\). Accordingly, for a row-stochastic \(T_{\mathrm{HMM}}\), we may take \(\bra{l_1} = \pi^T\) and \(\ket{r_1} = \ket{\mathbf{1}}\).
 
 The probability of observing a Pauli sequence \(x_{0:k}\) is given by a marginalisation over all possible hidden state sequences,
 \begin{equation}
@@ -228,13 +228,13 @@ This expression is in direct analogy with the SPP MPS probabilities in \cref{eq:
         \sum_{x\in\mathbb{P}^{(n)}}\sum_{j=1}^{D} (A_x)_{ij}=1 \ \ \forall\, i,
     \end{equation}
     then the process admits an edge-emitting Hidden Markov model (HMM) realisation with \(D\) hidden states under the identification
-    \begin{equation*}
+    \begin{equation}
         (K_x)_{ij}\equiv(A_x)_{ij}.
-    \end{equation*}
+    \end{equation}
     In particular, the SPP transfer matrix \(T = \sum_x A_x\) coincides with the HMM transition matrix \(T_{\mathrm{HMM}} = \sum_x K_x\).
 \end{proposition}
 
 These conditions are sufficient but not necessary; a generic SPP MPS need not admit a nonnegative, row-stochastic representation of the same bond dimension. However, any non-Markovian process can be rendered Markovian by enlarging the (in general, potentially unbounded) state space \cite{milzQuantumStochasticProcesses2021}. Constructing such an embedding optimally is model dependent and generally nontrivial~\cite{vidyasagarCompleteRealizationProblem2011}. Since we are primarily interested in utilising HMMs as practical generative models for correlated noise, we do not pursue minimal HMM realisations here.
 
-A practical advantage of HMM realisations is access to standard, efficient procedures for inference, learning, and sampling. Importantly, HMMs enable simple sequential sampling of Pauli trajectories via transition-emission update rules, making them well suited to large-scale Monte Carlo studies of QEC under correlated noise. This capability underpins the numerical analyses in subsequent sections, which we move onto next. (\Fidel{Cite HMM algorithms})
+A practical advantage of HMM realisations is access to standard, efficient procedures for inference, learning, and sampling~\cite{leonarde.baumMaximizationTechniqueOccurring1970}. Importantly, HMMs enable simple sequential sampling of Pauli trajectories via transition-emission update rules, making them well suited to large-scale Monte Carlo studies of QEC under correlated noise. This capability underpins the numerical analyses in subsequent sections, which we turn to next.
 

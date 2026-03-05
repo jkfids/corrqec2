@@ -34,7 +34,7 @@
   backend=biber,
   style=numeric,   % or style=quantum if you want Quantum’s own style
   sorting=none,    % <-- order of appearance
-  url=false,
+  % url=false,
   doi=false,
   isbn=false,
   eprint=false
@@ -42,6 +42,7 @@
 % Completely suppress URL and urldate in the bibliography
 \renewbibmacro*{url+urldate}{}  % don't print URL or "visited on" at all
 \addbibresource{references.bib}
+\addbibresource{referenceslocal.bib}
 
 % Tikz formatting
 \usepackage{lipsum}
@@ -68,9 +69,6 @@
 \newcommand{\dbraket}[2]{\langle \! \langle #1 | #2 \rangle \! \rangle}
 \newcommand{\dketbra}[2]{| #1 \rangle \! \rangle \! \langle \! \langle #2 |}
 
-% Editorial commands (remove for final version)
-\newcommand{\Fidel}[1]{{\textcolor{red}{Fidel: #1}}}
-
 % Theorems
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{lemma}[theorem]{Lemma}
@@ -87,9 +85,9 @@
 
 \begin{document}
 
-\title{Spatiotemporal Pauli processes: Quantum combs for correlated noise modelling in quantum error correction}
+\title{Spatiotemporal Pauli processes: Quantum combs for modelling correlated noise in quantum error correction}
 
-\author{John Fidel Kam}
+\author{John F Kam}
 \affiliation{School of Physics and Astronomy, Monash University, Clayton, VIC 3168, Australia}
 \affiliation{Quantum Innovation Centre (Q.InC), Agency for Science Technology and Research (A*STAR), 2 Fusionopolis Way, Innovis \#08-03, Singapore 138634, Republic of Singapore}
 \affiliation{Quantum Systems, Data61, CSIRO, Clayton, VIC 3168, Australia}
@@ -107,49 +105,35 @@
 \affiliation{Science, Mathematics and Technology Cluster, Singapore University of Technology and Design, 8 Somapah Road, 487372 Singapore}
 
 \begin{abstract}
-  \noindent Correlated noise is a decisive failure mode in quantum error correction (QEC), as temporal memory and spatial structure concentrate faults into error bursts that undermine standard threshold assumptions. Yet, a fundamental gap persists between the stochastic Pauli models ubiquitous in QEC and the microscopic, non-Markovian descriptions of physical device processes. We close this gap by introducing spatiotemporal Pauli processes (SPPs). By applying a multi-time Pauli twirl---operationally realised by Pauli frame randomisation---to a general process tensor, we map arbitrary non-Markovian dynamics to a process-separable Pauli comb, or equivalently a well-defined joint probability distribution over Pauli trajectories in time and space. We show that SPPs inherit efficient tensor network representations whose bond dimensions are bound by the environment's Liouville dimension. To interpret these structures, we develop transfer operator diagnostics linking spectra to correlation decay, and exact hidden Markov representations for suitable classes of SPPs. We demonstrate the framework using (i) a temporally correlated ``storm'' model that tunes correlation length at fixed marginal error rates, and (ii) a genuinely spatiotemporal 2D quantum cellular automaton bath that maps exactly to a nonlinear probabilistic cellular automaton under twirling. Tuning coherent bath interactions drives the system into a pseudo-critical regime, exhibiting critical slowing down and macroscopic error avalanches that cause a complete breakdown of surface code distance scaling. Together, these results justify SPPs as an operationally grounded, scalable toolkit for modelling, diagnosing, and benchmarking correlated noise in QEC.
+  \noindent Correlated noise is a critical failure mode in quantum error correction (QEC), as temporal memory and spatial structure concentrate faults into error bursts that undermine standard threshold assumptions. Yet, a fundamental gap persists between the stochastic Pauli models ubiquitous in QEC and the microscopic, non-Markovian descriptions of physical device dynamics. We close this gap by introducing \emph{Spatiotemporal Pauli Processes} (SPPs). By applying a multi-time Pauli twirl---operationally realised by Pauli-frame randomisation---to a general process tensor, we map arbitrary multi-time, non-Markovian dynamics to a multi-time Pauli process. This process is represented by a process-separable comb, or equivalently, a well-defined joint probability distribution over Pauli trajectories in spacetime. We show that SPPs inherit efficient tensor network representations whose bond dimensions are bounded by the environment's Liouville-space dimension. To interpret these structures, we develop transfer operator diagnostics linking spectra to correlation decay, and exact hidden Markov representations for suitable classes of SPPs. We demonstrate the framework via surface code memory and stability simulations of up to distance \(19\) for (i) a temporally correlated ``storm'' model that tunes correlation length at fixed marginal error rates, and (ii) a genuinely spatiotemporal 2D quantum cellular automaton bath that maps exactly to a nonlinear probabilistic cellular automaton under twirling. Tuning coherent bath interactions drives the system into a pseudo-critical regime, exhibiting critical slowing down and macroscopic error avalanches that cause a complete breakdown of surface code distance scaling. Together, these results justify SPPs as an operationally grounded, scalable toolkit for modelling, diagnosing, and benchmarking correlated noise in QEC.
 \end{abstract}
 
-\noindent\Fidel{ArXiv deadline: Friday, March 6th 3:00 AM SGT \\
-TODO:
-\begin{enumerate}
-  \item Section 1: Introduction
-  \item Abstract
-  \item Section 8: Discussion
-  \item Iterate through remaining feedback by Kavan and Angus.
-  \item Citations
-  \item Acknowledgements
-  \item Github repo link
-  \item Title
-\end{enumerate}
-}
+\clearpage
 
 \tableofcontents
 
 \input{section1}
-% \clearpage
 
 \input{section2}
-% \clearpage
 
 \input{section3}
-% \clearpage
 
 \input{section4}
-% \clearpage
 
 \input{section5}
-% \clearpage
-
 
 \input{section6}
-% \clearpage
 
 \input{section7}
-\clearpage
 
 \input{section8}
-\clearpage
+
+\begin{acknowledgments}
+This research was supported by the Commonwealth through an Australian Government Research Training Program Scholarship [DOI: \url{https://doi.org/10.82133/C42F-K220}]. This research is supported by the Ministry of Education, Singapore, under its Academic Research Fund (AcRF) Tier 1 grant, and funded through the SUTD Kickstarter Initiative (SKI 2021\_07\_02). John F Kam is supported by a CSIRO Future Science Platform Scholarship and the Agency for Science, Technology and Research (A*STAR) Research Attachment Programme (ARAP) at the Quantum Innovation Centre (Q.InC).
+\end{acknowledgments}
+
+\section*{Data and code availability}
+The datasets and code used in this study are publicly available at \url{https://github.com/jkfids/corrqec2}.
 
 \printbibliography
 

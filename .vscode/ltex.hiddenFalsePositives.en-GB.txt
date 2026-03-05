@@ -1,0 +1,1 @@
+{"rule":"MORFOLOGIK_RULE_EN_GB","sentence":"^\\Qbackground edgelayer nodelayer background,edgelayer,nodelayer,main none=[]\\E$"}

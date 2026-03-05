@@ -166,7 +166,7 @@ def main():
     results_dict, distances, thetas = load_results(filepath)
     Y1_dict, Y2_dict, Y3_dict = process_results(results_dict, distances, thetas)
     plot_figures(Y1_dict, Y2_dict, Y3_dict, distances, thetas)
-    plot_autocorr(results_dict, distance=11, thetas=[0.39, 0.4, 0.41])
+    # plot_autocorr(results_dict, distance=11, thetas=[0.39, 0.4, 0.41])
 
 
 if __name__ == "__main__":

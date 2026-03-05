@@ -20,7 +20,7 @@ and let \(\Upsilon_{0:k} \in \mathcal{B}(\mathcal{H}_{\Upsilon_{0:k}})\) be the 
         \Bigg(\bigotimes_{j=0}^k P_j\otimes P_j\Bigg).
     \end{equation}
 \end{definition}
-Intuitively, \(\mathcal{T}_P^{(k)}\) independently twirls each time step's input-output pair on \(\mathcal{H}_{\inp_j} \otimes \mathcal{H}_{\out_j}\), preserving the causal structure of the process tensor. In the language of higher-order quantum maps~\cite{tarantoHigherOrderQuantumOperations2025}, the multi-time Pauli twirl constitutes a time-local \emph{superprocess}. Operationally, it corresponds to Pauli-frame randomisation protocols~\cite{figueroa-romeroOperationalMarkovianizationRandomized2024}; standard randomised compiling provides one such implementation.
+Intuitively, \(\mathcal{T}_P^{(k)}\) independently twirls each time step's input-output pair on \(\mathcal{H}_{\inp_j} \otimes \mathcal{H}_{\out_j}\), preserving the causal structure of the process tensor. In the language of higher-order quantum maps~\cite{tarantoHigherOrderQuantumOperations2025}, the multi-time Pauli twirl constitutes a time-local \emph{superprocess}, since it maps physical processes to physical processes. Operationally, it corresponds to Pauli-frame randomisation protocols~\cite{figueroa-romeroOperationalMarkovianizationRandomized2024}; standard randomised compiling provides one such implementation.
 
 We now summarise the key properties of this mapping.
 \begin{proposition}[Properties]
@@ -36,9 +36,9 @@ The first two properties generalise those of standard Pauli twirling for quantum
 Let \(\mathcal{P} = (P_0, P_1, \ldots, P_k)\) denote a \emph{spatiotemporal Pauli trajectory}, where each \(P_j \in \mathbb{P}^{(n)}\) is an \(n\)-qubit Pauli operator at time step \(t_j\), and \(\Pi_{P_j} = \dketbra{P_j}{P_j}\) its corresponding Pauli Choi operator. Let \(\mathbb{P}^{(n,k)}\) denote the set of all such spatiotemporal Pauli trajectories over \(k+1\) time steps, and let \(\Pr{(\mathcal{P})}\) denote the trajectory weights induced by the twirl, defined explicitly in \cref{eq:spp-probabilities}.
 \begin{theorem}[Twirling yields a process-separable Pauli process]\label{thm:pt-to-spp}
   For any process tensor \(\Upsilon_{0:k}\), its twirl
-  \begin{equation*}
-    \Upsilon_{0:k}^{\mathcal{T}_P} = \mathcal{T}_P^{(k)}(\Upsilon_{0:k})
-  \end{equation*}
+  \begin{equation}
+    \Upsilon_{0:k}^{\mathcal{T}_P} \coloneq \mathcal{T}_P^{(k)}(\Upsilon_{0:k})
+  \end{equation}
   admits a process-separable decomposition
   \begin{equation}
     \Upsilon_{0:k}^{\mathcal{T}_P} = \sum_{\mathcal{P}\in\mathbb{P}^{(n,k)}}\Pr{(\mathcal{P})}\Upsilon_\mathcal{P}, \quad \Upsilon_\mathcal{P} = \bigotimes_{j=0}^k\Pi_{P_j}.
@@ -76,7 +76,7 @@ The reduction of non-Markovian dynamics to classical temporal correlations under
 While SPPs can be defined directly via~\cref{def:def-spp} without reference to an underlying quantum process, our formulation using the multi-time twirl provides a direct bridge between the physically grounded system--environment dynamics and the emergent stochastic Pauli process. This connection endows SPPs with the same rich internal structure as process tensors, enabling a straightforward and efficient tensor network construction. In particular, we show that \(\mathcal{T}_P^{(k)}\) is implemented by fixed local contractions on the physical legs of the process tensor.
 
 \subsection{Local tensor network implementations}
-We now show that the multi-time Pauli twirl admits an exact local implementation on a process tensor tensor network. Concretely, \(\mathcal{T}_P^{(k)}\) is realised by inserting a fixed Pauli tensor on each system input-output leg at every time step. This produces (i) a twirled process tensor MPO in the operator picture, and (ii) a classical tensor encoding the joint weights (and hence probabilities) of Pauli trajectories. Centrally, this transformation acts only on the open physical indices and leaves inner (environment) bonds unchanged.
+We now show that the multi-time Pauli twirl admits an exact local implementation on a process tensor network. Concretely, \(\mathcal{T}_P^{(k)}\) is realised by inserting a fixed Pauli tensor on each system input-output leg at every time step. This produces (i) a twirled process tensor MPO in the operator picture, and (ii) a classical tensor encoding the joint weights (and hence probabilities) of Pauli trajectories. Centrally, this transformation acts only on the open physical indices and leaves inner (environment) bonds unchanged.
 
 Starting from the Pauli superoperator \(P^* \otimes P\), we define the Pauli tensor \(\mathbf{P}\) via the reorder--fuse--transpose (RFT) operation introduced in \cref{sec:pt-tn} as
 \begin{equation}
@@ -169,18 +169,18 @@ Although \(\mathbf{w}_{x_0\dots x_k}\) is an exponentially large tensor, it inhe
 Importantly, \cref{prop:local-pt-twirl} and \cref{def:pt-mpo-to-spp-mps} show that the map from a process tensor MPO to the SPP MPS acts only on the physical indices and leaves the environment bonds \(\mu_j\) unchanged. This immediately implies that the temporal bond dimension required to represent the induced SPP cannot increase.
 \begin{lemma}[Bond dimension bound for SPP MPS]\label{thm:spp-bond}
   Let \(\mathbf{T}\) be a process tensor admitting an MPO form whose inner bond dimensions are \(\dim \mu_j\) for each time step \(t_j\). The resulting SPP MPS encoding the joint probability distribution \(\Pr(\mathbf{x}_{0:k})\), defined in \cref{def:def-spp}, admits an MPS representation with inner bond dimensions \(D_j\) satisfying 
-  \begin{equation*}
+  \begin{equation}
     D_j \leq \dim \mu_j \quad \forall j.
-  \end{equation*}
+  \end{equation}
 \end{lemma}
 \begin{proof}
     The tensors of the SPP MPS are obtained by applying a local, linear map to the physical indices of the process tensor MPO tensors. This operation acts strictly on the system Hilbert space and leaves the environment bonds \(\mu_j\) invariant. Since the minimum required bond dimension \(D_j\) is determined by the Schmidt rank across the temporal partition, and no operations are performed on the virtual bonds, the rank cannot increase. Therefore, the bond dimension is strictly bounded by the dimension of the original virtual space, \(D_j \le \dim \mu_j\).
 \end{proof}
 \begin{corollary}[Environment dimension bound]\label{thm:env-bond-dim-bound}
     For a process derived from a system interacting with a finite environment of dimension \(d_E\), the inner bond dimensions of the resulting SPP MPS is bounded by the Liouville space dimension of the environment,
-    \begin{equation*}
+    \begin{equation}
         D_j \le d_E^2.
-    \end{equation*}
+    \end{equation}
 \end{corollary}
 For generic Haar-random system-environment unitaries, the bound in \cref{thm:spp-bond} is typically saturated (up to finite-size effects), since the induced temporal memory explores the full environment Liouville space.
 

@@ -7,12 +7,12 @@ Up to this point, we have developed a general framework for spatiotemporal Pauli
 Correlations in realistic device noise can substantially alter QEC performance relative to memoryless baselines. 
 Our goal here is to not catalogue and deconstruct existing models, but to emphasise that a practical QEC-facing description of noise should (i) capture correlations at a level relevant to syndrome processing and decoding, while (ii) remain compatible with general underlying (Markovian or non-Markovian) dynamics. SPPs provide a convenient language for this purpose. Under randomised compiling, the multi-time Pauli twirl maps noisy stabiliser circuit dynamics to an effective SPP---a joint distribution over Pauli fault across space and time. This twirl is an operational construction: It does not assert that the microscopic dynamics are literally transformed into an SPP, but instead yields an effective model that captures the noise statistics relevant to stabiliser QEC (e.g., syndrome distributions and logical error rates) under the assumed randomisation protocol.
 
-Although the SPP framework resolves correlation at the level of individual operations, large-scale simulations and decoder interfaces often motivate a coarser representation. Accordingly, in our numerical studies we adopt a hybrid description: we treat within-round circuit noise using a standard independent gate-level model, while modelling inter-round memory effects by an SPP defined at the QEC cycle level. This choice reflects three pragmatic considerations. First Pauli noise on a Clifford syndrome extraction circuit can be coarse-grained to an effective correlated Pauli error model on data and ancilla qubits at the end or start of each cycle. Second, the correlations that most strongly impact long-time performance are frequently those that manifest across multiple rounds. Third, decoders and many characterisation protocols naturally consume coarse-grained syndrome data, making a cycle-level SPP a convenient interface between microscopic noise and practical QEC tools.
+Although the SPP framework resolves correlation at the level of individual operations, large-scale simulations and decoder interfaces often motivate a coarser representation. Accordingly, in our numerical studies we adopt a hybrid description: we treat within-round circuit noise using a standard independent gate-level model, while modelling inter-round memory effects by an SPP defined at the QEC cycle level. This choice reflects three pragmatic considerations. First, Pauli noise on a Clifford syndrome extraction circuit can be coarse-grained to an effective correlated Pauli error model on data and ancilla qubits at the end or start of each cycle~\cite{gicevQuantumComputerError2024}. Second, the correlations that most strongly impact long-time performance are frequently those that manifest across multiple rounds. Third, decoders and many characterisation protocols naturally consume coarse-grained syndrome data, making a cycle-level SPP a convenient interface between microscopic noise and practical QEC tools.
 
-In this section and the next, we exploit this bridge from microscopic dynamics, through SPPs, to efficiently simulable HMMs in two concrete settings. In \cref{sec:temporalstormmodel}, we introduce a simple one-dimensional SPP with tunable spectral gap (equivalently, tunable correlation length) while keeping marginal error rates fixed, enabling a controlled study of how temporal correlations can impact surface code memory and stability experiments. In \cref{sec:qcamodel}, we turn to a genuinely spatiotemporal two-dimensional SPP derived from a quantum cellular automaton model of environmental dynamics, which generates rich correlation structure and statistical-mechanical behaviour while remaining parametrically simple. Note that \(\xi_\eta\) should be interpreted as an effective correlation timescale rather than a definitive memory length. Near a critical point, the autocorrelations can exhibit multi-scale or non-single-exponential decay. The robust feature in \cref{fig:qca-statistical}(c) is therefore the existence and location of a narrow region of dramatically enhanced temporal correlations.
+In this section and the next, we exploit this bridge from microscopic dynamics, through SPPs, to efficiently simulable HMMs in two concrete settings. In \cref{sec:temporalstormmodel}, we introduce a simple one-dimensional SPP with tunable spectral gap (equivalently, tunable correlation length) while keeping marginal error rates fixed, enabling a controlled study of how temporal correlations can impact surface code memory and stability experiments. In \cref{sec:qcamodel}, we turn to a genuinely spatiotemporal two-dimensional SPP derived from a quantum cellular automaton model of environmental dynamics, which generates rich correlation structure and statistical-mechanical behaviour while remaining parametrically simple. Near a critical point, the autocorrelations can exhibit multi-scale or non-single-exponential decay. The robust feature in \cref{fig:qca-statistical}(c) is therefore the existence and location of a narrow region of dramatically enhanced temporal correlations.
 
 \subsection{Temporal storm noise model}\label{sec:storm-model-details}
-We now instantiate the general SPP formalism in a one-dimensional, analytically tunable setting, which we refer to as the \emph{temporal storm model}. Each system qubit is coupled to its own two-level environment with classical basis states $\{\ket{0},\ket{1}\}$, representing \emph{calm} and \emph{storm} conditions, respectively.
+We now instantiate the general SPP formalism in a one-dimensional, analytically tunable setting, which we refer to as the \emph{temporal storm model}. Each system qubit is coupled to its own two-level environment with classical basis states \(\{\ket{0},\ket{1}\}\), representing \emph{calm} and \emph{storm} conditions, respectively.
 
 \begin{figure}[t]
     \centering
@@ -30,12 +30,12 @@ We now instantiate the general SPP formalism in a one-dimensional, analytically 
     \label{fig:temporal-storm-overview}
 \end{figure}
 
-The environment undergoes a time-homogeneous classical Markov chain with transition probabilities $\Gamma_{s\to s'}$ between calm and storm (\cref{fig:temporal-storm-overview}). The system-environment interaction is modelled as a quantum channel conditioned on the environment state. When the environment \(E\) is in state $\ket{s'}$, the system \(S\) evolves according to
+The environment undergoes a time-homogeneous classical Markov chain with transition probabilities \(\Gamma_{s\to s'}\) between calm and storm (\cref{fig:temporal-storm-overview}). The system-environment interaction is modelled as a quantum channel conditioned on the environment state. When the environment \(E\) is in state \(\ket{s'}\), the system \(S\) evolves according to
 \begin{equation}
     \mathcal{E}_{s'}[\rho_S]
     = \sum_x q^{(x)}_{s'} \,\sigma^{(x)} \rho_S \sigma^{(x)},
 \end{equation}
-where $\sigma^{(x)}$ denotes the Pauli operators indexed by $x$, and $q^{(x)}_{s'}$ are probabilities satisfying \(\sum_x q^{(x)}_{s'} = 1\). The joint system-environment evolution over a single time step is thus described by the CPTP map
+where \(\sigma^{(x)}\) denotes the Pauli operators indexed by \(x\), and \(q^{(x)}_{s'}\) are probabilities satisfying \(\sum_x q^{(x)}_{s'} = 1\). The joint system-environment evolution over a single time step is thus described by the CPTP map
 \begin{equation}
     \Phi[\rho_{SE}]
     = \sum_{s,s',x} K^{(x)}_{s's} \,\rho_{SE}\, K^{(x)\dagger}_{s's},
@@ -44,9 +44,9 @@ where $\sigma^{(x)}$ denotes the Pauli operators indexed by $x$, and $q^{(x)}_{s
     = \sqrt{\Gamma_{s\to s'}\,q^{(x)}_{s'}}\;
       \ketbra{s'}{s}_E \otimes \sigma^{(x)}_S.
 \end{equation}
-Because the environment dynamics are classical and the conditional system channels \(\mathcal{E}_{s'}\) are Pauli, the corresponding process tensor is invariant under the multi-time Pauli twirl in \cref{eq:twirl-upsilon}; in other words, this construction directly specifies an SPP, and may be viewed as the twirled image of a family of compatible underlying process tensors.
+Because the environment dynamics are classical and the conditional system channels \(\mathcal{E}_{s'}\) are Pauli, the corresponding process tensor is invariant under the multi-time Pauli twirl in \cref{eq:twirl-upsilon}. In other words, this construction directly specifies an SPP, and may be viewed as the twirled image of a family of compatible underlying process tensors.
 
-Labelling the environment transition probabilities as $a = \Gamma_{0\to 1}$ and $b = \Gamma_{1\to 0}$, the corresponding transfer operator $T$ and SPP matrices $A^{(x)}$ are
+Labelling the environment transition probabilities as \(a = \Gamma_{0\to 1}\) and \(b = \Gamma_{1\to 0}\), the corresponding transfer operator \(T\) and SPP matrices \(A^{(x)}\) are
 \begin{equation}
     T
     =
@@ -57,13 +57,13 @@ Labelling the environment transition probabilities as $a = \Gamma_{0\to 1}$ and 
     \qquad
     A^{(x)} = T\,\mathrm{diag}\big(q_0^{(x)}, q_1^{(x)}\big).
 \end{equation}
-This is precisely a two-state HMM where \(T\) describes the evolution of the latent state, and the Pauli emission label \(x_t\) is drawn from \(q_{s_t}^{(x)}\). The spectrum of $T$ is given by \(\lambda_1 = 1, \lambda_2 = 1 - a - b\). The subleading eigenvalue \(\lambda_2\) sets the spectral gap \(\Delta\) and correlation length \(\xi\),
+This is precisely a two-state HMM where \(T\) describes the evolution of the latent state, and the Pauli emission label \(x_t\) is drawn from \(q_{s_t}^{(x)}\). The spectrum of \(T\) is given by \(\lambda_1 = 1, \lambda_2 = 1 - a - b\). The subleading eigenvalue \(\lambda_2\) sets the spectral gap \(\Delta\) and correlation length \(\xi\),
 \begin{equation}\label{eq:storm-spectral-gap}
     \Delta = a + b, \quad \xi = -\frac{1}{\ln(1-a-b)},
 \end{equation}
 where we assume \(0 \le a\), \(b \le 1\) with \(a + b < 1\), so that \(\lambda_2 \in (0, 1)\) and \(\xi > 0\).
 
-The left and right eigenvectors associated with $\lambda_1$, corresponding to the left and right stationary states, are
+The left and right eigenvectors associated with \(\lambda_1\), corresponding to the left and right stationary states, are
 \begin{equation}\label{eq:storm-stationary-states}
     \bra{l} =
     \begin{pmatrix}
@@ -76,7 +76,7 @@ The left and right eigenvectors associated with $\lambda_1$, corresponding to th
         1
     \end{pmatrix},
 \end{equation}
-where \(\pi_0 = b/(a+b)\) and \(\pi_1 = a/(a+b)\) are the stationary calm and storm fractions, respectively. These immediately lead to the marginal Pauli error rates,
+where \(\pi_0 = b/(a+b)\) and \(\pi_1 = a/(a+b)\) are the stationary calm and storm fractions, respectively, and we have dropped the subscript 1 in \(l_1, r_1\). These immediately lead to the marginal Pauli error rates,
 \begin{equation}\label{eq:storm-marginals}
     \bar{p}^{(x)}
     = \pi_0 q_0^{(x)} + \pi_1 q_1^{(x)} = \frac{bq_0^{(x)} + aq_1^{(x)}}{a+b}.
@@ -90,9 +90,9 @@ For the memory experiment, we simulate rotated surface code circuits of distance
 
 Noise is implemented in a hybrid manner following the modelling choice of \cref{sec:storm-model-details}. We apply a global independent, gate-level baseline noise model consisting of: a single qubit depolarising channel after every single qubit Clifford gate and on each data qubit at the start of each round, a two qubit depolarising channel after each two qubit entangling gate, a Pauli \(X\) flip (\(Z\) flip) channel before \(Z\)-basis (\(X\)-basis) measurements, and after \(Z\)-basis (\(X\)-basis) state preparations. All baseline noise processes are parameterised by a single characteristic error rate \(p = 0.1\%\).
 
-Inter-round temporal correlations are incorporated by composing, at the start of each round, an additional Pauli fault on every data and ancilla qubit sampled from the temporal storm SPP described above. The circuit granularity \(\mathcal{G}\) in \cref{fig:temporal-storm-overview} is therefore taken to be an entire syndrome extraction subcircuit per round, though the construction is valid for finer granularities. Throughout the sweep we fix the marginal error rate of the correlated errors to match the characteristic rate, \(\bar{p}^{(x)} = p = 0.1\%\), and vary correlation length over \(\xi \in [1, 28]\).
+Inter-round temporal correlations are incorporated by composing, at the start of each round, an additional Pauli fault on every data and ancilla qubit sampled from the temporal storm SPP described above. The circuit granularity \(\mathcal{G}\) in \cref{fig:temporal-storm-overview} is therefore taken to be an entire syndrome extraction subcircuit per round, though the construction is valid for finer granularities. Throughout the sweep we fix the marginal error rate of the correlated errors to match the characteristic rate, \(\bar{p}^{(x)} = p = 0.1\%\), and vary correlation length over \(\xi \in [1, 28]\). The initial state of the environment is sampled from the stationary distribution in \cref{eq:storm-stationary-states}.
 
-Simulations are performed using Stim~\cite{gidneyStimFastStabilizer2021} for stabiliser circuit sampling, with temporally correlated errors generated externally from the temporal storm HMM. Decoding is performed using minimum-weight perfect matching via PyMatching~\cite{higgottPyMatchingPythonPackage2022} on a detector error model constructed from the independent circuit-level noise with marginal error rates matched to the correlated process. For each parameter point we estimate failure probabilities from Monte Carlo sampling over \(10^7\) shots; error bars, where visible, denote binomial standard errors. All code and scripts used to generate the data and figures are available in (\Fidel{repository link}).
+Simulations are performed using Stim~\cite{gidneyStimFastStabilizer2021} for stabiliser circuit sampling, with temporally correlated errors generated externally from the temporal storm HMM. Decoding is performed using minimum-weight perfect matching via PyMatching~\cite{higgottSparseBlossomCorrecting2025} on a detector error model constructed from the independent circuit-level noise with marginal error rates matched to the correlated process. For each parameter point we estimate failure probabilities from Monte Carlo sampling over \(10^7\) shots; error bars, where visible, denote binomial standard errors.
 
 \subsection{Surface code memory and stability benchmarks}
 \begin{figure}[t]
@@ -105,7 +105,7 @@ Simulations are performed using Stim~\cite{gidneyStimFastStabilizer2021} for sta
 
 We first consider the memory experiment. \Cref{fig:temporal-storm-memory}(a) displays the per round logical error rate \(p_\mathrm{round}\) as a function of \(\xi\) for several code distances. For each \(d\), \(p_\mathrm{round}\) increases monotonically with \(\xi\), with the most pronounced shift occurring as the model crosses from nearly memoryless dynamics (\(\xi = 1\)) into moderate-to-long memory (\(1 < \xi \le 5\)). For larger \(\xi\), the curves tend to level off, consistent with a ``bursty'' noise picture in which memory concentrates faults into rarer but more damaging multi-round clusters. The \(d = 5\) data trends systematically above the higher distance curves and are therefore omitted from the fit in panel~(b). At the baseline error rate of \(p=0.1\%\), the distance five code provides comparatively weak error suppression even in the low memory regime, so increasing \(\xi\) degrades performance without exhibiting the same clean scaling observed at larger distances.
 
-\Cref{fig:temporal-storm-memory}(b) presents the same data as a performance-versus-distance scaling plot at fixed \(\xi\). The logical error rate remains approximately exponentially suppressed with increasing \(d\), but the decay exponent decreases in magnitude markedly as \(\xi\) grows. In this sense, temporal correlations blunt, though do not eliminate, the benefit of distance scaling, consistent with an effective spacetime distance reduction. From a resource perspective, the qubit overhead required to achieve a given logical error rate is highly sensitive to even modest growth in correlation length, for example, from \(\xi=1\) to \(\xi=2\).
+\Cref{fig:temporal-storm-memory}(b) presents the same data as a performance-versus-distance scaling plot at fixed \(\xi\). The logical error rate remains approximately exponentially suppressed with increasing \(d\), but the decay exponent decreases in magnitude markedly as \(\xi\) grows. In this sense, temporal correlations blunt, though do not eliminate, the benefit of distance scaling, consistent with an effective spacetime distance reduction. From a resource perspective, the qubit overhead required to achieve a given logical error rate is highly sensitive to growth in correlation length, for example, from \(\xi=1\) to \(\xi=2\).
 
 \begin{figure}[t]
     \centering

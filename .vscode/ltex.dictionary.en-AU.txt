@@ -18,3 +18,13 @@ tunable
 bipartition
 unitaries
 dephasing
+ket
+bipartitions
+eigenbasis
+sublattices
+re-classicalisation
+re-classicalised
+dephases
+superprocess
+embeddability
+Choi-channel
