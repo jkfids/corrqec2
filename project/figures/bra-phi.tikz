@@ -1,9 +1,0 @@
-\begin{tikzpicture}
-	\begin{pgfonlayer}{nodelayer}
-		\node [style=none] (0) at (0, 0) {};
-		\node [style=right-triangle] (1) at (1, 0) {\(\psi\)};
-	\end{pgfonlayer}
-	\begin{pgfonlayer}{edgelayer}
-		\draw (0.center) to (1);
-	\end{pgfonlayer}
-\end{tikzpicture}
