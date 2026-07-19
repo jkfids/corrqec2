@@ -1,4 +1,4 @@
-# corr-qec2
+# corrqec2
 Repository containing code and data for *Spatiotemporal Pauli process: Quantum combs for modelling correlated noise in quantum error correction*.
 
 
