@@ -5,6 +5,9 @@ from matplotlib.lines import Line2D
 import sinter
 import seaborn as sns
 
+FIGURE_DIR = "./manuscript/figures"
+DATA_DIR = "./data"
+
 
 def calc_xi(a, b):
     return -1 / np.log(1 - a - b)
@@ -92,7 +95,7 @@ if __name__ == "__main__":
 
     # Load data from CSV
     tasks = sinter.stats_from_csv_files(
-        "/home/fidel/Projects/corrqec2/data/experiment1_results.csv"
+        f"{DATA_DIR}/experiment1_results.csv"
     )
 
     # Prepare data for plotting
@@ -155,7 +158,7 @@ if __name__ == "__main__":
             xi_sorted_i, lower, upper, alpha=0.5, linewidth=0, color=colors[i]
         )
     ax1.set_ylabel("Logical error rate (per round)")
-    ax1.set_xlabel("Correlation length, $\\xi$")
+    ax1.set_xlabel("Correlation time, $\\xi$")
     ax1.legend(loc="lower right")
     ax1.set_xticks([1, 5, 10, 15, 20, 25])
     ax1.set_ylim(2e-9, 1.5e-4)
@@ -236,8 +239,26 @@ if __name__ == "__main__":
     secax2.set_xticks(qubit_ticks)
     secax2.tick_params(direction="in", width=0.6)
 
-    ax1.text(-0.155, 1.14, "(a)", transform=ax1.transAxes, va="top", ha="left", size=9)
-    ax2.text(-0.07, 1.14, "(b)", transform=ax2.transAxes, va="top", ha="left", size=9)
+    ax1.text(
+        -0.155,
+        1.14,
+        "(a)",
+        transform=ax1.transAxes,
+        va="top",
+        ha="left",
+        size=9,
+        fontweight="bold",
+    )
+    ax2.text(
+        -0.07,
+        1.14,
+        "(b)",
+        transform=ax2.transAxes,
+        va="top",
+        ha="left",
+        size=9,
+        fontweight="bold",
+    )
 
     for ax in (ax1, ax2):
         ax.grid(axis="y", alpha=0.5)
@@ -251,7 +272,7 @@ if __name__ == "__main__":
     fig.tight_layout()
     fig.subplots_adjust(wspace=0.09)
     fig.savefig(
-        "./project/paper/figures/experiment1.pdf",
+        f"{FIGURE_DIR}/experiment1.pdf",
         dpi=600,
         bbox_inches="tight",
         pad_inches=0.00,

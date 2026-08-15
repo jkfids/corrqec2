@@ -44,7 +44,6 @@ echo ""
 # Run the Python script
 # ============================================================================
 
-# python scripts/experiment1.py --num-workers $SLURM_CPUS_PER_TASK "$@"
 python scripts/experiment1.py --num-workers $((SLURM_CPUS_PER_TASK - 4)) --max-shots 10_000_000 --batch-size 10_000
 
 # ============================================================================

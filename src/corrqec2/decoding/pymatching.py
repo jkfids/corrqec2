@@ -1,4 +1,5 @@
 import pymatching
+import numpy as np
 
 from .base_decoder import Decoder
 
@@ -15,5 +16,7 @@ class Pymatching(Decoder):
         self.matcher = matcher
 
     def decode_batch(self, detection_events):
-        predictions = self.matcher.decode_batch(detection_events).flatten()
+        predictions = np.asarray(self.matcher.decode_batch(detection_events))
+        if predictions.ndim == 1:
+            predictions = predictions[:, np.newaxis]
         return predictions

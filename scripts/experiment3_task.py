@@ -6,6 +6,10 @@ from pathlib import Path
 from corrqec2.noisemodels import StormQCAModel
 from corrqec2.experiments import SurfaceCodeMemory
 
+# Sweep outputs are written here; on a cluster this is typically scratch
+# space. Change this one line to run elsewhere.
+RESULTS_DIR = Path.home() / "mx95_scratch2" / "jkam" / "corrqec2_results"
+
 
 def sample_error_matrix_to_file(distance, rounds, shots, theta, a, b, outdir):
     experiment = SurfaceCodeMemory(distance=distance, rounds=rounds)
@@ -44,9 +48,7 @@ def sample_error_matrix_to_file(distance, rounds, shots, theta, a, b, outdir):
 
 
 def main():
-    outdir = (
-        Path.home() / "mx95_scratch2" / "jkam" / "corrqec2_results" / "error_matrices"
-    )
+    outdir = RESULTS_DIR / "error_matrices"
 
     parser = argparse.ArgumentParser()
     parser.add_argument(

@@ -5,25 +5,36 @@ build-backend = "setuptools.build_meta"
 [project]
 dynamic = ["version"]
 name = "corrqec2"
-description = "Repository for SPC paper and related code."
+description = "Spatiotemporal Pauli processes: correlated noise models and surface code simulations."
 readme = "README.md"
-requires-python = ">=3.10"
-authors = [{ name = "John Fidel Kam", email = "jfidelkam@gmail.com" }]
-# maintainers = [
-#   { name = "John Smith", email = "john.smith@example.com" },
-# ]
-keywords = ["example", "python", "template"] # Keywords for your project
-classifiers = [ # Trove classifiers (https://pypi.org/classifiers/)
-  "Programming Language :: Python :: 3",
-  "License :: OSI Approved :: MIT License",
-  "Operating System :: OS Independent",
+license = "MIT AND CC-BY-4.0"
+license-files = ["LICENSE"]
+requires-python = ">=3.12"
+authors = [{ name = "John F. Kam", email = "jfidelkam@gmail.com" }]
+keywords = [
+  "quantum error correction",
+  "surface code",
+  "correlated noise",
+  "process tensor",
 ]
-dependencies = [ # Runtime dependencies for your project
-  "numpy",
-  "stim",
-  "sinter",
-  "PyMatching",
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Operating System :: OS Independent",
+  "Topic :: Scientific/Engineering :: Physics",
+]
+
+# Everything needed to run the experiments and regenerate the paper figures.
+# processtensor is not on PyPI; it is installed from its source repository.
+dependencies = [
+  "matplotlib",
   "numba",
+  "numpy",
+  "processtensor @ git+https://github.com/jkfids/process-tensor@6ef3e87049e845a31471f9b42dd9d9c057504ec8",
+  "PyMatching",
+  "scipy",
+  "seaborn",
+  "sinter",
+  "stim",
 ]
 
 [tool.setuptools.dynamic]

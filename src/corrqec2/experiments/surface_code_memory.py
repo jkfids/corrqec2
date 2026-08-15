@@ -14,11 +14,14 @@ class SurfaceCodeMemory(Experiment):
         self.basis = basis
         super().__init__(distance=distance, rounds=rounds)
 
+    def __str__(self) -> str:
+        return f"{self.__class__.__name__} (d={self.distance})"
+
     @property
     def all_qubit_types(self) -> list[str]:
         return ["data", "syndrome"]
 
-    def gen_stim_circuit(self) -> stim.Circuit:
+    def _build_circuit(self) -> stim.Circuit:
         circuit = stim.Circuit()
         code_task = "surface_code:rotated_memory_" + self.basis.lower()
 
@@ -51,21 +54,22 @@ class SurfaceCodeMemory(Experiment):
         return circuit
 
     def gen_split_circuits(self) -> list[stim.Circuit | tuple[int, stim.Circuit]]:
+        circuit = self._build_circuit()
         i_tick = None
         i_block = None
 
-        for i, instr in enumerate(self.circuit):
+        for i, instr in enumerate(circuit):
             if instr.name == "TICK" and i_tick is None:
                 i_tick = i
             elif isinstance(instr, stim.CircuitRepeatBlock) and i_block is None:
                 i_block = i
                 break
 
-        circuit_init = self.circuit[: i_tick + 1]
-        circuit_init_round = self.circuit[i_tick + 1 : i_block]
-        circuit_repeat_block = self.circuit[i_block].body_copy()
-        repeat_count = self.circuit[i_block].repeat_count
-        circuit_final = self.circuit[i_block + 1 :]
+        circuit_init = circuit[: i_tick + 1]
+        circuit_init_round = circuit[i_tick + 1 : i_block]
+        circuit_repeat_block = circuit[i_block].body_copy()
+        repeat_count = circuit[i_block].repeat_count
+        circuit_final = circuit[i_block + 1 :]
 
         return [
             circuit_init,

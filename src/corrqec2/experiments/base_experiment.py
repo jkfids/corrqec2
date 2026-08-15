@@ -17,31 +17,36 @@ class Experiment(ABC):
     - The dimensions of the error matrix
     """
 
-    def __init__(self, distance: int, rounds: int | str):
+    def __init__(self, distance: int | None, rounds: int | str):
 
         self._distance = distance
         self._rounds = self._parse_rounds(rounds)
 
-        # Main initializations
-        self._circuit = self.gen_stim_circuit()
+        # Main initializations (split circuits are the source of truth)
         self._split_circuits = self.gen_split_circuits()
+        self._circuit = self.gen_stim_circuit()
         self._qubit_coords = self.group_qubit_coords_by_type()
 
     def _parse_rounds(self, rounds: int | str) -> int:
         """Parse the rounds parameter, which can be an integer or a string like 'd' or '2d'.
 
         Args:
-            rounds (Union[int, str]): Number of rounds or a string representing rounds relative to distance.
+            rounds: Number of rounds or a string representing rounds relative to distance.
 
         Raises:
-            ValueError: _description_
+            ValueError: If the string is not 'd' or a positive integer multiple of 'd',
+                or if a distance-relative value is given without a distance.
 
         Returns:
-            int: _description_
+            Number of rounds.
         """
         if isinstance(rounds, int):
             return rounds
         elif isinstance(rounds, str):
+            if self.distance is None:
+                raise ValueError(
+                    f"Invalid rounds value: {rounds}. Distance-relative rounds require a non-null distance."
+                )
             if rounds == "d":
                 return self.distance
             elif (
@@ -51,9 +56,13 @@ class Experiment(ABC):
 
         raise ValueError(f"Invalid rounds value: {rounds}")
 
+    def gen_stim_circuit(self) -> stim.Circuit:
+        """Generate the main Stim circuit from split circuits."""
+        return self.combine_split_circuits(self.split_circuits)
+
     # PROPERTIES
     @property
-    def distance(self) -> int:
+    def distance(self) -> int | None:
         return self._distance
 
     @property
@@ -83,6 +92,29 @@ class Experiment(ABC):
         """List of all qubit indices."""
         return list(self.circuit.get_final_qubit_coordinates().keys())
 
+    @property
+    def num_logical(self) -> int:
+        """Number of logical qubits encoded by the code used in this experiment."""
+        return int(self.circuit.num_observables)
+
+    def __str__(self) -> str:
+        return f"{self.__class__.__name__}"
+
+    @staticmethod
+    def combine_split_circuits(
+        split_circuits: list[stim.Circuit | tuple[int, stim.Circuit]],
+    ) -> stim.Circuit:
+        combined_circuit = stim.Circuit()
+        for subcircuit in split_circuits:
+            if isinstance(subcircuit, stim.Circuit):
+                combined_circuit += subcircuit
+            elif isinstance(subcircuit, tuple):
+                repeat_count, repeat_circuit = subcircuit
+                combined_circuit.append(
+                    stim.CircuitRepeatBlock(repeat_count, repeat_circuit)
+                )
+        return combined_circuit
+
     # ABSTRACT PROPERTIES (NEED TO BE IMPLEMENTED IN SUBCLASS)
 
     @property
@@ -92,11 +124,6 @@ class Experiment(ABC):
         pass
 
     # INITIALIZATION METHODS (NEED TO BE IMPLEMENTED IN SUBCLASS)
-
-    @abstractmethod
-    def gen_stim_circuit(self) -> stim.Circuit:
-        """Generate the main Stim circuit for the experiment."""
-        pass
 
     @abstractmethod
     def gen_split_circuits(self) -> list[stim.Circuit | tuple[int, stim.Circuit]]:

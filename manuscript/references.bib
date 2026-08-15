@@ -1,0 +1,1599 @@
+@article{aaronsonImprovedSimulationStabilizer2004,
+  title = {Improved Simulation of Stabilizer Circuits},
+  author = {Aaronson, Scott and Gottesman, Daniel},
+  year = 2004,
+  month = nov,
+  journal = {Physical Review A},
+  volume = {70},
+  number = {5},
+  pages = {052328},
+  publisher = {American Physical Society},
+  doi = {10.1103/PhysRevA.70.052328}
+}
+
+@article{aharonovFaultTolerantQuantumComputation2006,
+  title = {Fault-{{Tolerant Quantum Computation}} with {{Long-Range Correlated Noise}}},
+  author = {Aharonov, Dorit and Kitaev, Alexei and Preskill, John},
+  year = 2006,
+  month = feb,
+  journal = {Physical Review Letters},
+  volume = {96},
+  number = {5},
+  pages = {050504},
+  publisher = {American Physical Society},
+  doi = {10.1103/PhysRevLett.96.050504}
+}
+
+@article{alickiInternalConsistencyFaulttolerant2006,
+  title = {Internal Consistency of Fault-Tolerant Quantum Error Correction in Light of Rigorous Derivations of the Quantum {{Markovian}} Limit},
+  author = {Alicki, Robert and Lidar, Daniel A. and Zanardi, Paolo},
+  year = 2006,
+  month = may,
+  journal = {Physical Review A},
+  volume = {73},
+  number = {5},
+  pages = {052311},
+  publisher = {American Physical Society},
+  doi = {10.1103/PhysRevA.73.052311}
+}
+
+@article{bauschLearningHighaccuracyError2024,
+  title = {Learning High-Accuracy Error Decoding for Quantum Processors},
+  year = 2024,
+  month = nov,
+  journal = {Nature},
+  volume = {635},
+  number = {8040},
+  pages = {834--840},
+  issn = {1476-4687},
+  doi = {10.1038/s41586-024-08148-8},
+  abstract = {Building a large-scale quantum computer requires effective strategies to correct errors that inevitably arise in physical quantum systems1. Quantum error-correction codes2 present a way to reach this goal by encoding logical information redundantly into many physical qubits. A key challenge in implementing such codes is accurately decoding noisy syndrome information extracted from redundancy checks to obtain the correct encoded logical information. Here we develop a recurrent, transformer-based neural network that learns to decode the surface code, the leading quantum error-correction code3. Our decoder outperforms other state-of-the-art decoders on real-world data from Google's Sycamore quantum processor for distance-3 and distance-5 surface codes4. On distances up to 11, the decoder maintains its advantage on simulated data with realistic noise including cross-talk and leakage, utilizing soft readouts and leakage information. After training on approximate synthetic data, the decoder adapts to the more complex, but unknown, underlying error distribution by training on a limited budget of experimental samples. Our work illustrates the ability of machine learning to go beyond human-designed algorithms by learning from data directly, highlighting machine learning as a strong contender for decoding in quantum computers.},
+  author = {Bausch, Johannes and Senior, Andrew W. and Heras, Francisco J. H. and Edlich, Thomas and Davies, Alex and Newman, Michael and Jones, Cody and Satzinger, Kevin and Niu, Murphy Yuezhen and Blackwell, Sam and {others}}
+}
+
+@article{bealeQuantumErrorCorrection2018,
+  title = {Quantum {{Error Correction Decoheres Noise}}},
+  author = {Beale, Stefanie J. and Wallman, Joel J. and Guti{\'e}rrez, Mauricio and Brown, Kenneth R. and Laflamme, Raymond},
+  year = 2018,
+  month = nov,
+  journal = {Physical Review Letters},
+  volume = {121},
+  number = {19},
+  pages = {190501},
+  publisher = {American Physical Society},
+  doi = {10.1103/PhysRevLett.121.190501}
+}
+
+@misc{bealeRandomizedCompilingFaulttolerant2023,
+  title = {Randomized Compiling in Fault-Tolerant Quantum Computation},
+  author = {Beale, Stefanie J. and Wallman, Joel J.},
+  year = 2023,
+  month = jun,
+  number = {arXiv:2306.13752},
+  eprint = {2306.13752},
+  primaryclass = {quant-ph},
+  publisher = {arXiv},
+  doi = {10.48550/arXiv.2306.13752},
+  urldate = {2025-09-09},
+  abstract = {Studies of quantum error correction (QEC) typically focus on stochastic Pauli errors because the existence of a threshold error rate below which stochastic Pauli errors can be corrected implies that there exists a threshold below which generic errors can be corrected. However, rigorous estimates of the threshold for generic errors are typically orders of magnitude worse than the threshold for stochastic Pauli errors. Specifically, coherent errors have a particularly harmful impact on the encoded space because they can map encoded states to superpositions of logical and error states. Further, coherent errors can add up and interfere over multiple rounds of error correction or between syndrome measurements, which may result in significantly worse errors than expected under a stochastic Pauli error model. In this paper, we present an algorithm which decoheres noise at the logical level, projecting the state of the system onto a logical state with a well-defined error. The algorithm does not significantly increase the depth of the logical circuit (and usually does not lead to any increase in depth), and applies generally to most fault-tolerant gadgets and error correction steps.},
+  archiveprefix = {arXiv},
+  keywords = {Quantum Physics},
+  file = {/home/fidel/Zotero/storage/E56BHTM8/Beale and Wallman - 2023 - Randomized compiling in fault-tolerant quantum computation.pdf;/home/fidel/Zotero/storage/82VHRUNQ/2306.html}
+}
+
+@article{bratrudMeasurementCorrelatedCharge2025,
+  title = {Measurement of Correlated Charge Noise in Superconducting Qubits at an Underground Facility},
+  year = 2025,
+  month = nov,
+  journal = {Nature Communications},
+  volume = {16},
+  number = {1},
+  pages = {9906},
+  issn = {2041-1723},
+  doi = {10.1038/s41467-025-63724-4},
+  abstract = {The charge environment of superconducting qubits may be studied through the introduction of controlled, quantified amounts of ionizing radiation. We measure space- and time-correlated charge jumps on a four-qubit device, operating 107 meters below the Earth's surface in a low-radiation, cryogenic facility designed for the characterization of low-threshold particle detectors. The rock overburden of this facility reduces the cosmic ray muon flux by over 99\% compared to laboratories at sea level. Combined with 4{$\pi$} coverage of a movable lead shield, this facility enables quantifiable control over the flux of ionizing radiation on the qubit device. Long-time-series charge tomography measurements on these weakly charge-sensitive qubits capture discontinuous jumps in the induced charge on the qubit islands, corresponding to the interaction of ionizing radiation with the qubit substrate. The rate of these charge jumps scales with the flux of ionizing radiation on the qubit package, as characterized by a series of independent measurements on another energy-resolving detector operating simultaneously in the same cryostat with the qubits. Using lead shielding, we achieve a minimum charge jump rate of \$\$0.1\textbraceleft 9\textbraceright\_\textbraceleft -0.03\textbraceright\textasciicircum\textbraceleft +0.04\textbraceright\$\$mHz, almost an order of magnitude lower than that measured in surface tests, but a factor of roughly seven higher than expected based on reduction of ambient gammas alone. We operate four qubits for over 22 consecutive hours with zero correlated charge jumps at length scales above three millimeters.},
+  author = {Bratrud, G. and Lewis, S. and Anyang, K. and Col{\'o}n Cesan{\'i}, A. and Dyson, T. and Magoon, H. and Sabhari, D. and Spahn, G. and Wagner, G. and Gualtieri, R. and {others}}
+}
+
+@article{bravyiSimulationRareEvents2013,
+  title = {Simulation of Rare Events in Quantum Error Correction},
+  author = {Bravyi, Sergey and Vargo, Alexander},
+  year = 2013,
+  month = dec,
+  journal = {Physical Review A},
+  volume = {88},
+  number = {6},
+  pages = {062308},
+  publisher = {American Physical Society},
+  doi = {10.1103/PhysRevA.88.062308}
+}
+
+@article{breuerColloquiumNonMarkovianDynamics2016,
+  title = {Colloquium: {{Non-Markovian}} Dynamics in Open Quantum Systems},
+  author = {Breuer, Heinz-Peter and Laine, Elsi-Mari and Piilo, Jyrki and Vacchini, Bassano},
+  year = 2016,
+  month = apr,
+  journal = {Reviews of Modern Physics},
+  volume = {88},
+  number = {2},
+  pages = {021002},
+  publisher = {American Physical Society},
+  doi = {10.1103/RevModPhys.88.021002}
+}
+
+@book{breuerTheoryOpenQuantum2007,
+  title = {The {{Theory}} of {{Open Quantum Systems}}},
+  author = {Breuer, Heinz-Peter and Petruccione, Francesco},
+  year = 2007,
+  month = jan,
+  publisher = {Oxford University Press},
+  doi = {10.1093/acprof:oso/9780199213900.001.0001},
+  urldate = {2026-05-02},
+  abstract = {This book treats the central physical concepts and mathematical techniques used to investigate the dynamics of open quantum systems. To provide a self-contained presentation, the text begins with a survey of classical probability theory and with an introduction to the foundations of quantum mechanics, with particular emphasis on its statistical interpretation and on the formulation of generalized measurement theory through quantum operations and effects. The fundamentals of density matrix theory, quantum Markov processes, and completely positive dynamical semigroups are developed. The most important master equations used in quantum optics and condensed matter theory are derived and applied to the study of many examples. Special attention is paid to the Markovian and non-Markovian theory of environment induced decoherence, its role in the dynamical description of the measurement process, and to the experimental observation of decohering electromagnetic field states. The book includes the modern formulation of open quantum systems in terms of stochastic processes in Hilbert space. Stochastic wave function methods and Monte Carlo algorithms are designed and applied to important examples from quantum optics and atomic physics. The fundamentals of the treatment of non-Markovian quantum processes in open systems are developed on the basis of various mathematical techniques, such as projection superoperator methods and influence functional techniques. In addition, the book expounds the relativistic theory of quantum measurements and the density matrix theory of relativistic quantum electrodynamics.},
+  isbn = {978-0-19-921390-0}
+}
+
+@article{chiribellaQuantumCircuitArchitecture2008,
+  title = {Quantum {{Circuit Architecture}}},
+  author = {Chiribella, G. and D'Ariano, G. M. and Perinotti, P.},
+  year = 2008,
+  month = aug,
+  journal = {Physical Review Letters},
+  volume = {101},
+  number = {6},
+  pages = {060401},
+  publisher = {American Physical Society},
+  doi = {10.1103/PhysRevLett.101.060401}
+}
+
+@article{chiribellaTheoreticalFrameworkQuantum2009,
+  title = {Theoretical Framework for Quantum Networks},
+  author = {Chiribella, Giulio and D'Ariano, Giacomo Mauro and Perinotti, Paolo},
+  year = 2009,
+  month = aug,
+  journal = {Physical Review A},
+  volume = {80},
+  number = {2},
+  pages = {022339},
+  publisher = {American Physical Society},
+  doi = {10.1103/PhysRevA.80.022339}
+}
+
+@article{claderImpactCorrelationsHeavy2021,
+  title = {Impact of Correlations and Heavy Tails on Quantum Error Correction},
+  author = {Clader, B. D. and Trout, Colin J. and Barnes, Jeff P. and Schultz, Kevin and Quiroz, Gregory and Titum, Paraj},
+  year = 2021,
+  month = may,
+  journal = {Physical Review A},
+  volume = {103},
+  number = {5},
+  pages = {052428},
+  publisher = {American Physical Society},
+  doi = {10.1103/PhysRevA.103.052428}
+}
+
+@article{costaQuantumCausalModelling2016,
+  title = {Quantum Causal Modelling},
+  author = {Costa, Fabio and Shrapnel, Sally},
+  year = 2016,
+  month = jun,
+  journal = {New Journal of Physics},
+  volume = {18},
+  number = {6},
+  pages = {063032},
+  publisher = {IOP Publishing},
+  issn = {1367-2630},
+  doi = {10.1088/1367-2630/18/6/063032},
+  abstract = {Causal modelling provides a powerful set of tools for identifying causal structure from observed correlations. It is well known that such techniques fail for quantum systems, unless one introduces `spooky' hidden mechanisms. Whether one can produce a genuinely quantum framework in order to discover causal structure remains an open question. Here we introduce a new framework for quantum causal modelling that allows for the discovery of causal structure. We define quantum analogues for core features of classical causal modelling techniques, including the causal Markov condition and faithfulness. Based on the process matrix formalism, this framework naturally extends to generalised structures with indefinite causal order.}
+}
+
+@article{cygorekUnderstandingUtilizingInner2025,
+  title = {Understanding and Utilizing the Inner Bonds of Process Tensors},
+  author = {Cygorek, Moritz and Gauger, Erik M.},
+  year = 2025,
+  month = jan,
+  journal = {SciPost Physics},
+  volume = {18},
+  number = {1},
+  eprint = {2404.01287},
+  primaryclass = {quant-ph},
+  pages = {024},
+  issn = {2542-4653},
+  doi = {10.21468/SciPostPhys.18.1.024},
+  urldate = {2025-10-14},
+  abstract = {Process tensor matrix product operators (PT-MPOs) enable numerically exact simulations for an unprecedentedly broad range of open quantum systems. By representing environment influences in MPO form, they can be efficiently compressed using established algorithms. The dimensions of inner bonds of the compressed PT-MPO may be viewed as an indicator of the complexity of the environment. Here, we show that the inner bonds themselves, not only their dimensions, have a concrete physical meaning: They represent the subspace of the full environment Liouville space which hosts environment excitations that may influence the subsequent open quantum systems dynamics the most. This connection can be expressed in terms of lossy linear transformations, whose pseudoinverses facilitate the extraction of environment observables. We demonstrate this by extracting the environment spin of a central spin problem, the current through a quantum system coupled to two leads, the number of photons emitted from quantum emitters into a structured environment, and the distribution of the total absorbed energy in a driven non-Markovian quantum system into system, environment, and interaction energy terms. Numerical tests further indicate that different PT-MPO algorithms compress environments to similar subspaces. Thus, the physical interpretation of inner bonds of PT-MPOs both provides a conceptional understanding and it enables new practical applications.},
+  archiveprefix = {arXiv},
+  keywords = {Condensed Matter - Mesoscale and Nanoscale Physics,Quantum Physics},
+  file = {/home/fidel/Zotero/storage/PRI6DX9F/Cygorek and Gauger - 2025 - Understanding and utilizing the inner bonds of process tensors.pdf}
+}
+
+@article{darmawanTensornetworkSimulationsSurface2017,
+  title = {Tensor-Network Simulations of the Surface Code under Realistic Noise},
+  author = {Darmawan, Andrew S. and Poulin, David},
+  year = 2017,
+  month = jul,
+  journal = {Physical Review Letters},
+  volume = {119},
+  number = {4},
+  pages = {040502},
+  publisher = {American Physical Society},
+  doi = {10.1103/PhysRevLett.119.040502}
+}
+
+@article{debroyLUCISurfaceCode2025,
+  title = {{{LUCI}} in the {{Surface Code}} with {{Dropouts}}},
+  author = {Debroy, Dripto M. and McEwen, Matt and Gidney, Craig and Shutty, Noah and Zalcman, Adam},
+  year = 2025,
+  month = dec,
+  journal = {Quantum},
+  volume = {9},
+  pages = {1936},
+  publisher = {Verein zur F\"orderung des Open Access Publizierens in den Quantenwissenschaften},
+  issn = {2521-327X},
+  doi = {10.22331/q-2025-12-11-1936}
+}
+
+@misc{delfosseSpacetimeCodesClifford2023,
+  title = {Spacetime Codes of {{Clifford}} Circuits},
+  author = {Delfosse, Nicolas and Paetznick, Adam},
+  year = 2023,
+  month = may,
+  number = {arXiv:2304.05943},
+  eprint = {2304.05943},
+  publisher = {arXiv},
+  doi = {10.48550/arXiv.2304.05943},
+  urldate = {2024-11-11},
+  abstract = {We propose a scheme for detecting and correcting faults in any Clifford circuit. The scheme is based on the observation that the set of all possible outcome bit-strings of a Clifford circuit is a linear code, which we call the outcome code. From the outcome code we construct a corresponding stabilizer code, the spacetime code. Our construction extends the circuit-to-code construction of Bacon, Flammia, Harrow and Shi [2], revisited recently by Gottesman [16], to include intermediate and multi-qubit measurements. With this correspondence, we reduce the problem of correcting faults in a circuit to the well-studied problem of correcting errors in a stabilizer code. More precisely, a most likely error decoder for the spacetime code can be transformed into a most likely fault decoder for the circuit. We give efficient algorithms to construct the outcome and spacetime codes. We also identify conditions under which these codes are LDPC, and give an algorithm to generate low-weight checks, which can then be combined with effcient LDPC code decoders.},
+  archiveprefix = {arXiv},
+  keywords = {Computer Science - Information Theory,Mathematics - Information Theory,Quantum Physics},
+  file = {/home/fidel/Zotero/storage/VX2UE2VU/Delfosse and Paetznick - 2023 - Spacetime codes of Clifford circuits.pdf;/home/fidel/Zotero/storage/GHYNCLT9/2304.html}
+}
+
+@article{dennisTopologicalQuantumMemory2002,
+  title = {Topological Quantum Memory},
+  author = {Dennis, Eric and Kitaev, Alexei and Landahl, Andrew and Preskill, John},
+  year = 2002,
+  month = aug,
+  journal = {Journal of Mathematical Physics},
+  volume = {43},
+  number = {9},
+  pages = {4452--4505},
+  issn = {0022-2488},
+  doi = {10.1063/1.1499754},
+  urldate = {2023-11-12},
+  abstract = {We analyze surface codes, the topological quantum error-correcting codes introduced by Kitaev. In these codes, qubits are arranged in a two-dimensional array on a surface of nontrivial topology, and encoded quantum operations are associated with nontrivial homology cycles of the surface. We formulate protocols for error recovery, and study the efficacy of these protocols. An order-disorder phase transition occurs in this system at a nonzero critical value of the error rate; if the error rate is below the critical value (the accuracy threshold), encoded information can be protected arbitrarily well in the limit of a large code block. This phase transition can be accurately modeled by a three-dimensional Z2 lattice gauge theory with quenched disorder. We estimate the accuracy threshold, assuming that all quantum gates are local, that qubits can be measured rapidly, and that polynomial-size classical computations can be executed instantaneously. We also devise a robust recovery procedure that does not require measurement or fast classical processing; however, for this procedure the quantum gates are local only if the qubits are arranged in four or more spatial dimensions. We discuss procedures for encoding, measurement, and performing fault-tolerant universal quantum computation with surface codes, and argue that these codes provide a promising framework for quantum computing architectures.},
+  file = {/home/fidel/Zotero/storage/TIZ8K8DL/Dennis et al. - 2002 - Topological quantum memory.pdf;/home/fidel/Zotero/storage/KF7GKNRE/Topological-quantum-memory.html}
+}
+
+@article{dowlingCapturingLongRangeMemory2024,
+  title = {Capturing {{Long-Range Memory Structures}} with {{Tree-Geometry Process Tensors}}},
+  author = {Dowling, Neil and Modi, Kavan and Mu{\~n}oz, Roberto N. and Singh, Sukhbinder and White, Gregory A. L.},
+  year = 2024,
+  month = oct,
+  journal = {Physical Review X},
+  volume = {14},
+  number = {4},
+  pages = {041018},
+  publisher = {American Physical Society},
+  doi = {10.1103/PhysRevX.14.041018}
+}
+
+@article{erhardCharacterizingLargescaleQuantum2019,
+  title = {Characterizing Large-Scale Quantum Computers via Cycle Benchmarking},
+  author = {Erhard, Alexander and Wallman, Joel J. and Postler, Lukas and Meth, Michael and Stricker, Roman and Martinez, Esteban A. and Schindler, Philipp and Monz, Thomas and Emerson, Joseph and Blatt, Rainer},
+  year = 2019,
+  month = nov,
+  journal = {Nature Communications},
+  volume = {10},
+  number = {1},
+  pages = {5347},
+  issn = {2041-1723},
+  doi = {10.1038/s41467-019-13068-7},
+  abstract = {Quantum computers promise to solve certain problems more efficiently than their digital counterparts. A major challenge towards practically useful quantum computing is characterizing and reducing the various errors that accumulate during an algorithm running on large-scale processors. Current characterization techniques are unable to adequately account for the exponentially large set of potential errors, including cross-talk and other correlated noise sources. Here we develop cycle benchmarking, a rigorous and practically scalable protocol for characterizing local and global errors across multi-qubit quantum processors. We experimentally demonstrate its practicality by quantifying such errors in non-entangling and entangling operations on an ion-trap quantum computer with up to 10 qubits, and total process fidelities for multi-qubit entangling gates ranging from \$\$99.6(1)\textbackslash\%\$\$for 2 qubits to \$\$86(2)\textbackslash\%\$\$for 10 qubits. Furthermore, cycle benchmarking data validates that the error rate per single-qubit gate and per two-qubit coupling does not increase with increasing system size.}
+}
+
+@article{evenblyAlgorithmsEntanglementRenormalization2009,
+  title = {Algorithms for Entanglement Renormalization},
+  author = {Evenbly, G. and Vidal, G.},
+  year = 2009,
+  month = apr,
+  journal = {Physical Review B},
+  volume = {79},
+  number = {14},
+  pages = {144108},
+  publisher = {American Physical Society},
+  doi = {10.1103/PhysRevB.79.144108}
+}
+
+@article{farrellyReviewQuantumCellular2020,
+  title = {A Review of {{Quantum Cellular Automata}}},
+  author = {Farrelly, Terry},
+  year = 2020,
+  month = nov,
+  journal = {Quantum},
+  volume = {4},
+  pages = {368},
+  publisher = {Verein zur F\"orderung des Open Access Publizierens in den Quantenwissenschaften},
+  issn = {2521-327X},
+  doi = {10.22331/q-2020-11-30-368}
+}
+
+@article{figueroa-romeroOperationalMarkovianizationRandomized2024,
+  title = {Operational {{Markovianization}} in Randomized Benchmarking},
+  author = {{Figueroa-Romero}, P and Papi{\v c}, M and Auer, A and Hsieh, M-H and Modi, K and {de Vega}, I},
+  year = 2024,
+  month = apr,
+  journal = {Quantum Science and Technology},
+  volume = {9},
+  number = {3},
+  pages = {035020},
+  publisher = {IOP Publishing},
+  issn = {2058-9565},
+  doi = {10.1088/2058-9565/ad3f44},
+  abstract = {A crucial task to obtain optimal and reliable quantum devices is to quantify their overall performance. The average fidelity of quantum gates is a particular figure of merit that can be estimated efficiently by randomized benchmarking (RB). However, the concept of gate-fidelity itself relies on the crucial assumption that noise behaves in a predictable, time-local, or so-called Markovian manner, whose breakdown can naturally become the leading source of errors as quantum devices scale in size and depth. We analytically show that error suppression techniques such as dynamical decoupling (DD) and Pauli-twirling can operationally Markovianize RB: (i) fast DD reduces non-Markovian RB to an exponential decay plus longer-time corrections, while on the other hand, (ii) Pauli-twirling generally does not affect the average, but (iii) it always suppresses the variance of such RB outputs. We demonstrate these effects numerically with a qubit noise model. Our results show that simple and efficient error suppression methods can simultaneously tame non-Markovian noise and allow for standard and reliable gate quality estimation, a fundamentally important task in the path toward fully functional quantum devices.}
+}
+
+@article{fkamDetrimentalNonMarkovianErrors2025,
+  title = {Detrimental Non-{{Markovian}} Errors for Surface Code Memory},
+  author = {Kam, John F. and Gicev, Spiro and Modi, Kavan and Southwell, Angus and Usman, Muhammad},
+  year = 2025,
+  month = jul,
+  journal = {Quantum Science and Technology},
+  volume = {10},
+  number = {3},
+  pages = {035060},
+  publisher = {IOP Publishing},
+  issn = {2058-9565},
+  doi = {10.1088/2058-9565/adebab},
+  abstract = {The realization of fault-tolerant quantum computers hinges on effective quantum error correction (QEC) protocols, whose performance significantly relies on the nature of the underlying noise. In this work, we directly study the structure of non-Markovian correlated errors and their impact on surface code memory performance. Specifically, we compare surface code performance under non-Markovian noise and independent circuit-level noise, while keeping marginal error rates constant. Our analysis shows that while not all temporally correlated structures are detrimental, certain structures, particularly multi-time `streaky' correlations affecting syndrome qubits and two-qubit gates, can severely degrade logical error rate scaling. Furthermore, we discuss our results in the context of recent QEC experiments on physical devices. These findings underscore the importance of understanding and mitigating non-Markovian noise toward achieving practical, fault-tolerant quantum computing.}
+}
+
+@article{flammiaEfficientEstimationPauli2020,
+  title = {Efficient Estimation of {{Pauli}} Channels},
+  author = {Flammia, Steven T and Wallman, Joel J},
+  year = 2020,
+  journal = {ACM Transactions on Quantum Computing},
+  volume = {1},
+  number = {1},
+  pages = {1--32},
+  publisher = {ACM New York, NY, USA},
+  issn = {2643-6809},
+  file = {/home/fidel/Zotero/storage/AZMWG8EC/Flammia and Wallman - 2020 - Efficient estimation of Pauli channels.pdf;/home/fidel/Zotero/storage/YA4NHETX/1907.12976v3.pdf}
+}
+
+@article{fowlerQuantifyingEffectsLocal2014,
+  title = {Quantifying the Effects of Local Many-Qubit Errors and Nonlocal Two-Qubit Errors on the Surface Code},
+  author = {Fowler, Austin G. and Martinis, John M.},
+  year = 2014,
+  month = mar,
+  journal = {Physical Review A},
+  volume = {89},
+  number = {3},
+  pages = {032316},
+  publisher = {American Physical Society},
+  doi = {10.1103/PhysRevA.89.032316}
+}
+
+@article{fowlerSurfaceCodesPractical2012,
+  title = {Surface Codes: {{Towards}} Practical Large-Scale Quantum Computation},
+  shorttitle = {Surface Codes},
+  author = {Fowler, Austin G. and Mariantoni, Matteo and Martinis, John M. and Cleland, Andrew N.},
+  year = 2012,
+  month = sep,
+  journal = {Physical Review A},
+  volume = {86},
+  number = {3},
+  pages = {032324},
+  issn = {1050-2947, 1094-1622},
+  doi = {10.1103/PhysRevA.86.032324},
+  urldate = {2023-06-04},
+  langid = {english},
+  file = {/home/fidel/Zotero/storage/ME8ZTSWD/Fowler et al. - 2012 - Surface codes Towards practical large-scale quant.pdf}
+}
+
+@article{gellerEfficientErrorModels2013,
+  title = {Efficient Error Models for Fault-Tolerant Architectures and the {{Pauli}} Twirling Approximation},
+  author = {Geller, Michael R. and Zhou, Zhongyuan},
+  year = 2013,
+  month = jul,
+  journal = {Physical Review A},
+  volume = {88},
+  number = {1},
+  pages = {012314},
+  issn = {1050-2947, 1094-1622},
+  doi = {10.1103/PhysRevA.88.012314},
+  urldate = {2025-08-26},
+  langid = {english}
+}
+
+@misc{gicevFullyConvolutional3D2025,
+  title = {Fully Convolutional {{3D}} Neural Network Decoders for Surface Codes with Syndrome Circuit Noise},
+  author = {Gicev, Spiro and Hollenberg, Lloyd C. L. and Usman, Muhammad},
+  year = 2025,
+  month = jun,
+  number = {arXiv:2506.16113},
+  eprint = {2506.16113},
+  primaryclass = {quant-ph},
+  publisher = {arXiv},
+  doi = {10.48550/arXiv.2506.16113},
+  urldate = {2026-03-05},
+  abstract = {Artificial Neural Networks (ANNs) are a promising approach to the decoding problem of Quantum Error Correction (QEC), but have observed consistent difficulty when generalising performance to larger QEC codes. Recent scalability-focused approaches have split the decoding workload by using local ANNs to perform initial syndrome processing and leaving final processing to a global residual decoder. We investigated ANN surface code decoding under a scheme exploiting the spatiotemporal structure of syndrome data. In particular, we present a vectorised method for surface code data simulation and benchmark decoding performance when such data defines a multi-label classification problem and generative modelling problem for rotated surface codes with circuit noise after each gate and idle timestep. Performance was found to generalise to rotated surface codes of sizes up to \$d=97\$, with depolarisation parameter thresholds of up to \$0.7\textbackslash\%\$ achieved, competitive with h Minimum Weight Perfect Matching (MWPM). Improved latencies, compared with MWPM alone, were found starting at code distances of \$d=33\$ and \$d=89\$ under noise models above and below threshold respectively. These results suggest promising prospects for ANN-based frameworks for surface code decoding with performance sufficient to support the demands expected from fault-tolerant resource estimates.},
+  archiveprefix = {arXiv},
+  keywords = {Quantum Physics},
+  file = {/home/fidel/Zotero/storage/GDHG294A/Gicev et al. - 2025 - Fully convolutional 3D neural network decoders for surface codes with syndrome circuit noise.pdf;/home/fidel/Zotero/storage/6S83ZSHP/2506.html}
+}
+
+@article{gicevQuantumComputerError2024,
+  title = {Quantum Computer Error Structure Probed by Quantum Error Correction Syndrome Measurements},
+  author = {Gicev, Spiro and Hollenberg, Lloyd C. L. and Usman, Muhammad},
+  year = 2024,
+  month = dec,
+  journal = {Physical Review Research},
+  volume = {6},
+  number = {4},
+  pages = {043249},
+  publisher = {American Physical Society},
+  doi = {10.1103/PhysRevResearch.6.043249}
+}
+
+@misc{gidneyDataStabilityExperiments2022,
+  title = {Data for "{{Stability Experiments}}: {{The Overlooked Dual}} of {{Memory Experiments}}"},
+  shorttitle = {Data for "{{Stability Experiments}}},
+  author = {Gidney, Craig},
+  year = 2022,
+  month = jul,
+  publisher = {Zenodo},
+  doi = {10.5281/ZENODO.6859486},
+  urldate = {2026-08-15},
+  abstract = {The code written, circuits generated, and statistics collected for the plots shown in the paper "Stability Experiments: The Overlooked Dual of Memory Experiments".},
+  copyright = {Creative Commons Attribution 4.0 International, Open Access}
+}
+
+@article{gidneyStabilityExperimentsOverlooked2022,
+  title = {Stability {{Experiments}}: {{The Overlooked Dual}} of {{Memory Experiments}}},
+  shorttitle = {Stability {{Experiments}}},
+  author = {Gidney, Craig},
+  year = 2022,
+  month = aug,
+  journal = {Quantum},
+  volume = {6},
+  pages = {786},
+  publisher = {Verein zur F\"orderung des Open Access Publizierens in den Quantenwissenschaften},
+  doi = {10.22331/q-2022-08-24-786},
+  urldate = {2024-10-03},
+  abstract = {Craig Gidney, Quantum 6, 786 (2022). Topological quantum computations are built on a foundation of two basic tasks: preserving logical observables through time and moving logical observables through space. Memory experiments, w\dots},
+  file = {/home/fidel/Zotero/storage/B5V39HV9/Gidney - 2022 - Stability Experiments The Overlooked Dual of Memory Experiments.pdf}
+}
+
+@article{gidneyStimFastStabilizer2021,
+  title = {Stim: A Fast Stabilizer Circuit Simulator},
+  author = {Gidney, Craig},
+  year = 2021,
+  month = jul,
+  journal = {Quantum},
+  volume = {5},
+  pages = {497},
+  publisher = {Verein zur F\"orderung des Open Access Publizierens in den Quantenwissenschaften},
+  issn = {2521-327X},
+  doi = {10.22331/q-2021-07-06-497}
+}
+
+@article{googlequantumaiandcollaboratorsQuantumErrorCorrection2025,
+  title = {Quantum Error Correction below the Surface Code Threshold},
+  author = {{Google Quantum AI and Collaborators}},
+  year = 2025,
+  month = feb,
+  journal = {Nature},
+  volume = {638},
+  number = {8052},
+  pages = {920--926},
+  issn = {1476-4687},
+  doi = {10.1038/s41586-024-08449-y},
+  abstract = {Quantum error correction1--4 provides a path to reach practical quantum computing by combining multiple physical qubits into a logical qubit, in which the logical error rate is suppressed exponentially as more qubits are added. However, this exponential suppression only occurs if the physical error rate is below a critical threshold. Here we present two below-threshold surface code memories on our newest generation of superconducting processors, Willow: a distance-7 code and a distance-5 code integrated with a real-time decoder. The logical error rate of our larger quantum memory is suppressed by a factor of {$\Lambda$}\,=\,2.14\,\textpm\,0.02 when increasing the code distance by 2, culminating in a 101-qubit distance-7 code with 0.143\%\,\textpm\,0.003 per cent error per cycle of error correction. This logical memory is also beyond breakeven, exceeding the lifetime of its best physical qubit by a factor of 2.4\,\textpm\,0.3. Our system maintains below-threshold performance when decoding in real time, achieving an average decoder latency of 63\,microseconds at distance 5 up to a million cycles, with a cycle time of 1.1\,microseconds. We also run repetition codes up to distance 29 and find that logical performance is limited by rare correlated error events, occurring approximately once every hour or 3\,\texttimes\,109 cycles. Our results indicate device performance that, if scaled, could realize the operational requirements of large-scale fault-tolerant quantum algorithms.}
+}
+
+@misc{gottesmanHeisenbergRepresentationQuantum1998,
+  title = {The {{Heisenberg Representation}} of {{Quantum Computers}}},
+  author = {Gottesman, Daniel},
+  year = 1998,
+  month = jul,
+  number = {arXiv:quant-ph/9807006},
+  eprint = {quant-ph/9807006},
+  publisher = {arXiv},
+  doi = {10.48550/arXiv.quant-ph/9807006},
+  urldate = {2025-12-07},
+  abstract = {Since Shor's discovery of an algorithm to factor numbers on a quantum computer in polynomial time, quantum computation has become a subject of immense interest. Unfortunately, one of the key features of quantum computers - the difficulty of describing them on classical computers - also makes it difficult to describe and understand precisely what can be done with them. A formalism describing the evolution of operators rather than states has proven extremely fruitful in understanding an important class of quantum operations. States used in error correction and certain communication protocols can be described by their stabilizer, a group of tensor products of Pauli matrices. Even this simple group structure is sufficient to allow a rich range of quantum effects, although it falls short of the full power of quantum computation.},
+  archiveprefix = {arXiv},
+  keywords = {Quantum Physics},
+  file = {/home/fidel/Zotero/storage/YDDSKI2D/Gottesman - 1998 - The Heisenberg Representation of Quantum Computers.pdf;/home/fidel/Zotero/storage/IUBI23XG/9807006.html}
+}
+
+@misc{gottesmanStabilizerCodesQuantum1997,
+  title = {Stabilizer {{Codes}} and {{Quantum Error Correction}}},
+  author = {Gottesman, Daniel},
+  year = 1997,
+  month = may,
+  number = {arXiv:quant-ph/9705052},
+  eprint = {quant-ph/9705052},
+  publisher = {arXiv},
+  doi = {10.48550/arXiv.quant-ph/9705052},
+  urldate = {2025-12-07},
+  abstract = {Controlling operational errors and decoherence is one of the major challenges facing the field of quantum computation and other attempts to create specified many-particle entangled states. The field of quantum error correction has developed to meet this challenge. A group-theoretical structure and associated subclass of quantum codes, the stabilizer codes, has proved particularly fruitful in producing codes and in understanding the structure of both specific codes and classes of codes. I will give an overview of the field of quantum error correction and the formalism of stabilizer codes. In the context of stabilizer codes, I will discuss a number of known codes, the capacity of a quantum channel, bounds on quantum codes, and fault-tolerant quantum computation.},
+  archiveprefix = {arXiv},
+  keywords = {Quantum Physics},
+  file = {/home/fidel/Zotero/storage/L7UG8FE6/Gottesman - 1997 - Stabilizer Codes and Quantum Error Correction.pdf;/home/fidel/Zotero/storage/3UHDBEUR/9705052.html}
+}
+
+@article{grayHyperoptimizedApproximateContraction2024,
+  title = {Hyperoptimized Approximate Contraction of Tensor Networks with Arbitrary Geometry},
+  author = {Gray, Johnnie and Chan, Garnet Kin-Lic},
+  year = 2024,
+  month = jan,
+  journal = {Physical Review X},
+  volume = {14},
+  number = {1},
+  pages = {011009},
+  publisher = {American Physical Society},
+  doi = {10.1103/PhysRevX.14.011009}
+}
+
+@article{greenbaumModelingCoherentErrors2017,
+  title = {Modeling Coherent Errors in Quantum Error Correction},
+  author = {Greenbaum, Daniel and Dutton, Zachary},
+  year = 2017,
+  month = dec,
+  journal = {Quantum Science and Technology},
+  volume = {3},
+  number = {1},
+  pages = {015007},
+  publisher = {IOP Publishing},
+  issn = {2058-9565},
+  doi = {10.1088/2058-9565/aa9a06},
+  abstract = {Analysis of quantum error correcting codes is typically done using a stochastic, Pauli channel error model for describing the noise on physical qubits. However, it was recently found that coherent errors (systematic rotations) on physical data qubits result in both physical and logical error rates that differ significantly from those predicted by a Pauli model. Here we examine the accuracy of the Pauli approximation for noise containing coherent errors (characterized by a rotation angle {$\epsilon$}) under the repetition code. We derive an analytic expression for the logical error channel as a function of arbitrary code distance d and concatenation level n, in the small error limit. We find that coherent physical errors result in logical errors that are partially coherent and therefore non-Pauli. However, the coherent part of the logical error is negligible at fewer than  error correction cycles when the decoder is optimized for independent Pauli errors, thus providing a regime of validity for the Pauli approximation. Above this number of correction cycles, the persistent coherent logical error will cause logical failure more quickly than the Pauli model would predict, and this may need to be combated with coherent suppression methods at the physical level or larger codes.}
+}
+
+@article{harperLearningCorrelatedNoise2023,
+  title = {Learning {{Correlated Noise}} in a 39-{{Qubit Quantum Processor}}},
+  author = {Harper, Robin and Flammia, Steven T.},
+  year = 2023,
+  month = oct,
+  journal = {PRX Quantum},
+  volume = {4},
+  number = {4},
+  pages = {040311},
+  publisher = {American Physical Society},
+  doi = {10.1103/PRXQuantum.4.040311}
+}
+
+@article{harringtonSynchronousDetectionCosmic2025,
+  title = {Synchronous Detection of Cosmic Rays and Correlated Errors in Superconducting Qubit Arrays},
+  year = 2025,
+  month = jul,
+  journal = {Nature Communications},
+  volume = {16},
+  number = {1},
+  pages = {6428},
+  issn = {2041-1723},
+  doi = {10.1038/s41467-025-61385-x},
+  abstract = {Quantum information processing at scale will require sufficiently stable and long-lived qubits, likely enabled by error-correction codes. Several recent superconducting-qubit experiments, however, reported observing intermittent spatiotemporally correlated errors that would be problematic for conventional codes, with ionizing radiation being a likely cause. Here, we directly measured the cosmic-ray contribution to spatiotemporally correlated qubit errors. We accomplished this by synchronously monitoring cosmic-ray detectors and qubit energy-relaxation dynamics of 10 transmon qubits distributed across a 5~\texttimes ~5~\texttimes ~0.35\,\,mm3 silicon chip. Cosmic rays caused correlated errors at a rate of \$\$1/\textbackslash left(592\textbackslash begin\textbraceleft array\textbraceright\textbraceleft c\textbraceright +48\textbackslash\textbackslash{} -41\textbackslash end\textbraceleft array\textbraceright\textbackslash,\textbraceleft\textbackslash rm\textbraceleft s\textbraceright\textbraceright\textbackslash right)\$\$, accounting for 17.1~\textpm ~1.3\% of all such events. Our qubits responded to essentially all of the cosmic rays and their secondary particles incident on the chip, consistent with the independently measured arrival flux. Moreover, we observed that the landscape of the superconducting gap in proximity to the Josephson junctions dramatically impacts the qubit response to cosmic rays. Given the practical difficulties associated with shielding cosmic rays, our results indicate the importance of radiation hardening---for example, superconducting gap engineering---to the realization of robust quantum error correction.},
+  author = {Harrington, Patrick M. and Li, Mingyu and Hays, Max and Van De Pontseele, Wouter and Mayer, Daniel and Pinckney, H. Douglas and Contipelli, Felipe and Gingras, Michael and Niedzielski, Bethany M. and Stickler, Hannah and {others}}
+}
+
+@article{heExperimentalQuantumError2025,
+  title = {Experimental {{Quantum Error Correction}} below the {{Surface Code Threshold}} via {{All-Microwave Leakage Suppression}}},
+  year = 2025,
+  month = dec,
+  journal = {Physical Review Letters},
+  volume = {135},
+  number = {26},
+  pages = {260601},
+  publisher = {American Physical Society},
+  doi = {10.1103/rqkg-dw31},
+  author = {He, Tan and Lin, Weiping and Wang, Rui and Li, Yuan and Bei, Jiahao and Cai, Jianbin and Cao, Sirui and Chen, Danning and Chen, Kefu and Chen, Xiawei and {others}}
+}
+
+@article{higgottPyMatchingPythonPackage2022,
+  title = {{{PyMatching}}: {{A Python Package}} for {{Decoding Quantum Codes}} with {{Minimum-Weight Perfect Matching}}},
+  shorttitle = {{{PyMatching}}},
+  author = {Higgott, Oscar},
+  year = 2022,
+  month = jun,
+  journal = {ACM Transactions on Quantum Computing},
+  volume = {3},
+  number = {3},
+  pages = {16:1--16:16},
+  doi = {10.1145/3505637},
+  urldate = {2024-08-20},
+  abstract = {This article introduces PyMatching, a fast open-source Python package for decoding quantum error-correcting codes with the minimum-weight perfect matching (MWPM) algorithm. PyMatching includes the standard MWPM decoder as well as a variant, which we call local matching, that restricts each syndrome defect to be matched to another defect within a local neighborhood. The decoding performance of local matching is almost identical to that of the standard MWPM decoder in practice, while reducing the computational complexity. We benchmark the performance of PyMatching, showing that local matching is several orders of magnitude faster than implementations of the full MWPM algorithm using NetworkX or Blossom V for problem sizes typically considered in error correction simulations. PyMatching and its dependencies are open-source, and it can be used to decode any quantum code for which syndrome defects come in pairs using a simple Python interface. PyMatching supports the use of weighted edges, hook errors, boundaries and measurement errors, enabling fast decoding, and simulation of fault-tolerant quantum computing.},
+  file = {/home/fidel/Zotero/storage/EEVC8E32/Higgott - 2022 - PyMatching A Python Package for Decoding Quantum Codes with Minimum-Weight Perfect Matching.pdf}
+}
+
+@article{higgottSparseBlossomCorrecting2025,
+  title = {Sparse {{Blossom}}: Correcting a Million Errors per Core Second with Minimum-Weight Matching},
+  author = {Higgott, Oscar and Gidney, Craig},
+  year = 2025,
+  month = jan,
+  journal = {Quantum},
+  volume = {9},
+  pages = {1600},
+  publisher = {Verein zur F\"orderung des Open Access Publizierens in den Quantenwissenschaften},
+  issn = {2521-327X},
+  doi = {10.22331/q-2025-01-20-1600}
+}
+
+@article{hinesPauliNoiseLearning2025,
+  title = {Pauli {{Noise Learning}} for {{Mid-Circuit Measurements}}},
+  author = {Hines, Jordan and Proctor, Timothy},
+  year = 2025,
+  month = jan,
+  journal = {Physical Review Letters},
+  volume = {134},
+  number = {2},
+  pages = {020602},
+  publisher = {American Physical Society},
+  doi = {10.1103/PhysRevLett.134.020602}
+}
+
+@misc{hinesSimulatingQuantumError2026,
+  title = {Simulating {{Quantum Error Correction}} beyond {{Pauli Stochastic Errors}}},
+  author = {Hines, Jordan and Ostrove, Corey and Rudinger, Kenneth and Seritan, Stefan and Young, Kevin and {Blume-Kohout}, Robin and Proctor, Timothy},
+  year = 2026,
+  month = mar,
+  number = {arXiv:2603.18457},
+  eprint = {2603.18457},
+  primaryclass = {quant-ph},
+  publisher = {arXiv},
+  doi = {10.48550/arXiv.2603.18457},
+  urldate = {2026-03-20},
+  abstract = {Quantum error correction (QEC), the lynchpin of fault-tolerant quantum computing (FTQC), is designed and validated against well-behaved Pauli stochastic error models. But in real-world deployment, QEC protocols encounter a vast array of other errors -- coherent and non-Pauli errors -- whose impacts on quantum circuits are vastly different than those of stochastic Pauli errors. The impacts of these errors on QEC and FTQC protocols have been largely unpredictable to date due to exponential classical simulation cost. Here, we show how to accurately and efficiently model the effects of coherent and non-Pauli errors on FTQC, and we study the effects of such errors on syndrome extraction for surface and bivariate bicycle codes, and on magic state cultivation. Our analysis suggests that coherent error can shift fault-tolerance thresholds, increase the space-time cost of magic state cultivation, and can increase logical error rates by an order of magnitude compared to equivalent stochastic errors. These analyses are enabled by a new technique for mapping any Markovian circuit-level error model with sufficiently small error rates onto a detector error model (DEM) for an FTQC circuit. The resulting DEM enables Monte Carlo estimation of logical error rates and noise-adapted decoding, and its parameters can be analytically related to the underlying physical noise parameters to enable approximate strong simulation.},
+  archiveprefix = {arXiv},
+  keywords = {Quantum Physics},
+  file = {/home/fidel/Zotero/storage/MH43UR6J/Hines et al. - 2026 - Simulating Quantum Error Correction beyond Pauli Stochastic Errors.pdf;/home/fidel/Zotero/storage/39ANJ3IV/2603.html}
+}
+
+@article{hockingsScalableNoiseCharacterization2025,
+  title = {Scalable {{Noise Characterization}} of {{Syndrome-Extraction Circuits}} with {{Averaged Circuit Eigenvalue Sampling}}},
+  author = {Hockings, Evan T. and Doherty, Andrew C. and Harper, Robin},
+  year = 2025,
+  month = feb,
+  journal = {PRX Quantum},
+  volume = {6},
+  number = {1},
+  pages = {010334},
+  publisher = {American Physical Society},
+  doi = {10.1103/PRXQuantum.6.010334}
+}
+
+@article{huangPerformanceQuantumError2019,
+  title = {Performance of Quantum Error Correction with Coherent Errors},
+  author = {Huang, Eric and Doherty, Andrew C. and Flammia, Steven},
+  year = 2019,
+  month = feb,
+  journal = {Physical Review A},
+  volume = {99},
+  number = {2},
+  pages = {022313},
+  publisher = {American Physical Society},
+  doi = {10.1103/PhysRevA.99.022313}
+}
+
+@article{hutterBreakdownSurfacecodeError2014,
+  title = {Breakdown of Surface-Code Error Correction Due to Coupling to a Bosonic Bath},
+  author = {Hutter, Adrian and Loss, Daniel},
+  year = 2014,
+  month = apr,
+  journal = {Physical Review A},
+  volume = {89},
+  number = {4},
+  pages = {042334},
+  publisher = {American Physical Society},
+  doi = {10.1103/PhysRevA.89.042334}
+}
+
+@article{iversonCoherenceLogicalQuantum2020,
+  title = {Coherence in Logical Quantum Channels},
+  author = {Iverson, Joseph K and Preskill, John},
+  year = 2020,
+  month = jul,
+  journal = {New Journal of Physics},
+  volume = {22},
+  number = {7},
+  pages = {073066},
+  publisher = {IOP Publishing},
+  issn = {1367-2630},
+  doi = {10.1088/1367-2630/ab8e5c},
+  abstract = {We study the effectiveness of quantum error correction against coherent noise. Coherent errors (for example, unitary noise) can interfere constructively, so that in some cases the average infidelity of a quantum circuit subjected to coherent errors may increase quadratically with the circuit size; in contrast, when errors are incoherent (for example, depolarizing noise), the average infidelity increases at worst linearly with circuit size. We consider the performance of quantum stabilizer codes against a noise model in which a unitary rotation is applied to each qubit, where the axes and angles of rotation are nearly the same for all qubits. In particular, we show that for the toric code subject to such independent coherent noise, and for minimal-weight decoding, the logical channel after error correction becomes increasingly incoherent as the length of the code increases, provided the noise strength decays inversely with the code distance. A similar conclusion holds for weakly correlated coherent noise. Our methods can also be used for analyzing the performance of other codes and fault-tolerant protocols against coherent noise. However, our result does not show that the coherence of the logical channel is suppressed in the more physically relevant case where the noise strength is held constant as the code block grows, and we recount the difficulties that prevented us from extending the result to that case. Nevertheless our work supports the idea that fault-tolerant quantum computing schemes will work effectively against coherent noise, providing encouraging news for quantum hardware builders who worry about the damaging effects of control errors and coherent interactions with the environment.}
+}
+
+@article{jainImprovedQuantumError2023,
+  title = {Improved Quantum Error Correction with Randomized Compiling},
+  author = {Jain, Aditya and Iyer, Pavithran and Bartlett, Stephen D. and Emerson, Joseph},
+  year = 2023,
+  month = jul,
+  journal = {Physical Review Research},
+  volume = {5},
+  number = {3},
+  pages = {033049},
+  publisher = {American Physical Society},
+  doi = {10.1103/PhysRevResearch.5.033049}
+}
+
+@article{jordanClassicalSimulationInfinitesize2008,
+  title = {Classical Simulation of Infinite-Size Quantum Lattice Systems in Two Spatial Dimensions},
+  author = {Jordan, J. and Or{\'u}s, R. and Vidal, G. and Verstraete, F. and Cirac, J. I.},
+  year = 2008,
+  month = dec,
+  journal = {Physical Review Letters},
+  volume = {101},
+  number = {25},
+  pages = {250602},
+  publisher = {American Physical Society},
+  doi = {10.1103/PhysRevLett.101.250602}
+}
+
+@article{jorgensenExploitingCausalTensor2019,
+  title = {Exploiting the {{Causal Tensor Network Structure}} of {{Quantum Processes}} to {{Efficiently Simulate Non-Markovian Path Integrals}}},
+  author = {J{\o}rgensen, Mathias R. and Pollock, Felix A.},
+  year = 2019,
+  month = dec,
+  journal = {Physical Review Letters},
+  volume = {123},
+  number = {24},
+  pages = {240602},
+  publisher = {American Physical Society},
+  doi = {10.1103/PhysRevLett.123.240602}
+}
+
+@article{jouzdaniFidelityThresholdSurface2014,
+  title = {Fidelity Threshold of the Surface Code beyond Single-Qubit Error Models},
+  author = {Jouzdani, Pejman and Novais, E. and Tupitsyn, I. S. and Mucciolo, Eduardo R.},
+  year = 2014,
+  month = oct,
+  journal = {Physical Review A},
+  volume = {90},
+  number = {4},
+  pages = {042315},
+  publisher = {American Physical Society},
+  doi = {10.1103/PhysRevA.90.042315}
+}
+
+@misc{kattemolleNonMarkovianityInducedPaulitwirling2026,
+  title = {Non-{{Markovianity}} Induced by {{Pauli-twirling}}},
+  author = {Kattem{\"o}lle, Joris and Gul{\'a}csi, Bal{\'a}zs and Burkard, Guido},
+  year = 2026,
+  month = feb,
+  number = {arXiv:2602.08464},
+  eprint = {2602.08464},
+  primaryclass = {quant-ph},
+  publisher = {arXiv},
+  doi = {10.48550/arXiv.2602.08464},
+  urldate = {2026-03-04},
+  abstract = {Noise forms a central obstacle to effective quantum information processing. Recent experimental advances have enabled the tailoring of noise properties through Pauli twirling, transforming arbitrary noise channels into Pauli channels. This underpins theoretical descriptions of fault-tolerant quantum computation and forms an essential tool in noise characterization and error mitigation. Pauli-Lindblad channels have been introduced to aptly parameterize quasi-local Pauli errors across a quantum register, excluding negative Pauli-Lindblad parameters relying on the Markovianity of the underlying noise processes. We point out that caution is required when parameterizing channels as Pauli-Lindblad channels with nonnegative parameters. For this, we study the effects of Pauli twirling on Markovianity. We use the notion of Markovianity of a channel (rather than that of an entire semigroup) and prove a general Pauli channel is non-Markovian if and only if at least one of its Pauli-Lindblad parameters is negative. Using this, we show that Markovian quantum channels often become non-Markovian after Pauli twirling. The Pauli-twirling induced non-Markovianity necessitates the use of negative Pauli-Lindblad parameters for a correct noise description in experimentally realistic scenarios. An important example is the implementation of the \$\textbackslash sqrt\textbraceleft X\textbraceright\$-gate under standard Markovian noise. As such, our results have direct implications for quantum error mitigation protocols that rely on accurate noise characterization.},
+  archiveprefix = {arXiv},
+  keywords = {Quantum Physics},
+  file = {/home/fidel/Zotero/storage/BL6HAGBQ/Kattemölle et al. - 2026 - Non-Markovianity induced by Pauli-twirling.pdf;/home/fidel/Zotero/storage/WRQ7GQW4/2602.html}
+}
+
+@misc{keelingProcessTensorApproaches2025,
+  title = {Process {{Tensor Approaches}} to {{Non-Markovian Quantum Dynamics}}},
+  author = {Keeling, Jonathan and Stoudenmire, E. Miles and Ba{\~n}uls, Mari-Carmen and Reichman, David R.},
+  year = 2025,
+  month = sep,
+  number = {arXiv:2509.07661},
+  eprint = {2509.07661},
+  primaryclass = {quant-ph},
+  publisher = {arXiv},
+  doi = {10.48550/arXiv.2509.07661},
+  urldate = {2026-03-05},
+  abstract = {The paradigm of considering open quantum systems -- i.e. focusing only on the system of interest, and treating the rest of the world as an effective environment -- has proven to be a highly effective way to understand a range of quantum systems, across areas of study such as quantum optics, cold atoms, superconducting qubits, and impurities in solid-state systems. A common approach in many of these contexts has been to consider simplified approaches based on the Born and Markov approximations. While these approximations are indeed often appropriate in contexts such as quantum optics, the widespread application of these approximations has been driven more by simplicity than by accuracy. In particular, these Markovian treatments will fail in many cases, such as when coupling to the environment is not weak, when the environment is structured and has resonances, when the system couples to low-frequency modes of the environment, or when the questions of interest involve the propagation of information through the environment. Despite the fact that many real problems are non-Markovian, the Markov approximation is still widely used, as it is often assumed that a fully non-Markovian treatment is too complex to be practical. In this perspective we discuss a recently developed set of techniques that address this challenge. Centering our discussion around the notion of the process tensor, we demonstrate that the generality of the process tensor concept, coupled with efficient tensor-network methods, opens the door to the description of a wide range of observable non-Markovian processes in a wide range of open quantum systems.},
+  archiveprefix = {arXiv},
+  keywords = {Condensed Matter - Mesoscale and Nanoscale Physics,Quantum Physics},
+  file = {/home/fidel/Zotero/storage/7WE6E5EI/Keeling et al. - 2025 - Process Tensor Approaches to Non-Markovian Quantum Dynamics.pdf;/home/fidel/Zotero/storage/WDRDZ74U/2509.html}
+}
+
+@article{klesseQuantumErrorCorrection2005,
+  title = {Quantum Error Correction in Spatially Correlated Quantum Noise},
+  author = {Klesse, Rochus and Frank, Sandra},
+  year = 2005,
+  month = nov,
+  journal = {Physical Review Letters},
+  volume = {95},
+  number = {23},
+  pages = {230503},
+  publisher = {American Physical Society},
+  doi = {10.1103/PhysRevLett.95.230503}
+}
+
+@article{knillTheoryQuantumErrorcorrecting1997,
+  title = {Theory of Quantum Error-Correcting Codes},
+  author = {Knill, Emanuel and Laflamme, Raymond},
+  year = 1997,
+  month = feb,
+  journal = {Physical Review A},
+  volume = {55},
+  number = {2},
+  pages = {900--911},
+  publisher = {American Physical Society},
+  doi = {10.1103/PhysRevA.55.900}
+}
+
+@misc{kobayashiTensornetworkDecodersProcess2024,
+  title = {Tensor-Network Decoders for Process Tensor Descriptions of Non-{{Markovian}} Noise},
+  author = {Kobayashi, Fumiyoshi and Manabe, Hidetaka and White, Gregory A. L. and Farrelly, Terry and Modi, Kavan and Stace, Thomas M.},
+  year = 2024,
+  month = dec,
+  number = {arXiv:2412.13739},
+  eprint = {2412.13739},
+  primaryclass = {quant-ph},
+  publisher = {arXiv},
+  doi = {10.48550/arXiv.2412.13739},
+  urldate = {2026-01-22},
+  abstract = {Quantum error correction (QEC) is essential for fault-tolerant quantum computation. Often in QEC errors are assumed to be independent and identically distributed and can be discretised to a random Pauli error during the execution of a quantum circuit. In real devices, however, the noise profile is much more complex and contains non-trivial spatiotemporal correlations, such as cross-talk, non-Markovianity, and their mixtures. Here, we examine the performance of two paradigmatic QEC codes in the presence of complex noise by using process tensors to represent spatiotemporal correlations beyond iid errors. This integration is an instance of the recently proposed \textbackslash textit\textbraceleft strategic code\textbraceright, which combines QEC with process tensors. In particular, we construct the maximum likelihood (ML) decoder for a quantum error correction code with a process tensor. To understand the computational overhead and implications of this approach, we implement our framework numerically for small code instances and evaluate its performance. We also propose a method to evaluate the performance of strategic codes and construct the ML decoder with an efficient tensor network approximation. Our results highlight the possible detrimental effects of correlated noise and potential pathways for designing decoders that account for such effects.},
+  archiveprefix = {arXiv},
+  keywords = {Quantum Physics},
+  file = {/home/fidel/Zotero/storage/PXI57GG6/Kobayashi et al. - 2024 - Tensor-network decoders for process tensor descriptions of non-Markovian noise.pdf;/home/fidel/Zotero/storage/3I3U8LQI/2412.html}
+}
+
+@misc{kunjummenSituCalibrationUnitary2025,
+  title = {In Situ Calibration of Unitary Operations during Quantum Error Correction},
+  author = {Kunjummen, Jonathan and Taylor, Jacob M.},
+  year = 2025,
+  month = nov,
+  number = {arXiv:2511.01080},
+  eprint = {2511.01080},
+  primaryclass = {quant-ph},
+  publisher = {arXiv},
+  doi = {10.48550/arXiv.2511.01080},
+  urldate = {2026-03-05},
+  abstract = {Quantum error correction uses the measurement of syndromes and classical decoding algorithms to estimate the location and type of errors while protecting the encoded quantum bits. Here we consider how prior information and Bayesian updates can play a critical role in improving the performance of QEC in the scenario of a particularly noisy qubit. This allows for leveraging even distance codes, which typically are less valued in QEC, to handle the noisy qubit, changing the power-law scaling of the logical error rate with the baseline physical error rate. A crucial component of this is updating the prior by real time feeding of decoder outputs into a approximate Kalman filter. Thus our approach provides a bootstrap to the actual error rates. We show this via simulation of the full closed-loop system: starting from uniform priors, the update procedure gradually learns site-specific error rates, enabling the decoder to outperform a fixed-prior baseline. In turn, we show that this enables in situ calibration of unitary operations via injection of gate set tomography operations with only moderate overhead in the more typical scenario of low noise qubits.},
+  archiveprefix = {arXiv},
+  keywords = {Quantum Physics},
+  file = {/home/fidel/Zotero/storage/Y3LKL9PY/Kunjummen and Taylor - 2025 - In situ calibration of unitary operations during quantum error correction.pdf;/home/fidel/Zotero/storage/47CXLHTE/2511.html}
+}
+
+@article{leonarde.baumMaximizationTechniqueOccurring1970,
+  title = {A {{Maximization Technique Occurring}} in the {{Statistical Analysis}} of {{Probabilistic Functions}} of {{Markov Chains}}},
+  author = {{Leonard E. Baum} and {Ted Petrie} and {George Soules} and {Norman Weiss}},
+  year = 1970,
+  month = feb,
+  journal = {The Annals of Mathematical Statistics},
+  volume = {41},
+  number = {1},
+  pages = {164--171},
+  doi = {10.1214/aoms/1177697196}
+}
+
+@article{levinTensorRenormalizationGroup2007,
+  title = {Tensor Renormalization Group Approach to Two-Dimensional Classical Lattice Models},
+  author = {Levin, Michael and Nave, Cody P.},
+  year = 2007,
+  month = sep,
+  journal = {Physical Review Letters},
+  volume = {99},
+  number = {12},
+  pages = {120601},
+  publisher = {American Physical Society},
+  doi = {10.1103/PhysRevLett.99.120601}
+}
+
+@article{liCosmicrayinducedCorrelatedErrors2025,
+  title = {Cosmic-Ray-Induced Correlated Errors in Superconducting Qubit Array},
+  year = 2025,
+  month = may,
+  journal = {Nature Communications},
+  volume = {16},
+  number = {1},
+  pages = {4677},
+  issn = {2041-1723},
+  doi = {10.1038/s41467-025-59778-z},
+  abstract = {Correlated errors may devastate quantum error corrections that are necessary for the realization of fault-tolerant quantum computation. Recent experiments with superconducting qubits indicate that they can arise from quasiparticle (QP) bursts induced by cosmic-ray muons and {$\gamma$}-rays. Here, we use charge-parity jump and bit flip for monitoring QP bursts and two muon detectors in the dilution refrigerator for detecting muon events. We directly observe QP bursts leading to correlated errors that are induced solely by muons and separate the contributions of muons and {$\gamma$}-rays. We further investigate the dynamical process of QP burst and the impact of QP trapping on correlated errors and particle detection. The proposed method, which monitors multiqubit simultaneous charge-parity jumps, has high sensitivity to QP bursts and may find applications for the detection of cosmic-ray particles, low-mass dark matter, and far-infrared photons.},
+  author = {Li, Xuegang and Wang, Junhua and Jiang, Yao-Yao and Xue, Guang-Ming and Cai, Xiaoxia and Zhou, Jun and Gong, Ming and Liu, Zhao-Feng and Zheng, Shuang-Yu and Ma, Deng-Ke and {others}}
+}
+
+@misc{liuNonMarkovianNoiseSuppression2024,
+  title = {Non-{{Markovian Noise Suppression Simplified}} through {{Channel Representation}}},
+  author = {Liu, Zhenhuan and Xiao, Yunlong and Cai, Zhenyu},
+  year = 2024,
+  month = dec,
+  number = {arXiv:2412.11220},
+  eprint = {2412.11220},
+  primaryclass = {quant-ph},
+  publisher = {arXiv},
+  doi = {10.48550/arXiv.2412.11220},
+  urldate = {2025-09-09},
+  abstract = {Non-Markovian noise, arising from the memory effect in the environment, poses substantial challenges to conventional quantum noise suppression protocols, including quantum error correction and mitigation. We introduce a channel representation for arbitrary non-Markovian quantum dynamics, termed the Choi channel, as it operates on the Choi states of the ideal gate layers. This representation translates the complex dynamics of non-Markovian noise into the familiar picture of noise channels acting on ideal states, allowing us to directly apply many existing error suppression protocols originally designed for Markovian noise. These protocols can then be translated from the Choi channel picture back to the circuit picture, yielding non-Markovian noise suppression protocols. With this framework, we have devised new protocols using Pauli twirling, probabilistic error cancellation and virtual channel purification. In particular, Pauli twirling can transform any non-Markovian noise into noise that exhibits only classical temporal correlations, thereby extending the proven noise resilience of single-shot quantum error correction to arbitrary non-Markovian noise. Through these examples, the Choi channel demonstrates significant potential as a foundational bridge for connecting existing techniques and inspiring the development of novel non-Markovian noise suppression protocols.},
+  archiveprefix = {arXiv},
+  keywords = {Quantum Physics},
+  file = {/home/fidel/Zotero/storage/6SPLDDNF/Liu et al. - 2024 - Non-Markovian Noise Suppression Simplified through Channel Representation.pdf;/home/fidel/Zotero/storage/Q93GCFZI/2412.html}
+}
+
+@misc{liuRealizingUniversalNonMarkovian2025,
+  title = {Realizing {{Universal Non-Markovian Noise Suppression}}},
+  author = {Liu, Hongfeng and Han, Zizhao and Nie, Xinfang and Liu, Zhenhuan and Lu, Dawei},
+  year = 2025,
+  month = nov,
+  number = {arXiv:2511.20304},
+  eprint = {2511.20304},
+  primaryclass = {quant-ph},
+  publisher = {arXiv},
+  doi = {10.48550/arXiv.2511.20304},
+  urldate = {2025-12-02},
+  abstract = {Non-Markovian noise, arising from environmental memory effects, is the most general and challenging form of noise in quantum computing, and is typically difficult to characterize and suppress. Here, we analyze and experimentally demonstrate a non-Markovian noise suppression scheme inspired by quantum purification protocols. We theoretically prove that, even without noise calibration and assumptions on specific noise models, the scheme can exponentially reduce non-Markovian error rates with respect to the ancillary system size. We implement the protocol using nuclear spins, demonstrating that non-Markovian noise can be suppressed for both unitary operations and non-unitary channels. The observed fidelities and process tomography show close agreement with theoretical predictions, confirming the practicality and effectiveness of the scheme.},
+  archiveprefix = {arXiv},
+  keywords = {Quantum Physics},
+  file = {/home/fidel/Zotero/storage/WMLN68IX/Liu et al. - 2025 - Realizing Universal Non-Markovian Noise Suppression.pdf;/home/fidel/Zotero/storage/PIMXJ8FA/2511.html}
+}
+
+@article{luQuantumErrorCorrection2007,
+  title = {Quantum {{Error Correction}} of {{Time-correlated Errors}}},
+  author = {Lu, Feng and Marinescu, Dan C.},
+  year = 2007,
+  month = aug,
+  journal = {Quantum Information Processing},
+  volume = {6},
+  number = {4},
+  pages = {273--293},
+  issn = {1573-1332},
+  doi = {10.1007/s11128-007-0058-1},
+  urldate = {2025-08-26},
+  abstract = {The complexity of the error correction circuitry forces us to design quantum error correction codes capable of correcting a single error per error correction cycle. Yet, time-correlated error are common for physical implementations of quantum systems; an error corrected during the previous cycle may reoccur later due to physical processes specific for each physical implementation of the qubits. In this paper, we study quantum error correction for a restricted class of time-correlated errors in a spin-boson model. The algorithm we propose allows the correction of two errors per error correction cycle, provided that one of them is time-correlated. The algorithm can be applied to any stabilizer code when the two logical qubits \$\$\textbackslash mid \textbraceleft\textbackslash rm 0\textbraceright\_L \textbackslash rangle\$\$ and \$\$\textbackslash mid \textbraceleft\textbackslash rm 1\textbraceright\_L \textbackslash rangle\$\$ are entangled states of 2 n basis states in \$\$\textbraceleft\textbackslash mathcal\textbraceleft H\textbraceright\textbraceright\_\textbraceleft 2\textasciicircum n\textbraceright\$\$ .},
+  copyright = {2007 Springer Science+Business Media, LLC},
+  langid = {english},
+  keywords = {great}
+}
+
+@article{magesanModelingQuantumNoise2013,
+  title = {Modeling Quantum Noise for Efficient Testing of Fault-Tolerant Circuits},
+  author = {Magesan, Easwar and Puzzuoli, Daniel and Granade, Christopher E. and Cory, David G.},
+  year = 2013,
+  month = jan,
+  journal = {Physical Review A},
+  volume = {87},
+  number = {1},
+  pages = {012324},
+  issn = {1050-2947, 1094-1622},
+  doi = {10.1103/PhysRevA.87.012324},
+  urldate = {2025-09-05},
+  copyright = {http://link.aps.org/licenses/aps-default-license},
+  langid = {english},
+  file = {/home/fidel/Zotero/storage/4BFRDUBQ/Magesan et al. - 2013 - Modeling quantum noise for efficient testing of fault-tolerant circuits.pdf}
+}
+
+@article{mcewenRelaxingHardwareRequirements2023,
+  title = {Relaxing {{Hardware Requirements}} for {{Surface Code Circuits}} Using {{Time-dynamics}}},
+  author = {McEwen, Matt and Bacon, Dave and Gidney, Craig},
+  year = 2023,
+  month = nov,
+  journal = {Quantum},
+  volume = {7},
+  pages = {1172},
+  publisher = {Verein zur F\"orderung des Open Access Publizierens in den Quantenwissenschaften},
+  doi = {10.22331/q-2023-11-07-1172},
+  urldate = {2024-08-27},
+  abstract = {Matt McEwen, Dave Bacon, and Craig Gidney, Quantum 7, 1172 (2023). The typical time-independent view of quantum error correction (QEC) codes hides significant freedom in the decomposition into circuits that are executable on hardware. Using the concept of d\dots},
+  file = {/home/fidel/Zotero/storage/HTZK4T2R/McEwen et al. - 2023 - Relaxing Hardware Requirements for Surface Code Circuits using Time-dynamics.pdf}
+}
+
+@article{mcewenRemovingLeakageinducedCorrelated2021,
+  title = {Removing Leakage-Induced Correlated Errors in Superconducting Quantum Error Correction},
+  year = 2021,
+  month = mar,
+  journal = {Nature Communications},
+  volume = {12},
+  number = {1},
+  pages = {1761},
+  issn = {2041-1723},
+  doi = {10.1038/s41467-021-21982-y},
+  abstract = {Quantum computing can become scalable through error correction, but logical error rates only decrease with system size when physical errors are sufficiently uncorrelated. During computation, unused high energy levels of the qubits can become excited, creating leakage states that are long-lived and mobile. Particularly for superconducting transmon qubits, this leakage opens a path to errors that are correlated in space and time. Here, we report a reset protocol that returns a qubit to the ground state from all relevant higher level states. We test its performance with the bit-flip stabilizer code, a simplified version of the surface code for quantum error correction. We investigate the accumulation and dynamics of leakage during error correction. Using this protocol, we find lower rates of logical errors and an improved scaling and stability of error suppression with increasing qubit number. This demonstration provides a key step on the path towards scalable quantum computing.},
+  author = {McEwen, M. and Kafri, D. and Chen, Z. and Atalaya, J. and Satzinger, K. J. and Quintana, C. and Klimov, P. V. and Sank, D. and Gidney, C. and Fowler, A. G. and {others}}
+}
+
+@article{mcewenResolvingCatastrophicError2022,
+  title = {Resolving Catastrophic Error Bursts from Cosmic Rays in Large Arrays of Superconducting Qubits},
+  year = 2022,
+  month = jan,
+  journal = {Nature Physics},
+  volume = {18},
+  number = {1},
+  pages = {107--111},
+  issn = {1745-2481},
+  doi = {10.1038/s41567-021-01432-8},
+  abstract = {Scalable quantum computing can become a reality with error correction, provided that coherent qubits can be constructed in large arrays1,2. The key premise is that physical errors can remain both small and sufficiently uncorrelated as devices scale, so that logical error rates can be exponentially suppressed. However, impacts from cosmic rays and latent radioactivity violate these assumptions. An impinging particle can ionize the substrate and induce a burst of quasiparticles that destroys qubit coherence throughout the device. High-energy radiation has been identified as a source of error in pilot superconducting quantum devices3--5, but the effect on large-scale algorithms and error correction remains an open question. Elucidating the physics involved requires operating large numbers of qubits at the same rapid timescales necessary for error correction. Here, we use space- and time-resolved measurements of a large-scale quantum processor to identify bursts of quasiparticles produced by high-energy rays. We track the events from their initial localized impact as they spread, simultaneously and severely limiting the energy coherence of all qubits and causing chip-wide failure. Our results provide direct insights into the impact of these damaging error bursts and highlight the necessity of mitigation to enable quantum computing to scale.},
+  author = {McEwen, Matt and Faoro, Lara and Arya, Kunal and Dunsworth, Andrew and Huang, Trent and Kim, Seon and Burkett, Brian and Fowler, Austin and Arute, Frank and Bardin, Joseph C. and {others}}
+}
+
+@article{milzQuantumStochasticProcesses2021,
+  title = {Quantum {{Stochastic Processes}} and {{Quantum}} Non-{{Markovian Phenomena}}},
+  author = {Milz, Simon and Modi, Kavan},
+  year = 2021,
+  month = jul,
+  journal = {PRX Quantum},
+  volume = {2},
+  number = {3},
+  pages = {030201},
+  issn = {2691-3399},
+  doi = {10.1103/PRXQuantum.2.030201},
+  urldate = {2023-05-26},
+  langid = {english},
+  file = {/home/fidel/Zotero/storage/NYLHD6WW/Milz and Modi - 2021 - Quantum Stochastic Processes and Quantum non-Marko.pdf;C\:\\Users\\jfide\\Downloads\\PRXQuantum.2.030201.pdf}
+}
+
+@misc{myersSimulatingGeneralNoise2025,
+  title = {Simulating General Noise Nearly as Cheaply as {{Pauli}} Noise},
+  author = {Myers, Mark and Teo, Mariesa H. and Mishra, Rajesh and Chai, Jing Hao and Ng, Hui Khoon},
+  year = 2025,
+  month = dec,
+  number = {arXiv:2512.07304},
+  eprint = {2512.07304},
+  primaryclass = {quant-ph},
+  publisher = {arXiv},
+  doi = {10.48550/arXiv.2512.07304},
+  urldate = {2026-03-04},
+  abstract = {Stabilizer simulation of Clifford quantum circuits - error-correction circuits, Clifford subroutines, etc. - on classical computers has played a central role in our understanding of circuit performance. The stabilizer description, however, restricts the accessible noise one can incorporate into the simulation to Pauli-type noise. More general noise, including coherent errors, may have more severe impact on circuit performance than Pauli noise; yet, such general noise have been difficult to access, much less investigate fully, in numerical simulations. Here, through the use of stratified importance sampling, we show how general noise can be simulated within the stabilizer formalism in reasonable time, with non-unitary noise being nearly as cheap as Pauli noise. Unitary (or coherent) noise can require an order of magnitude more time for the simulation, but nevertheless completes in very reasonable times, a drastic improvement over past approaches that typically fail to converge altogether. Our work thus enables detailed beyond-Pauli understanding of circuit performance in the presence of real device noise, which is rarely Pauli in nature. Among other examples, we present direct simulation results for the performance of the popular rotated planar surface codes under circuit-level general noise, previously available only in limited situations and/or through mappings to efficiently simulatable physical models.},
+  archiveprefix = {arXiv},
+  keywords = {Quantum Physics},
+  file = {/home/fidel/Zotero/storage/L75RE65L/Myers et al. - 2025 - Simulating general noise nearly as cheaply as Pauli noise.pdf;/home/fidel/Zotero/storage/PSFVCAEB/2512.html}
+}
+
+@misc{nayakIterativeDecodingStabilizer2026,
+  title = {Iterative {{Decoding}} of {{Stabilizer Codes}} under {{Radiation-Induced Correlated Noise}}},
+  author = {Nayak, Anuj K. and Baity, Paul G. and Love, Peter J. and Jeon, Nicholas and Yoon, Byung-Jun and Hoisie, Adolfy and Varshney, Lav R.},
+  year = 2026,
+  month = mar,
+  number = {arXiv:2603.18231},
+  eprint = {2603.18231},
+  primaryclass = {quant-ph},
+  publisher = {arXiv},
+  doi = {10.48550/arXiv.2603.18231},
+  urldate = {2026-07-07},
+  abstract = {Fault-tolerant quantum computation demands extremely low logical error rates, yet superconducting qubit arrays are subject to radiation-induced correlated noise arising from cosmic-ray muon-generated quasiparticles. The quasiparticle density is unknown and time-varying, resulting in a mismatch between the true noise statistics and the priors assumed by standard decoders, and consequently, degraded logical performance. We formalize joint noise sensing and decoding using syndrome measurements by modeling the QP density as a latent variable, which governs correlation in physical errors and syndrome measurements. Starting from a variational expectation--maximization approach, we derive an iterative algorithm that alternates between QP density estimation and syndrome-based decoding under the updated noise model. Simulations of surface-code and bivariate bicycle quantum memory under radiation-induced correlated noise demonstrate a measurable reduction in logical error probability relative to baseline decoding with a uniform prior. Beyond improved decoding performance, the inferred QP density provides diagnostic information relevant to device characterization, shielding, and chip design. These results indicate that integrating physical noise estimation into decoding can mitigate correlated noise effects and relax effective error-rate requirements for fault-tolerant quantum computation.},
+  archiveprefix = {arXiv},
+  keywords = {Computer Science - Information Theory,Electrical Engineering and Systems Science - Signal Processing,Quantum Physics},
+  file = {/home/fidel/Zotero/storage/39M7ZUT4/Nayak et al. - 2026 - Iterative Decoding of Stabilizer Codes under Radiation-Induced Correlated Noise.pdf;/home/fidel/Zotero/storage/YUVG4TCW/2603.html}
+}
+
+@article{ngFaulttolerantQuantumComputation2009,
+  title = {Fault-Tolerant Quantum Computation versus {{Gaussian}} Noise},
+  author = {Ng, Hui Khoon and Preskill, John},
+  year = 2009,
+  month = mar,
+  journal = {Physical Review A},
+  volume = {79},
+  number = {3},
+  pages = {032318},
+  publisher = {American Physical Society},
+  doi = {10.1103/PhysRevA.79.032318}
+}
+
+@article{nickersonAnalysingCorrelatedNoise2019,
+  title = {Analysing Correlated Noise on the Surface Code Using Adaptive Decoding Algorithms},
+  author = {Nickerson, Naomi H. and Brown, Benjamin J.},
+  year = 2019,
+  month = apr,
+  journal = {Quantum},
+  volume = {3},
+  pages = {131},
+  publisher = {Verein zur F\"orderung des Open Access Publizierens in den Quantenwissenschaften},
+  issn = {2521-327X},
+  doi = {10.22331/q-2019-04-08-131}
+}
+
+@book{nielsenQuantumComputationQuantum2010,
+  title = {Quantum {{Computation}} and {{Quantum Information}}: 10th {{Anniversary Edition}}},
+  author = {Nielsen, Michael A. and Chuang, Isaac L.},
+  year = 2010,
+  publisher = {Cambridge University Press},
+  address = {Cambridge},
+  doi = {10.1017/CBO9780511976667},
+  abstract = {One of the most cited books in physics of all time, Quantum Computation and Quantum Information remains the best textbook in this exciting field of science. This 10th anniversary edition includes an introduction from the authors setting the work in context. This comprehensive textbook describes such remarkable effects as fast quantum algorithms, quantum teleportation, quantum cryptography and quantum error-correction. Quantum mechanics and computer science are introduced before moving on to describe what a quantum computer is, how it can be used to solve problems faster than 'classical' computers and its real-world implementation. It concludes with an in-depth treatment of quantum information. Containing a wealth of figures and exercises, this well-known textbook is ideal for courses on the subject, and will interest beginning graduate students and researchers in physics, computer science, mathematics, and electrical engineering.},
+  isbn = {978-1-107-00217-3},
+  file = {/home/fidel/Zotero/storage/3MQZDAI7/Quantum_Computation_and_Quantum_Information_10th_A..._----_(7_Quantum_computers_physical_realization).pdf;/home/fidel/Zotero/storage/9QW8R7TN/Quantum_Computation_and_Quantum_Information_10th_A..._----_(8_Quantum_noise_and_quantum_operations).pdf;/home/fidel/Zotero/storage/G9HBA63A/quantum-computation-and-quantum-information-nielsen-chuang.pdf;/home/fidel/Zotero/storage/TRM87PJ3/Quantum_Computation_and_Quantum_Information_10th_A..._----_(2_Introduction_to_quantum_mechanics).pdf;/home/fidel/Zotero/storage/ZRYED5K8/Preskill and Blake - 10 Quantum error-correction.pdf}
+}
+
+@article{novaisDecoherenceCorrelatedNoise2006,
+  title = {Decoherence by {{Correlated Noise}} and {{Quantum Error Correction}}},
+  author = {Novais, E. and Baranger, Harold U.},
+  year = 2006,
+  month = jul,
+  journal = {Physical Review Letters},
+  volume = {97},
+  number = {4},
+  pages = {040501},
+  issn = {0031-9007, 1079-7114},
+  doi = {10.1103/PhysRevLett.97.040501},
+  urldate = {2025-08-26},
+  langid = {english},
+  keywords = {great}
+}
+
+@article{novaisSurfaceCodeFidelity2017,
+  title = {Surface Code Fidelity at Finite Temperatures},
+  author = {Novais, E. and Stanforth, A. J. and Mucciolo, Eduardo R.},
+  year = 2017,
+  month = apr,
+  journal = {Physical Review A},
+  volume = {95},
+  number = {4},
+  pages = {042339},
+  publisher = {American Physical Society},
+  doi = {10.1103/PhysRevA.95.042339}
+}
+
+@article{novaisSurfaceCodeThreshold2013,
+  title = {Surface Code Threshold in the Presence of Correlated Errors},
+  author = {Novais, E. and Mucciolo, Eduardo R.},
+  year = 2013,
+  month = jan,
+  journal = {Physical Review Letters},
+  volume = {110},
+  number = {1},
+  pages = {010502},
+  publisher = {American Physical Society},
+  doi = {10.1103/PhysRevLett.110.010502}
+}
+
+@article{oreshkovQuantumCorrelationsNo2012,
+  title = {Quantum Correlations with No Causal Order},
+  author = {Oreshkov, Ognyan and Costa, Fabio and Brukner, {\v C}aslav},
+  year = 2012,
+  month = oct,
+  journal = {Nature Communications},
+  volume = {3},
+  number = {1},
+  pages = {1092},
+  issn = {2041-1723},
+  doi = {10.1038/ncomms2076},
+  abstract = {The idea that events obey a definite causal order is deeply rooted in our understanding of the world and at the basis of the very notion of time. But where does causal order come from, and is it a necessary property of nature? Here, we address these questions from the standpoint of quantum mechanics in a new framework for multipartite correlations that does not assume a pre-defined global causal structure but only the validity of quantum mechanics locally. All known situations that respect causal order, including space-like and time-like separated experiments, are captured by this framework in a unified way. Surprisingly, we find correlations that cannot be understood in terms of definite causal order. These correlations violate a 'causal inequality' that is satisfied by all space-like and time-like correlations. We further show that in a classical limit causal order always arises, which suggests that space-time may emerge from a more fundamental structure in a quantum-to-classical transition.}
+}
+
+@article{pollockNonMarkovianQuantumProcesses2018,
+  title = {Non-{{Markovian}} Quantum Processes: {{Complete}} Framework and Efficient Characterization},
+  author = {Pollock, Felix A. and {Rodr{\'i}guez-Rosario}, C{\'e}sar and Frauenheim, Thomas and Paternostro, Mauro and Modi, Kavan},
+  year = 2018,
+  month = jan,
+  journal = {Physical Review A},
+  volume = {97},
+  number = {1},
+  pages = {012127},
+  publisher = {American Physical Society},
+  doi = {10.1103/PhysRevA.97.012127}
+}
+
+@article{preskillSufficientConditionNoise2013,
+  title = {Sufficient Condition on Noise Correlations for Scalable Quantum Computing},
+  author = {Preskill, John},
+  year = 2013,
+  month = mar,
+  journal = {Quantum Info. Comput.},
+  volume = {13},
+  number = {3--4},
+  pages = {181--194},
+  publisher = {Rinton Press, Incorporated},
+  address = {Paramus, NJ},
+  issn = {1533-7146},
+  abstract = {I study the effectiveness of fault-tolerant quantum computation against correlated Hamiltonian noise, and derive a sufficient condition for scalability. Arbitrarily long quantum computations can be executed reliably provided that noise terms acting collectively on k system qubits are sufficiently weak, and decay sufficiently rapidly with increasing k and with increasing spatial separation of the qubits.},
+  issue_date = {March 2013},
+  keywords = {accuracy threshold,fault tolerance,quantum error correction}
+}
+
+@misc{razaOnlineLearningQuantum2024,
+  title = {Online Learning of Quantum Processes},
+  author = {Raza, Asad and Caro, Matthias C. and Eisert, Jens and Khatri, Sumeet},
+  year = 2024,
+  month = jun,
+  number = {arXiv:2406.04250},
+  eprint = {2406.04250},
+  primaryclass = {quant-ph},
+  publisher = {arXiv},
+  doi = {10.48550/arXiv.2406.04250},
+  urldate = {2026-03-07},
+  abstract = {Among recent insights into learning quantum states, online learning and shadow tomography procedures are notable for their ability to accurately predict expectation values even of adaptively chosen observables. In contrast to the state case, quantum process learning tasks with a similarly adaptive nature have received little attention. In this work, we investigate online learning tasks for quantum processes. Whereas online learning is infeasible for general quantum channels, we show that channels of bounded gate complexity as well as Pauli channels can be online learned in the regret and mistake-bounded models of online learning. In fact, we can online learn probabilistic mixtures of any exponentially large set of known channels. We also provide a provably sample-efficient shadow tomography procedure for Pauli channels. Our results extend beyond quantum channels to non-Markovian multi-time processes, with favorable regret and mistake bounds, as well as a shadow tomography procedure. We complement our online learning upper bounds with mistake as well as computational lower bounds. On the technical side, we make use of the multiplicative weights update algorithm, classical adaptive data analysis, and Bell sampling, as well as tools from the theory of quantum combs for multi-time quantum processes. Our work initiates a study of online learning for classes of quantum channels and, more generally, non-Markovian quantum processes. Given the importance of online learning for state shadow tomography, this may serve as a step towards quantum channel variants of adaptive shadow tomography.},
+  archiveprefix = {arXiv},
+  keywords = {Computer Science - Machine Learning,Quantum Physics,Statistics - Machine Learning},
+  file = {/home/fidel/Zotero/storage/M5WS7MPY/Raza et al. - 2024 - Online learning of quantum processes.pdf;/home/fidel/Zotero/storage/J6DNLV9E/2406.html}
+}
+
+@misc{remmExperimentallyInformedDecoding2025,
+  title = {Experimentally {{Informed Decoding}} of {{Stabilizer Codes Based}} on {{Syndrome Correlations}}},
+  year = 2025,
+  month = feb,
+  number = {arXiv:2502.17722},
+  eprint = {2502.17722},
+  primaryclass = {quant-ph},
+  publisher = {arXiv},
+  doi = {10.48550/arXiv.2502.17722},
+  urldate = {2025-03-05},
+  abstract = {High-fidelity decoding of quantum error correction codes relies on an accurate experimental model of the physical errors occurring in the device. Because error probabilities can depend on the context of the applied operations, the error model is ideally calibrated using the same circuit as is used for the error correction experiment. Here, we present an experimental approach guided by a novel analytical formula to characterize the probability of independent errors using correlations in the syndrome data generated by executing the error correction circuit. Using the method on a distance-three surface code, we analyze error channels that flip an arbitrary number of syndrome elements, including Pauli Y errors, hook errors, multi-qubit errors, and leakage, in addition to standard Pauli X and Z errors. We use the method to find the optimal weights for a minimum-weight perfect matching decoder without relying on a theoretical error model. Additionally, we investigate whether improved knowledge of the Pauli Y error channel, based on correlating the X- and Z-type error syndromes, can be exploited to enhance matching decoding. Furthermore, we find correlated errors that flip many syndrome elements over up-to-eight cycles, potentially caused by leakage of the data qubits out of the computational subspace. The presented method provides the tools for accurately calibrating a broad family of decoders, beyond the minimum-weight perfect matching decoder, without relying on prior knowledge of the error model.},
+  archiveprefix = {arXiv},
+  keywords = {Quantum Physics},
+  file = {/home/fidel/Zotero/storage/82S3PUZG/Remm et al. - 2025 - Experimentally Informed Decoding of Stabilizer Codes Based on Syndrome Correlations.pdf;/home/fidel/Zotero/storage/GGSRQU8N/2502.html},
+  author = {Remm, Ants and Lacroix, Nathan and B{\"o}deker, Lukas and Genois, Elie and Hellings, Christoph and Swiadek, Fran{\c c}ois and Norris, Graham J. and Eichler, Christopher and Blais, Alexandre and M{\"u}ller, Markus and {others}}
+}
+
+@article{renHighdimensionalDensityEstimation2023,
+  title = {High-Dimensional Density Estimation with Tensorizing Flow},
+  author = {Ren, Yinuo and Zhao, Hongli and Khoo, Yuehaw and Ying, Lexing},
+  year = 2023,
+  month = jun,
+  journal = {Research in the Mathematical Sciences},
+  volume = {10},
+  number = {3},
+  pages = {30},
+  issn = {2197-9847},
+  doi = {10.1007/s40687-023-00395-x},
+  abstract = {We propose the tensorizing flow method for estimating high-dimensional probability density functions from observed data. Our method combines the optimization-less feature of the tensor-train with the flexibility of flow-based generative models, providing an accurate and efficient approach for density estimation. Specifically, our method first constructs an approximate density in the tensor-train form by efficiently solving the tensor cores from a linear system based on kernel density estimators of low-dimensional marginals. Subsequently, a continuous-time flow model is trained from this tensor-train density to the observed empirical distribution using maximum likelihood estimation. Numerical results are presented to demonstrate the performance of our method.}
+}
+
+@article{schollwockDensitymatrixRenormalizationGroup2005,
+  title = {The Density-Matrix Renormalization Group},
+  author = {Schollw{\"o}ck, U.},
+  year = 2005,
+  month = apr,
+  journal = {Reviews of Modern Physics},
+  volume = {77},
+  number = {1},
+  pages = {259--315},
+  publisher = {American Physical Society},
+  doi = {10.1103/RevModPhys.77.259}
+}
+
+@misc{schumacherReversibleQuantumCellular2004,
+  title = {Reversible Quantum Cellular Automata},
+  author = {Schumacher, B. and Werner, R. F.},
+  year = 2004,
+  month = may,
+  number = {arXiv:quant-ph/0405174},
+  eprint = {quant-ph/0405174},
+  publisher = {arXiv},
+  doi = {10.48550/arXiv.quant-ph/0405174},
+  urldate = {2026-03-05},
+  abstract = {We define quantum cellular automata as infinite quantum lattice systems with discrete time dynamics, such that the time step commutes with lattice translations and has strictly finite propagation speed. In contrast to earlier definitions this allows us to give an explicit characterization of all local rules generating such automata. The same local rules also generate the global time step for automata with periodic boundary conditions. Our main structure theorem asserts that any quantum cellular automaton is structurally reversible, i.e., that it can be obtained by applying two blockwise unitary operations in a generalized Margolus partitioning scheme. This implies that, in contrast to the classical case, the inverse of a nearest neighbor quantum cellular automaton is again a nearest neighbor automaton. We present several construction methods for quantum cellular automata, based on unitaries commuting with their translates, on the quantization of (arbitrary) reversible classical cellular automata, on quantum circuits, and on Clifford transformations with respect to a description of the single cells by finite Weyl systems. Moreover, we indicate how quantum random walks can be considered as special cases of cellular automata, namely by restricting a quantum lattice gas automaton with local particle number conservation to the single particle sector.},
+  archiveprefix = {arXiv},
+  keywords = {Quantum Physics},
+  file = {/home/fidel/Zotero/storage/S9E8HIQU/Schumacher and Werner - 2004 - Reversible quantum cellular automata.pdf;/home/fidel/Zotero/storage/EQRYW62D/0405174.html}
+}
+
+@misc{seifSingleSnapshotNonMarkovianity2026,
+  title = {Single Snapshot Non-{{Markovianity}} of {{Pauli}} Channels},
+  author = {Seif, Alireza and Malekakhlagh, Moein and Govia, Swarnadeep Majumder Luke C. G.},
+  year = 2026,
+  month = feb,
+  number = {arXiv:2602.13145},
+  eprint = {2602.13145},
+  primaryclass = {quant-ph},
+  publisher = {arXiv},
+  doi = {10.48550/arXiv.2602.13145},
+  urldate = {2026-03-04},
+  abstract = {Pauli channels are widely used to describe errors in quantum computers, particularly when noise is shaped via Pauli twirling. A common assumption is that such channels admit a Markovian generator, namely a Pauli-Lindblad model with non-negative rates, but the validity of this assumption has not been systematically examined. Here, using CP-indivisibility as our criterion for non-Markovianity, we study multi-qubit Pauli channels from a single snapshot of the dynamics. We find that while the generator always has the same structure as the standard Pauli-Lindblad model, the rates may be negative or complex. We show that random Pauli channels are almost always non-Markovian, with the probability of encountering a negative rate converging doubly exponentially to unity with the number of qubits. For physically motivated noise models shaped by Pauli twirling, including single-qubit over-rotations and two-qubit amplitude damping errors, we find that negative rates are generic, even when the underlying physical noise is Markovian. We generalize probabilistic error amplification and cancellation to non-Markovian generators, and quantify the sampling overhead introduced by negative and complex rates. Experiments on superconducting qubits confirm that allowing negative rates in the learned noise model yields more accurate predictions than restricting to non-negative rates.},
+  archiveprefix = {arXiv},
+  keywords = {Quantum Physics},
+  file = {/home/fidel/Zotero/storage/667NJEJ9/Seif et al. - 2026 - Single snapshot non-Markovianity of Pauli channels.pdf;/home/fidel/Zotero/storage/AJKHJE69/2602.html}
+}
+
+@article{shabaniCorrelatedErrorsCan2008,
+  title = {Correlated Errors Can Lead to Better Performance of Quantum Codes},
+  author = {Shabani, A.},
+  year = 2008,
+  month = feb,
+  journal = {Physical Review A},
+  volume = {77},
+  number = {2},
+  pages = {022323},
+  issn = {1050-2947, 1094-1622},
+  doi = {10.1103/PhysRevA.77.022323},
+  urldate = {2025-08-26},
+  langid = {english}
+}
+
+@article{silvaScalableProtocolIdentification2008,
+  title = {Scalable Protocol for Identification of Correctable Codes},
+  author = {Silva, M. and Magesan, E. and Kribs, D. W. and Emerson, J.},
+  year = 2008,
+  month = jul,
+  journal = {Physical Review A},
+  volume = {78},
+  number = {1},
+  pages = {012347},
+  publisher = {American Physical Society},
+  doi = {10.1103/PhysRevA.78.012347}
+}
+
+@article{sivakOptimizationDecoderPriors2024,
+  title = {Optimization of {{Decoder Priors}} for {{Accurate Quantum Error Correction}}},
+  author = {Sivak, Volodymyr and Newman, Michael and Klimov, Paul},
+  year = 2024,
+  month = oct,
+  journal = {Physical Review Letters},
+  volume = {133},
+  number = {15},
+  pages = {150603},
+  publisher = {American Physical Society},
+  doi = {10.1103/PhysRevLett.133.150603}
+}
+
+@misc{staudtRoleCorrelatedNoise2011,
+  title = {The {{Role}} of {{Correlated Noise}} in {{Quantum Computing}}},
+  author = {Staudt, Daan},
+  year = 2011,
+  month = nov,
+  publisher = {arXiv},
+  doi = {10.48550/arXiv.1111.1417},
+  urldate = {2025-08-26},
+  abstract = {This paper aims to give an overview of the current state of fault-tolerant quantum computing, by surveying a number of results in the field. We show that thresholds can be obtained for a simple noise model as first proved in [AB97, Kit97, KLZ98], by presenting a proof for statistically independent noise, following the presentation of Aliferis, Gottesman and Preskill [AGP06]. We also present a result by Terhal and Burkard [TB05] and later improved upon by Aliferis, Gottesman and Preskill [AGP06] that shows a threshold can still be obtained for local non-Markovian noise, where we allow the noise to be weakly correlated in space and time. We then turn to negative results, presenting work by Ben-Aroya and Ta-Shma [BT11] who showed conditional errors cannot be perfectly corrected. We end our survey by briefly mentioning some more speculative objections, as put forth by Kalai [Kal08, Kal09, Kal11].},
+  keywords = {Quantum Physics}
+}
+
+@article{strathearnEfficientNonMarkovianQuantum2018,
+  title = {Efficient Non-{{Markovian}} Quantum Dynamics Using Time-Evolving Matrix Product Operators},
+  author = {Strathearn, A. and Kirton, P. and Kilda, D. and Keeling, J. and Lovett, B. W.},
+  year = 2018,
+  month = aug,
+  journal = {Nature Communications},
+  volume = {9},
+  number = {1},
+  pages = {3322},
+  issn = {2041-1723},
+  doi = {10.1038/s41467-018-05617-3},
+  abstract = {In order to model realistic quantum devices it is necessary to simulate quantum systems strongly coupled to their environment. To date, most understanding of open quantum systems is restricted either to weak system--bath couplings or to special cases where specific numerical techniques become effective. Here we present a general and yet exact numerical approach that efficiently describes the time evolution of a quantum system coupled to a non-Markovian harmonic environment. Our method relies on expressing the system state and its propagator as a matrix product state and operator, respectively, and using a singular value decomposition to compress the description of the state as time evolves. We demonstrate the power and flexibility of our approach by numerically identifying the localisation transition of the Ohmic spin-boson model, and considering a model with widely separated environmental timescales arising for a pair of spins embedded in a common environment.}
+}
+
+@misc{tanggaraStrategicCodeUnified2024,
+  title = {Strategic {{Code}}: {{A Unified Spatio-Temporal Framework}} for {{Quantum Error-Correction}}},
+  shorttitle = {Strategic {{Code}}},
+  author = {Tanggara, Andrew and Gu, Mile and Bharti, Kishor},
+  year = 2024,
+  month = may,
+  number = {arXiv:2405.17567},
+  eprint = {2405.17567},
+  primaryclass = {quant-ph},
+  publisher = {arXiv},
+  doi = {10.48550/arXiv.2405.17567},
+  urldate = {2025-09-11},
+  abstract = {Quantum error-correcting code (QECC) is the central ingredient in fault-tolerant quantum information processing. An emerging paradigm of dynamical QECC shows that one can robustly encode logical quantum information both temporally and spatially in a more resource-efficient manner than traditional QECCs. Nevertheless, an overarching theory of how dynamical QECCs achieve fault-tolerance is lacking. In this work, we bridge this gap by proposing a unified spatio-temporal QECC framework called the ``strategic code'' built around an ``interrogator'' device which sequentially measures and evolves the spatial QECC in an adaptive manner based on the ``quantum combs'' formalism, a generalization of the channel-state duality. The strategic code covers all existing dynamical and static QECC, as well as all physically plausible QECCs to be discovered in the future, including those that involve adaptivity in its operational dynamics. Within this framework, we show an algebraic and an information-theoretic necessary and sufficient error-correction conditions for a strategic code, which consider spatially and temporally correlated errors. These conditions include the analogous known static QECC conditions as a special case. Lastly, we also propose an optimization-theoretic approach to obtain an approximate strategic code adapting to a correlated error.},
+  archiveprefix = {arXiv},
+  keywords = {Quantum Physics},
+  file = {/home/fidel/Zotero/storage/JARPW49X/Tanggara et al. - 2024 - Strategic Code A Unified Spatio-Temporal Framework for Quantum Error-Correction.pdf;/home/fidel/Zotero/storage/ZAUQC9Y9/2405.html}
+}
+
+@misc{tarantoHigherOrderQuantumOperations2025,
+  title = {Higher-{{Order Quantum Operations}}},
+  author = {Taranto, Philip and Milz, Simon and Murao, Mio and Quintino, Marco T{\'u}lio and Modi, Kavan},
+  year = 2025,
+  month = mar,
+  number = {arXiv:2503.09693},
+  eprint = {2503.09693},
+  primaryclass = {quant-ph},
+  publisher = {arXiv},
+  doi = {10.48550/arXiv.2503.09693},
+  urldate = {2025-07-16},
+  abstract = {An operational description of quantum phenomena concerns developing models that describe experimentally observed behaviour. \$\textbackslash textit\textbraceleft Higher-order quantum operations\textbraceright\textbackslash unicode\textbraceleft x2014\textbraceright\$quantum operations that transform quantum operations\$\textbackslash unicode\textbraceleft x2014\textbraceright\$are fundamental to modern quantum theory, extending beyond basic state preparations, evolutions, and measurements described by the Born rule. These operations naturally emerge in quantum circuit architectures, correlated open dynamics, and investigations of quantum causality, to name but a few fields of application. This Review Article provides both a pedagogical introduction to the framework of higher-order quantum operations and a comprehensive survey of current literature, illustrated through physical examples. We conclude by identifying open problems and future research directions in this rapidly evolving field.},
+  archiveprefix = {arXiv},
+  keywords = {Quantum Physics},
+  file = {/home/fidel/Zotero/storage/FYIAAK85/Taranto et al. - 2025 - Higher-Order Quantum Operations.pdf;/home/fidel/Zotero/storage/EZNRBCQB/2503.html}
+}
+
+@article{terhalFaulttolerantQuantumComputation2005,
+  title = {Fault-Tolerant Quantum Computation for Local Non-{{Markovian}} Noise},
+  author = {Terhal, Barbara M. and Burkard, Guido},
+  year = 2005,
+  month = jan,
+  journal = {Physical Review A},
+  volume = {71},
+  number = {1},
+  pages = {012336},
+  publisher = {American Physical Society},
+  doi = {10.1103/PhysRevA.71.012336}
+}
+
+@book{trefethenSpectraPseudospectraBehavior2005,
+  title = {Spectra and {{Pseudospectra}}: {{The Behavior}} of {{Nonnormal Matrices}} and {{Operators}}},
+  shorttitle = {Spectra and {{Pseudospectra}}},
+  author = {Trefethen, Lloyd N. and Embree, Mark},
+  year = 2005,
+  publisher = {Princeton University Press},
+  address = {Princeton, NJ},
+  doi = {10.1515/9780691213101},
+  isbn = {9780691119461},
+  langid = {english}
+}
+
+@article{vanderstraetenVariationalMethodsContracting2022,
+  title = {Variational Methods for Contracting Projected Entangled-Pair States},
+  author = {Vanderstraeten, Laurens and Burgelman, Lander and Ponsioen, Boris and Van Damme, Maarten and Vanhecke, Bram and Corboz, Philippe and Haegeman, Jutho and Verstraete, Frank},
+  year = 2022,
+  month = may,
+  journal = {Physical Review B},
+  volume = {105},
+  number = {19},
+  pages = {195140},
+  publisher = {American Physical Society},
+  doi = {10.1103/PhysRevB.105.195140}
+}
+
+@article{vidyasagarCompleteRealizationProblem2011,
+  title = {The Complete Realization Problem for Hidden {{Markov}} Models: A Survey and Some New Results},
+  author = {Vidyasagar, M.},
+  year = 2011,
+  month = dec,
+  journal = {Mathematics of Control, Signals, and Systems},
+  volume = {23},
+  number = {1},
+  pages = {1--65},
+  issn = {1435-568X},
+  doi = {10.1007/s00498-011-0066-7},
+  abstract = {Suppose m is a positive integer, and let \$\$\textbraceleft\textbackslash mathcal\textbraceleft M\textbraceright{} = \textbackslash\textbraceleft 1, \textbackslash ldots ,m\textbackslash\textbraceright\textbraceright\$\$. Suppose \$\$\textbraceleft\textbackslash\textbraceleft\textbackslash mathcal\textbraceleft Y\textbraceright\_t \textbackslash\textbraceright\textbraceright\$\$is a stationary stochastic process assuming values in \$\$\textbraceleft\textbackslash mathcal\textbraceleft M\textbraceright\textbraceright\$\$. In this paper we study the question: When does there exist a hidden Markov model (HMM) that reproduces the statistics of this process? This question is more than forty years old, and as yet no complete solution is available. In this paper, we begin by surveying several known results, and then we present some new results that provide `almost' necessary and sufficient conditions for the existence of a HMM for a mixing and ultra-mixing process (where the notion of ultra-mixing is introduced here). In the survey part of the paper, consisting of Sects. 2 through 8, we rederive the following known results: (i) Associate an infinite matrix H with the process, and call it a `Hankel' matrix (because of some superficial similarity to a Hankel matrix). Then the process has a HMM realization onlyifH has finite rank. (ii) However, the finite Hankel rank condition is notsufficient in general. There exist processes with finite Hankel rank that do not admit a HMM realization. (iii) An abstract necessary and sufficient condition states that a frequency distribution has a realization as an HMM if and only if it belongs to a `stable polyhedral' convex set within the set of all frequency distributions on \$\$\textbraceleft\textbackslash mathcal\textbraceleft M\textbraceright\textasciicircum\textbraceleft *\textbraceright\textbraceright\$\$, the set of all finite strings over \$\$\textbraceleft\textbackslash mathcal\textbraceleft M\textbraceright\textbraceright\$\$. While this condition may be `necessary and sufficient,' it virtually amounts to a restatement of the problem rather than a solution of it, as observed by Anderson (Math Control Signals Syst 12(1):80--120, 1999). (iv) Suppose a process has finite Hankel rank, say r. Then there always exists a `regular quasi-realization' of the process. That is, there exist a row vector, a column vector, and a set of matrices, each of dimension r or r \texttimes ~r as appropriate, such that the frequency of arbitrary strings is given by a formula that is similar to the corresponding formula for HMM's. Moreover, all quasi-regular realizations of the process can be obtained from one of them via a similarity transformation. Hence, given a finite Hankel-rank process, it is a simple matter to determine whether or not it has a regular HMM in the conventional sense, by testing the feasibility of a linear programming problem. (v) If in addition the process is {$\alpha$}-mixing, every regular quasi-realization has additional features. Specifically, a matrix associated with the quasi-realization (which plays the role of the state transition matrix in a HMM) is `quasi-row stochastic' (in that its rows add up to one, even though the matrix may not be nonnegative), and it also satisfies the `quasi-strong Perron property' (its spectral radius is one, the spectral radius is a simple eigenvalue, and there are no other eigenvalues on the unit circle). A corollary is that if a finite Hankel rank {$\alpha$}-mixing process has a regular HMM in the conventional sense, then the associated Markov chain is irreducible and aperiodic. While this last result is not surprising, it does not seem to have been stated explicitly. While the above results are all `known,' they are scattered over the literature; moreover, the presentation here is unified and occasionally consists of relatively simpler proofs than are found in the literature. Next we move on to present some new results. The key is the introduction of a property called `ultra-mixing.' The following results are established: (a) Suppose a process has finite Hankel rank, is both {$\alpha$}-mixing as well as `ultra-mixing,' and in addition satisfies a technical condition. Then it has an irreducible HMM realization (and not just a quasi-realization). Moreover, the Markov process underlying the HMM is either aperiodic (and is thus {$\alpha$}-mixing), or else satisfies a `consistency condition.' (b) In the other direction, suppose a HMM satisfies the consistency condition plus another technical condition. Then the associated output process has finite Hankel rank, is {$\alpha$}-mixing and is also ultra-mixing. Moreover, it is shown that under a natural topology on the set of HMMs, both `technical' conditions are indeed satisfied by an open dense set of HMMs. Taken together, these two results show that, modulo two technical conditions, the finite Hankel rank condition, {$\alpha$}-mixing, and ultra-mixing are `almost' necessary and sufficient for a process to have an irreducible and aperiodic HMM.}
+}
+
+@article{wagnerOptimalNoiseEstimation2021,
+  title = {Optimal Noise Estimation from Syndrome Statistics of Quantum Codes},
+  author = {Wagner, Thomas and Kampermann, Hermann and Bru{\ss}, Dagmar and Kliesch, Martin},
+  year = 2021,
+  month = mar,
+  journal = {Physical Review Research},
+  volume = {3},
+  number = {1},
+  pages = {013292},
+  publisher = {American Physical Society},
+  doi = {10.1103/PhysRevResearch.3.013292}
+}
+
+@article{wagnerPauliChannelsCan2022,
+  title = {Pauli Channels Can Be Estimated from Syndrome Measurements in Quantum Error Correction},
+  author = {Wagner, Thomas and Kampermann, Hermann and Bru{\ss}, Dagmar and Kliesch, Martin},
+  year = 2022,
+  month = sep,
+  journal = {Quantum},
+  volume = {6},
+  pages = {809},
+  publisher = {Verein zur F\"orderung des Open Access Publizierens in den Quantenwissenschaften},
+  issn = {2521-327X},
+  doi = {10.22331/q-2022-09-19-809}
+}
+
+@article{wallmanNoiseTailoringScalable2016,
+  title = {Noise Tailoring for Scalable Quantum Computation via Randomized Compiling},
+  author = {Wallman, Joel J. and Emerson, Joseph},
+  year = 2016,
+  month = nov,
+  journal = {Physical Review A},
+  volume = {94},
+  number = {5},
+  pages = {052325},
+  publisher = {American Physical Society},
+  doi = {10.1103/PhysRevA.94.052325},
+  urldate = {2023-11-13},
+  abstract = {Quantum computers are poised to radically outperform their classical counterparts by manipulating coherent quantum systems. A realistic quantum computer will experience errors due to the environment and imperfect control. When these errors are even partially coherent, they present a major obstacle to performing robust computations. Here, we propose a method for introducing independent random single-qubit gates into the logical circuit in such a way that the effective logical circuit remains unchanged. We prove that this randomization tailors the noise into stochastic Pauli errors, which can dramatically reduce error rates while introducing little or no experimental overhead. Moreover, we prove that our technique is robust to the inevitable variation in errors over the randomizing gates and numerically illustrate the dramatic reductions in worst-case error that are achievable. Given such tailored noise, gates with significantly lower fidelity---comparable to fidelities realized in current experiments---are sufficient to achieve fault-tolerant quantum computation. Furthermore, the worst-case error rate of the tailored noise can be directly and efficiently measured through randomized benchmarking protocols, enabling a rigorous certification of the performance of a quantum computer.},
+  file = {/home/fidel/Zotero/storage/Q7G8N64B/Wallman and Emerson - 2016 - Noise tailoring for scalable quantum computation v.pdf;/home/fidel/Zotero/storage/KP8FE4IF/PhysRevA.94.html}
+}
+
+@article{wareExperimentalPauliframeRandomization2021,
+  title = {Experimental {{Pauli-frame}} Randomization on a Superconducting Qubit},
+  author = {Ware, Matthew and Ribeill, Guilhem and Rist{\`e}, Diego and Ryan, Colm A. and Johnson, Blake and {da Silva}, Marcus P.},
+  year = 2021,
+  month = apr,
+  journal = {Physical Review A},
+  volume = {103},
+  number = {4},
+  pages = {042604},
+  publisher = {American Physical Society},
+  doi = {10.1103/PhysRevA.103.042604}
+}
+
+@article{whiteDemonstrationNonMarkovianProcess2020,
+  title = {Demonstration of Non-{{Markovian}} Process Characterisation and Control on a Quantum Processor},
+  author = {White, G. A. L. and Hill, C. D. and Pollock, F. A. and Hollenberg, L. C. L. and Modi, K.},
+  year = 2020,
+  month = dec,
+  journal = {Nature Communications},
+  volume = {11},
+  number = {1},
+  pages = {6301},
+  issn = {2041-1723},
+  doi = {10.1038/s41467-020-20113-3},
+  abstract = {In the scale-up of quantum computers, the framework underpinning fault-tolerance generally relies on the strong assumption that environmental noise affecting qubit logic is uncorrelated (Markovian). However, as physical devices progress well into the complex multi-qubit regime, attention is turning to understanding the appearance and mitigation of correlated --- or non-Markovian --- noise, which poses a serious challenge to the progression of quantum technology. This error type has previously remained elusive to characterisation techniques. Here, we develop a framework for characterising non-Markovian dynamics in quantum systems and experimentally test it on multi-qubit superconducting quantum devices. Where noisy processes cannot be accounted for using standard Markovian techniques, our reconstruction predicts the behaviour of the devices with an infidelity of 10-3. Our results show this characterisation technique leads to superior quantum control and extension of coherence time by effective decoupling from the non-Markovian environment. This framework, validated by our results, is applicable to any controlled quantum device and offers a significant step towards optimal device operation and noise reduction.}
+}
+
+@misc{whiteManytimePhysicsPractice2024,
+  title = {Many-Time Physics in Practice: Characterising and Controlling Non-{{Markovian}} Quantum Stochastic Processes},
+  shorttitle = {Many-Time Physics in Practice},
+  author = {White, Gregory A. L.},
+  year = 2024,
+  month = may,
+  number = {arXiv:2405.05416},
+  eprint = {2405.05416},
+  primaryclass = {quant-ph},
+  publisher = {arXiv},
+  doi = {10.48550/arXiv.2405.05416},
+  urldate = {2025-09-18},
+  abstract = {Every year, substantial theoretical and experimental progress is made towards the realisation of a genuinely new computational paradigm in the construction of a quantum computer. But progress is fractal; to make headway is to unearth the next set of obstacles. Decades of work has so far overcome physical, mathematical, engineering, and information theoretic obstacles to produce the remarkable high-fidelity devices we see today. But these devices must be near perfect to be useful. Indeed, advancements so far have precipitated sensitivity to a host of complex dynamical and control-based effects. Chief among these today are non-Markovian memory effects, where interactions between a quantum system and its surrounding environment can give rise to multi-time correlations. In this thesis, we address this issue and formally present a generalisation of quantum process tomography, called process tensor tomography (PTT). This establishes the ability to rigorously and systematically characterise non-Markovian open quantum systems, resolving many long-standing issues in the field. In the first part of this work, we present an original review of the literature and motivate the problem at hand. In the second, we develop the framework of PTT, including experiment design, post-processing algorithms, and both simulated and near-term device demonstrations. In particular, we demonstrate this as a tool for obtaining in-depth diagnostics about the nature and origin of temporal quantum correlations. Lastly, we dedicate our efforts to efficiency and self-consistency. To this effect, we explore theoretically processes with sparse memory structures. We then leverage this to develop various efficient estimation techniques tailored for different settings. The result is a robust and lightweight framework capable of both reconstructing and optimally controlling any non-Markovian open quantum dynamics.},
+  archiveprefix = {arXiv},
+  keywords = {Quantum Physics},
+  file = {/home/fidel/Zotero/storage/G4DTEYL2/White - 2024 - Many-time physics in practice characterising and controlling non-Markovian quantum stochastic proce.pdf;/home/fidel/Zotero/storage/BTYSPUMZ/2405.html}
+}
+
+@article{whiteNonMarkovianQuantumProcess2022,
+  title = {Non-{{Markovian Quantum Process Tomography}}},
+  author = {White, G.A.L. and Pollock, F.A. and Hollenberg, L.C.L. and Modi, K. and Hill, C.D.},
+  year = 2022,
+  month = may,
+  journal = {PRX Quantum},
+  volume = {3},
+  number = {2},
+  pages = {020344},
+  publisher = {American Physical Society},
+  doi = {10.1103/PRXQuantum.3.020344}
+}
+
+@article{whiteUnifyingNonMarkovianCharacterization2025,
+  title = {Unifying {{Non-Markovian Characterization}} with an {{Efficient}} and {{Self-Consistent Framework}}},
+  author = {White, G. A. L. and Jurcevic, P. and Hill, C. D. and Modi, K.},
+  year = 2025,
+  month = may,
+  journal = {Physical Review X},
+  volume = {15},
+  number = {2},
+  pages = {021047},
+  publisher = {American Physical Society},
+  doi = {10.1103/PhysRevX.15.021047}
+}
+
+@article{woodTensorNetworksGraphical2015,
+  title = {Tensor Networks and Graphical Calculus for Open Quantum Systems},
+  author = {Wood, Christopher J. and Biamonte, Jacob D. and Cory, David G.},
+  year = 2015,
+  journal = {Quantum Information and Computation},
+  volume = {15},
+  number = {9-10},
+  eprint = {1111.6950},
+  primaryclass = {quant-ph},
+  pages = {0759--0811},
+  issn = {1533-7146},
+  doi = {10.26421/QIC15.9-10-3},
+  archiveprefix = {arXiv},
+  file = {/home/fidel/Zotero/storage/MU7HJQ6V/Wood et al. - 2015 - Tensor networks and graphical calculus for open quantum systems.pdf}
+}
+
+@article{zhangLearningForecastingOpen2025,
+  title = {Learning and Forecasting Open Quantum Dynamics with Correlated Noise},
+  year = 2025,
+  month = jan,
+  journal = {Communications Physics},
+  volume = {8},
+  number = {1},
+  pages = {29},
+  issn = {2399-3650},
+  doi = {10.1038/s42005-025-01944-2},
+  abstract = {The development of practical quantum processors relies on the ability to control and predict their functioning despite the presence of noise. This is particularly challenging for temporarily correlated noise. Here we propose a physics-inspired supervised machine learning approach to efficiently and accurately predict the functioning of quantum processors in the presence of correlated noise, which only requires data from randomized benchmarking experiments. To demonstrate the efficacy of our technique, we analyze the data from a superconducting quantum processor with tunable correlated noise. We produce training data by evolving the system for a number of time steps, and with this, we fully quantify the correlated noise and accurately predict the dynamics of the system for times beyond the training data. This approach shows a path towards efficient and effective learning of noisy quantum dynamics and optimally control quantum processors over long and complex computations even in the presence of correlated noise.},
+  author = {Zhang, Xinfang and Wu, Zhihao and White, Gregory A. L. and Xiang, Zhongcheng and Hu, Shun and Peng, Zhihui and Liu, Yong and Zheng, Dongning and Fu, Xiang and Huang, Anqi and {others}}
+}
+
+@misc{ziyadEmergentNonMarkovianityLogical2026,
+  title = {Emergent {{Non-Markovianity}} in {{Logical Qubit Dynamics}}},
+  author = {Ziyad, Jalan A. and {Blume-Kohout}, Robin and Rudinger, Kenneth},
+  year = 2026,
+  month = feb,
+  number = {arXiv:2512.08893},
+  eprint = {2512.08893},
+  primaryclass = {quant-ph},
+  publisher = {arXiv},
+  doi = {10.48550/arXiv.2512.08893},
+  urldate = {2026-03-04},
+  abstract = {Logical qubits encoded in quantum error correcting codes can exhibit non-Markovian dynamical evolution, even when the underlying physical noise is Markovian. To understand this emergent non-Markovianity, we define a Markovianity condition appropriate to logical gate operations, and study it by relating logical operations to their physical implementation (operations on the data qubits into which the logical qubit is encoded). We apply our analysis to small quantum codes, and show that they exhibit non-Markovian dynamics even for very simple physical noise models. We show that non-Markovianity can emerge from Markovian physical operations if (and only if) the physical qubits are not necessarily returned to the code subspace after every round of QEC. In this situation, the syndrome qubits can act as a memory, mediating time correlations and enabling violation of the Markov condition. We quantify the emergent non-Markovianity in simple examples, and propose sufficient conditions for reliable use of gate-based characterization techniques like gate set tomography in early fault-tolerant quantum devices.},
+  archiveprefix = {arXiv},
+  keywords = {Quantum Physics},
+  file = {/home/fidel/Zotero/storage/JAJLTTD4/Ziyad et al. - 2026 - Emergent Non-Markovianity in Logical Qubit Dynamics.pdf;/home/fidel/Zotero/storage/5TFTLK93/2512.html}
+}
+
+@article{zouSpatiallyCorrelatedClassical2024,
+  title = {Spatially Correlated Classical and Quantum Noise in Driven Qubits},
+  author = {Zou, Ji and Bosco, Stefano and Loss, Daniel},
+  year = 2024,
+  month = apr,
+  journal = {npj Quantum Information},
+  volume = {10},
+  number = {1},
+  pages = {46},
+  issn = {2056-6387},
+  doi = {10.1038/s41534-024-00842-9},
+  abstract = {Correlated noise across multiple qubits poses a significant challenge for achieving scalable and fault-tolerant quantum processors. Despite recent experimental efforts to quantify this noise in various qubit architectures, a comprehensive understanding of its role in qubit dynamics remains elusive. Here, we present an analytical study of the dynamics of driven qubits under spatially correlated noise, including both Markovian and non-Markovian noise. Surprisingly, we find that by operating the qubit system at low temperatures, where correlated quantum noise plays an important role, significant long-lived entanglement between qubits can be generated. Importantly, this generation process can be controlled on-demand by turning the qubit driving on and off. On the other hand, we demonstrate that by operating the system at a higher temperature, the crosstalk between qubits induced by the correlated noise is unexpectedly suppressed. We finally reveal the impact of spatio-temporally correlated 1/f noise on the decoherence rate, and how its temporal correlations restore lost entanglement. Our findings provide critical insights into not only suppressing crosstalk between qubits caused by correlated noise but also in effectively leveraging such noise as a beneficial resource for controlled entanglement generation.}
+}

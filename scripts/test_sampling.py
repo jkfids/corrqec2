@@ -4,6 +4,10 @@ import stim
 import sinter
 from corrqec2.sampling import SinterSampler, save_stats_to_csv
 
+# Sweep outputs are written here; on a cluster this is typically scratch
+# space. Change this one line to run elsewhere.
+RESULTS_DIR = Path.home() / "mx95_scratch2" / "jkam" / "corrqec2_results"
+
 
 def main():
     # Parse command-line arguments
@@ -29,7 +33,7 @@ def main():
     args = parser.parse_args()
 
     # Configure output path
-    save_dir = Path.home() / "mx95_scratch2" / "jkam" / "corrqec2_results"
+    save_dir = RESULTS_DIR
     save_dir.mkdir(parents=True, exist_ok=True)
     resume_path = save_dir / "test_sampling.tmp.csv"
     output_path = save_dir / "test_sampling.csv"

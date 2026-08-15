@@ -44,11 +44,14 @@ class Sampler:
         # t1 = time.perf_counter()
         detection_events, observable_flips = self.simulate_with_errors(error_masks)
         # t2 = time.perf_counter()
-        predictions = self.decode_batch(detection_events).flatten()
+        predictions = self.decode_batch(detection_events)
         # t3 = time.perf_counter()
-        n_errors = int(np.count_nonzero(predictions != observable_flips))
-        n_shots = len(observable_flips)
-
+        if predictions.ndim == 1:
+            predictions = predictions[:, np.newaxis]
+        if observable_flips.ndim == 1:
+            observable_flips = observable_flips[:, np.newaxis]
+        n_shots = predictions.shape[0]
+        n_errors = int(np.any(predictions != observable_flips, axis=1).sum())
         # print(
         #     f"Error sampling: {t1 - t0:.2f} s | Simulation: {t2 - t1:.2f} s | Decoding: {t3 - t2:.2f} s"
         # )
@@ -56,13 +59,13 @@ class Sampler:
         return n_errors, n_shots
 
     def gen_error_masks(self, batch_size: int) -> ErrorMasks:
-        """_summary_
+        """Generate error masks for a simulation batch based on the noise model.
 
         Args:
-            batch_size (int): _description_
+            batch_size: Number of parallel simulations
 
         Returns:
-            ErrorMasks: _description_
+            Masks specifying where to apply Pauli errors in the circuit.
         """
         error_matrix = self.noise_model.gen_error_matrix(self.experiment, batch_size)
         error_masks = ErrorMaskConverter.error_matrix_to_error_masks(
@@ -73,24 +76,24 @@ class Sampler:
     def simulate_with_errors(
         self, error_masks: ErrorMasks
     ) -> tuple[np.ndarray, np.ndarray]:
-        """_summary_
+        """Simulate a batch of shots with the given Pauli errors injected.
 
         Args:
-            error_masks (ErrorMasks): _description_
+            error_masks: Masks specifying where to apply Pauli errors.
 
         Returns:
-            tuple[np.ndarray, np.ndarray]: _description_
+            Detection events and observable flips for the batch.
         """
 
         return self.simulator.simulate_batch(error_masks)
 
     def decode_batch(self, detection_events: np.ndarray) -> np.ndarray:
-        """_summary_
+        """Decode a batch of detection events with the configured decoder.
 
         Args:
-            detection_events (np.ndarray): _description_
+            detection_events: Detection event bits, shape (n_shots, n_detectors).
 
         Returns:
-            np.ndarray: _description_
+            Predicted logical observable flips, shape (n_shots, n_observables).
         """
         return self.decoder.decode_batch(detection_events)

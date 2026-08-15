@@ -1,7 +1,10 @@
 import time
 import sinter
 from .sampler import Sampler
-from ..experiments import SurfaceCodeMemory, SurfaceCodeStability
+from ..experiments import (
+    SurfaceCodeMemory,
+    SurfaceCodeStability,
+)
 from ..noisemodels import StandardCircuitLevel, StormModel, StormQCAModel
 from ..decoding import Pymatching
 
@@ -71,10 +74,8 @@ class SinterCompiledSampler(sinter.CompiledSampler):
         elapsed_time = time.perf_counter() - start_time
 
         if self.print_progress:
-            experiment_name = self.sampler.experiment.__class__.__name__
-            distance = self.sampler.experiment.distance
             print(
-                f"{experiment_name} (distance {distance}): Sampled {n_shots} shots with {n_errors} errors in {elapsed_time:.2f} seconds",
+                f"{self.sampler.experiment}: Sampled {n_shots} shots with {n_errors} errors in {elapsed_time:.2f} seconds",
                 flush=True,
             )
 

@@ -64,7 +64,7 @@ def create_task(
         marginalized_detector_error_model: Whether to use marginalized detector error model.
 
     Returns:
-        sinter.Task: The created Sinter task.
+        The created Sinter task.
     """
     metadata = _gen_task_metadata(
         experiment=experiment,
@@ -90,12 +90,13 @@ def run_tasks_to_csv(
     """Run Sinter tasks and save results to a CSV file.
 
     Args:
-        tasks (list[sinter.Task]): _description_
-        n_workers (int): _description_
-        max_shots (int): _description_
-        output_dir (Path): _description_
-        filename (str): _description_
-        print_progress (bool, optional): _description_. Defaults to True.
+        tasks: Tasks to sample.
+        n_workers: Number of worker processes.
+        max_shots: Maximum number of shots per task.
+        min_batch_size: Minimum number of shots per worker batch.
+        output_dir: Directory the CSV is written to; created if missing.
+        filename: Output filename, with or without the '.csv' suffix.
+        print_progress: Print progress while sampling. Defaults to True.
     """
     output_dir.mkdir(parents=True, exist_ok=True)
     if filename.endswith(".csv"):
@@ -136,14 +137,17 @@ def run_tasks(
     """Run Sinter tasks using sinter.collect().
 
     Args:
-        tasks (list[sinter.Task]): _description_
-        n_workers (int): _description_
-        max_shots (int): _description_
-        save_resume_filepath (Path | None, optional): _description_. Defaults to None.
-        print_progress (bool, optional): _description_. Defaults to False.
+        tasks: Tasks to sample.
+        n_workers: Number of worker processes.
+        max_shots: Maximum number of shots per task.
+        min_batch_size: Minimum number of shots per worker batch.
+            Defaults to 1000.
+        save_resume_filepath: File used to checkpoint and resume
+            sampling. Defaults to None.
+        print_progress: Print progress while sampling. Defaults to False.
 
     Returns:
-        _type_: _description_
+        Collected statistics, one entry per task.
     """
     sampler = SinterSampler(
         min_batch_size=min_batch_size, print_progress=print_progress

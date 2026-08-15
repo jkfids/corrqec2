@@ -6,6 +6,9 @@ import sinter
 import seaborn as sns
 from matplotlib.ticker import FormatStrFormatter, MultipleLocator
 
+FIGURE_DIR = "./manuscript/figures"
+DATA_DIR = "./data"
+
 
 def calc_per_round(per_shot: float, rounds: int):
     return 0.5 * (1 - (1 - 2 * per_shot) ** (1 / rounds))
@@ -41,7 +44,7 @@ if __name__ == "__main__":
 
     # Load data from CSV
     tasks = sinter.stats_from_csv_files(
-        "/home/fidel/Projects/corrqec2/data/experiment4_results.csv"
+        f"{DATA_DIR}/experiment4_results.csv"
     )
 
     # Prepare data for plotting
@@ -189,8 +192,26 @@ if __name__ == "__main__":
     ax2.set_xlim(4.5, 17.5)
     ax2.set_xticks([5, 7, 9, 11, 13, 15, 17])
 
-    ax1.text(-0.155, 1.08, "(a)", transform=ax1.transAxes, va="top", ha="left", size=10)
-    ax2.text(-0.07, 1.08, "(b)", transform=ax2.transAxes, va="top", ha="left", size=10)
+    ax1.text(
+        -0.155,
+        1.08,
+        "(a)",
+        transform=ax1.transAxes,
+        va="top",
+        ha="left",
+        size=10,
+        fontweight="bold",
+    )
+    ax2.text(
+        -0.07,
+        1.08,
+        "(b)",
+        transform=ax2.transAxes,
+        va="top",
+        ha="left",
+        size=10,
+        fontweight="bold",
+    )
 
     for ax in (ax1, ax2, ax3):
         ax.semilogy()
@@ -203,7 +224,7 @@ if __name__ == "__main__":
     fig1.tight_layout()
     fig1.subplots_adjust(wspace=0.1)
     fig1.savefig(
-        "./project/paper/figures/experiment4.pdf",
+        f"{FIGURE_DIR}/experiment4.pdf",
         dpi=600,
         bbox_inches="tight",
         pad_inches=0.00,
@@ -214,8 +235,9 @@ if __name__ == "__main__":
     ax3.set_xlabel("$\\theta$", labelpad=2)
     ax3.set_ylabel("$p_L$", labelpad=1)
     fig2.tight_layout()
+    # Auxiliary inset, not used in the manuscript: keep it out of the figures dir.
     fig2.savefig(
-        "./project/paper/figures/experiment4_mini.pdf",
+        f"{DATA_DIR}/experiment4_mini.pdf",
         dpi=600,
         bbox_inches="tight",
         pad_inches=0.00,

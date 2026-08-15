@@ -16,9 +16,9 @@ class Decoder(ABC):
         """Decode detection events to predict logical observable flips.
 
         Args:
-            detection_events (np.ndarray): _description_
+            detection_events: Detection event bits, shape (n_shots, n_detectors).
 
         Returns:
-            np.ndarray: _description_
+            Predicted logical observable flips, shape (n_shots, n_observables).
         """
         pass

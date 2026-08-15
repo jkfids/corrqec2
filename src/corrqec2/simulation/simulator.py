@@ -28,13 +28,13 @@ class CircuitSimulator:
         self,
         error_masks: ErrorMasks,
     ) -> tuple[np.ndarray, np.ndarray]:
-        """_summary_
+        """Simulate a batch of circuits with the given error masks.
 
         Args:
-            error_masks (ErrorMasks): _description_
+            error_masks: Masks specifying where to apply Pauli errors.
 
         Returns:
-            tuple[np.ndarray, np.ndarray]: _description_
+            Detection events and observable flips for the batch.
         """
 
         batch_size = error_masks.n_samples
@@ -57,8 +57,8 @@ class CircuitSimulator:
                     sim.do(repeat_circuit)
                     round_idx += 1
         sim.do(self._split_circuits[-1])
-        detection_events = sim.get_detector_flips().transpose()
-        observable_flips = sim.get_observable_flips().flatten()
+        detection_events = sim.get_detector_flips().T
+        observable_flips = sim.get_observable_flips().T
 
         return detection_events, observable_flips
 

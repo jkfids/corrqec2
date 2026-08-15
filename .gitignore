@@ -239,6 +239,11 @@ __marimo__/
 *.nls
 *.out
 *.pdf
+# Keep figure PDFs (e.g. manuscript/figures/) and presentation handouts,
+# ignore built documents.
+!**/figures/*.pdf
+!**/figures/**/*.pdf
+!presentations/*.pdf
 *.pyg
 *.run.xml
 *.snm

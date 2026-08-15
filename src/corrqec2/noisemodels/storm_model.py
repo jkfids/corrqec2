@@ -3,7 +3,6 @@ from numba import njit
 import stim
 
 from ..experiments import Experiment
-from ..experiments import combine_split_circuits
 from .base_noise_model import NoiseModel
 
 
@@ -18,12 +17,16 @@ def _sample_storm_hmm_batch(
     """Numba JIT implementation of batch sampling from storm HMM model.
 
     Args:
-        n_chains (int): _description_
-        n_rounds (int): _description_
-        initial_probs (np.ndarray): _description_
+        n_chains: Number of independent chains to sample.
+        n_rounds: Number of rounds per chain.
+        initial_probs: Initial probabilities of the calm and stormy states,
+            shape (2,).
+        transfer_matrix: State transition probabilities, shape (2, 2).
+        emission_probs: Pauli emission probabilities for the calm and stormy
+            states, shape (2, 4).
 
     Returns:
-        np.ndarray: _description_
+        Pauli indices (0=I, 1=X, 2=Y, 3=Z), shape (n_chains, n_rounds).
     """
     samples = np.empty((n_chains, n_rounds), dtype=np.int8)
 
@@ -94,14 +97,15 @@ class StormModel(NoiseModel):
         """Generate error matrix for custom Pauli noise model for experiment batches.
 
         Args:
-            experiment (Experiment): _description_
-            n_samples (int, optional): _description_. Defaults to 1.
+            experiment: Experiment fixing the qubit layout and number of rounds.
+            n_samples: Number of samples in the batch. Defaults to 1.
 
         Raises:
-            NotImplementedError: _description_
+            NotImplementedError: If the experiment type is not supported.
 
         Returns:
-            np.ndarray: _description_
+            Pauli indices (0=I, 1=X, 2=Y, 3=Z), shape
+            (n_samples, n_noisy_qubits, n_rounds).
         """
         n_qubits, n_rounds = experiment.get_error_matrix_shape(self.noisy_qubit_types)
 
@@ -118,16 +122,17 @@ class StormModel(NoiseModel):
         return error_matrix
 
     def gen_marginalized_circuit(self, experiment: Experiment) -> stim.Circuit:
-        """_summary_
+        """Generate noisy circuit with marginalized, independent noise.
 
         Args:
-            experiment (Experiment): _description_
+            experiment: Experiment fixing the qubit layout and number of rounds.
 
         Raises:
-            NotImplementedError: _description_
+            NotImplementedError: If the experiment type is not supported.
 
         Returns:
-            stim.Circuit: _description_
+            Circuit carrying independent Stim noise channels at the model's
+            marginal error rates.
         """
 
         # Get base circuit
@@ -161,7 +166,7 @@ class StormModel(NoiseModel):
             subcircuits_new.append(subcircuit_new)
 
         # Combine all parts back into a single circuit
-        new_circuit = combine_split_circuits(
+        new_circuit = Experiment.combine_split_circuits(
             [split_circuits[0]] + subcircuits_new + [split_circuits[-1]]
         )
 

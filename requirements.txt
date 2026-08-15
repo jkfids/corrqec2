@@ -1,6 +1,0 @@
-dynamax==1.0.1
-jax==0.6.2
-numpy==2.3.5
-sinter==1.15.0
-stim==1.15.0
-PyMatching==2.3.1

@@ -2,6 +2,10 @@ from pathlib import Path
 import numpy as np
 from corrqec2.sampling import create_task, run_tasks_to_csv, get_default_parser
 
+# Sweep outputs are written here; on a cluster this is typically scratch
+# space. Change this one line to run elsewhere.
+RESULTS_DIR = Path.home() / "mx95_scratch2" / "jkam" / "corrqec2_results"
+
 
 def calc_a_b(p_bar, Delta):
     """Calculate storm model parameters a, b for given spectral gap Delta (=a+b) and fixed marginal error rate p_bar."""
@@ -34,7 +38,7 @@ def main():
     args = parser.parse_args()
 
     # Configure output path
-    output_dir = Path.home() / "mx95_scratch2" / "jkam" / "corrqec2_results"
+    output_dir = RESULTS_DIR
 
     # Sweep over number of rounds and correlation lengths
     tasks = []

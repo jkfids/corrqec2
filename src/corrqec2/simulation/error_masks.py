@@ -35,15 +35,16 @@ class ErrorMaskConverter:
         experiment: Experiment,
         noisy_qubit_types: list[str],
     ) -> ErrorMasks:
-        """_summary_
+        """Convert an error matrix into per-Pauli boolean masks.
 
         Args:
-            error_matrix (np.ndarray): _description_
-            experiment (Experiment): _description_
-            noisy_qubit_types (list[str]): _description_
+            error_matrix: Pauli indices (0=I, 1=X, 2=Y, 3=Z) for the noisy
+                qubits, shape (n_samples, n_noisy_qubits, n_rounds).
+            experiment: Experiment whose circuit fixes the full qubit indexing.
+            noisy_qubit_types: Qubit types covered by the error matrix.
 
         Returns:
-            ErrorMasks: _description_
+            Boolean X, Y, Z masks over all circuit qubits.
         """
         padded_error_matrix = ErrorMaskConverter._pad_to_full_qubits(
             error_matrix, experiment, noisy_qubit_types
@@ -61,7 +62,12 @@ class ErrorMaskConverter:
         n_stim_qubits = experiment.circuit.num_qubits
         noisy_qubits = experiment.get_qubits_by_type(noisy_qubit_types)
         n_samples, _, n_rounds = error_matrix.shape
-        padded_error_matrix = np.zeros((n_samples, n_stim_qubits, n_rounds))
+        # Match the input dtype (int8 Pauli labels); defaulting to float64 here
+        # made this array 8x larger than needed, and it is the largest allocation
+        # in a sampling batch.
+        padded_error_matrix = np.zeros(
+            (n_samples, n_stim_qubits, n_rounds), dtype=error_matrix.dtype
+        )
         padded_error_matrix[:, noisy_qubits, :] = error_matrix
         return padded_error_matrix
 

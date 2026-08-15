@@ -2,6 +2,10 @@ from pathlib import Path
 import numpy as np
 from corrqec2.sampling import create_task, run_tasks_to_csv, get_default_parser
 
+# Sweep outputs are written here; on a cluster this is typically scratch
+# space. Change this one line to run elsewhere.
+RESULTS_DIR = Path.home() / "mx95_scratch2" / "jkam" / "corrqec2_results"
+
 
 def main():
     # Parse command-line arguments
@@ -9,10 +13,9 @@ def main():
     args = parser.parse_args()
 
     # Configure output path
-    output_dir = Path.home() / "mx95_scratch2" / "jkam" / "corrqec2_results"
+    output_dir = RESULTS_DIR
 
     # Sweep over distances and controlled-rotation angles
-    tasks = []
     thetas = [0.2, 0.25, 0.3, 0.34, 0.36, 0.38, 0.4, 0.42, 0.44, 0.48]
     thetas = [t * np.pi for t in thetas]
     distances = [5, 7, 9, 11, 13, 15, 17]
@@ -26,6 +29,7 @@ def main():
         "after_reset_flip_probability": p_gate,
     }
 
+    tasks = []
     for distance in distances:
         for theta in thetas:
             task = create_task(

@@ -5,6 +5,9 @@ from matplotlib.ticker import FormatStrFormatter, MultipleLocator
 import pickle
 import seaborn as sns
 
+FIGURE_DIR = "./manuscript/figures"
+DATA_DIR = "./data"
+
 
 def load_results(filepath):
     with open(filepath, "rb") as f:
@@ -130,15 +133,42 @@ def plot_figures(Y1_dict, Y2_dict, Y3_dict, distances, thetas):
     ax1.set_title("Mean density")
     ax2.set_title("Scaled variance")
     ax3.set_title("Fitted correlation time")
-    ax1.text(-0.22, 1.12, "(a)", transform=ax1.transAxes, va="top", ha="left", size=12)
-    ax2.text(-0.22, 1.12, "(b)", transform=ax2.transAxes, va="top", ha="left", size=12)
-    ax3.text(-0.22, 1.12, "(c)", transform=ax3.transAxes, va="top", ha="left", size=12)
+    ax1.text(
+        -0.22,
+        1.12,
+        "(a)",
+        transform=ax1.transAxes,
+        va="top",
+        ha="left",
+        size=12,
+        fontweight="bold",
+    )
+    ax2.text(
+        -0.22,
+        1.12,
+        "(b)",
+        transform=ax2.transAxes,
+        va="top",
+        ha="left",
+        size=12,
+        fontweight="bold",
+    )
+    ax3.text(
+        -0.22,
+        1.12,
+        "(c)",
+        transform=ax3.transAxes,
+        va="top",
+        ha="left",
+        size=12,
+        fontweight="bold",
+    )
     ax3.legend()
 
     fig.tight_layout()
     fig.subplots_adjust(wspace=0.25)
     fig.savefig(
-        "./project/paper/figures/experiment3.pdf",
+        f"{FIGURE_DIR}/experiment3.pdf",
         dpi=600,
         bbox_inches="tight",
         pad_inches=0.0,
@@ -158,11 +188,11 @@ def plot_autocorr(results_dict, distance, thetas):
         ax.plot(np.arange(len(Ys[i])), Ys[i], label=f"θ={t:.2f}π")
     ax.semilogy()
     ax.legend()
-    fig.savefig("/home/fidel/Projects/corrqec2/data/test_autocorr.png", dpi=600)
+    fig.savefig(f"{DATA_DIR}/test_autocorr.png", dpi=600)
 
 
 def main():
-    filepath = "/home/fidel/Projects/corrqec2/data/experiment3_results.pkl"
+    filepath = f"{DATA_DIR}/experiment3_results.pkl"
     results_dict, distances, thetas = load_results(filepath)
     Y1_dict, Y2_dict, Y3_dict = process_results(results_dict, distances, thetas)
     plot_figures(Y1_dict, Y2_dict, Y3_dict, distances, thetas)

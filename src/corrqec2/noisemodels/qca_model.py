@@ -3,7 +3,6 @@ from numba import njit
 import stim
 
 from ..experiments import Experiment, SurfaceCodeMemory, SurfaceCodeStability
-from ..experiments import combine_split_circuits
 from .base_noise_model import NoiseModel
 
 
@@ -24,20 +23,25 @@ def _sample_batches(
     """Numba JIT implementation of batch sampling from QCA + storm HMM model.
 
     Args:
-        n_samples (int): _description_
-        n_sites (int): _description_
-        n_rounds (int): _description_
-        initial_probs (np.ndarray): _description_
-        a (float): _description_
-        b (float): _description_
-        red_indices (np.ndarray): _description_
-        black_indices (np.ndarray): _description_
-        adjacencies (np.ndarray): _description_
-        update_probs (np.ndarray): _description_
-        emission_probs (np.ndarray): _description_
+        n_samples: Number of samples in the batch.
+        n_sites: Number of bath sites, one per noisy qubit.
+        n_rounds: Number of rounds per sample.
+        initial_probs: Initial probabilities of the calm and stormy site
+            states, shape (2,).
+        a: Calm-to-stormy transition probability.
+        b: Stormy-to-calm transition probability.
+        red_indices: Site indices of the red sublattice.
+        black_indices: Site indices of the black sublattice.
+        adjacencies: Neighbouring site indices per site, shape
+            (n_sites, max_degree), padded with -1.
+        update_probs: QCA update probability indexed by the number of
+            stormy neighbours.
+        emission_probs: Pauli emission probabilities for the calm and
+            stormy states, shape (2, 4).
 
     Returns:
-        np.ndarray: _description_
+        Pauli indices (0=I, 1=X, 2=Y, 3=Z), shape
+        (n_samples, n_sites, n_rounds).
     """
 
     samples = np.empty((n_samples, n_sites, n_rounds), dtype=np.int8)
@@ -82,12 +86,12 @@ def _storm_step(
     """Perform single storm transition on a classical bath configuration.
 
     Args:
-        bath_state (np.ndarray): np.int8, shape (n_sites,)
-        a (float): _description_
-        b (float): _description_
+        bath_state: Calm (0) or stormy (1) state per site, shape (n_sites,).
+        a: Calm-to-stormy transition probability.
+        b: Stormy-to-calm transition probability.
 
     Returns:
-        np.ndarray: _description_
+        The updated bath configuration.
     """
     new_state = bath_state.copy()
     for i in range(bath_state.size):
@@ -111,14 +115,14 @@ def _qca_step(
     """Perform single checkerboard QCA update on a classical bath configuration.
 
     Args:
-        bath_state (np.ndarray): np.int8, shape (n_sites,)
-        red_indices (np.ndarray): np.int32, shape (n_red,)
-        black_indices (np.ndarray): np.int32, shape (n_black,)
-        adjacencies (np.ndarray): np.int32, shape (n_sites, max_deg)
-        update_probs (np.ndarray): np.float64, shape (max_deg+1,)
+        bath_state: np.int8, shape (n_sites,)
+        red_indices: np.int32, shape (n_red,)
+        black_indices: np.int32, shape (n_black,)
+        adjacencies: np.int32, shape (n_sites, max_deg)
+        update_probs: np.float64, shape (max_deg+1,)
 
     Returns:
-        np.ndarray: np.int8, shape (n_sites,)
+        np.int8, shape (n_sites,)
     """
     new_state = bath_state.copy()
     max_deg = adjacencies.shape[1]
@@ -158,8 +162,8 @@ def _emission_step(
     """Perform emission step for classical bath configuration.
 
     Args:
-        bath_state (np.ndarray): np.int8, shape (n_sites,)
-        emission_probs (np.ndarray): np.float64, shape (2, 4)
+        bath_state: np.int8, shape (n_sites,)
+        emission_probs: np.float64, shape (2, 4)
     """
     emissions = np.empty(bath_state.size, dtype=np.int8)
     for i in range(bath_state.size):
@@ -236,17 +240,17 @@ def _estimate_qca_marginal_error_rate(
     3) mapping excited-state occupancy to emitted non-identity probability.
 
     Args:
-        a (float): Storm excitation probability 0->1.
-        b (float): Storm relaxation probability 1->0.
-        theta (float): QCA angle in radians.
-        emissions (np.ndarray | list[list[float]] | None): Emission table of shape
+        a: Storm excitation probability 0->1.
+        b: Storm relaxation probability 1->0.
+        theta: QCA angle in radians.
+        emissions: Emission table of shape
             (2, 4), where column 0 is probability of I. If None, defaults to
             model convention [[1,0,0,0],[0,1/3,1/3,1/3]].
-        degree (int): Effective nearest-neighbour degree in the lattice.
-        n_iterations (int): Number of fixed-point iterations for density estimate.
+        degree: Effective nearest-neighbour degree in the lattice.
+        n_iterations: Number of fixed-point iterations for density estimate.
 
     Returns:
-        float: Estimated marginal non-identity error probability in [0, 1].
+        Estimated marginal non-identity error probability in [0, 1].
     """
     if not (0.0 <= a <= 1.0 and 0.0 <= b <= 1.0):
         raise ValueError("a and b must lie in [0, 1].")
@@ -388,7 +392,7 @@ class StormQCAModel(NoiseModel):
             subcircuits_new.append(subcircuit_new)
 
         # Combine all parts back into a single circuit
-        new_circuit = combine_split_circuits(
+        new_circuit = Experiment.combine_split_circuits(
             [split_circuits[0]] + subcircuits_new + [split_circuits[-1]]
         )
 

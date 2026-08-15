@@ -4,6 +4,10 @@ import pickle
 
 import numpy as np
 
+# Sweep outputs are written here; on a cluster this is typically scratch
+# space. Change this one line to run elsewhere.
+RESULTS_DIR = Path.home() / "mx95_scratch2" / "jkam" / "corrqec2_results"
+
 
 def load_error_matrix(filepath):
     with np.load(filepath) as data:
@@ -79,10 +83,8 @@ def calc_stats(error_matrix, burnin, max_lag):
 
 def main():
     print("Processing experiment 3 error matrices...")
-    resultsdir = (
-        Path.home() / "mx95_scratch2" / "jkam" / "corrqec2_results" / "error_matrices"
-    )
-    savedir = Path.home() / "mx95_scratch2" / "jkam" / "corrqec2_results"
+    resultsdir = RESULTS_DIR / "error_matrices"
+    savedir = RESULTS_DIR
 
     parser = argparse.ArgumentParser()
     parser.add_argument("--burnin", type=int, default=200_000, help="Burn-in period")

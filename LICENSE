@@ -1,6 +1,10 @@
 MIT License
 
-Copyright (c) 2025 Fidel
+Copyright (c) 2025 John F. Kam
+
+NOTE: The MIT license below covers all files in this repository EXCEPT those
+under src/corrqec2/experiments/_stability_builder/, which are third-party code
+under a different license. See "Third-party code" at the end of this file.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -19,3 +23,27 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+
+================================================================================
+Third-party code
+================================================================================
+
+src/corrqec2/experiments/_stability_builder/
+
+  Adapted from the source code accompanying:
+
+    C. Gidney, "Stability Experiments: The Overlooked Dual of Memory
+    Experiments", Quantum 6, 786 (2022).
+    https://doi.org/10.22331/q-2022-08-24-786
+
+  archived at https://doi.org/10.5281/zenodo.6859486
+
+  Copyright (c) 2022 Craig Gidney.
+
+  Licensed under the Creative Commons Attribution 4.0 International License
+  (CC BY 4.0): https://creativecommons.org/licenses/by/4.0/
+
+  This material has been modified for integration into corrqec2. It is
+  provided "as is", without warranties or conditions of any kind, either
+  express or implied.

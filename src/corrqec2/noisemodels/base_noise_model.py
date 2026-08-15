@@ -5,7 +5,6 @@ import numpy as np
 import stim
 
 from ..experiments.base_experiment import Experiment
-from ..experiments.experiment_utils import combine_split_circuits
 
 # CURRENTLY MISSING MPP
 from ..stim_gates import (
@@ -46,11 +45,12 @@ class NoiseModel(ABC):
         """Inject Stim circuit with built-in Stim noise channels
 
         Args:
-            circuit (stim.Circuit | Experiment): _description_
-            split_circuit (bool, optional): _description_. Defaults to False.
+            experiment: Experiment providing the noiseless split circuits.
+            split_circuit: Return the split circuits rather than a single
+                combined circuit. Defaults to False.
 
         Returns:
-            stim.Circuit | List[stim.Circuit | tuple[int, stim.Circuit]]: _description_
+            The noisy circuit, or its split components if split_circuit is True.
         """
 
         if not isinstance(experiment, Experiment):
@@ -67,7 +67,7 @@ class NoiseModel(ABC):
             )
 
         if not split_circuit:
-            noisy_circuit = combine_split_circuits(noisy_split_circuits)
+            noisy_circuit = Experiment.combine_split_circuits(noisy_split_circuits)
             return noisy_circuit
         else:
             return noisy_split_circuits
@@ -79,14 +79,15 @@ class NoiseModel(ABC):
         """Generate error matrix for custom Pauli noise model for experiment batches.
 
         Args:
-            experiment (Experiment): _description_
-            n_samples (int, optional): _description_. Defaults to 1.
+            experiment: Experiment fixing the qubit layout and number of rounds.
+            n_samples: Number of samples in the batch. Defaults to 1.
 
         Raises:
-            NotImplementedError: _description_
+            NotImplementedError: If the subclass does not implement this method.
 
         Returns:
-            np.ndarray: _description_
+            Pauli indices (0=I, 1=X, 2=Y, 3=Z), shape
+            (n_samples, n_noisy_qubits, n_rounds).
         """
         raise NotImplementedError("This method should be implemented in a subclass.")
 
@@ -95,13 +96,14 @@ class NoiseModel(ABC):
         """Generate noisy circuit with marginalized, independent noise.
 
         Args:
-            experiment (Experiment): _description_
+            experiment: Experiment fixing the qubit layout and number of rounds.
 
         Raises:
-            NotImplementedError: _description_
+            NotImplementedError: If the subclass does not implement this method.
 
         Returns:
-            stim.Circuit: _description_
+            Circuit carrying independent Stim noise channels at the model's
+            marginal error rates.
         """
         raise NotImplementedError("This method should be implemented in a subclass.")
 
@@ -112,13 +114,13 @@ class NoiseModel(ABC):
         """Generate the detector error model for the correlated noise model.
 
         Args:
-            experiment (Experiment): _description_
+            experiment: Experiment fixing the qubit layout and number of rounds.
 
         Raises:
-            NotImplementedError: _description_
+            NotImplementedError: If the subclass does not implement this method.
 
         Returns:
-            stim.DetectorErrorModel: _description_
+            Detector error model of the correlated noise model.
         """
         raise NotImplementedError("This method should be implemented in a subclass.")
 
